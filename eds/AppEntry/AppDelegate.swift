@@ -4,7 +4,9 @@
 //
 //  Created by 厦门士林电机有限公司 on 2019/11/4.
 //  Copyright © 2019 厦门士林电机有限公司. All rights reserved.
-//
+//  AppDelegate职责：
+//      <iOS 13.0   全权处理App和UI的生命周期
+//      >=   13.0   App的生命周期，新的Scene Session的生命周期
 
 import UIKit
 

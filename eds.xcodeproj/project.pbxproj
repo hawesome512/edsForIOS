@@ -16,7 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		460F7230236FC14500CFC7C3 /* eds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = eds.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		460F7230236FC14500CFC7C3 /* EDS云管理.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EDS云管理.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		460F7233236FC14500CFC7C3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		460F7235236FC14500CFC7C3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		460F7237236FC14500CFC7C3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -48,7 +48,7 @@
 		460F7231236FC14500CFC7C3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				460F7230236FC14500CFC7C3 /* eds.app */,
+				460F7230236FC14500CFC7C3 /* EDS云管理.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -56,15 +56,319 @@
 		460F7232236FC14500CFC7C3 /* eds */ = {
 			isa = PBXGroup;
 			children = (
-				460F7233236FC14500CFC7C3 /* AppDelegate.swift */,
-				460F7235236FC14500CFC7C3 /* SceneDelegate.swift */,
-				460F7237236FC14500CFC7C3 /* ViewController.swift */,
-				460F7239236FC14500CFC7C3 /* Main.storyboard */,
-				460F723C236FC14600CFC7C3 /* Assets.xcassets */,
-				460F723E236FC14600CFC7C3 /* LaunchScreen.storyboard */,
 				460F7241236FC14600CFC7C3 /* Info.plist */,
+				460F7268236FF93800CFC7C3 /* AppEntry */,
+				460F7247236FF3D600CFC7C3 /* Features */,
+				460F7261236FF62A00CFC7C3 /* Utilities */,
+				460F7260236FF5FA00CFC7C3 /* Helpers */,
+				460F7262236FF6A100CFC7C3 /* Resources */,
+				460F7267236FF8BE00CFC7C3 /* Others */,
 			);
 			path = eds;
+			sourceTree = "<group>";
+		};
+		460F7247236FF3D600CFC7C3 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				460F7248236FF42100CFC7C3 /* Base */,
+				460F7269236FFCC200CFC7C3 /* Login */,
+				460F7263236FF73D00CFC7C3 /* Home */,
+				460F724C236FF45800CFC7C3 /* Monitor */,
+				460F7254236FF52000CFC7C3 /* Alarm */,
+				460F7250236FF4E000CFC7C3 /* Workorder */,
+				460F7258236FF56300CFC7C3 /* Energy */,
+				460F725C236FF5A800CFC7C3 /* Mine */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		460F7248236FF42100CFC7C3 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				460F724B236FF44000CFC7C3 /* Controllers */,
+				460F724A236FF43800CFC7C3 /* Views */,
+				460F7249236FF42C00CFC7C3 /* Models */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		460F7249236FF42C00CFC7C3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		460F724A236FF43800CFC7C3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		460F724B236FF44000CFC7C3 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		460F724C236FF45800CFC7C3 /* Monitor */ = {
+			isa = PBXGroup;
+			children = (
+				460F724F236FF4D500CFC7C3 /* Controllers */,
+				460F724E236FF4CD00CFC7C3 /* Views */,
+				460F724D236FF4BE00CFC7C3 /* Models */,
+			);
+			path = Monitor;
+			sourceTree = "<group>";
+		};
+		460F724D236FF4BE00CFC7C3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		460F724E236FF4CD00CFC7C3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		460F724F236FF4D500CFC7C3 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		460F7250236FF4E000CFC7C3 /* Workorder */ = {
+			isa = PBXGroup;
+			children = (
+				460F7253236FF50F00CFC7C3 /* Controllers */,
+				460F7252236FF50700CFC7C3 /* Views */,
+				460F7251236FF4F200CFC7C3 /* Models */,
+			);
+			path = Workorder;
+			sourceTree = "<group>";
+		};
+		460F7251236FF4F200CFC7C3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		460F7252236FF50700CFC7C3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		460F7253236FF50F00CFC7C3 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		460F7254236FF52000CFC7C3 /* Alarm */ = {
+			isa = PBXGroup;
+			children = (
+				460F7257236FF54900CFC7C3 /* Controllers */,
+				460F7256236FF53B00CFC7C3 /* Views */,
+				460F7255236FF52800CFC7C3 /* Models */,
+			);
+			path = Alarm;
+			sourceTree = "<group>";
+		};
+		460F7255236FF52800CFC7C3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		460F7256236FF53B00CFC7C3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		460F7257236FF54900CFC7C3 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		460F7258236FF56300CFC7C3 /* Energy */ = {
+			isa = PBXGroup;
+			children = (
+				460F725B236FF58000CFC7C3 /* Controllers */,
+				460F725A236FF57B00CFC7C3 /* Views */,
+				460F7259236FF57300CFC7C3 /* Models */,
+			);
+			path = Energy;
+			sourceTree = "<group>";
+		};
+		460F7259236FF57300CFC7C3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		460F725A236FF57B00CFC7C3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		460F725B236FF58000CFC7C3 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		460F725C236FF5A800CFC7C3 /* Mine */ = {
+			isa = PBXGroup;
+			children = (
+				460F725F236FF5BE00CFC7C3 /* Controllers */,
+				460F725E236FF5B700CFC7C3 /* Views */,
+				460F725D236FF5AF00CFC7C3 /* Models */,
+			);
+			path = Mine;
+			sourceTree = "<group>";
+		};
+		460F725D236FF5AF00CFC7C3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		460F725E236FF5B700CFC7C3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		460F725F236FF5BE00CFC7C3 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		460F7260236FF5FA00CFC7C3 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		460F7261236FF62A00CFC7C3 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		460F7262236FF6A100CFC7C3 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				460F723C236FC14600CFC7C3 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		460F7263236FF73D00CFC7C3 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				460F7266236FF75300CFC7C3 /* Controllers */,
+				460F7265236FF74D00CFC7C3 /* Views */,
+				460F7264236FF74600CFC7C3 /* Models */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		460F7264236FF74600CFC7C3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		460F7265236FF74D00CFC7C3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		460F7266236FF75300CFC7C3 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		460F7267236FF8BE00CFC7C3 /* Others */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Others;
+			sourceTree = "<group>";
+		};
+		460F7268236FF93800CFC7C3 /* AppEntry */ = {
+			isa = PBXGroup;
+			children = (
+				460F7237236FC14500CFC7C3 /* ViewController.swift */,
+				460F7239236FC14500CFC7C3 /* Main.storyboard */,
+				460F7233236FC14500CFC7C3 /* AppDelegate.swift */,
+				460F7235236FC14500CFC7C3 /* SceneDelegate.swift */,
+				460F723E236FC14600CFC7C3 /* LaunchScreen.storyboard */,
+			);
+			path = AppEntry;
+			sourceTree = "<group>";
+		};
+		460F7269236FFCC200CFC7C3 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				460F726C236FFCE100CFC7C3 /* Controllers */,
+				460F726B236FFCDB00CFC7C3 /* Views */,
+				460F726A236FFCD200CFC7C3 /* Models */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		460F726A236FFCD200CFC7C3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		460F726B236FFCDB00CFC7C3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		460F726C236FFCE100CFC7C3 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -84,7 +388,7 @@
 			);
 			name = eds;
 			productName = eds;
-			productReference = 460F7230236FC14500CFC7C3 /* eds.app */;
+			productReference = 460F7230236FC14500CFC7C3 /* EDS云管理.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -292,7 +596,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xseec.eds;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "EDS云管理";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -310,7 +614,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xseec.eds;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "EDS云管理";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -4,7 +4,7 @@
 //
 //  Created by 厦门士林电机有限公司 on 2019/11/4.
 //  Copyright © 2019 厦门士林电机有限公司. All rights reserved.
-//
+//  iOS 13.0之后，UI生命周期在此处理
 
 import UIKit
 
