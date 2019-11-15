@@ -10,40 +10,40 @@ import Moya
 import Foundation
 
 enum WAService {
-    case login(authority:String)                                                                  //登陆
-    case getTagList(authority:String, deviceName:String)                                          //获取工程“监控点”集合
-    case getTagValues(authority:String, tagList:[Tag])                                            //获取“监控点”的值
-    case setTagValues(authority:String, tagList:[Tag])                                            //修改“监控点”点值
-    case getTagLog(authority:String, requestBody:WATagLogRequestBody)                             //获取“监控点”历史记录
-    
+    case login(authority: String) //登陆
+    case getTagList(authority: String, projectID: String) //获取工程“监控点”集合
+    case getTagValues(authority: String, tagList: [Tag]) //获取“监控点”的值
+    case setTagValues(authority: String, tagList: [Tag]) //修改“监控点”点值
+    case getTagLog(authority: String, requestBody: WATagLogRequestBody) //获取“监控点”历史记录
+
 }
 
 extension WAService: TargetType {
-    
+
     var baseURL: URL {
-        return URL(string: "\(ProjectConfig.servicePath)/WaWebService/Json")!
+        return URL(string: "\(EDSConfig.servicePath)/WaWebService/Json")!
     }
-    
+
     var path: String {
         switch self {
         case .login:
             //eg:https://www.eds.ink/WaWebService/Json/getuserinfo/eds
-            return "/GetUserInfo/\(ProjectConfig.projectName)"
-        case .getTagList(_, let deviceName):
+            return "/GetUserInfo/\(EDSConfig.projectName)"
+        case .getTagList(_, let projectID):
             //eg:https://www.eds.ink/WaWebService/Json/taglist/eds/xs/1/xrd
-            return "/TagList/\(ProjectConfig.projectName)/\(ProjectConfig.nodeName)/\(deviceName)"
+            return "/TagList/\(EDSConfig.projectName)/\(EDSConfig.nodeName)/\(projectID)"
         case .getTagValues:
             //eg:https://www.eds.ink/WaWebService/Json/gettagvalue/eds
-            return "/GetTagValue/\(ProjectConfig.projectName)"
+            return "/GetTagValue/\(EDSConfig.projectName)"
         case .setTagValues:
             //eg:https://www.eds.ink/WaWebService/Json/settagvalue/eds
-            return "/SetTagValue/\(ProjectConfig.projectName)"
+            return "/SetTagValue/\(EDSConfig.projectName)"
         case .getTagLog:
             //eg:https://www.eds.ink/WaWebService/Json/getdatalog/eds
-            return "/GetDataLog/\(ProjectConfig.projectName)"
+            return "/GetDataLog/\(EDSConfig.projectName)"
         }
     }
-    
+
     var method: Moya.Method {
         switch self {
         case .login, .getTagList:
@@ -52,11 +52,11 @@ extension WAService: TargetType {
             return .post
         }
     }
-    
+
     var sampleData: Data {
         return Data()
     }
-    
+
     var task: Task {
         switch self {
         case .login, .getTagList:
@@ -65,15 +65,15 @@ extension WAService: TargetType {
             //在Reque body中以json格式传参数，tagList.toJSON()；此处尤为需要注意不能使用toJSONString(),因为它会在最外层加字符串双引号
             return .requestParameters(parameters: ["Tags": tagList.toJSON()], encoding: JSONEncoding.default)
         case .getTagLog(_, let requestBody):
-            return .requestParameters(parameters: ["StartTime":requestBody.startTime, "IntervalType":requestBody.intervalType, "Interval":requestBody.interval, "Records":requestBody.records, "Tags":requestBody.tags], encoding: JSONEncoding.default)
+            return .requestParameters(parameters: requestBody.toJSON()!, encoding: JSONEncoding.default)
         }
     }
-    
-    var headers: [String : String]? {
+
+    var headers: [String: String]? {
         switch self {
         case .login(let authority), .getTagList(let authority, _), .getTagValues(let authority, _), .setTagValues(let authority, _), .getTagLog(let authority, _):
-            return ["Content-type" : "application/json;charset=utf-8", "Authorization" : "Basic \(authority)"]
+            return ["Content-type": "application/json;charset=utf-8", "Authorization": "Basic \(authority)"]
         }
     }
-    
+
 }

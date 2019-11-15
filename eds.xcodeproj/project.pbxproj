@@ -8,8 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		0788B1ED30AE519DE223717B /* Pods_eds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A018248F37C60BAB1547D4 /* Pods_eds.framework */; };
-		4605D14C237297E100558500 /* WATagLogRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4605D14B237297E100558500 /* WATagLogRequestBody.swift */; };
+		4605D14C237297E100558500 /* LogTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4605D14B237297E100558500 /* LogTag.swift */; };
 		4605D14E2372BF6A00558500 /* Date-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4605D14D2372BF6A00558500 /* Date-Ext.swift */; };
+		460BA6D1237A4775008E7CDF /* JsonUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460BA6D0237A4775008E7CDF /* JsonUtility.swift */; };
+		460BA6D3237A7ABB008E7CDF /* EDSService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460BA6D2237A7ABB008E7CDF /* EDSService.swift */; };
+		460BA6D5237A934A008E7CDF /* ProjectInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460BA6D4237A934A008E7CDF /* ProjectInfo.swift */; };
+		460BA6D7237BCC23008E7CDF /* Workorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460BA6D6237BCC23008E7CDF /* Workorder.swift */; };
+		460BA6D9237CDB03008E7CDF /* Alarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460BA6D8237CDB03008E7CDF /* Alarm.swift */; };
+		460BA6DB237CE08A008E7CDF /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460BA6DA237CE08A008E7CDF /* Action.swift */; };
+		460BA6DD237CFE94008E7CDF /* ProjectAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460BA6DC237CFE94008E7CDF /* ProjectAccount.swift */; };
+		460BA6DF237D2C9A008E7CDF /* PhoneVerification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460BA6DE237D2C9A008E7CDF /* PhoneVerification.swift */; };
 		460F7234236FC14500CFC7C3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460F7233236FC14500CFC7C3 /* AppDelegate.swift */; };
 		460F7236236FC14500CFC7C3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460F7235236FC14500CFC7C3 /* SceneDelegate.swift */; };
 		460F7238236FC14500CFC7C3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460F7237236FC14500CFC7C3 /* ViewController.swift */; };
@@ -18,7 +26,7 @@
 		460F7240236FC14600CFC7C3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 460F723E236FC14600CFC7C3 /* LaunchScreen.storyboard */; };
 		460F726E2371111100CFC7C3 /* WAService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460F726D2371111100CFC7C3 /* WAService.swift */; };
 		460F7270237113B500CFC7C3 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460F726F237113B500CFC7C3 /* Const.swift */; };
-		460F727223711D8900CFC7C3 /* ProjectConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460F727123711D8900CFC7C3 /* ProjectConfig.swift */; };
+		460F727223711D8900CFC7C3 /* EDSConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460F727123711D8900CFC7C3 /* EDSConfig.swift */; };
 		46E0E3D02374074F00116DA2 /* String-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E0E3CF2374074F00116DA2 /* String-Ext.swift */; };
 		46EBD4782374FDAC00D7E6FC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EBD4772374FDAC00D7E6FC /* User.swift */; };
 		46EE431D237153DC00DF22FB /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EE431C237153DC00DF22FB /* Tag.swift */; };
@@ -26,8 +34,16 @@
 
 /* Begin PBXFileReference section */
 		11812BFF5D5618F49FD03B4D /* Pods-eds.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eds.release.xcconfig"; path = "Target Support Files/Pods-eds/Pods-eds.release.xcconfig"; sourceTree = "<group>"; };
-		4605D14B237297E100558500 /* WATagLogRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WATagLogRequestBody.swift; sourceTree = "<group>"; };
+		4605D14B237297E100558500 /* LogTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogTag.swift; sourceTree = "<group>"; };
 		4605D14D2372BF6A00558500 /* Date-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date-Ext.swift"; sourceTree = "<group>"; };
+		460BA6D0237A4775008E7CDF /* JsonUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonUtility.swift; sourceTree = "<group>"; };
+		460BA6D2237A7ABB008E7CDF /* EDSService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EDSService.swift; sourceTree = "<group>"; };
+		460BA6D4237A934A008E7CDF /* ProjectInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectInfo.swift; sourceTree = "<group>"; };
+		460BA6D6237BCC23008E7CDF /* Workorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workorder.swift; sourceTree = "<group>"; };
+		460BA6D8237CDB03008E7CDF /* Alarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alarm.swift; sourceTree = "<group>"; };
+		460BA6DA237CE08A008E7CDF /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
+		460BA6DC237CFE94008E7CDF /* ProjectAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectAccount.swift; sourceTree = "<group>"; };
+		460BA6DE237D2C9A008E7CDF /* PhoneVerification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneVerification.swift; sourceTree = "<group>"; };
 		460F7230236FC14500CFC7C3 /* EDS云管理.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EDS云管理.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		460F7233236FC14500CFC7C3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		460F7235236FC14500CFC7C3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -38,7 +54,7 @@
 		460F7241236FC14600CFC7C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		460F726D2371111100CFC7C3 /* WAService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WAService.swift; sourceTree = "<group>"; };
 		460F726F237113B500CFC7C3 /* Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
-		460F727123711D8900CFC7C3 /* ProjectConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectConfig.swift; sourceTree = "<group>"; };
+		460F727123711D8900CFC7C3 /* EDSConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EDSConfig.swift; sourceTree = "<group>"; };
 		46E0E3CF2374074F00116DA2 /* String-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String-Ext.swift"; sourceTree = "<group>"; };
 		46EBD4772374FDAC00D7E6FC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		46EE431C237153DC00DF22FB /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
@@ -128,9 +144,16 @@
 		460F7249236FF42C00CFC7C3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				460F727123711D8900CFC7C3 /* ProjectConfig.swift */,
+				4605D14B237297E100558500 /* LogTag.swift */,
+				460F727123711D8900CFC7C3 /* EDSConfig.swift */,
 				46EE431C237153DC00DF22FB /* Tag.swift */,
 				46EBD4772374FDAC00D7E6FC /* User.swift */,
+				460BA6D4237A934A008E7CDF /* ProjectInfo.swift */,
+				460BA6D6237BCC23008E7CDF /* Workorder.swift */,
+				460BA6D8237CDB03008E7CDF /* Alarm.swift */,
+				460BA6DA237CE08A008E7CDF /* Action.swift */,
+				460BA6DC237CFE94008E7CDF /* ProjectAccount.swift */,
+				460BA6DE237D2C9A008E7CDF /* PhoneVerification.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -308,7 +331,7 @@
 			isa = PBXGroup;
 			children = (
 				460F726D2371111100CFC7C3 /* WAService.swift */,
-				4605D14B237297E100558500 /* WATagLogRequestBody.swift */,
+				460BA6D2237A7ABB008E7CDF /* EDSService.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -317,6 +340,7 @@
 			isa = PBXGroup;
 			children = (
 				460F726F237113B500CFC7C3 /* Const.swift */,
+				460BA6D0237A4775008E7CDF /* JsonUtility.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -543,16 +567,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				460F726E2371111100CFC7C3 /* WAService.swift in Sources */,
-				4605D14C237297E100558500 /* WATagLogRequestBody.swift in Sources */,
+				4605D14C237297E100558500 /* LogTag.swift in Sources */,
 				46E0E3D02374074F00116DA2 /* String-Ext.swift in Sources */,
+				460BA6D9237CDB03008E7CDF /* Alarm.swift in Sources */,
 				460F7238236FC14500CFC7C3 /* ViewController.swift in Sources */,
 				460F7234236FC14500CFC7C3 /* AppDelegate.swift in Sources */,
+				460BA6D7237BCC23008E7CDF /* Workorder.swift in Sources */,
 				46EE431D237153DC00DF22FB /* Tag.swift in Sources */,
+				460BA6D1237A4775008E7CDF /* JsonUtility.swift in Sources */,
+				460BA6DB237CE08A008E7CDF /* Action.swift in Sources */,
 				460F7236236FC14500CFC7C3 /* SceneDelegate.swift in Sources */,
+				460BA6D3237A7ABB008E7CDF /* EDSService.swift in Sources */,
+				460BA6DF237D2C9A008E7CDF /* PhoneVerification.swift in Sources */,
 				4605D14E2372BF6A00558500 /* Date-Ext.swift in Sources */,
 				460F7270237113B500CFC7C3 /* Const.swift in Sources */,
-				460F727223711D8900CFC7C3 /* ProjectConfig.swift in Sources */,
+				460BA6D5237A934A008E7CDF /* ProjectInfo.swift in Sources */,
+				460F727223711D8900CFC7C3 /* EDSConfig.swift in Sources */,
 				46EBD4782374FDAC00D7E6FC /* User.swift in Sources */,
+				460BA6DD237CFE94008E7CDF /* ProjectAccount.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
