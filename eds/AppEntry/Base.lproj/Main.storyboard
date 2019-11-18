@@ -14,32 +14,9 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fKm-jJ-94s">
-                                <rect key="frame" x="20" y="179" width="374" height="538"/>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BZz-YC-p73">
-                                <rect key="frame" x="176" y="737" width="62" height="30"/>
-                                <state key="normal" title="选择图片"/>
-                                <connections>
-                                    <action selector="selectPicture:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2tX-Kz-Pod"/>
-                                </connections>
-                            </button>
-                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="fKm-jJ-94s" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="06F-V0-1sj"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="fKm-jJ-94s" secondAttribute="trailing" constant="20" id="hCi-7a-f8F"/>
-                            <constraint firstItem="fKm-jJ-94s" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="lx8-o6-20s"/>
-                            <constraint firstItem="BZz-YC-p73" firstAttribute="top" secondItem="fKm-jJ-94s" secondAttribute="bottom" constant="20" id="mCL-hw-olH"/>
-                            <constraint firstItem="fKm-jJ-94s" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.6" id="rVa-Kr-fNB"/>
-                            <constraint firstItem="BZz-YC-p73" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="xgy-7k-kdP"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <connections>
-                        <outlet property="showImageView" destination="fKm-jJ-94s" id="hdD-M6-Cy9"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

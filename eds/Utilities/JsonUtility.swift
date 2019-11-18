@@ -9,6 +9,7 @@
 import Foundation
 import SwiftyJSON
 import HandyJSON
+import CocoaMQTT
 
 class JsonUtility {
 
@@ -71,4 +72,8 @@ class JsonUtility {
         return nil
     }
 
+    //MARK: - MQTTService---------------------------
+    class func getMQTTTagList(message: CocoaMQTTMessage) -> [MQTTTag?]? {
+        return [MQTTTag].deserialize(from: message.string, designatedPath: "d")
+    }
 }

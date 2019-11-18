@@ -27,6 +27,9 @@
 		460F726E2371111100CFC7C3 /* WAService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460F726D2371111100CFC7C3 /* WAService.swift */; };
 		460F7270237113B500CFC7C3 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460F726F237113B500CFC7C3 /* Const.swift */; };
 		460F727223711D8900CFC7C3 /* EDSConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460F727123711D8900CFC7C3 /* EDSConfig.swift */; };
+		468BC3C423823738008BD62C /* MQTTService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468BC3C323823738008BD62C /* MQTTService.swift */; };
+		468BC3C623824B50008BD62C /* MQTTConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468BC3C523824B50008BD62C /* MQTTConfig.swift */; };
+		468BC3CA23829BA4008BD62C /* MQTTTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468BC3C923829BA4008BD62C /* MQTTTag.swift */; };
 		46E0E3D02374074F00116DA2 /* String-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E0E3CF2374074F00116DA2 /* String-Ext.swift */; };
 		46EBD4782374FDAC00D7E6FC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EBD4772374FDAC00D7E6FC /* User.swift */; };
 		46EE431D237153DC00DF22FB /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EE431C237153DC00DF22FB /* Tag.swift */; };
@@ -55,6 +58,9 @@
 		460F726D2371111100CFC7C3 /* WAService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WAService.swift; sourceTree = "<group>"; };
 		460F726F237113B500CFC7C3 /* Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
 		460F727123711D8900CFC7C3 /* EDSConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EDSConfig.swift; sourceTree = "<group>"; };
+		468BC3C323823738008BD62C /* MQTTService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MQTTService.swift; sourceTree = "<group>"; };
+		468BC3C523824B50008BD62C /* MQTTConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MQTTConfig.swift; sourceTree = "<group>"; };
+		468BC3C923829BA4008BD62C /* MQTTTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MQTTTag.swift; sourceTree = "<group>"; };
 		46E0E3CF2374074F00116DA2 /* String-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String-Ext.swift"; sourceTree = "<group>"; };
 		46EBD4772374FDAC00D7E6FC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		46EE431C237153DC00DF22FB /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
@@ -144,11 +150,13 @@
 		460F7249236FF42C00CFC7C3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				4605D14B237297E100558500 /* LogTag.swift */,
-				460F727123711D8900CFC7C3 /* EDSConfig.swift */,
 				46EE431C237153DC00DF22FB /* Tag.swift */,
-				46EBD4772374FDAC00D7E6FC /* User.swift */,
+				4605D14B237297E100558500 /* LogTag.swift */,
+				468BC3C923829BA4008BD62C /* MQTTTag.swift */,
+				460F727123711D8900CFC7C3 /* EDSConfig.swift */,
 				460BA6D4237A934A008E7CDF /* ProjectInfo.swift */,
+				468BC3C523824B50008BD62C /* MQTTConfig.swift */,
+				46EBD4772374FDAC00D7E6FC /* User.swift */,
 				460BA6D6237BCC23008E7CDF /* Workorder.swift */,
 				460BA6D8237CDB03008E7CDF /* Alarm.swift */,
 				460BA6DA237CE08A008E7CDF /* Action.swift */,
@@ -330,8 +338,7 @@
 		460F7260236FF5FA00CFC7C3 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				460F726D2371111100CFC7C3 /* WAService.swift */,
-				460BA6D2237A7ABB008E7CDF /* EDSService.swift */,
+				468BC3CB23829D8B008BD62C /* Service */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -432,6 +439,16 @@
 			children = (
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		468BC3CB23829D8B008BD62C /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				460F726D2371111100CFC7C3 /* WAService.swift */,
+				460BA6D2237A7ABB008E7CDF /* EDSService.swift */,
+				468BC3C323823738008BD62C /* MQTTService.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		4B0F161A00D52823A59422AA /* Pods */ = {
@@ -573,13 +590,16 @@
 				460F7238236FC14500CFC7C3 /* ViewController.swift in Sources */,
 				460F7234236FC14500CFC7C3 /* AppDelegate.swift in Sources */,
 				460BA6D7237BCC23008E7CDF /* Workorder.swift in Sources */,
+				468BC3C423823738008BD62C /* MQTTService.swift in Sources */,
 				46EE431D237153DC00DF22FB /* Tag.swift in Sources */,
 				460BA6D1237A4775008E7CDF /* JsonUtility.swift in Sources */,
+				468BC3CA23829BA4008BD62C /* MQTTTag.swift in Sources */,
 				460BA6DB237CE08A008E7CDF /* Action.swift in Sources */,
 				460F7236236FC14500CFC7C3 /* SceneDelegate.swift in Sources */,
 				460BA6D3237A7ABB008E7CDF /* EDSService.swift in Sources */,
 				460BA6DF237D2C9A008E7CDF /* PhoneVerification.swift in Sources */,
 				4605D14E2372BF6A00558500 /* Date-Ext.swift in Sources */,
+				468BC3C623824B50008BD62C /* MQTTConfig.swift in Sources */,
 				460F7270237113B500CFC7C3 /* Const.swift in Sources */,
 				460BA6D5237A934A008E7CDF /* ProjectInfo.swift in Sources */,
 				460F727223711D8900CFC7C3 /* EDSConfig.swift in Sources */,

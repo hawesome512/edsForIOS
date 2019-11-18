@@ -13,5 +13,6 @@ target 'eds' do
   pod 'RxCocoa'
   pod 'Kingfisher'
   pod 'Charts'
+  pod 'CocoaMQTT'
 
 end

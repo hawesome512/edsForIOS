@@ -23,7 +23,7 @@ extension Date {
         dateFormatter.dateFormat = "yyyy-MM-dd 00:00:00"
         return dateFormatter.string(from: self)
     }
-
+    
     //格式：20190101000000，适用作为ID的时间戳
     func toIDString() -> String {
         let dateFormatter = DateFormatter()
@@ -35,6 +35,14 @@ extension Date {
     func toDateString() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.string(from: self)
+    }
+    
+    //格式：2019-10-01T12:00:00+0000
+    func toUTCString()->String{
+        let dateFormatter=DateFormatter()
+        dateFormatter.dateFormat="yyyy-MM-dd'T'HH:mm:ssZZZ"
+        dateFormatter.timeZone=NSTimeZone(name: "UTC") as TimeZone?
         return dateFormatter.string(from: self)
     }
 
