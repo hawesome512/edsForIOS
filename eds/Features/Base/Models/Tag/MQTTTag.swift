@@ -11,7 +11,7 @@ import HandyJSON
 
 class MQTTTag: HandyJSON {
 
-    var tag: String = "null"
+    var tag: String = NIL
     //不同于Tag,此处为Double格式，与Simple MQTT cmd格式相匹配
     var value: Double?
 
@@ -24,5 +24,10 @@ class MQTTTag: HandyJSON {
     init(name: String, value: Double) {
         tag = name
         self.value = value
+    }
+
+    func toTag() -> Tag {
+        //在WAService中-1通常表示通讯失败，无效数据
+        return Tag(name: tag, value: String(format: "%.2f", value ?? -1.0))
     }
 }

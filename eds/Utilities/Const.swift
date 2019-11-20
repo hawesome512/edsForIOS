@@ -8,4 +8,5 @@
 
 import Foundation
 
-
+//用null而不是nil,为了跟网络服务json中格式（edsservice）格式匹配,Tag/MQTTTag……
+let NIL="null"

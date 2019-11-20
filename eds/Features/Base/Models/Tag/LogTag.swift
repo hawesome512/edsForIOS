@@ -12,7 +12,7 @@ import HandyJSON
 struct LogTag: HandyJSON {
 
     // Name……等未采用Swift语法～小驼峰命名，是为了方便HandyJSON将Tag转化为符合WA的Json格式
-    var Name: String = "null"
+    var Name: String = NIL
     // 数据类型：取时间段内的最后值、最小值、最大值、平均值
     var DataType: LogDataType = .Last
     // 值的数组

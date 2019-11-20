@@ -14,7 +14,20 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W87-WV-mpM">
+                                <rect key="frame" x="179.5" y="433" width="55" height="30"/>
+                                <state key="normal" title="Execute"/>
+                                <connections>
+                                    <action selector="execute:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Mnc-yb-KAZ"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="W87-WV-mpM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4bo-Bl-Zqc"/>
+                            <constraint firstItem="W87-WV-mpM" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="gTl-SY-xjs"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>

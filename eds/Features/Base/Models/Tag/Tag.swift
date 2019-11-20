@@ -12,7 +12,7 @@ import HandyJSON
 class Tag: HandyJSON {
 
     //Name和Value未采用Swift语法～小驼峰命名，是为了方便HandyJSON将Tag转化为符合WA的Json格式
-    var Name: String = "null"
+    var Name: String = NIL
     var Value: String?
 
     required init() { }

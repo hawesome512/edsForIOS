@@ -33,6 +33,7 @@
 		46E0E3D02374074F00116DA2 /* String-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E0E3CF2374074F00116DA2 /* String-Ext.swift */; };
 		46EBD4782374FDAC00D7E6FC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EBD4772374FDAC00D7E6FC /* User.swift */; };
 		46EE431D237153DC00DF22FB /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EE431C237153DC00DF22FB /* Tag.swift */; };
+		46FD463A2384C35500A796BC /* TagUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FD46392384C35500A796BC /* TagUtility.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +65,7 @@
 		46E0E3CF2374074F00116DA2 /* String-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String-Ext.swift"; sourceTree = "<group>"; };
 		46EBD4772374FDAC00D7E6FC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		46EE431C237153DC00DF22FB /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		46FD46392384C35500A796BC /* TagUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagUtility.swift; sourceTree = "<group>"; };
 		49A018248F37C60BAB1547D4 /* Pods_eds.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_eds.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE5850CFD0236670BF546995 /* Pods-eds.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eds.debug.xcconfig"; path = "Target Support Files/Pods-eds/Pods-eds.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -150,12 +152,8 @@
 		460F7249236FF42C00CFC7C3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				46EE431C237153DC00DF22FB /* Tag.swift */,
-				4605D14B237297E100558500 /* LogTag.swift */,
-				468BC3C923829BA4008BD62C /* MQTTTag.swift */,
-				460F727123711D8900CFC7C3 /* EDSConfig.swift */,
+				46FD463723836D5700A796BC /* Tag */,
 				460BA6D4237A934A008E7CDF /* ProjectInfo.swift */,
-				468BC3C523824B50008BD62C /* MQTTConfig.swift */,
 				46EBD4772374FDAC00D7E6FC /* User.swift */,
 				460BA6D6237BCC23008E7CDF /* Workorder.swift */,
 				460BA6D8237CDB03008E7CDF /* Alarm.swift */,
@@ -348,6 +346,7 @@
 			children = (
 				460F726F237113B500CFC7C3 /* Const.swift */,
 				460BA6D0237A4775008E7CDF /* JsonUtility.swift */,
+				46FD46392384C35500A796BC /* TagUtility.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -447,8 +446,20 @@
 				460F726D2371111100CFC7C3 /* WAService.swift */,
 				460BA6D2237A7ABB008E7CDF /* EDSService.swift */,
 				468BC3C323823738008BD62C /* MQTTService.swift */,
+				460F727123711D8900CFC7C3 /* EDSConfig.swift */,
+				468BC3C523824B50008BD62C /* MQTTConfig.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		46FD463723836D5700A796BC /* Tag */ = {
+			isa = PBXGroup;
+			children = (
+				46EE431C237153DC00DF22FB /* Tag.swift */,
+				4605D14B237297E100558500 /* LogTag.swift */,
+				468BC3C923829BA4008BD62C /* MQTTTag.swift */,
+			);
+			path = Tag;
 			sourceTree = "<group>";
 		};
 		4B0F161A00D52823A59422AA /* Pods */ = {
@@ -604,6 +615,7 @@
 				460BA6D5237A934A008E7CDF /* ProjectInfo.swift in Sources */,
 				460F727223711D8900CFC7C3 /* EDSConfig.swift in Sources */,
 				46EBD4782374FDAC00D7E6FC /* User.swift in Sources */,
+				46FD463A2384C35500A796BC /* TagUtility.swift in Sources */,
 				460BA6DD237CFE94008E7CDF /* ProjectAccount.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

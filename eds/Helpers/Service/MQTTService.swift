@@ -12,9 +12,20 @@ import HandyJSON
 
 class MQTTService {
 
-    let mqtt: CocoaMQTT
+    //单例，只允许存在一个实例
+    static let sharedInstance = MQTTService(config: MQTTConfig())
 
-    init(config: MQTTConfig) {
+    private let mqtt: CocoaMQTT
+
+    var delegate: MQTTServiceDelegate? {
+        didSet {
+            if let delegate = delegate {
+                mqtt.didReceiveMessage = delegate.didReceiveMessage
+            }
+        }
+    }
+
+    private init(config: MQTTConfig) {
         let clientID = "EDSMQTT-" + UUID().uuidString
         mqtt = CocoaMQTT(clientID: clientID, host: config.host, port: config.port)
         mqtt.username = config.username
@@ -24,20 +35,16 @@ class MQTTService {
         print("MQTT Connected:\(connected).")
     }
 
-    func didReceiveMessage(handler: @escaping (CocoaMQTT, CocoaMQTTMessage, UInt16) -> Void) {
-        mqtt.didReceiveMessage = handler
-    }
-
     //ProjectID:1/XRD,ProjectName:XRD
     func refreshTagValues(projectName: String) {
-        //订阅格式：data/XRD
+        //订阅格式：data/XRD，数据格式参照研华网关SimpleMQTT
         mqtt.subscribe("data/" + projectName)
 
     }
 
     func updateTagValues(projectName: String, updatedTags: [MQTTTag]) {
         let jsonString = MQTTUpdateTagsBody(tags: updatedTags).toJSONString()!
-        //发布格式：cmd/XRD
+        //发布格式：cmd/XRD，数据格式参照研华网关SimpleMQTT
         mqtt.publish("cmd/" + projectName, withString: jsonString)
     }
 
@@ -48,6 +55,10 @@ class MQTTService {
         }
     }
 
+}
+
+protocol MQTTServiceDelegate {
+    func didReceiveMessage(mqtt: CocoaMQTT, message: CocoaMQTTMessage, flag: UInt16)
 }
 
 //MQTT修改参数需要的JSON格式（Simple MQTT)
