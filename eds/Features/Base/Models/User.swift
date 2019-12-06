@@ -14,11 +14,15 @@ class User {
     //用户密钥～[username:password]，base64加密
     var authority: String?
     //用户权限等级
-    var userLevel: UserLevel
+    var userLevel: UserLevel = .unLogin
     //用户所属的工程设备，一个用户只能拥有一个工程
-    var projectID: String
+    var projectID: String?
+    
+    //单例
+    static let sharedInstance = User()
+    private init() { }
 
-    init(base64Authority: String, ownedProjectID: String) {
+    func onLoginSuccess(base64Authority: String, ownedProjectID: String) {
         authority = base64Authority
         projectID = ownedProjectID
         userLevel = .usernameAdmin
@@ -26,7 +30,7 @@ class User {
 
     //EDS Service工单、记录等数据模型需要ID
     func generateID() -> String {
-        return "\(projectID)-\(Date().toIDString())"
+        return "\(projectID ?? NIL)-\(Date().toIDString())"
     }
 
 }
@@ -42,4 +46,6 @@ enum UserLevel: Int, HandyJSONEnum {
     case qrcodeGuest = 3
     //超级管理员，EDS开发人员专有，可以修改EDS系统、发布工单等
     case superAdmin = 4
+    //未登录，初始化用，不能进入系统
+    case unLogin = 5
 }
