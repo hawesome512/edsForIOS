@@ -14,7 +14,7 @@ import HandyJSON
 struct DeviceModel: HandyJSON {
 
     static let sharedInstance: DeviceModel? = {
-        if let path = Bundle.main.path(forResource: "device", ofType: "json") {
+        if let path = Bundle.main.path(forResource: "Device", ofType: "json") {
             if let json = try? JSON(data: Data(contentsOf: URL(fileURLWithPath: path))) {
                 return DeviceModel.deserialize(from: json.description)
             }
@@ -61,7 +61,7 @@ struct DevicePageItem: HandyJSON {
     var name = ""
     //关联点列表
     var tags: [String] = [String]()
-    //显示方式
+    //显示方式，nil搜索自定义or不显示
     var display: DeviceDisplay?
     //附带参数
     var items: [String]?
@@ -69,6 +69,7 @@ struct DevicePageItem: HandyJSON {
     var unit: String?
 }
 
+//与显示类型相对应的tablecell_id为：device_display,e.g.:device_bar
 enum DeviceDisplay: String, HandyJSONEnum {
     //柱状图，对应的items为坐标范围
     case bar

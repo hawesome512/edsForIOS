@@ -5,6 +5,9 @@
 //  Created by 厦门士林电机有限公司 on 2019/11/18.
 //  Copyright © 2019 厦门士林电机有限公司. All rights reserved.
 //  MQTT Service,MQTT将实现数据的快速更新
+//  【注意】⚠️：不能初始化后，马上调用refresh or update，必须有时间间隔差
+//  外部调用错误范例:1⃣️MQTTService.sharedInstance.delegate=self 首次调用shareInstance执行单例初始化init(建立mqtt.connect)
+//                2⃣️MQTTService.sharedInstance.refreshTagValues("XRD") 刚connect马上订阅，将无效
 
 import Foundation
 import CocoaMQTT
@@ -46,6 +49,10 @@ class MQTTService {
         let jsonString = MQTTUpdateTagsBody(tags: updatedTags).toJSONString()!
         //发布格式：cmd/XRD，数据格式参照研华网关SimpleMQTT
         mqtt.publish("cmd/" + projectName, withString: jsonString)
+    }
+
+    func description() -> String {
+        return "MQTT Service Singleton has been init."
     }
 
     deinit {

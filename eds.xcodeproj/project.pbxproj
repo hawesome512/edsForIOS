@@ -27,10 +27,21 @@
 		460F726E2371111100CFC7C3 /* WAService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460F726D2371111100CFC7C3 /* WAService.swift */; };
 		460F7270237113B500CFC7C3 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460F726F237113B500CFC7C3 /* Const.swift */; };
 		460F727223711D8900CFC7C3 /* EDSConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460F727123711D8900CFC7C3 /* EDSConfig.swift */; };
+		4621271423B197A900105664 /* DeviceListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621271323B197A900105664 /* DeviceListViewController.swift */; };
+		4621271E23B19FF400105664 /* DeviceDynamicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621271523B19FF100105664 /* DeviceDynamicCell.swift */; };
+		4621271F23B19FF400105664 /* DeviceTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621271623B19FF100105664 /* DeviceTextCell.swift */; };
+		4621272023B19FF400105664 /* DeviceStaticCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621271723B19FF100105664 /* DeviceStaticCell.swift */; };
+		4621272123B19FF400105664 /* DeviceAtsStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621271823B19FF200105664 /* DeviceAtsStatusCell.swift */; };
+		4621272223B19FF400105664 /* DeviceButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621271923B19FF200105664 /* DeviceButtonCell.swift */; };
+		4621272323B19FF400105664 /* DeviceOnOffCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621271A23B19FF200105664 /* DeviceOnOffCell.swift */; };
+		4621272423B19FF400105664 /* DeviceDefaultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621271B23B19FF300105664 /* DeviceDefaultCell.swift */; };
+		4621272523B19FF400105664 /* DeviceRangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621271C23B19FF300105664 /* DeviceRangeCell.swift */; };
+		4621272623B19FF400105664 /* DeviceBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621271D23B19FF400105664 /* DeviceBarCell.swift */; };
+		4621272823B1A71A00105664 /* DeviceCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621272723B1A71A00105664 /* DeviceCellType.swift */; };
 		468BC3C423823738008BD62C /* MQTTService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468BC3C323823738008BD62C /* MQTTService.swift */; };
 		468BC3C623824B50008BD62C /* MQTTConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468BC3C523824B50008BD62C /* MQTTConfig.swift */; };
 		468BC3CA23829BA4008BD62C /* MQTTTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468BC3C923829BA4008BD62C /* MQTTTag.swift */; };
-		46DEF1A02399F832008780C3 /* device.json in Resources */ = {isa = PBXBuildFile; fileRef = 46DEF19F2399F832008780C3 /* device.json */; };
+		46DEF1A02399F832008780C3 /* Device.json in Resources */ = {isa = PBXBuildFile; fileRef = 46DEF19F2399F832008780C3 /* Device.json */; };
 		46DEF1A3239A00F3008780C3 /* DeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DEF1A2239A00F3008780C3 /* DeviceModel.swift */; };
 		46E0E3D02374074F00116DA2 /* String-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E0E3CF2374074F00116DA2 /* String-Ext.swift */; };
 		46EBD4782374FDAC00D7E6FC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EBD4772374FDAC00D7E6FC /* User.swift */; };
@@ -61,10 +72,21 @@
 		460F726D2371111100CFC7C3 /* WAService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WAService.swift; sourceTree = "<group>"; };
 		460F726F237113B500CFC7C3 /* Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
 		460F727123711D8900CFC7C3 /* EDSConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EDSConfig.swift; sourceTree = "<group>"; };
+		4621271323B197A900105664 /* DeviceListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceListViewController.swift; sourceTree = "<group>"; };
+		4621271523B19FF100105664 /* DeviceDynamicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceDynamicCell.swift; sourceTree = "<group>"; };
+		4621271623B19FF100105664 /* DeviceTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceTextCell.swift; sourceTree = "<group>"; };
+		4621271723B19FF100105664 /* DeviceStaticCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceStaticCell.swift; sourceTree = "<group>"; };
+		4621271823B19FF200105664 /* DeviceAtsStatusCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceAtsStatusCell.swift; sourceTree = "<group>"; };
+		4621271923B19FF200105664 /* DeviceButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceButtonCell.swift; sourceTree = "<group>"; };
+		4621271A23B19FF200105664 /* DeviceOnOffCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceOnOffCell.swift; sourceTree = "<group>"; };
+		4621271B23B19FF300105664 /* DeviceDefaultCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceDefaultCell.swift; sourceTree = "<group>"; };
+		4621271C23B19FF300105664 /* DeviceRangeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceRangeCell.swift; sourceTree = "<group>"; };
+		4621271D23B19FF400105664 /* DeviceBarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceBarCell.swift; sourceTree = "<group>"; };
+		4621272723B1A71A00105664 /* DeviceCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCellType.swift; sourceTree = "<group>"; };
 		468BC3C323823738008BD62C /* MQTTService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MQTTService.swift; sourceTree = "<group>"; };
 		468BC3C523824B50008BD62C /* MQTTConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MQTTConfig.swift; sourceTree = "<group>"; };
 		468BC3C923829BA4008BD62C /* MQTTTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MQTTTag.swift; sourceTree = "<group>"; };
-		46DEF19F2399F832008780C3 /* device.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = device.json; sourceTree = "<group>"; };
+		46DEF19F2399F832008780C3 /* Device.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Device.json; sourceTree = "<group>"; };
 		46DEF1A2239A00F3008780C3 /* DeviceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceModel.swift; sourceTree = "<group>"; };
 		46E0E3CF2374074F00116DA2 /* String-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String-Ext.swift"; sourceTree = "<group>"; };
 		46EBD4772374FDAC00D7E6FC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -134,7 +156,7 @@
 				460F7248236FF42100CFC7C3 /* Base */,
 				460F7269236FFCC200CFC7C3 /* Login */,
 				460F7263236FF73D00CFC7C3 /* Home */,
-				460F724C236FF45800CFC7C3 /* Monitor */,
+				460F724C236FF45800CFC7C3 /* Device */,
 				460F7254236FF52000CFC7C3 /* Alarm */,
 				460F7250236FF4E000CFC7C3 /* Workorder */,
 				460F7258236FF56300CFC7C3 /* Energy */,
@@ -157,14 +179,11 @@
 			isa = PBXGroup;
 			children = (
 				46FD463723836D5700A796BC /* Tag */,
-				460BA6D4237A934A008E7CDF /* ProjectInfo.swift */,
 				46EBD4772374FDAC00D7E6FC /* User.swift */,
-				460BA6D6237BCC23008E7CDF /* Workorder.swift */,
-				460BA6D8237CDB03008E7CDF /* Alarm.swift */,
-				460BA6DA237CE08A008E7CDF /* Action.swift */,
 				460BA6DC237CFE94008E7CDF /* ProjectAccount.swift */,
 				460BA6DE237D2C9A008E7CDF /* PhoneVerification.swift */,
-				46DEF1A2239A00F3008780C3 /* DeviceModel.swift */,
+				460BA6D4237A934A008E7CDF /* ProjectInfo.swift */,
+				460BA6DA237CE08A008E7CDF /* Action.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -183,19 +202,21 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
-		460F724C236FF45800CFC7C3 /* Monitor */ = {
+		460F724C236FF45800CFC7C3 /* Device */ = {
 			isa = PBXGroup;
 			children = (
 				460F724F236FF4D500CFC7C3 /* Controllers */,
 				460F724E236FF4CD00CFC7C3 /* Views */,
 				460F724D236FF4BE00CFC7C3 /* Models */,
 			);
-			path = Monitor;
+			path = Device;
 			sourceTree = "<group>";
 		};
 		460F724D236FF4BE00CFC7C3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				46DEF1A2239A00F3008780C3 /* DeviceModel.swift */,
+				4621272723B1A71A00105664 /* DeviceCellType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -203,6 +224,15 @@
 		460F724E236FF4CD00CFC7C3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4621271823B19FF200105664 /* DeviceAtsStatusCell.swift */,
+				4621271D23B19FF400105664 /* DeviceBarCell.swift */,
+				4621271923B19FF200105664 /* DeviceButtonCell.swift */,
+				4621271523B19FF100105664 /* DeviceDynamicCell.swift */,
+				4621271B23B19FF300105664 /* DeviceDefaultCell.swift */,
+				4621271A23B19FF200105664 /* DeviceOnOffCell.swift */,
+				4621271C23B19FF300105664 /* DeviceRangeCell.swift */,
+				4621271723B19FF100105664 /* DeviceStaticCell.swift */,
+				4621271623B19FF100105664 /* DeviceTextCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -210,6 +240,7 @@
 		460F724F236FF4D500CFC7C3 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				4621271323B197A900105664 /* DeviceListViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -227,6 +258,7 @@
 		460F7251236FF4F200CFC7C3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				460BA6D6237BCC23008E7CDF /* Workorder.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -258,6 +290,7 @@
 		460F7255236FF52800CFC7C3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				460BA6D8237CDB03008E7CDF /* Alarm.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -359,7 +392,7 @@
 		460F7262236FF6A100CFC7C3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				46DEF19F2399F832008780C3 /* device.json */,
+				46DEF19F2399F832008780C3 /* Device.json */,
 				460F723C236FC14600CFC7C3 /* Assets.xcassets */,
 			);
 			path = Resources;
@@ -451,8 +484,8 @@
 			children = (
 				460F726D2371111100CFC7C3 /* WAService.swift */,
 				460BA6D2237A7ABB008E7CDF /* EDSService.swift */,
-				468BC3C323823738008BD62C /* MQTTService.swift */,
 				460F727123711D8900CFC7C3 /* EDSConfig.swift */,
+				468BC3C323823738008BD62C /* MQTTService.swift */,
 				468BC3C523824B50008BD62C /* MQTTConfig.swift */,
 			);
 			path = Service;
@@ -548,7 +581,7 @@
 				460F7240236FC14600CFC7C3 /* LaunchScreen.storyboard in Resources */,
 				460F723D236FC14600CFC7C3 /* Assets.xcassets in Resources */,
 				460F723B236FC14500CFC7C3 /* Main.storyboard in Resources */,
-				46DEF1A02399F832008780C3 /* device.json in Resources */,
+				46DEF1A02399F832008780C3 /* Device.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -602,11 +635,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				460F726E2371111100CFC7C3 /* WAService.swift in Sources */,
+				4621272023B19FF400105664 /* DeviceStaticCell.swift in Sources */,
 				4605D14C237297E100558500 /* LogTag.swift in Sources */,
+				4621272223B19FF400105664 /* DeviceButtonCell.swift in Sources */,
+				4621272323B19FF400105664 /* DeviceOnOffCell.swift in Sources */,
 				46E0E3D02374074F00116DA2 /* String-Ext.swift in Sources */,
 				460BA6D9237CDB03008E7CDF /* Alarm.swift in Sources */,
+				4621272423B19FF400105664 /* DeviceDefaultCell.swift in Sources */,
 				460F7238236FC14500CFC7C3 /* ViewController.swift in Sources */,
+				4621271E23B19FF400105664 /* DeviceDynamicCell.swift in Sources */,
 				46DEF1A3239A00F3008780C3 /* DeviceModel.swift in Sources */,
+				4621272523B19FF400105664 /* DeviceRangeCell.swift in Sources */,
 				460F7234236FC14500CFC7C3 /* AppDelegate.swift in Sources */,
 				460BA6D7237BCC23008E7CDF /* Workorder.swift in Sources */,
 				468BC3C423823738008BD62C /* MQTTService.swift in Sources */,
@@ -617,11 +656,16 @@
 				460F7236236FC14500CFC7C3 /* SceneDelegate.swift in Sources */,
 				460BA6D3237A7ABB008E7CDF /* EDSService.swift in Sources */,
 				460BA6DF237D2C9A008E7CDF /* PhoneVerification.swift in Sources */,
+				4621272123B19FF400105664 /* DeviceAtsStatusCell.swift in Sources */,
 				4605D14E2372BF6A00558500 /* Date-Ext.swift in Sources */,
+				4621271F23B19FF400105664 /* DeviceTextCell.swift in Sources */,
 				468BC3C623824B50008BD62C /* MQTTConfig.swift in Sources */,
 				460F7270237113B500CFC7C3 /* Const.swift in Sources */,
+				4621272623B19FF400105664 /* DeviceBarCell.swift in Sources */,
 				460BA6D5237A934A008E7CDF /* ProjectInfo.swift in Sources */,
+				4621272823B1A71A00105664 /* DeviceCellType.swift in Sources */,
 				460F727223711D8900CFC7C3 /* EDSConfig.swift in Sources */,
+				4621271423B197A900105664 /* DeviceListViewController.swift in Sources */,
 				46EBD4782374FDAC00D7E6FC /* User.swift in Sources */,
 				46FD463A2384C35500A796BC /* TagUtility.swift in Sources */,
 				460BA6DD237CFE94008E7CDF /* ProjectAccount.swift in Sources */,

@@ -12,12 +12,14 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
+
     //全局变量，工程监控点列表
     lazy var tagList: [Tag] = []
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        //未避免MQTT初始化后马上订阅，将单例初始化提前
+        print(MQTTService.sharedInstance.description())
         return true
     }
 

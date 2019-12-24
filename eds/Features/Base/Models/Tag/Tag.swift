@@ -25,4 +25,10 @@ class Tag: HandyJSON {
         Name = name
         Value = value
     }
+    
+    
+    /// 点所属的设备名：KB_A3_1:Ia，设备名为KB_A3_1
+    func getDeviceName()->String{
+        return Name.components(separatedBy: ":")[0]
+    }
 }
