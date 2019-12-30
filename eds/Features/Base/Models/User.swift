@@ -17,7 +17,7 @@ class User {
     var userLevel: UserLevel = .unLogin
     //用户所属的工程设备，一个用户只能拥有一个工程
     var projectID: String?
-    
+
     //单例
     static let sharedInstance = User()
     private init() { }

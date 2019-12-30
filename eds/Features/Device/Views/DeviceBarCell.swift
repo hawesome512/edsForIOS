@@ -24,24 +24,15 @@ class DeviceBarCell: UITableViewCell {
     fileprivate func initViews() {
         barChartView = BarChartView()
         addSubview(barChartView)
-
-        barChartView.translatesAutoresizingMaskIntoConstraints = false
-        let superView = barChartView.superview!
-        //右和底边约束为负数才表示缩进
-        NSLayoutConstraint.activate([
-            barChartView.topAnchor.constraint(equalTo: superView.topAnchor, constant: space),
-            barChartView.bottomAnchor.constraint(equalTo: superView.bottomAnchor, constant: -space),
-            barChartView.leadingAnchor.constraint(equalTo: superView.leadingAnchor, constant: space),
-            barChartView.trailingAnchor.constraint(equalTo: superView.trailingAnchor, constant: -space)
-        ])
+        barChartView.edgesToSuperview(insets:.uniform(space))
     }
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         initViews()
         setDefaultStyle()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -93,7 +84,7 @@ class DeviceBarCell: UITableViewCell {
             let lowerLine = ChartLimitLine(limit: lower)
             lowerLine.lineColor = UIColor.systemYellow
             lowerLine.lineDashLengths = [10, 10]
-            lowerLine.lineWidth=2
+            lowerLine.lineWidth = 2
             leftAxis.addLimitLine(lowerLine)
         }
     }

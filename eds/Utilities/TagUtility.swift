@@ -18,33 +18,56 @@ class TagUtility: MQTTServiceDelegate {
 
     private init() { }
 
-    var tagList: [Tag] = []
+    private var tagList: [Tag] = [] {
+        didSet {
+            //获取点列表之后，进行mqtt订阅
+            MQTTService.sharedInstance.delegate = self
+            MQTTService.sharedInstance.refreshTagValues(projectName: tempProject)
+        }
+    }
 
-    /// 添加工程点列表，保持值单例中
-    /// - Parameter target: target两个可空属性需要换算
-    func addTagList(with target: [Tag?]?) {
+    //MARK:通信>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    //临时测试
+    private let tempAuthority = "xkb:xseec".toBase64()
+    private let tempProjectID = "1/XKB"
+    private let tempProject = "XKB"
+
+    /// 从后台导入工程点列表
+    func loadProjectTagList() {
         //获取后台服务点列表请求在生命周期中只有一次
         guard tagList.count == 0 else {
             return
         }
-        tagList = (target?.filter { $0 != nil })! as! [Tag]
-        print("TagUtility:Load project tag list.")
-
-        //获取所有tag的value一次
-        MoyaProvider<WAService>().request(.getTagValues(authority: "xkb:xseec".toBase64(), tagList: tagList)) { result in
+        MoyaProvider<WAService>().request(.getTagList(authority: tempAuthority, projectID: tempProjectID)) { result in
             switch result {
             case .success(let response):
-                self.update(with: JsonUtility.getTagValues(data: response.data))
-                print("TagUtility:Update tag list value.")
+                //后台返回数据类型[tag?]?👉[tag]
+                let tempList = JsonUtility.getTagList(data: response.data)
+                self.tagList = (tempList?.filter { $0 != nil })! as! [Tag]
+                self.updateTagList(with: self.tagList)
+                print("TagUtility:Load project tag list.")
             default:
                 break
             }
         }
+    }
 
-        //mqtt订阅
-        //⚠️待验证订阅不会漏掉所有tag的value变化
-        MQTTService.sharedInstance.delegate = self
-        MQTTService.sharedInstance.refreshTagValues(projectName: "XKB")
+    /// 更新点值
+    /// - Parameter tags: 需要更新的点列表
+    func updateTagList(with tags: [Tag]) {
+        guard tags.count > 0 else {
+            return
+        }
+        MoyaProvider<WAService>().request(.getTagValues(authority: tempAuthority, tagList: tags)) { result in
+            switch result {
+            case .success(let response):
+                self.update(with: JsonUtility.getTagValues(data: response.data))
+                print("TagUtility:Update \(tags.count) tag values.")
+            default:
+                break
+            }
+        }
     }
 
     func didReceiveMessage(mqtt: CocoaMQTT, message: CocoaMQTTMessage, flag: UInt16) {
@@ -52,6 +75,8 @@ class TagUtility: MQTTServiceDelegate {
         //print("Mqtt receive at " + Date().description)
     }
 
+
+    //MARK:便捷方法>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     /// 获取设备列表（淡化设备概念，用[String]
     func getDeviceList() -> [String] {
@@ -77,6 +102,8 @@ class TagUtility: MQTTServiceDelegate {
         return tagList.first { $0.Name == tagName }
     }
 
+    //MARK:私有方法>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
     private func update(with target: [Tag?]?) {
         //Filter>forEach>first
         target?.forEach { tag in
@@ -91,13 +118,20 @@ class TagUtility: MQTTServiceDelegate {
         update(with: targetTags)
     }
 
-    //MARK:静态方法
+    //MARK:静态方法>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-
-    /// 获取设备类型图
+    /// 获取设备类型图标
     /// - Parameter name: 设备or点名称，CY_A2_2👉A2
     static func getDeviceIcon(with name: String) -> UIImage? {
-        let infos = name.components(separatedBy: "_")
-        return infos.count == 3 ? UIImage(named: "device_"+infos[1]) : nil
+        let infos = name.components(separatedBy: Tag.deviceSeparator)
+        return infos.count == 3 ? UIImage(named: "device_" + infos[1]) : nil
+    }
+
+
+    /// 获取设备类型String
+    /// - Parameter name: 设备or点名称
+    static func getDeviceType(with name: String) -> String? {
+        let infos = name.components(separatedBy: Tag.deviceSeparator)
+        return infos.count == 3 ? infos[1] : nil
     }
 }

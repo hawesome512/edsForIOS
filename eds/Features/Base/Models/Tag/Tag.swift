@@ -8,12 +8,27 @@
 
 import Foundation
 import HandyJSON
+import RxCocoa
 
 class Tag: HandyJSON {
+    //分隔符，工程编码_设备类型_编号:Ia
+    static let deviceSeparator = "_"
+    static let nameSeparator = ":"
 
     //Name和Value未采用Swift语法～小驼峰命名，是为了方便HandyJSON将Tag转化为符合WA的Json格式
     var Name: String = NIL
-    var Value: String?
+    var Value: String? {
+        didSet {
+            //发布Value更新，通知相应的ui观察者
+            if let value = Value {
+                showValue.accept(Double(value))
+            }
+        }
+    }
+
+    //用于Rx绑定之UI中，因为value<String>可能为整数和浮点数，为防止外部调用Int(“浮点数字符串”出错）
+    //Int("10.0")非法，Int(Double("10"))ok
+    var showValue = BehaviorRelay<Double?>(value: nil)
 
     required init() { }
 
@@ -25,10 +40,10 @@ class Tag: HandyJSON {
         Name = name
         Value = value
     }
-    
-    
+
+
     /// 点所属的设备名：KB_A3_1:Ia，设备名为KB_A3_1
-    func getDeviceName()->String{
-        return Name.components(separatedBy: ":")[0]
+    func getDeviceName() -> String {
+        return Name.components(separatedBy: Tag.nameSeparator)[0]
     }
 }

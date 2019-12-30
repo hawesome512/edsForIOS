@@ -30,18 +30,15 @@ class DeviceStaticCell: UITableViewCell {
     private func initViews() {
         deviceImageView.contentMode = .scaleAspectFit
         addSubview(deviceImageView)
+        deviceImageView.heightToSuperview(offset: space)
+        deviceImageView.widthToHeight(of: deviceImageView)
+        deviceImageView.leadingToSuperview(offset: space)
+        deviceImageView.centerYToSuperview()
 
-        let superView = deviceImageView.superview!
-        deviceImageView.translatesAutoresizingMaskIntoConstraints = false
-        deviceImageView.heightAnchor.constraint(equalTo: superView.heightAnchor, constant: -space).isActive = true
-        deviceImageView.widthAnchor.constraint(equalTo: deviceImageView.heightAnchor).isActive = true
-        deviceImageView.leadingAnchor.constraint(equalTo: superView.leadingAnchor, constant: space).isActive = true
-        deviceImageView.centerYAnchor.constraint(equalTo: superView.centerYAnchor).isActive = true
         nameLabel.textAlignment = .center
         addSubview(nameLabel)
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.centerYAnchor.constraint(equalTo: deviceImageView.centerYAnchor).isActive = true
-        nameLabel.leadingAnchor.constraint(equalTo: deviceImageView.trailingAnchor, constant: space).isActive = true
+        nameLabel.centerYToSuperview()
+        nameLabel.leadingToTrailing(of: deviceImageView)
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

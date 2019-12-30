@@ -13,6 +13,13 @@ import HandyJSON
 
 struct DeviceModel: HandyJSON {
 
+    //items中按钮信息：ON/5555/green
+    static let itemInfoSeparator = "/"
+    //items中空的项，忽略
+    static let itemNil = ""
+    //items中首项为*，表示等差范围数列
+    static let itemStepArray = "*"
+
     static let sharedInstance: DeviceModel? = {
         if let path = Bundle.main.path(forResource: "Device", ofType: "json") {
             if let json = try? JSON(data: Data(contentsOf: URL(fileURLWithPath: path))) {
@@ -38,13 +45,19 @@ struct DeviceType: HandyJSON {
     //设备分类：断路器、电表……
     var category = ""
     //状态位，判断设备异常的tag
-    var status = ""
+    var status = Status()
     //异常报警图表中显示的tag列表，Ia/Ib/Ic
     var alarm: [String] = []
     //远程控制的验证权限,CtrlCode
     var authority: [String] = [String]()
     //设备页面列表,纵览/实时/遥控
     var pages: [DevicePage] = [DevicePage]()
+}
+
+struct Status: HandyJSON {
+    //状态info存于开关位中
+    var tag: String = ""
+    var items: [String]?
 }
 
 struct DevicePage: HandyJSON {

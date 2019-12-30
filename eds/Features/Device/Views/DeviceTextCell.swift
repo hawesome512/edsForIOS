@@ -18,7 +18,7 @@ class DeviceTextCell: UITableViewCell {
         didSet {
             if let color = backgroundGradientColor {
                 //当添加背景色时，文本颜色变为白色更直观
-                gradientLayer.setHorGradientLayer(centerColor: color)
+                gradientLayer.setHorCenterGradientLayer(centerColor: color)
                 valueLabel.textColor = .white
             }
         }
@@ -34,11 +34,8 @@ class DeviceTextCell: UITableViewCell {
         valueLabel.textAlignment = .center
         valueLabel.numberOfLines = 1
         addSubview(valueLabel)
-
-        valueLabel.translatesAutoresizingMaskIntoConstraints = false
-        valueLabel.leadingAnchor.constraint(equalTo: valueLabel.superview!.leadingAnchor, constant: space).isActive = true
-        valueLabel.trailingAnchor.constraint(equalTo: valueLabel.superview!.trailingAnchor, constant: -space).isActive = true
-        valueLabel.heightAnchor.constraint(equalTo: valueLabel.superview!.heightAnchor).isActive = true
+        valueLabel.horizontalToSuperview(insets: .horizontal(space))
+        valueLabel.heightToSuperview()
 
         //添加渐变层,默认透明
         layer.insertSublayer(gradientLayer, at: 0)
@@ -66,25 +63,3 @@ class DeviceTextCell: UITableViewCell {
 
 }
 
-extension CAGradientLayer {
-
-
-    /// 生成水平渐变层（颜色由中间向横向两端渐淡直至透明）
-    /// - Parameter centerColor: 中间颜色
-    func setHorGradientLayer(centerColor: UIColor) {
-        //水平渐变颜色：透明，color，透明
-        let gradientsColors = [
-            centerColor.withAlphaComponent(0).cgColor,
-            centerColor.cgColor,
-            centerColor.withAlphaComponent(0).cgColor
-        ]
-        //位置：起始（透明），中间（color），结束（透明）
-        let gradientLocations: [NSNumber] = [0, 0.5, 1]
-
-        colors = gradientsColors
-        locations = gradientLocations
-        //水平横向；（tips:x<横向>,y<纵向>范围：0～1）
-        startPoint = CGPoint(x: 0, y: 0.5)
-        endPoint = CGPoint(x: 1, y: 0.5)
-    }
-}

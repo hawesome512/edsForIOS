@@ -4,9 +4,10 @@
 //
 //  Created by 厦门士林电机有限公司 on 2019/12/24.
 //  Copyright © 2019 厦门士林电机有限公司. All rights reserved.
-//
+//  设备列表：静态设备，动态设备，可折叠，增删调整，自定义
 
 import UIKit
+import Moya
 
 class DeviceListViewController: UIViewController {
 
@@ -20,24 +21,33 @@ class DeviceListViewController: UIViewController {
     }
 
     fileprivate func initViews() {
-
+        //再更新一次动态设备状态点
+        updateDeviceStatus()
+        //设定导航栏
         title = NSLocalizedString("资产", comment: "Device List Title")
         navigationController?.navigationBar.prefersLargeTitles = false
-
+        //TableView
         tableView.register(DeviceDynamicCell.self, forCellReuseIdentifier: cellType.rawValue)
         tableView.cellLayoutMarginsFollowReadableWidth = true
         tableView.dataSource = self
         tableView.delegate = self
         view.addSubview(tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        tableView.edgesToSuperview()
 
     }
 
-
+    //MARK:更新状态位数据
+    private func updateDeviceStatus() {
+        var statusTagList = [Tag]()
+        deviceNames.forEach { deviceName in
+            if let statusTagName = DeviceModel.sharedInstance?.types.first(where: {
+                $0.type == TagUtility.getDeviceType(with: deviceName)
+            })?.status.tag {
+                statusTagList.append(Tag(name: deviceName + Tag.nameSeparator + statusTagName))
+            }
+        }
+        TagUtility.sharedInstance.updateTagList(with: statusTagList)
+    }
 
 }
 
@@ -54,8 +64,7 @@ extension DeviceListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellType.rawValue) as! DeviceDynamicCell
         let name = deviceNames[indexPath.row]
-        cell.nameLabel.text = name
-        cell.deviceImageView.image = TagUtility.getDeviceIcon(with: name)
+        cell.deviceName = name
         return cell
     }
 
@@ -67,5 +76,4 @@ extension DeviceListViewController: UITableViewDelegate, UITableViewDataSource {
         //设置Footer将移除tableview底部空白cell的separator line
         return UIView()
     }
-
 }

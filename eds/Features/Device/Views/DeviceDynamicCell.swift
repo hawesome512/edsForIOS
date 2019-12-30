@@ -7,57 +7,80 @@
 //  Device设备列表页的cell,含运行状态statusView
 
 import UIKit
+import RxCocoa
+import RxSwift
 
 class DeviceDynamicCell: UITableViewCell {
 
-    private let space: CGFloat = 20
+    private let space: CGFloat = 10
     private let size: CGFloat = 24
 
-    var deviceImageView = UIImageView()
-    var nameLabel = UILabel()
-    var infoLabel = UILabel()
-    var statusView = UIView()
+    private let deviceImageView = UIImageView()
+    private let nameLabel = UILabel()
+    private let infoLabel = UILabel()
+    private let statusView = UIView()
+
+    private let disposeBag = DisposeBag()
+
+    public var deviceName: String? {
+        didSet {
+            if let deviceName = deviceName {
+                deviceImageView.image = TagUtility.getDeviceIcon(with: deviceName)
+                nameLabel.text = deviceName
+//                infoLabel.text=
+                setStatus(with: deviceName)
+            }
+        }
+    }
+
+    private func setStatus(with deviceName: String) {
+        let deviceType = TagUtility.getDeviceType(with: deviceName)
+        if let deviceModel = DeviceModel.sharedInstance?.types.first(where: { $0.type == deviceType }) {
+            //tag全名：RD_A3_1:Ia
+            let tagName = deviceModel.status.tag
+            let tag = TagUtility.sharedInstance.getTag(by: deviceName + Tag.nameSeparator + tagName)
+            tag?.showValue.asObservable().throttle(.seconds(1), scheduler: MainScheduler.instance).subscribe(onNext: { showValue in
+                if let showValue = showValue, let items = deviceModel.status.items {
+                    if let status = TagValueConverter.getStatus(value: showValue, items: items) {
+                        self.statusView.backgroundColor = status.getStatusColor()
+                    }
+                }
+            }).disposed(by: disposeBag)
+        }
+    }
 
     fileprivate func initViews() {
 
-//        deviceImageView.image = UIImage(named: "device_ACB")
+        deviceImageView.image = UIImage(named: "device_static")
         deviceImageView.contentMode = .scaleAspectFit
         addSubview(deviceImageView)
+        deviceImageView.heightToSuperview(offset: -space * 2)
+        deviceImageView.widthToHeight(of: deviceImageView)
+        deviceImageView.topToSuperview(offset: space)
+        deviceImageView.leadingToSuperview(offset: space)
 
-        let superView = deviceImageView.superview!
-        deviceImageView.translatesAutoresizingMaskIntoConstraints = false
-        deviceImageView.heightAnchor.constraint(equalTo: superView.heightAnchor, constant: -space * 2).isActive = true
-        deviceImageView.widthAnchor.constraint(equalTo: deviceImageView.heightAnchor).isActive = true
-        deviceImageView.leadingAnchor.constraint(equalTo: superView.leadingAnchor, constant: space).isActive = true
-        deviceImageView.topAnchor.constraint(equalTo: superView.topAnchor, constant: space).isActive = true
-
-//        nameLabel.text = "ACB(KB#3)"
+        nameLabel.text = "#000"
         nameLabel.font = UIFont.preferredFont(forTextStyle: .headline)
         addSubview(nameLabel)
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.topAnchor.constraint(equalTo: superView.topAnchor, constant: space).isActive = true
-        nameLabel.leadingAnchor.constraint(equalTo: deviceImageView.trailingAnchor, constant: space).isActive = true
-        nameLabel.heightAnchor.constraint(equalTo: deviceImageView.heightAnchor, multiplier: 0.5).isActive = true
+        nameLabel.topToSuperview(offset: space)
+        nameLabel.leadingToTrailing(of: deviceImageView)
+        nameLabel.height(to: deviceImageView, multiplier: 0.5)
 
         infoLabel.text = NSLocalizedString("编辑资产基本信息", comment: "device_info_default")
         infoLabel.font = UIFont.preferredFont(forTextStyle: .body)
         infoLabel.textColor = .systemGray
         addSubview(infoLabel)
-        infoLabel.translatesAutoresizingMaskIntoConstraints = false
-        infoLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: space).isActive = true
-        infoLabel.leadingAnchor.constraint(equalTo: deviceImageView.trailingAnchor, constant: space).isActive = true
-        infoLabel.trailingAnchor.constraint(equalTo: superView.trailingAnchor, constant: -space).isActive = true
+        infoLabel.topToBottom(of: nameLabel, offset: space)
+        infoLabel.leadingToTrailing(of: deviceImageView, offset: space)
+        infoLabel.trailingToSuperview(offset: space)
 
         statusView.layer.cornerRadius = size / 2
         statusView.clipsToBounds = true
-        statusView.backgroundColor = .red
         addSubview(statusView)
-        statusView.translatesAutoresizingMaskIntoConstraints = false
-        statusView.widthAnchor.constraint(equalToConstant: size).isActive = true
-        statusView.heightAnchor.constraint(equalToConstant: size).isActive = true
-        statusView.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor).isActive = true
-        statusView.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: space).isActive = true
-        statusView.trailingAnchor.constraint(lessThanOrEqualTo: superView.trailingAnchor, constant: -space).isActive = true
+        statusView.width(size)
+        statusView.height(size)
+        statusView.centerY(to: nameLabel)
+        statusView.leadingToTrailing(of: nameLabel)
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

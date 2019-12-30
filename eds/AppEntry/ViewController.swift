@@ -21,52 +21,42 @@ class ViewController: UIViewController {
     let disposeBag = DisposeBag()
     let button = UIButton()
     let label = UILabel()
+    var tag: Tag?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
-        loadTagList()
+        TagUtility.sharedInstance.loadProjectTagList()
     }
 
-    func loadTagList() {
-        MoyaProvider<WAService>().request(.getTagList(authority: "xkb:xseec".toBase64(), projectID: "1/XKB")) { result in
-            switch result {
-            case .success(let response):
-                TagUtility.sharedInstance.addTagList(with: JsonUtility.getTagList(data: response.data))
-            default:
-                break
-            }
-        }
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemBlue]
     }
 
     fileprivate func initViews() {
-
-        navigationController?.navigationBar.prefersLargeTitles = true
         title = "首页"
-        
+
         button.backgroundColor = .systemBlue
         button.setTitle("Execute", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.rx.tap.bind(onNext: {
 
             //跳转设备列表
-//            let deviceListVC = DeviceListViewController()
-//            self.navigationController?.pushViewController(deviceListVC, animated: true)
-
+            let deviceListVC = DeviceViewController()
+            deviceListVC.deviceName = "KB_M2_3"
+            self.navigationController?.pushViewController(deviceListVC, animated: true)
 
         }).disposed(by: disposeBag)
         view.addSubview(button)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        button.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        button.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        button.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        
+        button.center(in: view)
+        button.width(200)
+        button.height(60)
+
         label.text = "0"
         view.addSubview(label)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 20).isActive = true
-        label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        label.topToBottom(of: button, offset: 20)
+        label.centerXToSuperview()
     }
 }
 

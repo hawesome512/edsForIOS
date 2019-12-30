@@ -24,23 +24,14 @@ class DeviceDefaultCell: UITableViewCell {
         nameLabel.textColor = UIColor.systemBlue
         nameLabel.font = preferredFont
         addSubview(nameLabel)
+        nameLabel.centerYToSuperview()
+        nameLabel.leadingToSuperview(offset: space)
 
         valueLabel.text = "1000"
         valueLabel.font = preferredFont
         addSubview(valueLabel)
-
-        //右边界约束：space*[-2],因要保证valuelabel与accessoryView足够的空间，使用负数而非正数值
-        //此处获取accessoryView为nil,故使用superview约束
-        if let superView = nameLabel.superview {
-            nameLabel.translatesAutoresizingMaskIntoConstraints = false
-            valueLabel.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                nameLabel.centerYAnchor.constraint(equalTo: superView.centerYAnchor),
-                nameLabel.leadingAnchor.constraint(equalTo: superView.leadingAnchor, constant: space),
-                valueLabel.centerYAnchor.constraint(equalTo: superView.centerYAnchor),
-                valueLabel.trailingAnchor.constraint(equalTo: superView.trailingAnchor, constant: -space * 2)
-            ])
-        }
+        valueLabel.centerYToSuperview()
+        valueLabel.trailingToSuperview(offset: space)
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

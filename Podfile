@@ -14,5 +14,7 @@ target 'eds' do
   pod 'Kingfisher'
   pod 'Charts'
   pod 'CocoaMQTT'
+  pod 'Parchment'
+  pod 'TinyConstraints'
 
 end

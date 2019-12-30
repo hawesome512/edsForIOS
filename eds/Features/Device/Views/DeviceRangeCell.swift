@@ -134,10 +134,8 @@ class RangeMakerView: UIView {
         valueLabel.textColor = color
         valueLabel.text = "0"
         addSubview(valueLabel)
-
-        valueLabel.translatesAutoresizingMaskIntoConstraints = false
-        valueLabel.topAnchor.constraint(equalTo: valueLabel.superview!.topAnchor, constant: verSpace).isActive = true
-        valueLabel.widthAnchor.constraint(equalTo: valueLabel.superview!.widthAnchor).isActive = true
+        valueLabel.topToSuperview(offset: verSpace)
+        valueLabel.widthToSuperview()
         //默认背景全黑不透明，清除背景色
         backgroundColor = UIColor.clear
     }
@@ -166,28 +164,4 @@ class RangeMakerView: UIView {
         triangle.fill()
     }
 
-}
-
-extension CGPoint {
-    //点偏移
-    func offset(x: CGFloat, y: CGFloat) -> CGPoint {
-        return CGPoint(x: self.x + x, y: self.y + y)
-    }
-}
-
-extension UIColor {
-    convenience init(colorName: String) {
-        var color: UIColor
-        switch colorName.lowercased() {
-        case "red":
-            color = UIColor.systemRed
-        case "green":
-            color = UIColor.systemGreen
-        case "yellow":
-            color = UIColor.systemYellow
-        default:
-            color = UIColor.white
-        }
-        self.init(cgColor: color.cgColor)
-    }
 }

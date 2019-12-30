@@ -28,7 +28,7 @@ class DeviceButtonCell: UITableViewCell {
     fileprivate func initViews() {
         //Add buttons by items
         items.forEach { item in
-            let infos = item.components(separatedBy: "_")
+            let infos = item.components(separatedBy: DeviceModel.itemInfoSeparator)
             if infos.count == 3 {
                 let button = UIButton()
                 button.backgroundColor = UIColor.init(colorName: infos[2])
@@ -40,26 +40,20 @@ class DeviceButtonCell: UITableViewCell {
             }
         }
         //Add Constraints
-        if let superView = buttons.first?.superview {
-            //CGFloat方便下面的“宽”的计算公式
-            let count = CGFloat( buttons.count)
-            for index in 0..<buttons.count {
-
-                let button = buttons[index]
-                button.translatesAutoresizingMaskIntoConstraints = false
-
-                let top = button.topAnchor.constraint(equalTo: superView.topAnchor, constant: space)
-                let bottom = button.bottomAnchor.constraint(equalTo: superView.bottomAnchor, constant: -space)
-
-                //宽：[width-space*(n+1)]/n,注意constant设置负数
-                let ratio = 1 / count
-                let widthConstant = (count + 1) / count * space
-                let width = button.widthAnchor.constraint(equalTo: superView.widthAnchor, multiplier: ratio, constant: -widthConstant)
-
-                //水平间距约束：space
-                let xAxisAnchor = index == 0 ? superView.leadingAnchor : buttons[index - 1].trailingAnchor
-                let leading = button.leadingAnchor.constraint(equalTo: xAxisAnchor, constant: space)
-                NSLayoutConstraint.activate([top, bottom, leading, width])
+        //CGFloat方便下面的“宽”的计算公式
+        let count = CGFloat( buttons.count)
+        for index in 0..<buttons.count {
+            let button = buttons[index]
+            //垂直缩进space
+            button.verticalToSuperview(insets: .uniform(space))
+            //宽：[width-space*(n+1)]/n,均分屏宽
+            let ratio = 1 / count
+            let widthOffset = (count + 1) / count * space
+            button.widthToSuperview(multiplier: ratio, offset: -widthOffset)
+            if index == 0 {
+                button.leadingToSuperview(offset: space)
+            } else {
+                button.leadingToTrailing(of: buttons[index - 1], offset: space)
             }
         }
     }

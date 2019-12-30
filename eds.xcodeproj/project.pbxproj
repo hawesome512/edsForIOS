@@ -38,6 +38,15 @@
 		4621272523B19FF400105664 /* DeviceRangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621271C23B19FF300105664 /* DeviceRangeCell.swift */; };
 		4621272623B19FF400105664 /* DeviceBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621271D23B19FF400105664 /* DeviceBarCell.swift */; };
 		4621272823B1A71A00105664 /* DeviceCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621272723B1A71A00105664 /* DeviceCellType.swift */; };
+		4621272A23B332B500105664 /* TagValueConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621272923B332B500105664 /* TagValueConverter.swift */; };
+		4621272C23B5CDBA00105664 /* DeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621272B23B5CDBA00105664 /* DeviceViewController.swift */; };
+		4621273023B5D95A00105664 /* DevicePageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621272F23B5D95A00105664 /* DevicePageTableViewController.swift */; };
+		4621273223B5E8F600105664 /* CAGradientLayer-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621273123B5E8F600105664 /* CAGradientLayer-Ext.swift */; };
+		4621273423B5EA0A00105664 /* ColorConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621273323B5EA0A00105664 /* ColorConst.swift */; };
+		4621273623B5EF6A00105664 /* DeviceHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621273523B5EF6A00105664 /* DeviceHeaderView.swift */; };
+		4621273823B60B9800105664 /* CGPoint-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621273723B60B9800105664 /* CGPoint-Ext.swift */; };
+		4621273A23B60BE100105664 /* UIColor-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621273923B60BE100105664 /* UIColor-Ext.swift */; };
+		4621273C23B6205200105664 /* UINavigationController-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621273B23B6205200105664 /* UINavigationController-Ext.swift */; };
 		468BC3C423823738008BD62C /* MQTTService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468BC3C323823738008BD62C /* MQTTService.swift */; };
 		468BC3C623824B50008BD62C /* MQTTConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468BC3C523824B50008BD62C /* MQTTConfig.swift */; };
 		468BC3CA23829BA4008BD62C /* MQTTTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468BC3C923829BA4008BD62C /* MQTTTag.swift */; };
@@ -83,6 +92,15 @@
 		4621271C23B19FF300105664 /* DeviceRangeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceRangeCell.swift; sourceTree = "<group>"; };
 		4621271D23B19FF400105664 /* DeviceBarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceBarCell.swift; sourceTree = "<group>"; };
 		4621272723B1A71A00105664 /* DeviceCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCellType.swift; sourceTree = "<group>"; };
+		4621272923B332B500105664 /* TagValueConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagValueConverter.swift; sourceTree = "<group>"; };
+		4621272B23B5CDBA00105664 /* DeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceViewController.swift; sourceTree = "<group>"; };
+		4621272F23B5D95A00105664 /* DevicePageTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicePageTableViewController.swift; sourceTree = "<group>"; };
+		4621273123B5E8F600105664 /* CAGradientLayer-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CAGradientLayer-Ext.swift"; sourceTree = "<group>"; };
+		4621273323B5EA0A00105664 /* ColorConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorConst.swift; sourceTree = "<group>"; };
+		4621273523B5EF6A00105664 /* DeviceHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceHeaderView.swift; sourceTree = "<group>"; };
+		4621273723B60B9800105664 /* CGPoint-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint-Ext.swift"; sourceTree = "<group>"; };
+		4621273923B60BE100105664 /* UIColor-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor-Ext.swift"; sourceTree = "<group>"; };
+		4621273B23B6205200105664 /* UINavigationController-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController-Ext.swift"; sourceTree = "<group>"; };
 		468BC3C323823738008BD62C /* MQTTService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MQTTService.swift; sourceTree = "<group>"; };
 		468BC3C523824B50008BD62C /* MQTTConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MQTTConfig.swift; sourceTree = "<group>"; };
 		468BC3C923829BA4008BD62C /* MQTTTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MQTTTag.swift; sourceTree = "<group>"; };
@@ -113,6 +131,10 @@
 			children = (
 				4605D14D2372BF6A00558500 /* Date-Ext.swift */,
 				46E0E3CF2374074F00116DA2 /* String-Ext.swift */,
+				4621273123B5E8F600105664 /* CAGradientLayer-Ext.swift */,
+				4621273723B60B9800105664 /* CGPoint-Ext.swift */,
+				4621273923B60BE100105664 /* UIColor-Ext.swift */,
+				4621273B23B6205200105664 /* UINavigationController-Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -233,6 +255,7 @@
 				4621271C23B19FF300105664 /* DeviceRangeCell.swift */,
 				4621271723B19FF100105664 /* DeviceStaticCell.swift */,
 				4621271623B19FF100105664 /* DeviceTextCell.swift */,
+				4621273523B5EF6A00105664 /* DeviceHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -241,6 +264,8 @@
 			isa = PBXGroup;
 			children = (
 				4621271323B197A900105664 /* DeviceListViewController.swift */,
+				4621272B23B5CDBA00105664 /* DeviceViewController.swift */,
+				4621272F23B5D95A00105664 /* DevicePageTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -385,6 +410,8 @@
 				460F726F237113B500CFC7C3 /* Const.swift */,
 				460BA6D0237A4775008E7CDF /* JsonUtility.swift */,
 				46FD46392384C35500A796BC /* TagUtility.swift */,
+				4621272923B332B500105664 /* TagValueConverter.swift */,
+				4621273323B5EA0A00105664 /* ColorConst.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -635,8 +662,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				460F726E2371111100CFC7C3 /* WAService.swift in Sources */,
+				4621272C23B5CDBA00105664 /* DeviceViewController.swift in Sources */,
 				4621272023B19FF400105664 /* DeviceStaticCell.swift in Sources */,
 				4605D14C237297E100558500 /* LogTag.swift in Sources */,
+				4621272A23B332B500105664 /* TagValueConverter.swift in Sources */,
 				4621272223B19FF400105664 /* DeviceButtonCell.swift in Sources */,
 				4621272323B19FF400105664 /* DeviceOnOffCell.swift in Sources */,
 				46E0E3D02374074F00116DA2 /* String-Ext.swift in Sources */,
@@ -646,9 +675,11 @@
 				4621271E23B19FF400105664 /* DeviceDynamicCell.swift in Sources */,
 				46DEF1A3239A00F3008780C3 /* DeviceModel.swift in Sources */,
 				4621272523B19FF400105664 /* DeviceRangeCell.swift in Sources */,
+				4621273C23B6205200105664 /* UINavigationController-Ext.swift in Sources */,
 				460F7234236FC14500CFC7C3 /* AppDelegate.swift in Sources */,
 				460BA6D7237BCC23008E7CDF /* Workorder.swift in Sources */,
 				468BC3C423823738008BD62C /* MQTTService.swift in Sources */,
+				4621273A23B60BE100105664 /* UIColor-Ext.swift in Sources */,
 				46EE431D237153DC00DF22FB /* Tag.swift in Sources */,
 				460BA6D1237A4775008E7CDF /* JsonUtility.swift in Sources */,
 				468BC3CA23829BA4008BD62C /* MQTTTag.swift in Sources */,
@@ -656,17 +687,22 @@
 				460F7236236FC14500CFC7C3 /* SceneDelegate.swift in Sources */,
 				460BA6D3237A7ABB008E7CDF /* EDSService.swift in Sources */,
 				460BA6DF237D2C9A008E7CDF /* PhoneVerification.swift in Sources */,
+				4621273623B5EF6A00105664 /* DeviceHeaderView.swift in Sources */,
 				4621272123B19FF400105664 /* DeviceAtsStatusCell.swift in Sources */,
 				4605D14E2372BF6A00558500 /* Date-Ext.swift in Sources */,
 				4621271F23B19FF400105664 /* DeviceTextCell.swift in Sources */,
 				468BC3C623824B50008BD62C /* MQTTConfig.swift in Sources */,
 				460F7270237113B500CFC7C3 /* Const.swift in Sources */,
+				4621273823B60B9800105664 /* CGPoint-Ext.swift in Sources */,
 				4621272623B19FF400105664 /* DeviceBarCell.swift in Sources */,
+				4621273223B5E8F600105664 /* CAGradientLayer-Ext.swift in Sources */,
+				4621273423B5EA0A00105664 /* ColorConst.swift in Sources */,
 				460BA6D5237A934A008E7CDF /* ProjectInfo.swift in Sources */,
 				4621272823B1A71A00105664 /* DeviceCellType.swift in Sources */,
 				460F727223711D8900CFC7C3 /* EDSConfig.swift in Sources */,
 				4621271423B197A900105664 /* DeviceListViewController.swift in Sources */,
 				46EBD4782374FDAC00D7E6FC /* User.swift in Sources */,
+				4621273023B5D95A00105664 /* DevicePageTableViewController.swift in Sources */,
 				46FD463A2384C35500A796BC /* TagUtility.swift in Sources */,
 				460BA6DD237CFE94008E7CDF /* ProjectAccount.swift in Sources */,
 			);
