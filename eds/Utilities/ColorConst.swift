@@ -10,3 +10,7 @@ import Foundation
 import UIKit
 
 let edsDefaultColor = UIColor.systemBlue
+let edsDivideColor = UIColor.systemGray.withAlphaComponent(0.1)
+let edsON = UIColor.systemRed
+let edsOFF = UIColor.systemGreen
+let edsAlarm = UIColor.systemYellow

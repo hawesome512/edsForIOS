@@ -7,6 +7,7 @@
 //  Device水平范围指示条:init>items(addLabels)>value(updateMarker)
 
 import UIKit
+import RxSwift
 
 class DeviceRangeCell: UITableViewCell {
 
@@ -14,12 +15,13 @@ class DeviceRangeCell: UITableViewCell {
     private let lineWidth: CGFloat = 4
     private let horSpace: CGFloat = 20
     private let verSpace: CGFloat = 10
+    private let disposeBag = DisposeBag()
     private var labelSize = CGSize(width: 50, height: 20)
 
     // MARK: 外部设置
     //items格式：["0","green","10","yellow","20","red","30"]
     //cell在滚动时会频繁实例cell，判断count!=0时，不新增Label
-    var items: [String] = [] {
+    private var items: [String] = [] {
         didSet {
             if rangeLabels.count == 0 {
                 addRangeLabels()
@@ -27,7 +29,7 @@ class DeviceRangeCell: UITableViewCell {
         }
     }
 
-    var value: Float = 0 {
+    private var value: Float = 0 {
         didSet {
             valueRangeMaker.valueLabel.text = String(value)
             updateMarker()
@@ -36,6 +38,7 @@ class DeviceRangeCell: UITableViewCell {
 
     //items里坐标值：0，10，20，30……
     private var rangeLabels: [UILabel] = []
+    private var nameLabel = UILabel()
 
     private var valueRangeMaker: RangeMakerView = RangeMakerView()
 
@@ -50,8 +53,14 @@ class DeviceRangeCell: UITableViewCell {
         valueRangeMaker = RangeMakerView()
         valueRangeMaker.frame.size = size
         //游标置于范围条上方，间隔verSpace
-        valueRangeMaker.frame.origin = CGPoint(x: 0, y: verSpace)
+        valueRangeMaker.frame.origin = CGPoint(x: 0, y: verSpace * 2)
         addSubview(valueRangeMaker)
+
+        nameLabel.textColor = edsDefaultColor
+        nameLabel.font = UIFont.preferredFont(forTextStyle: .title3)
+        addSubview(nameLabel)
+        nameLabel.leadingToSuperview(offset: horSpace)
+        nameLabel.topToSuperview(offset: verSpace)
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -65,9 +74,13 @@ class DeviceRangeCell: UITableViewCell {
     }
 
     override func draw(_ rect: CGRect) {
+        //最少是一段（无意义）：start-color-end
+        guard items.count >= 3 else {
+            return
+        }
         //绘制多段范围条直线和更新坐标值位置
         let steps = (items.count - 1) / 2
-        var start = CGPoint(x: horSpace, y: rect.height * 0.6)
+        var start = CGPoint(x: horSpace, y: rect.height * 0.75)
         rangeLabels.first?.frame = CGRect(origin: start.offset(x: -labelSize.width / 2, y: verSpace), size: labelSize)
         for index in 1...steps {
             //n的终点为n+1的起点
@@ -119,6 +132,24 @@ class DeviceRangeCell: UITableViewCell {
         }
         return 1
     }
+
+}
+
+extension DeviceRangeCell: DevicePageItemSource {
+    func initViews(with pageItem: DevicePageItem, rx tags: [Tag], rowIndex: Int) {
+        nameLabel.text = pageItem.name.localize(with: prefixDevice)
+        if let items = pageItem.items {
+            self.items = items
+            tags[0].showValue.asObservable().throttle(.seconds(1), scheduler: MainScheduler.instance).subscribe(onNext: {
+                self.value = Float($0)
+            }).disposed(by: disposeBag)
+        }
+    }
+
+    func getNumerOfRows(with pageItem: DevicePageItem) -> Int {
+        return 1
+    }
+
 
 }
 

@@ -11,4 +11,6 @@ import UIKit
 
 //用null而不是nil,为了跟网络服务json中格式（edsservice）格式匹配,Tag/MQTTTag……
 let NIL="null"
+//本地化中跟设备相关的String，comment说明中➕前缀“device_
+let prefixDevice="device"
 

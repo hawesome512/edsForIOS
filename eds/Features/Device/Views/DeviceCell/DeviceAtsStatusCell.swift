@@ -7,6 +7,7 @@
 //  Device/ATS的工作状态指示:init>value(待完善）
 
 import UIKit
+import RxSwift
 
 class DeviceATSStatusCell: UITableViewCell {
 
@@ -17,6 +18,7 @@ class DeviceATSStatusCell: UITableViewCell {
     private let space: CGFloat = 10
     private let lineWidth: CGFloat = 2
     private let lineColor: UIColor = UIColor.black.withAlphaComponent(0.8)
+    private let disposeBag = DisposeBag()
 
     //5个状态指示灯，用字典存储，避免顺序混乱
     private lazy var statusValueViews: [ATSStatusViewType: UIView] = {
@@ -103,6 +105,38 @@ class DeviceATSStatusCell: UITableViewCell {
         addSubview(view)
         return view
     }
+
+}
+
+extension DeviceATSStatusCell: DevicePageItemSource {
+    func initViews(with pageItem: DevicePageItem, rx tags: [Tag], rowIndex: Int) {
+        tags[0].showValue.asObservable().throttle(.seconds(1), scheduler: MainScheduler.instance).subscribe(onNext: {
+            //e.g.:"1off(1on)/1normal(1fault)/2off(2on)/2normal(2fault)
+            let status = TagValueConverter.getText(value: $0, items: pageItem.items).text
+            let source1Fault = status.contains("1fault")
+            self.statusValueViews[.source1]?.backgroundColor = source1Fault ? edsAlarm : edsON
+            let source2Fault = status.contains("2fault")
+            self.statusValueViews[.source2]?.backgroundColor = source2Fault ? edsAlarm : edsON
+            if status.contains("1on") {
+                self.statusValueViews[.to1]?.backgroundColor = edsON
+                self.statusValueViews[.to2]?.backgroundColor = edsOFF
+                self.statusValueViews[.toOFF]?.backgroundColor = edsOFF
+            } else if status.contains("2on") {
+                self.statusValueViews[.to1]?.backgroundColor = edsOFF
+                self.statusValueViews[.to2]?.backgroundColor = edsON
+                self.statusValueViews[.toOFF]?.backgroundColor = edsOFF
+            } else {
+                self.statusValueViews[.to1]?.backgroundColor = edsOFF
+                self.statusValueViews[.to2]?.backgroundColor = edsOFF
+                self.statusValueViews[.toOFF]?.backgroundColor = edsON
+            }
+        }).disposed(by: disposeBag)
+    }
+
+    func getNumerOfRows(with pageItem: DevicePageItem) -> Int {
+        return 1
+    }
+
 
 }
 

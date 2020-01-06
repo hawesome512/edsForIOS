@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DeviceStaticCell: UITableViewCell {
+class DeviceFixedCell: UITableViewCell {
 
     private let space: CGFloat = 20
 

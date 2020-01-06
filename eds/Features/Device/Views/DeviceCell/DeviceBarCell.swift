@@ -8,23 +8,18 @@
 
 import UIKit
 import Charts
+import RxSwift
 
 class DeviceBarCell: UITableViewCell {
 
     private let space: CGFloat = 20
     private var barChartView: BarChartView!
-
-    //更新数据
-    var values: [Double] = [] {
-        didSet {
-            setData()
-        }
-    }
+    private let disposeBag = DisposeBag()
 
     fileprivate func initViews() {
         barChartView = BarChartView()
         addSubview(barChartView)
-        barChartView.edgesToSuperview(insets:.uniform(space))
+        barChartView.edgesToSuperview(insets: .uniform(space))
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -56,44 +51,47 @@ class DeviceBarCell: UITableViewCell {
     /// 设置样式
     /// - Parameters:
     ///   - xItems: 横坐标列表
-    ///   - yMax: 纵坐标最大值
-    ///   - yMin: 纵坐标最小值
-    ///   - yLabelCount: 纵坐标间隔数
-    ///   - yUpper: 警戒线
-    ///   - yLower: 警戒线
-    func setPreferredStyle(xItems: [String]? = ["A", "B", "C"], yMax: Double? = 120, yMin: Double? = 0, yLabelCount: Int? = 4, yUpper: Double?, yLower: Double?) {
+    ///   - yItems: e.g.:["0","green","50","red","100"]
+    private func setPreferredStyle(_ pageItem: DevicePageItem) {
+        let xItems = pageItem.tags
+        let yItems = pageItem.items
 
-        barChartView.xAxis.valueFormatter = BarAxisFormatter(items: xItems!)
-        barChartView.xAxis.labelCount = xItems!.count
+        barChartView.xAxis.valueFormatter = BarAxisFormatter(items: xItems)
+        barChartView.xAxis.labelCount = xItems.count
 
         let leftAxis = barChartView.leftAxis
         leftAxis.labelFont = UIFont.preferredFont(forTextStyle: .caption1)
-        leftAxis.labelCount = yLabelCount!
-        leftAxis.axisMaximum = yMax!
-        leftAxis.axisMinimum = yMin!
         leftAxis.drawLimitLinesBehindDataEnabled = true
-
-        if let upper = yUpper {
-            let upperLine = ChartLimitLine(limit: upper)
-            upperLine.lineColor = UIColor.systemRed
-            upperLine.lineDashLengths = [10, 10]
-            leftAxis.addLimitLine(upperLine)
-        }
-
-        if let lower = yLower {
-            let lowerLine = ChartLimitLine(limit: lower)
-            lowerLine.lineColor = UIColor.systemYellow
-            lowerLine.lineDashLengths = [10, 10]
-            lowerLine.lineWidth = 2
-            leftAxis.addLimitLine(lowerLine)
+        leftAxis.labelCount = 4
+        if let yItems = yItems, yItems.count > 0 {
+            leftAxis.axisMaximum = Double(yItems.last!) ?? 100
+            leftAxis.axisMinimum = Double(yItems.first!) ?? 0
+            for index in stride(from: 2, to: yItems.count - 1, by: 2) {
+                let line = ChartLimitLine(limit: Double(yItems[index]) ?? 0)
+                line.lineColor = UIColor(colorName: yItems[index + 1])
+                line.lineDashLengths = [10, 10]
+                leftAxis.addLimitLine(line)
+            }
+        } else {
+            //若未设置，y起始值将随着valus变动
+            leftAxis.axisMinimum = 0
         }
     }
 
-    private func setData() {
+
+    /// 更新数据
+    /// - Parameter values: <#values description#>
+    private func setData(values: [Double]) {
+        guard values.count > 0 else {
+            return
+        }
         //[values]->[(index,value)]
         let entries = values.enumerated().map {
             BarChartDataEntry(x: Double($0.offset), y: $0.element)
         }
+        //values太小时，若在柱状图下面绘制将遮挡xAxis的Labels
+        let drawValueAbove = values.max()! <= barChartView.leftAxis.axisMaximum * 0.3
+        barChartView.drawValueAboveBarEnabled = drawValueAbove
         if let set = barChartView.data?.dataSets.first as? BarChartDataSet {
             //更新
             set.replaceEntries(entries)
@@ -114,6 +112,28 @@ class DeviceBarCell: UITableViewCell {
 
 }
 
+extension DeviceBarCell: DevicePageItemSource {
+    func getNumerOfRows(with pageItem: DevicePageItem) -> Int {
+        return 1
+    }
+
+    func initViews(with pageItem: DevicePageItem, rx tags: [Tag], rowIndex: Int) {
+        setPreferredStyle(pageItem)
+        Observable.combineLatest(tags.map { $0.showValue.asObservable() }).throttle(.seconds(1), scheduler: MainScheduler.instance).subscribe(onNext: {
+            if let unit = pageItem.unit, tags.count > 0 {
+                //需换算，用百分比表示
+                let unitTag = TagUtility.sharedInstance.getRelatedTag(with: unit, related: tags[0])
+                let ratio = Double(unitTag?.Value ?? "1") ?? 1
+                self.setData(values: $0.map { value in
+                    return value / ratio * 100
+                })
+            } else {
+                self.setData(values: $0)
+            }
+        }).disposed(by: disposeBag)
+    }
+}
+
 class BarAxisFormatter: IAxisValueFormatter {
 
     var items: [String]
@@ -123,7 +143,7 @@ class BarAxisFormatter: IAxisValueFormatter {
     }
 
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-        return items[Int(value)]
+        return items[Int(value)].localize(with: prefixDevice)
     }
 
 }

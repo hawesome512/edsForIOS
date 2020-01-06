@@ -36,4 +36,11 @@ extension String {
         }
         return regex.stringByReplacingMatches(in: self, options: [], range: NSMakeRange(0, self.count), withTemplate: "\"\"")
     }
+
+
+    /// 本地化
+    /// - Parameter prefix: 前缀，e.g.：device_status
+    func localize(with prefix: String = "") -> String {
+        return NSLocalizedString(self, comment: prefix.isEmpty ? self : "\(prefix)_\(self)")
+    }
 }

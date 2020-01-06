@@ -13,7 +13,7 @@ class DeviceListViewController: UIViewController {
 
     private let tableView = UITableView()
     private let deviceNames = TagUtility.sharedInstance.getDeviceList()
-    private let cellType = DeviceCellType.DeviceDynamicCell
+    private let cellType = DeviceCellType.dynamic
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +24,7 @@ class DeviceListViewController: UIViewController {
         //再更新一次动态设备状态点
         updateDeviceStatus()
         //设定导航栏
-        title = NSLocalizedString("资产", comment: "Device List Title")
+        title = "property".localize()
         navigationController?.navigationBar.prefersLargeTitles = false
         //TableView
         tableView.register(DeviceDynamicCell.self, forCellReuseIdentifier: cellType.rawValue)
@@ -69,6 +69,10 @@ extension DeviceListViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let deviceViewController = DeviceViewController()
+        deviceViewController.deviceName = deviceNames[indexPath.row]
+        navigationController?.pushViewController(deviceViewController, animated: true)
+
         tableView.deselectRow(at: indexPath, animated: false)
     }
 

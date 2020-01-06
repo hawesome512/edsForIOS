@@ -28,8 +28,8 @@ class TagUtility: MQTTServiceDelegate {
 
     //MARK:通信>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-    //临时测试
-    private let tempAuthority = "xkb:xseec".toBase64()
+    //临时测试，public，其他页面（修改参数）也可以调用
+    public let tempAuthority = "xkb:xseec".toBase64()
     private let tempProjectID = "1/XKB"
     private let tempProject = "XKB"
 
@@ -95,11 +95,26 @@ class TagUtility: MQTTServiceDelegate {
         return tagList.filter { $0.Name.contains(deviceName) }
     }
 
+    /// 获取设备中的点列表（可空）
+    /// - Parameters:
+    ///   - tagNames: 点（短）名称：[Ia,Ib……]
+    ///   - device: 设备名:KB_A3_1
+    func getTagList(by tagNames: [String], in device: String) -> [Tag] {
+        //经过filter后已排除nil项，可以安全使用as!
+        return tagNames.map { name in
+            tagList.first { $0.Name == device + Tag.nameSeparator + name }
+        }.filter { $0 != nil } as! [Tag]
+    }
 
-    /// 获取点（可空）
-    /// - Parameter tagName: 点名称
-    func getTag(by tagName: String) -> Tag? {
-        return tagList.first { $0.Name == tagName }
+
+    /// 根据点名称，获取关联点（related)所属设备中的点
+    /// - Parameters:
+    ///   - tagName: 点名称
+    ///   - tag: 关联点
+    func getRelatedTag(with tagName: String, related tag: Tag) -> Tag? {
+        //tag.Name:KB_A3_1:Ia
+        let device = tag.Name.components(separatedBy: Tag.nameSeparator)[0]
+        return tagList.first { $0.Name == device + Tag.nameSeparator + tagName }
     }
 
     //MARK:私有方法>>>>>>>>>>>>>>>>>>>>>>>>>>>

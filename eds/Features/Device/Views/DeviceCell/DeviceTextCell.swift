@@ -7,14 +7,17 @@
 //  Deviced文字显示（状态背景渐变）：init>backgroundGradientColor>valueLabel
 
 import UIKit
+import RxCocoa
+import RxSwift
 
 class DeviceTextCell: UITableViewCell {
 
     private let space: CGFloat = 20
-
-    var valueLabel = UILabel()
-
-    var backgroundGradientColor: UIColor? {
+    private let disposeBag = DisposeBag()
+    private var valueLabel = UILabel()
+    //横向渐变背景，需在draw(_:)设定frame
+    private var gradientLayer = CAGradientLayer()
+    private var backgroundGradientColor: UIColor? {
         didSet {
             if let color = backgroundGradientColor {
                 //当添加背景色时，文本颜色变为白色更直观
@@ -24,12 +27,10 @@ class DeviceTextCell: UITableViewCell {
         }
     }
 
-    private var gradientLayer = CAGradientLayer()
-
     fileprivate func initViews() {
+
         //自适应字体大小
-        valueLabel.font = valueLabel.font.withSize(80)
-        valueLabel.text = "100"
+        valueLabel.font = valueLabel.font.withSize(100)
         valueLabel.adjustsFontSizeToFitWidth = true
         valueLabel.textAlignment = .center
         valueLabel.numberOfLines = 1
@@ -61,5 +62,22 @@ class DeviceTextCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+}
+
+extension DeviceTextCell: DevicePageItemSource {
+    func getNumerOfRows(with pageItem: DevicePageItem) -> Int {
+        return 1
+    }
+
+    func initViews(with pageItem: DevicePageItem, rx tags: [Tag], rowIndex: Int) {
+        if let tag = tags.first {
+            tag.showValue.asObservable().throttle(.seconds(1), scheduler: MainScheduler.instance).subscribe(onNext: { value in
+                let status = TagValueConverter.getText(value: value, items: pageItem.items)
+                //文本，背景横向渐变
+                self.valueLabel.text = status.text
+                self.backgroundGradientColor = status.status?.getStatusColor()
+            }).disposed(by: disposeBag)
+        }
+    }
 }
 

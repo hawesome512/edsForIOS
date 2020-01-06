@@ -23,16 +23,16 @@ class DeviceHeaderView: UIView {
         backgroundColor = .white
         imageView.contentMode = .scaleAspectFit
         addSubview(imageView)
-        imageView.edgesToSuperview()
+        imageView.edgesToSuperview(insets: .top(20))
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func draw(_ rect: CGRect) {
+    override func layoutSubviews() {
         //渐变层需要约束frame
-        cornerGradientLayer.frame = rect
+        cornerGradientLayer.frame = bounds
     }
 
 }

@@ -75,27 +75,11 @@ struct DevicePageItem: HandyJSON {
     //关联点列表
     var tags: [String] = [String]()
     //显示方式，nil搜索自定义or不显示
-    var display: DeviceDisplay?
+    var display = ""
     //附带参数
     var items: [String]?
     //换算单位
     var unit: String?
-}
-
-//与显示类型相对应的tablecell_id为：device_display,e.g.:device_bar
-enum DeviceDisplay: String, HandyJSONEnum {
-    //柱状图，对应的items为坐标范围
-    case bar
-    //可调参数，对应的items为步进
-    case item
-    //普通列表显示
-    case list
-    //水平指示，对应items为坐标范围
-    case range
-    //开关，对应items为开关index位
-    case onoff
-    //大标题文本显示
-    case text
-    //按钮*n
-    case button
+    //是否显示Section标题
+    var section: String?
 }

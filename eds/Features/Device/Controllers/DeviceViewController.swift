@@ -8,6 +8,7 @@
 
 import UIKit
 import Parchment
+import TinyConstraints
 
 class DeviceViewController: UIViewController, DevicePageScrollDelegate {
 
@@ -15,6 +16,8 @@ class DeviceViewController: UIViewController, DevicePageScrollDelegate {
     private var navigationBar: UINavigationBar?
     //头图↕️偏移当约束
     private var headerViewTopConstraint: NSLayoutConstraint?
+
+    private var pages: [DevicePage] = []
 
     var deviceName: String = "" {
         didSet {
@@ -30,10 +33,8 @@ class DeviceViewController: UIViewController, DevicePageScrollDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-    }
-
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        navigationController?.navigationBar.prefersLargeTitles = traitCollection.horizontalSizeClass == .regular
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.subviews.first?.alpha = 0
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -60,18 +61,20 @@ class DeviceViewController: UIViewController, DevicePageScrollDelegate {
 
         //添加Page View Controller
         if let deviceType = TagUtility.getDeviceType(with: deviceName) {
-            let pageVCs = DeviceModel.sharedInstance?.types.first(where: { $0.type == deviceType })?.pages.map { page -> DevicePageTableViewController in
-                let pageVC = DevicePageTableViewController()
-                pageVC.pageModel = page
-                pageVC.scrollDelegate = self
-                return pageVC
-            }
-            //Parchment
-            let pagingVC = FixedPagingViewController(viewControllers: pageVCs!)
-            addChild(pagingVC)
-            containerView.addSubview(pagingVC.view)
-            pagingVC.didMove(toParent: self)
-            pagingVC.view.edgesToSuperview()
+            //Icon类型的Menu Item
+            pages = DeviceModel.sharedInstance?.types.first(where: { $0.type == deviceType })?.pages ?? []
+            let pagingViewController = PagingViewController<IconItem>()
+            pagingViewController.dataSource = self
+            pagingViewController.menuItemSource = .class(type: IconPagingCell.self)
+            //均分window.width
+            pagingViewController.menuItemSize = .sizeToFit(minWidth: 100, height: 60)
+            //活跃页颜色
+            pagingViewController.indicatorColor = .systemRed
+
+            addChild(pagingViewController)
+            pagingViewController.didMove(toParent: self)
+            containerView.addSubview(pagingViewController.view)
+            pagingViewController.view.edgesToSuperview()
         }
     }
 
@@ -87,7 +90,7 @@ class DeviceViewController: UIViewController, DevicePageScrollDelegate {
 
         headerView.layoutIfNeeded()
         navigationController?.navigationBar.prefersLargeTitles = offset < maxOffset / 2
-        //navigationController?.navigationBar.subviews.first?.alpha = offset / maxOffset
+        navigationController?.navigationBar.subviews.first?.alpha = offset / maxOffset
     }
 
     private func calStatusAndNavBarHeight() -> CGFloat {
@@ -95,6 +98,27 @@ class DeviceViewController: UIViewController, DevicePageScrollDelegate {
         let statusHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
         let navHeight = navigationController?.navigationBar.frame.height ?? 0
         return statusHeight + navHeight
+    }
+
+}
+
+// MARK: -Paging View Controller DataSource
+extension DeviceViewController: PagingViewControllerDataSource {
+
+    func pagingViewController<T>(_ pagingViewController: PagingViewController<T>, viewControllerForIndex index: Int) -> UIViewController {
+        let pageVC = DevicePageTableViewController()
+        pageVC.set(with: pages[index], in: deviceName)
+        pageVC.scrollDelegate = self
+        return pageVC
+    }
+
+    func pagingViewController<T>(_ pagingViewController: PagingViewController<T>, pagingItemForIndex index: Int) -> T {
+        let icon = "device_\(pages[index].title)"
+        return IconItem(icon: icon, index: index) as! T
+    }
+
+    func numberOfViewControllers<T>(in: PagingViewController<T>) -> Int {
+        return pages.count
     }
 
 }

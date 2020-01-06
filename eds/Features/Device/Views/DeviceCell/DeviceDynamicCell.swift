@@ -18,7 +18,7 @@ class DeviceDynamicCell: UITableViewCell {
     private let deviceImageView = UIImageView()
     private let nameLabel = UILabel()
     private let infoLabel = UILabel()
-    private let statusView = UIView()
+    private let statusView = UILabel()
 
     private let disposeBag = DisposeBag()
 
@@ -27,7 +27,6 @@ class DeviceDynamicCell: UITableViewCell {
             if let deviceName = deviceName {
                 deviceImageView.image = TagUtility.getDeviceIcon(with: deviceName)
                 nameLabel.text = deviceName
-//                infoLabel.text=
                 setStatus(with: deviceName)
             }
         }
@@ -37,13 +36,14 @@ class DeviceDynamicCell: UITableViewCell {
         let deviceType = TagUtility.getDeviceType(with: deviceName)
         if let deviceModel = DeviceModel.sharedInstance?.types.first(where: { $0.type == deviceType }) {
             //tag全名：RD_A3_1:Ia
-            let tagName = deviceModel.status.tag
-            let tag = TagUtility.sharedInstance.getTag(by: deviceName + Tag.nameSeparator + tagName)
+            let tag = TagUtility.sharedInstance.getTagList(by: [deviceModel.status.tag], in: deviceName).first
             tag?.showValue.asObservable().throttle(.seconds(1), scheduler: MainScheduler.instance).subscribe(onNext: { showValue in
-                if let showValue = showValue, let items = deviceModel.status.items {
-                    if let status = TagValueConverter.getStatus(value: showValue, items: items) {
-                        self.statusView.backgroundColor = status.getStatusColor()
-                    }
+                if let status = TagValueConverter.getText(value: showValue, items: deviceModel.status.items).status {
+                    self.statusView.backgroundColor = status.getStatusColor()
+                    let text = status.getStatusText().localize(with: prefixDevice)
+                    //圆角Label,text应当适当缩进，简易处理：在text前后添加空格，使lable.width变大
+                    self.statusView.text = "  \(text)  "
+
                 }
             }).disposed(by: disposeBag)
         }
@@ -63,10 +63,10 @@ class DeviceDynamicCell: UITableViewCell {
         nameLabel.font = UIFont.preferredFont(forTextStyle: .headline)
         addSubview(nameLabel)
         nameLabel.topToSuperview(offset: space)
-        nameLabel.leadingToTrailing(of: deviceImageView)
+        nameLabel.leadingToTrailing(of: deviceImageView, offset: space)
         nameLabel.height(to: deviceImageView, multiplier: 0.5)
 
-        infoLabel.text = NSLocalizedString("编辑资产基本信息", comment: "device_info_default")
+        infoLabel.text = NSLocalizedString("edit basic info here.", comment: "device_info_default")
         infoLabel.font = UIFont.preferredFont(forTextStyle: .body)
         infoLabel.textColor = .systemGray
         addSubview(infoLabel)
@@ -74,13 +74,15 @@ class DeviceDynamicCell: UITableViewCell {
         infoLabel.leadingToTrailing(of: deviceImageView, offset: space)
         infoLabel.trailingToSuperview(offset: space)
 
+        //圆角
         statusView.layer.cornerRadius = size / 2
         statusView.clipsToBounds = true
+        statusView.textColor = .white
+        statusView.numberOfLines = 1
         addSubview(statusView)
-        statusView.width(size)
         statusView.height(size)
         statusView.centerY(to: nameLabel)
-        statusView.leadingToTrailing(of: nameLabel)
+        statusView.leadingToTrailing(of: nameLabel, offset: space)
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
