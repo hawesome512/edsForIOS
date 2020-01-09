@@ -41,10 +41,8 @@ class ViewController: UIViewController {
         button.setTitle("Execute", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.rx.tap.bind(onNext: {
-
             //跳转设备列表
             let deviceListVC = DeviceListViewController()
-//            deviceListVC.deviceName = "KB_M2_3"
             self.navigationController?.pushViewController(deviceListVC, animated: true)
 
         }).disposed(by: disposeBag)

@@ -36,9 +36,9 @@ struct IconItem: PagingItem, Hashable, Comparable {
     }
 
     //Parchment规定PagingItem必须实现hashable,comparable
-    var hashValue: Int {
-        return icon.hashValue
-    }
+//    var hashValue: Int {
+//        return icon.hashValue
+//    }
 
     static func < (lhs: IconItem, rhs: IconItem) -> Bool {
         return lhs.index < rhs.index

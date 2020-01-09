@@ -14,3 +14,8 @@ let edsDivideColor = UIColor.systemGray.withAlphaComponent(0.1)
 let edsON = UIColor.systemRed
 let edsOFF = UIColor.systemGreen
 let edsAlarm = UIColor.systemYellow
+let edsGrayColor = UIColor.systemGray
+
+
+//标准间距
+let edsSpace: CGFloat = 20

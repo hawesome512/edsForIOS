@@ -23,9 +23,7 @@ class Tag: HandyJSON {
     var Value: String? {
         didSet {
             //发布Value更新，通知相应的ui观察者
-            if let value = Value {
-                showValue.accept(Double(value) ?? Tag.nilValue)
-            }
+            showValue.accept(getValue())
         }
     }
 
@@ -42,6 +40,13 @@ class Tag: HandyJSON {
     init(name: String, value: String) {
         Name = name
         Value = value
+    }
+
+    func getValue() -> Double {
+        if let value = Value, let doubleValue = Double(value) {
+            return doubleValue
+        }
+        return Tag.nilValue
     }
 
 

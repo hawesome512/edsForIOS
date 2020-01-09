@@ -1,5 +1,10 @@
-/* property */
+/* device_property */
 "property" = "资产";
+/* device_updating */
+"updating" = "正在修改";
+/* device_update */
+"update" = "修改参数";
+
 
 /* device_normal */
 "normal" = "正常";
@@ -105,16 +110,16 @@
 "instant_protect" = "瞬时";
 /* device_Isd_switch */
 "Isd_switch" = "保护功能";
-/* device_Tsd_switch*/
-"Tsd_switch" = "I2t";
 /* device_Ii_switch */
 "Ii_switch" = "保护功能";
 /* device_ground_protect */
 "ground_protect" = "接地保护";
 /* device_Ig_switch */
 "Ig_switch" = "保护功能";
-/* device_Tg_switch */
-"Tg_switch" = "I2t";
+/* device_I2t_on */
+"I2t_on" = "反时限";
+/* device_I2t_off */
+"I2t_off" = "定时限";
 
 
 /* device_current_ratio */
@@ -170,8 +175,16 @@
 "setting" = "设置";
 /* device_switch_mode */
 "switch_mode" = "转换模式";
+/* device_switch_mode_off */
+"switch_mode_off" = "自投不自复";
+/* device_switch_mode_on */
+"switch_mode_on" = "自投自复";
 /* device_operator_mode */
 "operator_mode" = "操作方式";
+/* device_operator_mode_off */
+"operator_mode_off" = "自动";
+/* device_operator_mode_on */
+"operator_mode_on" = "手动";
 /* device_ct_ratio */
 "CT" = "CT变比(5A)";
 

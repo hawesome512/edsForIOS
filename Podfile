@@ -16,5 +16,5 @@ target 'eds' do
   pod 'CocoaMQTT'
   pod 'Parchment'
   pod 'TinyConstraints'
-
+  pod 'HGCircularSlider'
 end

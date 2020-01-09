@@ -43,4 +43,15 @@ extension String {
     func localize(with prefix: String = "") -> String {
         return NSLocalizedString(self, comment: prefix.isEmpty ? self : "\(prefix)_\(self)")
     }
+
+    /// Name带单位时格式化文本，单位：灰色
+    /// - Parameter input: Ir(xIn)
+    func formatNameAndUnit() -> NSAttributedString {
+        if let index = self.firstIndex(of: "(") {
+            let attrStr = NSMutableAttributedString(string: self.prefix(upTo: index).description, attributes: [NSAttributedString.Key.foregroundColor: edsDefaultColor])
+            attrStr.append(NSAttributedString(string: self.suffix(from: index).description, attributes: [NSAttributedString.Key.foregroundColor: edsGrayColor]))
+            return attrStr
+        }
+        return NSAttributedString(string: self, attributes: [NSAttributedString.Key.foregroundColor: edsDefaultColor])
+    }
 }

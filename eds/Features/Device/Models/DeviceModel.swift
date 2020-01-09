@@ -17,7 +17,7 @@ struct DeviceModel: HandyJSON {
     static let itemInfoSeparator = "/"
     //items中空的项，忽略
     static let itemNil = ""
-    //items中首项为*，表示等差范围数列
+    //items中首项为*，表示等差范围数列,尽管数列item可能非常多（上千个）但app中只做粗调，尽量将step步进设大
     static let itemStepArray = "*"
 
     static let sharedInstance: DeviceModel? = {

@@ -16,6 +16,7 @@ class DeviceOnOffCell: UITableViewCell {
 
     private var nameLabel = UILabel()
     private var valueSwitch = UISwitch()
+    private var extraLabel = UILabel()
     private let disposeBag = DisposeBag()
 
     fileprivate func initViews() {
@@ -31,6 +32,11 @@ class DeviceOnOffCell: UITableViewCell {
         addSubview(valueSwitch)
         valueSwitch.centerYToSuperview()
         valueSwitch.trailingToSuperview(offset: space)
+
+        extraLabel.textColor = .systemGray
+        addSubview(extraLabel)
+        extraLabel.trailingToLeading(of: valueSwitch, offset: -space)
+        extraLabel.verticalToSuperview()
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -57,13 +63,25 @@ extension DeviceOnOffCell: DevicePageItemSource {
             nameLabel.text = pageItem.name.localize(with: prefixDevice)
 
             tag.showValue.asObservable().throttle(.seconds(1), scheduler: MainScheduler.instance).subscribe(onNext: {
-                self.valueSwitch.isOn = TagValueConverter.getSwitch(value: $0, items: pageItem.items)
+                let isOn = TagValueConverter.getSwitch(value: $0, items: pageItem.items)
+                self.valueSwitch.isOn = isOn
+                if let item = pageItem.items?.first, item.contains(DeviceModel.itemInfoSeparator) {
+                    let infos = item.components(separatedBy: DeviceModel.itemInfoSeparator)
+                    //["1/false/true"]
+                    if infos.count == 3 {
+                        self.extraLabel.text = "\(pageItem.name)_\(isOn ? infos[2] : infos[1])".localize(with: prefixDevice)
+                        return
+                    }
+                }
+                self.extraLabel.text = nil
             }).disposed(by: disposeBag)
 
             valueSwitch.rx.controlEvent(.valueChanged).throttle(.seconds(1), scheduler: MainScheduler.instance).withLatestFrom(valueSwitch.rx.value).subscribe(onNext: {
                 if let newValue = TagValueConverter.setSwitch(tagValue: tag.Value, isOn: $0, items: pageItem.items) {
-                    tag.Value = newValue
-                    MoyaProvider<WAService>().request(.setTagValues(authority: TagUtility.sharedInstance.tempAuthority, tagList: [tag])) { result in
+                    self.extraLabel.text = "updating".localize(with: prefixDevice)
+                    //tag.Value = newValue,直接赋值，value将直接显示在extraLabel中不表示真实的后台修改值
+                    let newTag = Tag(name: tag.Name, value: newValue)
+                    MoyaProvider<WAService>().request(.setTagValues(authority: TagUtility.sharedInstance.tempAuthority, tagList: [newTag])) { result in
                         switch result {
                         case .success(let response):
                             print(JsonUtility.didSettedValues(data: response.data))

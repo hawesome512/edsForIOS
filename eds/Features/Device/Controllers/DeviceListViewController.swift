@@ -24,7 +24,7 @@ class DeviceListViewController: UIViewController {
         //再更新一次动态设备状态点
         updateDeviceStatus()
         //设定导航栏
-        title = "property".localize()
+        title = "property".localize(with: prefixDevice)
         navigationController?.navigationBar.prefersLargeTitles = false
         //TableView
         tableView.register(DeviceDynamicCell.self, forCellReuseIdentifier: cellType.rawValue)

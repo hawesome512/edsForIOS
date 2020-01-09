@@ -88,9 +88,9 @@ class TagValueConverter {
     /// 判断开关位是否为on（1）
     /// - Parameters:
     ///   - value: 点值
-    ///   - items: ["0"]
+    ///   - items: ["0/off/on"]，其中off/on为可选，方便定制显示
     static func getSwitch(value: Double, items: [String]?) -> Bool {
-        if let items = items, items.count > 0, let intIndex = Int(items[0]) {
+        if let intIndex = getFirstInt(from: items) {
             let intValue = Int(value)
             //防止pow(x,y)👉decimal，2^n，使pow(double,double)
             let flag = intPow(x: 2, y: intIndex)
@@ -101,11 +101,10 @@ class TagValueConverter {
     }
 
     static func setSwitch(tagValue: String?, isOn: Bool, items: [String]?) -> String? {
-        if let tagValue = tagValue, let dValue = Double(tagValue), let index = items?.first, let intIndex = Int(index) {
+        if let tagValue = tagValue, let dValue = Double(tagValue), let intIndex = getFirstInt(from: items) {
             let intValue = Int(dValue)
             if isOn {
                 //或运算2^n，将标志位置1
-                print("\(intValue),\(intPow(x: 2, y: intIndex))")
                 return String(intValue | intPow(x: 2, y: intIndex))
             } else {
                 //与运算2^16-1-2^n，将标志位置0，开关位两个字节，最多16位,e.g.:n=3👉0x1111 0111
@@ -113,6 +112,16 @@ class TagValueConverter {
             }
         }
         return nil
+    }
+
+
+    /// 获取items中首项整数
+    /// - Parameter items: ["0/false/true"]
+    private static func getFirstInt(from items: [String]?) -> Int? {
+        guard let item = items?.first else {
+            return nil
+        }
+        return Int(item.components(separatedBy: DeviceModel.itemInfoSeparator)[0])
     }
 
     private static func intPow(x: Int, y: Int) -> Int {

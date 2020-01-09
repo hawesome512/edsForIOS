@@ -19,6 +19,7 @@ class DeviceListCell: UITableViewCell {
     private var valueLabel = UILabel()
     //计算行数时需要使用到pageItem
     private var pageItem: DevicePageItem?
+    private var listTag: Tag?
 
     fileprivate func initViews() {
         //cell右边icon样式“>"
@@ -50,10 +51,21 @@ class DeviceListCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        if selected && isItemCell() {
+            let itemMeterViewController = UIStoryboard(name: "Device", bundle: nil).instantiateViewController(withIdentifier: String(describing: DeviceItemMeterViewController.self)) as! DeviceItemMeterViewController
+            itemMeterViewController.initViews(with: pageItem!, tag: listTag!)
+            //导航的方式打开新vc
+            (self.window?.rootViewController as? UINavigationController)?.pushViewController(itemMeterViewController, animated: true)
+        }
     }
 
+    //判断Cell是否为Item Cell
+    private func isItemCell() -> Bool {
+        guard let display = pageItem?.display, DeviceCellType(rawValue: display) == .item else {
+            return false
+        }
+        return true
+    }
 }
 
 extension DeviceListCell: DevicePageItemSource {
@@ -63,12 +75,14 @@ extension DeviceListCell: DevicePageItemSource {
 
     func initViews(with pageItem: DevicePageItem, rx tags: [Tag], rowIndex: Int) {
         let tag = tags[rowIndex]
+        self.pageItem = pageItem
+        listTag = tag
         //默认使用pageItem.name(更方便自定义，如ACB的Ir(A)与MCCB的Ir(In)显示不同
         let name = tags.count == 1 ? pageItem.name : tag.getTagShortName()
-        nameLabel.text = name.localize(with: prefixDevice)
+        nameLabel.attributedText = name.localize(with: prefixDevice).formatNameAndUnit()
         tag.showValue.asObservable().throttle(.seconds(1), scheduler: MainScheduler.instance).subscribe(onNext: {
             var value = $0.clean
-            //items有值时，显示固定转换值，items里包含转换信息
+            //List模式时：items有值时，显示固定转换值，items里包含转换信息
             if let items = pageItem.items, DeviceCellType(rawValue: pageItem.display) == .list {
                 value = TagValueConverter.getFixedText(value: $0, items: items).localize(with: prefixDevice)
             }
