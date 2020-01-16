@@ -27,6 +27,8 @@ class DevicePageTableViewController: UITableViewController {
 
     private var pageModel: DevicePage?
     private var deviceName = ""
+    //在需密码权限的设备中，用于记录是否已经验证过了，避免重复动作
+    private var hasVarified = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,12 +42,27 @@ class DevicePageTableViewController: UITableViewController {
         return pageModel?.content.count ?? 0
     }
 
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    //自定义Section Header View:更大的尺寸，更浅的背景
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let pageItem = pageModel!.content[section]
         if let section = pageItem.section {
-            return section.localize(with: prefixDevice)
+            let view = UIView()
+            let label = UILabel()
+            view.backgroundColor = edsDivideColor
+            label.text = section.localize(with: prefixDevice)
+            view.addSubview(label)
+            label.edgesToSuperview(insets: .uniform(10))
+            return view
         } else {
             return nil
+        }
+    }
+
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if let _ = pageModel!.content[section].section {
+            return 40
+        } else {
+            return 0
         }
     }
 
@@ -78,8 +95,6 @@ class DevicePageTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-
         tableView.deselectRow(at: indexPath, animated: false)
     }
 

@@ -149,4 +149,11 @@ class TagUtility: MQTTServiceDelegate {
         let infos = name.components(separatedBy: Tag.deviceSeparator)
         return infos.count == 3 ? infos[1] : nil
     }
+
+    /// 获取设备名String
+    /// - Parameter name: 设备or点名称
+    static func getDeviceName(with name: String) -> String? {
+        let infos = name.components(separatedBy: Tag.nameSeparator)
+        return infos.count == 2 ? infos[0] : nil
+    }
 }

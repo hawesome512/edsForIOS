@@ -28,7 +28,8 @@ class DeviceItemMeterViewController: UIViewController {
         initDefaultViews()
     }
 
-    func initViews(with pageItem: DevicePageItem, tag: Tag) {
+    func initViews(with pageItem: DevicePageItem, tag: Tag, authority: AuthorityResult) {
+
         guard var items = pageItem.items, items.count > 0 else {
             return
         }
@@ -101,6 +102,15 @@ class DeviceItemMeterViewController: UIViewController {
                 }
             }
         }).disposed(by: disposeBag)
+        
+        switch authority {
+        case .granted:
+            break
+        default:
+            authorityLabel.text = authority.rawValue.localize(with: prefixTrend)
+            updateButton.isEnabled = false
+            circularSlider.isEnabled = false
+        }
 
     }
 

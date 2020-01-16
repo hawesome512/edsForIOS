@@ -25,7 +25,9 @@ class DeviceDynamicCell: UITableViewCell {
     public var deviceName: String? {
         didSet {
             if let deviceName = deviceName {
-                deviceImageView.image = TagUtility.getDeviceIcon(with: deviceName)
+                if let image = TagUtility.getDeviceIcon(with: deviceName) {
+                    deviceImageView.image = image
+                }
                 nameLabel.text = deviceName
                 setStatus(with: deviceName)
             }

@@ -14,7 +14,7 @@ enum WAService {
     case getTagList(authority: String, projectID: String) //获取工程“监控点”集合
     case getTagValues(authority: String, tagList: [Tag]) //获取“监控点”的值
     case setTagValues(authority: String, tagList: [Tag]) //修改“监控点”点值
-    case getTagLog(authority: String, requestBody: WATagLogRequestBody) //获取“监控点”历史记录
+    case getTagLog(authority: String, condition: WATagLogRequestCondition) //获取“监控点”历史记录
 
 }
 
@@ -64,8 +64,8 @@ extension WAService: TargetType {
         case .getTagValues(_, let tagList), .setTagValues(_, let tagList):
             //在Reque body中以json格式传参数，tagList.toJSON()；此处尤为需要注意不能使用toJSONString(),因为它会在最外层加字符串双引号
             return .requestParameters(parameters: ["Tags": tagList.toJSON()], encoding: JSONEncoding.default)
-        case .getTagLog(_, let requestBody):
-            return .requestParameters(parameters: requestBody.toJSON()!, encoding: JSONEncoding.default)
+        case .getTagLog(_, let condition):
+            return .requestParameters(parameters: condition.toJSON()!, encoding: JSONEncoding.default)
         }
     }
 

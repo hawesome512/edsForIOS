@@ -10,12 +10,13 @@ import Foundation
 import UIKit
 
 let edsDefaultColor = UIColor.systemBlue
-let edsDivideColor = UIColor.systemGray.withAlphaComponent(0.1)
+let edsDivideColor = UIColor.systemGray6
 let edsON = UIColor.systemRed
 let edsOFF = UIColor.systemGreen
 let edsAlarm = UIColor.systemYellow
 let edsGrayColor = UIColor.systemGray
 
 
-//标准间距
+//标准间距,水平20，竖直10
 let edsSpace: CGFloat = 20
+let edsVerSpace: CGFloat = 10

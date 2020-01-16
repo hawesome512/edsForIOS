@@ -13,5 +13,7 @@ import UIKit
 let NIL = "null"
 //本地化中跟设备相关的String，comment说明中➕前缀“device_
 let prefixDevice = "device"
+//本地化跟趋势分析相关的String……
+let prefixTrend = "trend"
 
 

@@ -17,4 +17,5 @@ target 'eds' do
   pod 'Parchment'
   pod 'TinyConstraints'
   pod 'HGCircularSlider'
+  pod 'SwiftDate'
 end

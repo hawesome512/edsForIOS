@@ -60,9 +60,10 @@ class DeviceViewController: UIViewController, DevicePageScrollDelegate {
         containerView.topToBottom(of: headerView)
 
         //添加Page View Controller
-        if let deviceType = TagUtility.getDeviceType(with: deviceName) {
+        if let type = TagUtility.getDeviceType(with: deviceName) {
+            let deviceType = DeviceModel.sharedInstance?.types.first(where: { $0.type == type })
             //Icon类型的Menu Item
-            pages = DeviceModel.sharedInstance?.types.first(where: { $0.type == deviceType })?.pages ?? []
+            pages = deviceType?.pages ?? []
             let pagingViewController = PagingViewController<IconItem>()
             pagingViewController.dataSource = self
             pagingViewController.menuItemSource = .class(type: IconPagingCell.self)
@@ -83,7 +84,7 @@ class DeviceViewController: UIViewController, DevicePageScrollDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
 
         //动画：tableview往上滚动👉头图偏移往上👉title大>小👉导航栏透明>不透明
-        let maxOffset = headerView.frame.height - calStatusAndNavBarHeight()
+        let maxOffset = headerView.frame.height - ViewUtility.calStatusAndNavBarHeight(in: self)
         var offset = min(maxOffset, scrollView.contentOffset.y)
         offset = max(0, offset)
         headerViewTopConstraint?.constant = -offset
@@ -91,13 +92,6 @@ class DeviceViewController: UIViewController, DevicePageScrollDelegate {
         headerView.layoutIfNeeded()
         navigationController?.navigationBar.prefersLargeTitles = offset < maxOffset / 2
         navigationController?.navigationBar.subviews.first?.alpha = offset / maxOffset
-    }
-
-    private func calStatusAndNavBarHeight() -> CGFloat {
-
-        let statusHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
-        let navHeight = navigationController?.navigationBar.frame.height ?? 0
-        return statusHeight + navHeight
     }
 
 }

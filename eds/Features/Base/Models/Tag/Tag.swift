@@ -15,8 +15,8 @@ class Tag: HandyJSON {
     //分隔符，工程编码_设备类型_编号:Ia
     static let deviceSeparator = "_"
     static let nameSeparator = ":"
-    //通信失败时用-1表示
-    static let nilValue: Double = -1
+    //通信失败时用-1表示,多精读避免碰到刚好为-1的值
+    static let nilValue: Double = -1.000123
 
     //Name和Value未采用Swift语法～小驼峰命名，是为了方便HandyJSON将Tag转化为符合WA的Json格式
     var Name: String = NIL

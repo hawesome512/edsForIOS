@@ -15,6 +15,7 @@ class DeviceButtonCell: UITableViewCell {
     private let space: CGFloat = 20
     private var buttons = [UIButton]()
     private let disposeBag = DisposeBag()
+    private var buttonTag = Tag()
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -24,7 +25,8 @@ class DeviceButtonCell: UITableViewCell {
 
 }
 
-extension DeviceButtonCell: DevicePageItemSource {
+extension DeviceButtonCell: DevicePageItemSource, PasswordVerifyDelegate {
+
     func getNumerOfRows(with pageItem: DevicePageItem) -> Int {
         return 1
     }
@@ -40,20 +42,22 @@ extension DeviceButtonCell: DevicePageItemSource {
                     button.tintColor = UIColor.white
                     button.setTitle(infos[0], for: .normal)
                     button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .largeTitle)
-                    button.rx.tap.asObservable().throttle(.seconds(1), scheduler: MainScheduler.instance).subscribe({ _ in
-                        //发送指令：0xAAAA/0x5555,json中已配置为十进制
-                        tags[0].Value = infos[1]
-                        MoyaProvider<WAService>().request(.setTagValues(authority: TagUtility.sharedInstance.tempAuthority, tagList: tags)) { result in
-                            switch result {
-                            case .success(let response):
-                                print(String(format: "Update %s value: %b", tags[0].Name, JsonUtility.didSettedValues(data: response.data)))
-                            default:
-                                break
-                            }
-                        }
-                    }).disposed(by: disposeBag)
                     addSubview(button)
                     buttons.append(button)
+                    button.rx.tap.asObservable().throttle(.seconds(1), scheduler: MainScheduler.instance).subscribe({ _ in
+
+                        //------------特殊处理-----------------
+                        //XS遗留的问题，原先远程控制位0x5000只写，网关采集失败造成farCtrl点通讯无效，后来一些设备修改0x5000为可读可写
+                        //但还是存在某些设备0x5000只写，为保证其通讯流程性，在云平台+网关设备点列表中移除farCtrl点，以至于在TagList中找不到控制点
+                        var authorityResult: AuthorityResult = .localLocked
+                        if tags.count != 0 {
+                            //发送指令：0xAAAA/0x5555,json中已配置为十进制
+                            self.buttonTag = Tag(name: tags[0].Name, value: infos[1])
+                            authorityResult = VerifyUtility.verify(tag: tags[0], in: self)
+                        }
+                        self.showVerifiedMessage(authority: authorityResult)
+
+                    }).disposed(by: disposeBag)
                 }
             }
             //Add Constraints
@@ -73,6 +77,30 @@ extension DeviceButtonCell: DevicePageItemSource {
                     button.leadingToTrailing(of: buttons[index - 1], offset: space)
                 }
             }
+        }
+    }
+
+    //远程控制，每次都必须验证
+    func passwordVerified() {
+        MoyaProvider<WAService>().request(.setTagValues(authority: TagUtility.sharedInstance.tempAuthority, tagList: [buttonTag])) { result in
+            switch result {
+            case .success(let response):
+                print(String(format: "Update %s value: %b", self.buttonTag.Name, JsonUtility.didSettedValues(data: response.data)))
+            default:
+                break
+            }
+        }
+    }
+
+    func showVerifiedMessage(authority: AuthorityResult) {
+        switch authority {
+        case .localLocked, .userLocked:
+            let alertController = UIAlertController(title: "denied".localize(with: prefixDevice), message: authority.rawValue.localize(with: prefixDevice), preferredStyle: .alert)
+            let cancel = UIAlertAction(title: NSLocalizedString("ok", comment: "ok"), style: .cancel, handler: nil)
+            alertController.addAction(cancel)
+            window?.rootViewController?.present(alertController, animated: true, completion: nil)
+        default:
+            break
         }
     }
 

@@ -1,9 +1,43 @@
+/* ok */
+"ok" = "好";
+
+/* trend_evaluation */
+"evaluation" = "运行评估";
+/* trend_max */
+"max" = "最大值";
+/* trend_min */
+"min" = "最小值";
+/* trend_avg */
+"avg" = "平均值";
+/* trend_stable */
+"stable" = "波动";
+/* trend_communication */
+"communication" = "通讯";
+/* trend_overflow */
+"overflow" = "超值";
+/* trend_excellent */
+"excellent" = "优";
+/* trend_general */
+"general" = "良";
+/* trend_bad */
+"bad" = "差";
+
 /* device_property */
 "property" = "资产";
 /* device_updating */
 "updating" = "正在修改";
 /* device_update */
 "update" = "修改参数";
+/* device_password_title */
+"password_title" = "设备密码";
+/* device_password_error */
+"password_error" = "密码错误";
+/* device_userLocked */
+"userLocked" = "您没有执行此操作的权限，需向管理员申请授权。";
+/* device_localLocked */
+"localLocked" = "此设备设定为【本地】模式，不能远程控制。";
+/* device_denied */
+"denied" = "操作失败";
 
 
 /* device_normal */
@@ -113,7 +147,7 @@
 /* device_Ii_switch */
 "Ii_switch" = "保护功能";
 /* device_ground_protect */
-"ground_protect" = "接地保护";
+"ground_protect" = "接地";
 /* device_Ig_switch */
 "Ig_switch" = "保护功能";
 /* device_I2t_on */

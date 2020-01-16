@@ -17,13 +17,10 @@ class DeviceTextCell: UITableViewCell {
     private var valueLabel = UILabel()
     //横向渐变背景，需在draw(_:)设定frame
     private var gradientLayer = CAGradientLayer()
-    private var backgroundGradientColor: UIColor? {
+    private var backgroundGradientColor: UIColor = edsDefaultColor {
         didSet {
-            if let color = backgroundGradientColor {
-                //当添加背景色时，文本颜色变为白色更直观
-                gradientLayer.setHorCenterGradientLayer(centerColor: color)
-                valueLabel.textColor = .white
-            }
+            //当添加背景色时，文本颜色变为白色更直观
+            gradientLayer.setHorCenterGradientLayer(centerColor: backgroundGradientColor)
         }
     }
 
@@ -34,11 +31,11 @@ class DeviceTextCell: UITableViewCell {
         valueLabel.adjustsFontSizeToFitWidth = true
         valueLabel.textAlignment = .center
         valueLabel.numberOfLines = 1
+        valueLabel.textColor = .white
         addSubview(valueLabel)
         valueLabel.horizontalToSuperview(insets: .horizontal(space))
         valueLabel.heightToSuperview()
 
-        //添加渐变层,默认透明
         layer.insertSublayer(gradientLayer, at: 0)
     }
 
@@ -75,7 +72,7 @@ extension DeviceTextCell: DevicePageItemSource {
                 let status = TagValueConverter.getText(value: value, items: pageItem.items)
                 //文本，背景横向渐变
                 self.valueLabel.text = status.text
-                self.backgroundGradientColor = status.status?.getStatusColor()
+                self.backgroundGradientColor = status.status?.getStatusColor() ?? edsDefaultColor
             }).disposed(by: disposeBag)
         }
     }

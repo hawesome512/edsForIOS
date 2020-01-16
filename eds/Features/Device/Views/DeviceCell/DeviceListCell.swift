@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 
-class DeviceListCell: UITableViewCell {
+class DeviceListCell: UITableViewCell, PasswordVerifyDelegate {
 
     private let space: CGFloat = 20
     private let preferredFont = UIFont.preferredFont(forTextStyle: .title3)
@@ -20,6 +20,8 @@ class DeviceListCell: UITableViewCell {
     //计算行数时需要使用到pageItem
     private var pageItem: DevicePageItem?
     private var listTag: Tag?
+    //是否累加值，在DeviceTrendViewController使用
+    private var isAccumulated = false
 
     fileprivate func initViews() {
         //cell右边icon样式“>"
@@ -51,11 +53,17 @@ class DeviceListCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        if selected && isItemCell() {
-            let itemMeterViewController = UIStoryboard(name: "Device", bundle: nil).instantiateViewController(withIdentifier: String(describing: DeviceItemMeterViewController.self)) as! DeviceItemMeterViewController
-            itemMeterViewController.initViews(with: pageItem!, tag: listTag!)
-            //导航的方式打开新vc
-            (self.window?.rootViewController as? UINavigationController)?.pushViewController(itemMeterViewController, animated: true)
+        guard selected else {
+            return
+        }
+        //参数修改页面or趋势评估页面
+        if isItemCell() {
+            let authorityResult = VerifyUtility.verify(tag: listTag!, in: self)
+            presentMeterViewController(authority: authorityResult)
+        } else {
+            let trendViewController = DeviceTrendTableViewController()
+            trendViewController.trend(with: [listTag!], condition: nil, isAccumulated: isAccumulated)
+            (self.window?.rootViewController as? UINavigationController)?.pushViewController(trendViewController, animated: true)
         }
     }
 
@@ -66,9 +74,27 @@ class DeviceListCell: UITableViewCell {
         }
         return true
     }
+
+    //修改参数时，密码验证成功，打开参数表盘界面
+    func passwordVerified() {
+        presentMeterViewController(authority: .granted)
+    }
+
+    //打开参数表盘界面，本地模式/权限限制只能查看
+    private func presentMeterViewController(authority: AuthorityResult) {
+        //正在验证中，等待返回结果
+        if authority == .verifying {
+            return
+        }
+        let itemMeterViewController = UIStoryboard(name: "Device", bundle: nil).instantiateViewController(withIdentifier: String(describing: DeviceItemMeterViewController.self)) as! DeviceItemMeterViewController
+        itemMeterViewController.initViews(with: pageItem!, tag: listTag!, authority: authority)
+        //导航的方式打开新vc
+        (self.window?.rootViewController as? UINavigationController)?.pushViewController(itemMeterViewController, animated: true)
+    }
 }
 
 extension DeviceListCell: DevicePageItemSource {
+    
     func getNumerOfRows(with pageItem: DevicePageItem) -> Int {
         return pageItem.tags.count
     }
@@ -77,9 +103,12 @@ extension DeviceListCell: DevicePageItemSource {
         let tag = tags[rowIndex]
         self.pageItem = pageItem
         listTag = tag
+        if pageItem.items?.first == DeviceModel.itemsAccumulation {
+            isAccumulated = true
+        }
         //默认使用pageItem.name(更方便自定义，如ACB的Ir(A)与MCCB的Ir(In)显示不同
-        let name = tags.count == 1 ? pageItem.name : tag.getTagShortName()
-        nameLabel.attributedText = name.localize(with: prefixDevice).formatNameAndUnit()
+        let tagTitle = tags.count == 1 ? pageItem.name : tag.getTagShortName()
+        nameLabel.attributedText = tagTitle.localize(with: prefixDevice).formatNameAndUnit()
         tag.showValue.asObservable().throttle(.seconds(1), scheduler: MainScheduler.instance).subscribe(onNext: {
             var value = $0.clean
             //List模式时：items有值时，显示固定转换值，items里包含转换信息

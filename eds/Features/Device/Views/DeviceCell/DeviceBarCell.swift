@@ -15,6 +15,9 @@ class DeviceBarCell: UITableViewCell {
     private let space: CGFloat = 20
     private var barChartView: BarChartView!
     private let disposeBag = DisposeBag()
+    //传递给DeviceTrendViewController，标题和记录点
+    private var barTags: [Tag] = []
+    private var isAccumulated = false
 
     fileprivate func initViews() {
         barChartView = BarChartView()
@@ -110,6 +113,17 @@ class DeviceBarCell: UITableViewCell {
         }
     }
 
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        guard selected else {
+            return
+        }
+        let trendViewController = DeviceTrendTableViewController()
+        trendViewController.trend(with: barTags, condition: nil, isAccumulated: isAccumulated)
+        (self.window?.rootViewController as? UINavigationController)?.pushViewController(trendViewController, animated: true)
+
+    }
+
 }
 
 extension DeviceBarCell: DevicePageItemSource {
@@ -118,6 +132,10 @@ extension DeviceBarCell: DevicePageItemSource {
     }
 
     func initViews(with pageItem: DevicePageItem, rx tags: [Tag], rowIndex: Int) {
+        barTags = tags
+        if pageItem.items?.first == DeviceModel.itemsAccumulation {
+            isAccumulated = true
+        }
         setPreferredStyle(pageItem)
         Observable.combineLatest(tags.map { $0.showValue.asObservable() }).throttle(.seconds(1), scheduler: MainScheduler.instance).subscribe(onNext: {
             if let unit = pageItem.unit, tags.count > 0 {

@@ -58,7 +58,8 @@ class TagValueConverter {
             return (status, text)
         } else {
             //无效items时，不转换，直接显示数值
-            return (nil, String(format: "%d", value))
+
+            return (nil, value.clean)
         }
     }
 
