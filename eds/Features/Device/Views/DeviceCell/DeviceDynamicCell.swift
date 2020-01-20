@@ -9,25 +9,32 @@
 import UIKit
 import RxCocoa
 import RxSwift
+import TinyConstraints
 
 class DeviceDynamicCell: UITableViewCell {
 
-    private let space: CGFloat = 10
-    private let size: CGFloat = 24
-
     private let deviceImageView = UIImageView()
     private let nameLabel = UILabel()
-    private let infoLabel = UILabel()
-    private let statusView = UILabel()
+    private let statusView = RoundLabel()
+    private var imageViewLeading: Constraint?
 
     private let disposeBag = DisposeBag()
+
+    override var indentationLevel: Int {
+        didSet {
+            let constant = CGFloat(indentationLevel) * edsSpace
+            imageViewLeading?.constant = constant
+            //自定义cell控件约束不受layoutMargin影响，它只影响分割线
+            layoutMargins.left = constant
+        }
+    }
 
     public var deviceName: String? {
         didSet {
             if let deviceName = deviceName {
-                if let image = TagUtility.getDeviceIcon(with: deviceName) {
-                    deviceImageView.image = image
-                }
+//                if let image = TagUtility.getDeviceIcon(with: deviceName) {
+//                    deviceImageView.image = image
+//                }
                 nameLabel.text = deviceName
                 setStatus(with: deviceName)
             }
@@ -44,7 +51,7 @@ class DeviceDynamicCell: UITableViewCell {
                     self.statusView.backgroundColor = status.getStatusColor()
                     let text = status.getStatusText().localize(with: prefixDevice)
                     //圆角Label,text应当适当缩进，简易处理：在text前后添加空格，使lable.width变大
-                    self.statusView.text = "  \(text)  "
+                    self.statusView.innerText = text //.text = "  \(text)  "
 
                 }
             }).disposed(by: disposeBag)
@@ -53,38 +60,31 @@ class DeviceDynamicCell: UITableViewCell {
 
     fileprivate func initViews() {
 
-        deviceImageView.image = UIImage(named: "device_static")
+        deviceImageView.image = UIImage(named: "device_fixed")?.withTintColor(edsDefaultColor)
         deviceImageView.contentMode = .scaleAspectFit
         addSubview(deviceImageView)
-        deviceImageView.heightToSuperview(offset: -space * 2)
+        deviceImageView.heightToSuperview(offset: -edsSpace)
         deviceImageView.widthToHeight(of: deviceImageView)
-        deviceImageView.topToSuperview(offset: space)
-        deviceImageView.leadingToSuperview(offset: space)
+        imageViewLeading = deviceImageView.leadingToSuperview(offset: edsSpace)
+        deviceImageView.centerYToSuperview()
 
         nameLabel.text = "#000"
-        nameLabel.font = UIFont.preferredFont(forTextStyle: .headline)
+        nameLabel.font = UIFont.preferredFont(forTextStyle: .title3)
+        nameLabel.textColor = edsDefaultColor
         addSubview(nameLabel)
-        nameLabel.topToSuperview(offset: space)
-        nameLabel.leadingToTrailing(of: deviceImageView, offset: space)
+        nameLabel.centerY(to: deviceImageView)
+        nameLabel.leadingToTrailing(of: deviceImageView, offset: edsSpace / 2)
         nameLabel.height(to: deviceImageView, multiplier: 0.5)
 
-        infoLabel.text = NSLocalizedString("edit basic info here.", comment: "device_info_default")
-        infoLabel.font = UIFont.preferredFont(forTextStyle: .body)
-        infoLabel.textColor = .systemGray
-        addSubview(infoLabel)
-        infoLabel.topToBottom(of: nameLabel, offset: space)
-        infoLabel.leadingToTrailing(of: deviceImageView, offset: space)
-        infoLabel.trailingToSuperview(offset: space)
-
         //圆角
-        statusView.layer.cornerRadius = size / 2
-        statusView.clipsToBounds = true
         statusView.textColor = .white
-        statusView.numberOfLines = 1
+//        statusView.numberOfLines = 1
+        //不显示边框
+        statusView.layer.borderColor = edsDefaultColor.withAlphaComponent(0).cgColor
         addSubview(statusView)
-        statusView.height(size)
+        statusView.height(24)
         statusView.centerY(to: nameLabel)
-        statusView.leadingToTrailing(of: nameLabel, offset: space)
+        statusView.leadingToTrailing(of: nameLabel, offset: edsSpace / 2)
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

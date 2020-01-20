@@ -37,6 +37,10 @@ enum EDSService {
     case queryAccountList(factor: EDSServiceQueryFactor)
     //更新账号信息
     case updateAccount(account: HandyJSON)
+    //获取设备列表
+    case queryDeviceList(factor: EDSServiceQueryFactor)
+    //更新设备信息
+    case updateDevice(device: HandyJSON)
     //手机验证码
     case verifyPhoneLogin(phoneVerification: HandyJSON)
     //上传图片
@@ -71,6 +75,10 @@ extension EDSService: TargetType {
             return "/QueryAccountServlet"
         case .updateAccount:
             return "/UpdateAccountServlet"
+        case .queryDeviceList:
+            return "/QueryDeviceServlet"
+        case .updateDevice:
+            return "/UpdateDeviceServlet"
         case .verifyPhoneLogin:
             return "/QueryPhoneServlet"
         case .upload:
@@ -80,9 +88,9 @@ extension EDSService: TargetType {
 
     var method: Moya.Method {
         switch self {
-        case .queryProjectInfoList, .queryWorkorderList, .queryAlarmList, .queryActionList, .queryAccountList:
+        case .queryProjectInfoList, .queryWorkorderList, .queryAlarmList, .queryActionList, .queryAccountList, .queryDeviceList:
             return .get
-        case .updateProject, .updateWorkorder, .updateAlarm, .updateAction, .updateAccount, .verifyPhoneLogin, .upload:
+        case .updateProject, .updateWorkorder, .updateAlarm, .updateAction, .updateAccount, .updateDevice, .verifyPhoneLogin, .upload:
             return .post
         }
     }
@@ -93,14 +101,14 @@ extension EDSService: TargetType {
 
     var task: Task {
         switch self {
-        case .queryProjectInfoList(let factor), .queryWorkorderList(let factor), .queryAlarmList(let factor), .queryActionList(let factor), .queryAccountList(let factor):
+        case .queryProjectInfoList(let factor), .queryWorkorderList(let factor), .queryAlarmList(let factor), .queryActionList(let factor), .queryAccountList(let factor), .queryDeviceList(let factor):
             //get请求，参数置于url中
             return .requestParameters(parameters: factor.toJSON()!, encoding: URLEncoding.queryString)
-        case .updateProject(let edsModel), .updateWorkorder(let edsModel), .updateAlarm(let edsModel), .updateAction(let edsModel), .updateAccount(let edsModel), .verifyPhoneLogin(let edsModel):
+        case .updateProject(let edsModel), .updateWorkorder(let edsModel), .updateAlarm(let edsModel), .updateAction(let edsModel), .updateAccount(let edsModel), .updateDevice(let edsModel), .verifyPhoneLogin(let edsModel):
             //post请求，参数在Request Body中
             return .requestParameters(parameters: edsModel.toJSON()!, encoding: JSONEncoding.default)
         case .upload(let fileURL, let fileName):
-            let imageData=MultipartFormData(provider: .file(fileURL), name: fileName, fileName: fileName, mimeType: "image/*")
+            let imageData = MultipartFormData(provider: .file(fileURL), name: fileName, fileName: fileName, mimeType: "image/*")
             return .uploadMultipart([imageData])
         }
     }

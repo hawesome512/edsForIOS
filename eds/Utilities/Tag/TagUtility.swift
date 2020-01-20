@@ -29,9 +29,9 @@ class TagUtility: MQTTServiceDelegate {
     //MARK:通信>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     //临时测试，public，其他页面（修改参数）也可以调用
-    public let tempAuthority = "xkb:xseec".toBase64()
-    private let tempProjectID = "1/XKB"
-    private let tempProject = "XKB"
+    public let tempAuthority = "guest:xseec".toBase64()
+    public let tempProjectID = "2/XRD"
+    public let tempProject = "XRD"
 
     /// 从后台导入工程点列表
     func loadProjectTagList() {

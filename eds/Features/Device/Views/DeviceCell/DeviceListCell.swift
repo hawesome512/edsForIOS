@@ -33,7 +33,6 @@ class DeviceListCell: UITableViewCell, PasswordVerifyDelegate {
         addSubview(nameLabel)
         nameLabel.centerYToSuperview()
         nameLabel.leadingToSuperview(offset: space)
-
         valueLabel.text = String(format: "%d", Tag.nilValue)
         valueLabel.font = preferredFont
         addSubview(valueLabel)
@@ -94,7 +93,7 @@ class DeviceListCell: UITableViewCell, PasswordVerifyDelegate {
 }
 
 extension DeviceListCell: DevicePageItemSource {
-    
+
     func getNumerOfRows(with pageItem: DevicePageItem) -> Int {
         return pageItem.tags.count
     }

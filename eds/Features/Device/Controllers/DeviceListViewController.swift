@@ -8,12 +8,13 @@
 
 import UIKit
 import Moya
+import RxSwift
 
 class DeviceListViewController: UIViewController {
 
+    private let disposeBag = DisposeBag()
     private let tableView = UITableView()
-    private let deviceNames = TagUtility.sharedInstance.getDeviceList()
-    private let cellType = DeviceCellType.dynamic
+    private var deviceList = DeviceUtility.sharedInstance.getVisibleDeviceList()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,9 +27,11 @@ class DeviceListViewController: UIViewController {
         //设定导航栏
         title = "property".localize(with: prefixDevice)
         navigationController?.navigationBar.prefersLargeTitles = false
-        //TableView
-        tableView.register(DeviceDynamicCell.self, forCellReuseIdentifier: cellType.rawValue)
-        tableView.cellLayoutMarginsFollowReadableWidth = true
+
+        //TableView初始化配置
+        tableView.register(DeviceDynamicCell.self, forCellReuseIdentifier: DeviceCellType.dynamic.rawValue)
+        tableView.register(DeviceFixedCell.self, forCellReuseIdentifier: DeviceCellType.fixed.rawValue)
+//        tableView.cellLayoutMarginsFollowReadableWidth = true
         tableView.dataSource = self
         tableView.delegate = self
         view.addSubview(tableView)
@@ -36,10 +39,12 @@ class DeviceListViewController: UIViewController {
 
     }
 
-    //MARK:更新状态位数据
+    //MARK:可通讯设备更新状态位数据
     private func updateDeviceStatus() {
         var statusTagList = [Tag]()
-        deviceNames.forEach { deviceName in
+        deviceList.filter { $0.level == .dynamic }.forEach { device in
+            //e.g.:CY_A2_2
+            let deviceName = device.getShortID()
             if let statusTagName = DeviceModel.sharedInstance?.types.first(where: {
                 $0.type == TagUtility.getDeviceType(with: deviceName)
             })?.status.tag {
@@ -53,25 +58,45 @@ class DeviceListViewController: UIViewController {
 
 extension DeviceListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return deviceNames.count
+        return deviceList.count
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let config = cellType.getRowHeight()
+        let config = deviceList[indexPath.row].getCellType().getRowHeight()
         return max(config.ratio * tableView.frame.height, config.min)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellType.rawValue) as! DeviceDynamicCell
-        let name = deviceNames[indexPath.row]
-        cell.deviceName = name
-        return cell
+        let device = deviceList[indexPath.row]
+        //不重用cell，避免折叠等显示混乱
+//        let cell = tableView.dequeueReusableCell(withIdentifier: device.getCellType().rawValue)!
+        //自定义的cell使用level不能自动缩进，必须手动修改约束或分割线
+        if device.level == .dynamic {
+            let cell = DeviceDynamicCell()
+            cell.deviceName = device.getShortID()
+            cell.indentationLevel = device.getIndentationLevel()
+            return cell
+        } else {
+            let cell = DeviceFixedCell()
+            cell.indentationLevel = device.getIndentationLevel()
+            cell.device = device
+            cell.foldButton.rx.tap.bind(onNext: {
+                device.collapsed = !device.collapsed
+                self.deviceList = DeviceUtility.sharedInstance.getVisibleDeviceList()
+                tableView.reloadData()
+            }).disposed(by: disposeBag)
+            return cell
+        }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let deviceViewController = DeviceViewController()
-        deviceViewController.deviceName = deviceNames[indexPath.row]
-        navigationController?.pushViewController(deviceViewController, animated: true)
+
+        let device = deviceList[indexPath.row]
+        if device.level == .dynamic {
+            let deviceViewController = DeviceViewController()
+            deviceViewController.deviceName = device.getShortID()
+            navigationController?.pushViewController(deviceViewController, animated: true)
+        }
 
         tableView.deselectRow(at: indexPath, animated: false)
     }

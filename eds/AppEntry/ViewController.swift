@@ -16,8 +16,8 @@ import RxSwift
 import RxCocoa
 import SwiftDate
 
-class ViewController: UIViewController{
-    
+class ViewController: UIViewController {
+
     let disposeBag = DisposeBag()
     let button = UIButton()
     let label = UILabel()
@@ -26,7 +26,9 @@ class ViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
+        //导入数据列表
         TagUtility.sharedInstance.loadProjectTagList()
+        DeviceUtility.sharedInstance.loadProjectDeviceList()
     }
 
     override func viewWillAppear(_ animated: Bool) {

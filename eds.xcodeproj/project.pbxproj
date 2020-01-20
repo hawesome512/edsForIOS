@@ -58,6 +58,8 @@
 		46227A4323C8231300768799 /* BallonMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46227A4223C8231300768799 /* BallonMarker.swift */; };
 		46227A4523C82A4C00768799 /* ViewUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46227A4423C82A4C00768799 /* ViewUtility.swift */; };
 		462D23AE23C076C500C28F15 /* IconPagingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462D23AD23C076C500C28F15 /* IconPagingCell.swift */; };
+		4670902C23D3FD1E008777ED /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4670902B23D3FD1E008777ED /* Device.swift */; };
+		4670902E23D430B8008777ED /* DeviceUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4670902D23D430B8008777ED /* DeviceUtility.swift */; };
 		468BC3C423823738008BD62C /* MQTTService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468BC3C323823738008BD62C /* MQTTService.swift */; };
 		468BC3C623824B50008BD62C /* MQTTConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468BC3C523824B50008BD62C /* MQTTConfig.swift */; };
 		468BC3CA23829BA4008BD62C /* MQTTTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468BC3C923829BA4008BD62C /* MQTTTag.swift */; };
@@ -66,7 +68,7 @@
 		469BB71923CEA1C800A57C51 /* PasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469BB71823CEA1C800A57C51 /* PasswordView.swift */; };
 		469BB71F23CEDAC800A57C51 /* PasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469BB71E23CEDAC800A57C51 /* PasswordViewController.swift */; };
 		469BB72123CEFF6D00A57C51 /* VerifyUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469BB72023CEFF6D00A57C51 /* VerifyUtility.swift */; };
-		46DEF1A02399F832008780C3 /* Device200116.json in Resources */ = {isa = PBXBuildFile; fileRef = 46DEF19F2399F832008780C3 /* Device200116.json */; };
+		46DEF1A02399F832008780C3 /* Device.json in Resources */ = {isa = PBXBuildFile; fileRef = 46DEF19F2399F832008780C3 /* Device.json */; };
 		46DEF1A3239A00F3008780C3 /* DeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DEF1A2239A00F3008780C3 /* DeviceModel.swift */; };
 		46E0E3D02374074F00116DA2 /* String-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E0E3CF2374074F00116DA2 /* String-Ext.swift */; };
 		46EBD4782374FDAC00D7E6FC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EBD4772374FDAC00D7E6FC /* User.swift */; };
@@ -132,6 +134,8 @@
 		46227A4223C8231300768799 /* BallonMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BallonMarker.swift; sourceTree = "<group>"; };
 		46227A4423C82A4C00768799 /* ViewUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewUtility.swift; sourceTree = "<group>"; };
 		462D23AD23C076C500C28F15 /* IconPagingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconPagingCell.swift; sourceTree = "<group>"; };
+		4670902B23D3FD1E008777ED /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
+		4670902D23D430B8008777ED /* DeviceUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceUtility.swift; sourceTree = "<group>"; };
 		468BC3C323823738008BD62C /* MQTTService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MQTTService.swift; sourceTree = "<group>"; };
 		468BC3C523824B50008BD62C /* MQTTConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MQTTConfig.swift; sourceTree = "<group>"; };
 		468BC3C923829BA4008BD62C /* MQTTTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MQTTTag.swift; sourceTree = "<group>"; };
@@ -140,7 +144,7 @@
 		469BB71823CEA1C800A57C51 /* PasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordView.swift; sourceTree = "<group>"; };
 		469BB71E23CEDAC800A57C51 /* PasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordViewController.swift; sourceTree = "<group>"; };
 		469BB72023CEFF6D00A57C51 /* VerifyUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyUtility.swift; sourceTree = "<group>"; };
-		46DEF19F2399F832008780C3 /* Device200116.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Device200116.json; sourceTree = "<group>"; };
+		46DEF19F2399F832008780C3 /* Device.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Device.json; sourceTree = "<group>"; };
 		46DEF1A2239A00F3008780C3 /* DeviceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceModel.swift; sourceTree = "<group>"; };
 		46E0E3CF2374074F00116DA2 /* String-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String-Ext.swift"; sourceTree = "<group>"; };
 		46EBD4772374FDAC00D7E6FC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -283,6 +287,7 @@
 				4621272723B1A71A00105664 /* DeviceCellType.swift */,
 				46FB866723BAE87800754E88 /* DevicePageItemSource.swift */,
 				469BB70C23CAEBB800A57C51 /* TrendEvaluation.swift */,
+				4670902B23D3FD1E008777ED /* Device.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -456,6 +461,7 @@
 				4621273323B5EA0A00105664 /* UIConst.swift */,
 				46227A4423C82A4C00768799 /* ViewUtility.swift */,
 				469BB72023CEFF6D00A57C51 /* VerifyUtility.swift */,
+				4670902D23D430B8008777ED /* DeviceUtility.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -463,7 +469,7 @@
 		460F7262236FF6A100CFC7C3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				46DEF19F2399F832008780C3 /* Device200116.json */,
+				46DEF19F2399F832008780C3 /* Device.json */,
 				460F723C236FC14600CFC7C3 /* Assets.xcassets */,
 			);
 			path = Resources;
@@ -683,7 +689,7 @@
 				460F7240236FC14600CFC7C3 /* LaunchScreen.storyboard in Resources */,
 				460F723D236FC14600CFC7C3 /* Assets.xcassets in Resources */,
 				460F723B236FC14500CFC7C3 /* Main.storyboard in Resources */,
-				46DEF1A02399F832008780C3 /* Device200116.json in Resources */,
+				46DEF1A02399F832008780C3 /* Device.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -736,6 +742,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4670902C23D3FD1E008777ED /* Device.swift in Sources */,
 				460F726E2371111100CFC7C3 /* WAService.swift in Sources */,
 				4621272C23B5CDBA00105664 /* DeviceViewController.swift in Sources */,
 				46FB866823BAE87800754E88 /* DevicePageItemSource.swift in Sources */,
@@ -757,6 +764,7 @@
 				46227A4123C80FF400768799 /* DeviceTrendTableViewController.swift in Sources */,
 				460BA6D7237BCC23008E7CDF /* Workorder.swift in Sources */,
 				468BC3C423823738008BD62C /* MQTTService.swift in Sources */,
+				4670902E23D430B8008777ED /* DeviceUtility.swift in Sources */,
 				4621273A23B60BE100105664 /* UIColor-Ext.swift in Sources */,
 				46EE431D237153DC00DF22FB /* Tag.swift in Sources */,
 				460BA6D1237A4775008E7CDF /* JsonUtility.swift in Sources */,

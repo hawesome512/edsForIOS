@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "device_static.pdf",
+      "filename" : "device_fixed.pdf",
       "scale" : "1x"
     },
     {

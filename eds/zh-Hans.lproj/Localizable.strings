@@ -12,7 +12,7 @@
 /* trend_stable */
 "stable" = "波动";
 /* trend_communication */
-"communication" = "通讯";
+"communication" = "通信";
 /* trend_overflow */
 "overflow" = "超值";
 /* trend_excellent */
@@ -22,6 +22,8 @@
 /* trend_bad */
 "bad" = "差";
 
+/* device_uncommunicate */
+"uncommunicate" = "非通信型";
 /* device_property */
 "property" = "资产";
 /* device_updating */

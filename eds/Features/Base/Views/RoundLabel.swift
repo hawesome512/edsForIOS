@@ -33,6 +33,7 @@ class RoundLabel: UILabel {
         //必须添加父类draw，否则text不显示
         super.draw(rect)
         layer.cornerRadius = rect.height / 2
+        layer.borderWidth = 1
     }
 
 }

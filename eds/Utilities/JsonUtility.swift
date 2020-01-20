@@ -57,6 +57,7 @@ class JsonUtility {
     }
 
     //EDS Service所有get操作响应格式都一样，设计泛型方法，type只是为了传入数据类型
+    //e.g.:getEDSServiceList(with:response.data,type:[Device]())
     class func getEDSServiceList<T:HandyJSON>(with data: Data, type: [T]) -> [T?]? {
         let jsonString = String(data: data, encoding: .utf8)?.removeNull()
         return [T].deserialize(from: jsonString)

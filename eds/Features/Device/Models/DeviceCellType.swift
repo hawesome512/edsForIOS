@@ -43,9 +43,9 @@ enum DeviceCellType: String {
         switch self {
         case .bar, .ATSStatus:
             return (0.25, 240)
-        case .dynamic, .text, .button, .range:
+        case .text, .button, .range:
             return (0.125, 120)
-        case .onoff, .fixed, .list, .item:
+        case .onoff, .list, .item, .dynamic, .fixed:
             return (0.0625, 60)
         }
     }

@@ -7,38 +7,72 @@
 //  Device静态（非通信型），资产管理的一部分
 
 import UIKit
+import TinyConstraints
+import RxSwift
 
 class DeviceFixedCell: UITableViewCell {
 
-    private let space: CGFloat = 20
-
+    var foldButton = UIButton()
     var deviceImageView = UIImageView()
     var nameLabel = UILabel()
+    var levelLabel = RoundLabel()
+    private var leading: Constraint?
 
-    var staticType: DeviceStaticCellType? {
+    private let disposeBag = DisposeBag()
+
+    var device: Device? {
         didSet {
-            if let staticType = staticType {
-                tintColor = staticType.getColor()
-                nameLabel.text = staticType.getName()
-                nameLabel.textColor = staticType.getColor()
-                deviceImageView.image = staticType.getIcon()
-                accessoryView = staticType.getAccessoryView()
+            if let device = device {
+                //不同类型的Device缩进不同，实现层级分支
+                let constant = CGFloat(indentationLevel) * edsSpace
+                leading?.constant = constant
+                //自定义cell控件约束不受layoutMargin影响，它只影响分割线
+                layoutMargins.left = constant
+                
+                if let image = device.getCollapsedImage() {
+                    foldButton.setImage(image, for: .normal)
+                } else {
+                    foldButton.setImage(nil, for: .normal)
+                    //静态设备无>符号（20),且其与deviceImageView的水平间隙（10）也将取消，故左移1.5*space
+                    leading?.constant -= 1.5 * edsSpace
+                }
+                nameLabel.text = device.title
+                nameLabel.textColor = device.getTintColor()
+                levelLabel.alpha = (device.level == DeviceLevel.fixed) ? 1 : 0
+                deviceImageView.image = device.getIcon()
+                accessoryView = device.getAccessoryView()
             }
         }
     }
 
     private func initViews() {
+        tintColor = .systemGray
+        foldButton.size(CGSize(width: edsSpace, height: edsSpace))
+        addSubview(foldButton)
+        leading = foldButton.leadingToSuperview(offset: edsSpace)
+        foldButton.centerYToSuperview()
+
         deviceImageView.contentMode = .scaleAspectFit
         addSubview(deviceImageView)
-        deviceImageView.heightToSuperview(offset: space)
+        deviceImageView.heightToSuperview(offset: -edsSpace)
         deviceImageView.widthToHeight(of: deviceImageView)
-        deviceImageView.leadingToSuperview(offset: space)
+        deviceImageView.leadingToTrailing(of: foldButton, offset: edsSpace / 2)
         deviceImageView.centerYToSuperview()
 
         nameLabel.textAlignment = .center
         addSubview(nameLabel)
         nameLabel.centerYToSuperview()
-        nameLabel.leadingToTrailing(of: deviceImageView)
+        nameLabel.font = UIFont.preferredFont(forTextStyle: .title3)
+        nameLabel.leadingToTrailing(of: deviceImageView, offset: edsSpace / 2)
+
+        levelLabel.textColor = .systemGray
+        levelLabel.layer.borderColor = UIColor.systemGray3.cgColor
+        levelLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
+        levelLabel.innerText = "uncommunicate".localize(with: prefixDevice)
+        addSubview(levelLabel)
+        levelLabel.top(to: nameLabel)
+        levelLabel.height(24)
+        levelLabel.leadingToTrailing(of: nameLabel, offset: edsSpace / 2)
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -53,48 +87,6 @@ class DeviceFixedCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
-    }
-
-}
-
-
-/// 静态Cell类型：配电房，配电箱，静态设备
-/// 相应类型图片应放置于Assets中，以device_枚举类型命名，如device_room
-/// 配电房&配电箱可展开/增删设备，uicolor:black
-enum DeviceStaticCellType {
-    case room(named: String)
-    case box(named: String)
-    case fixture(named: String)
-
-    func getName() -> String {
-        switch self {
-        case .box(let name), .room(let name), .fixture(let name):
-            return name
-        }
-    }
-
-    func getColor() -> UIColor {
-        switch self {
-        case .room, .box:
-            return .black
-        default:
-            return .systemGray
-        }
-    }
-
-    func getIcon() -> UIImage? {
-        //enum含参数(name)，不能使用rawValue属性获得string,self👉string:"box("")"
-        let iconName = String(describing: self).components(separatedBy: "(")[0]
-        return UIImage(named: "device_" + String(describing: iconName))?.withTintColor(getColor())
-    }
-
-    func getAccessoryView() -> UIView? {
-        switch self {
-        case .room, .box:
-            return UIImageView(image: UIImage(systemName: "plus"))
-        default:
-            return nil
-        }
     }
 
 }

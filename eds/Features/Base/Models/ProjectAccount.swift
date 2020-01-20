@@ -19,6 +19,8 @@ class ProjectAccount: HandyJSON {
     var number = 1
     //已授权的手机号，用分号【；】分割
     var phone = ""
+    //授权给工程用户可添加静态设备点数量
+    var device = 1
 
     required init() { }
 
