@@ -17,8 +17,8 @@ class DeviceFixedCell: UITableViewCell {
     var nameLabel = UILabel()
     var levelLabel = RoundLabel()
     private var leading: Constraint?
-
     private let disposeBag = DisposeBag()
+    var delegate: AdditionDelegate?
 
     var device: Device? {
         didSet {
@@ -28,7 +28,7 @@ class DeviceFixedCell: UITableViewCell {
                 leading?.constant = constant
                 //自定义cell控件约束不受layoutMargin影响，它只影响分割线
                 layoutMargins.left = constant
-                
+
                 if let image = device.getCollapsedImage() {
                     foldButton.setImage(image, for: .normal)
                 } else {
@@ -40,7 +40,12 @@ class DeviceFixedCell: UITableViewCell {
                 nameLabel.textColor = device.getTintColor()
                 levelLabel.alpha = (device.level == DeviceLevel.fixed) ? 1 : 0
                 deviceImageView.image = device.getIcon()
-                accessoryView = device.getAccessoryView()
+                
+                let accessoryButton = device.getAccessoryView()
+                accessoryButton?.rx.tap.bind(onNext: {
+                    self.delegate?.add(inParent: device)
+                }).disposed(by: disposeBag)
+                accessoryView = accessoryButton
             }
         }
     }
@@ -88,5 +93,7 @@ class DeviceFixedCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
     }
+
+
 
 }

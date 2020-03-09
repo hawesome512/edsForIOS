@@ -57,6 +57,7 @@ struct WATagLogRequestCondition: HandyJSON {
     ///   - tags: <#tags description#>
     ///   - dataType: <#dataType description#>
     static func defaultCondition(with tags: [Tag], isAccumulated: Bool) -> WATagLogRequestCondition {
+        //累加值取最后值，其他默认取平均值
         let dataType: LogDataType = isAccumulated ? .Last : .Avg
         let logTags = tags.map { LogTag(name: $0.Name, logDataType: dataType) }
         //从整点开始

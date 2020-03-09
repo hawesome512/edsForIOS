@@ -20,6 +20,15 @@ class User {
 
     //单例
     static let sharedInstance = User()
+    //调试时的测试用户【临时】
+    static let tempInstance: User = {
+        let user = User()
+        user.authority = "guest:xseec".toBase64()
+        user.projectID = "2/XRD"
+        user.userLevel = .phoneAdmin
+        return user
+    }()
+
     private init() { }
 
     func onLoginSuccess(base64Authority: String, ownedProjectID: String) {
@@ -30,9 +39,23 @@ class User {
 
     //EDS Service工单、记录等数据模型需要ID
     func generateID() -> String {
-        return "\(projectID ?? NIL)-\(Date().toIDString())"
+//        return "\(projectID ?? NIL)-\(Date().toIDString())"
+        return "\(projectID ?? NIL)-\(String.randomString(length: 3))"
     }
 
+    func generateImageID() -> String {
+        let project = projectID?.replacingOccurrences(of: "/", with: "_")
+        return "\(project ?? NIL)_\(String.randomString(length: 3))"
+    }
+
+    //e.g.:XRD
+    func getProjectName() -> String? {
+        return projectID?.components(separatedBy: "/").last
+    }
+
+    func isOperable() -> Bool {
+        return userLevel.rawValue <= UserLevel.phoneAdmin.rawValue
+    }
 }
 
 enum UserLevel: Int, HandyJSONEnum {

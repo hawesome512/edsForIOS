@@ -62,8 +62,7 @@ extension DeviceListViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let config = deviceList[indexPath.row].getCellType().getRowHeight()
-        return max(config.ratio * tableView.frame.height, config.min)
+        return deviceList[indexPath.row].getCellType().getRowHeight(in: tableView)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -73,11 +72,12 @@ extension DeviceListViewController: UITableViewDelegate, UITableViewDataSource {
         //自定义的cell使用level不能自动缩进，必须手动修改约束或分割线
         if device.level == .dynamic {
             let cell = DeviceDynamicCell()
-            cell.deviceName = device.getShortID()
+            cell.device = device
             cell.indentationLevel = device.getIndentationLevel()
             return cell
         } else {
             let cell = DeviceFixedCell()
+            cell.delegate = self
             cell.indentationLevel = device.getIndentationLevel()
             cell.device = device
             cell.foldButton.rx.tap.bind(onNext: {
@@ -93,9 +93,13 @@ extension DeviceListViewController: UITableViewDelegate, UITableViewDataSource {
 
         let device = deviceList[indexPath.row]
         if device.level == .dynamic {
-            let deviceViewController = DeviceViewController()
-            deviceViewController.deviceName = device.getShortID()
-            navigationController?.pushViewController(deviceViewController, animated: true)
+            let dynamicVC = DynamicDeviceViewController()
+            dynamicVC.device = device
+            navigationController?.pushViewController(dynamicVC, animated: true)
+        } else {
+            let fixedVC = FixedDeviceViewController()
+            fixedVC.device = device
+            navigationController?.pushViewController(fixedVC, animated: true)
         }
 
         tableView.deselectRow(at: indexPath, animated: false)
@@ -104,5 +108,84 @@ extension DeviceListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         //设置Footer将移除tableview底部空白cell的separator line
         return UIView()
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = AdditionTableHeaderView()
+        headerView.title.text = "add_room".localize(with: prefixDevice)
+        headerView.delegate = self
+        return headerView
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        //删除设备：弹出框确认▶️删除设备及所属设备▶️更新父级支路
+        if editingStyle == .delete {
+            let deleteDevice = deviceList[indexPath.row]
+            let title = String(format: "delete_title".localize(with: prefixDevice), arguments: [deleteDevice.title])
+            let alertController = UIAlertController(title: title, message: "delete_info".localize(with: prefixDevice), preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "cancel".localize(), style: .cancel, handler: nil)
+            let okAction = UIAlertAction(title: "delete".localize(), style: .destructive) { _ in
+                var modifiedDevices = [deleteDevice]
+                modifiedDevices.append(contentsOf: DeviceUtility.sharedInstance.getBranceList(device: deleteDevice, visiableOnly: false))
+                modifiedDevices = modifiedDevices.map { device in
+                    device.prepareForDelete()
+                    return device
+                }
+                DeviceUtility.sharedInstance.remove(devices: modifiedDevices)
+                //需要修改父级支路信息
+                if let parent = DeviceUtility.sharedInstance.getParent(of: deleteDevice) {
+                    parent.removeBranch(with: deleteDevice.getShortID())
+                    print(parent.toJSONString()!)
+                    modifiedDevices.append(parent)
+                }
+                modifiedDevices.forEach({ device in
+                    MoyaProvider<EDSService>().request(.updateDevice(device: device)) { _ in }
+                })
+
+                self.deviceList = DeviceUtility.sharedInstance.getVisibleDeviceList()
+                tableView.reloadData()
+                print("modify \(modifiedDevices.count) devices.")
+            }
+            alertController.addAction(cancelAction)
+            alertController.addAction(okAction)
+            present(alertController, animated: true, completion: nil)
+        }
+    }
+}
+
+extension DeviceListViewController: AdditionDelegate {
+
+    func add(inParent: Device?) {
+        //自定义【新增】弹出框
+        let alertController = DeviceAdditionAlertController.initController(device: inParent)
+        //因需要处理ok之后到逻辑，故不在DeviceAdditionAlertController里面添加OKAction
+        let okAction = UIAlertAction(title: "ok".localize(), style: .default) { _ in
+            if let proj = User.tempInstance.projectID, let title = alertController.nameField.text {
+                //新建Device
+                let id = "\(proj)-\(alertController.getAddedDeviceId())"
+                let newDevice = Device(deviceID: id)
+                newDevice.account = proj
+                newDevice.title = title
+                newDevice.level = alertController.getAddedDeviceLevel()
+                MoyaProvider<EDSService>().request(.updateDevice(device: newDevice)) { response in
+                    switch response {
+                    case .success(_):
+                        //成功新增后，更新资产列表
+                        DeviceUtility.sharedInstance.deviceList.append(newDevice)
+                        self.deviceList = DeviceUtility.sharedInstance.getVisibleDeviceList()
+                        self.tableView.reloadData()
+                    default:
+                        break
+                    }
+                }
+                //更新新增Device的父级支路
+                if let parent = inParent {
+                    parent.addBranch(with: newDevice.getShortID())
+                    MoyaProvider<EDSService>().request(.updateDevice(device: parent)) { _ in }
+                }
+            }
+        }
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
     }
 }

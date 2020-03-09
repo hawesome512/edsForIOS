@@ -10,7 +10,7 @@ import UIKit
 import Parchment
 import TinyConstraints
 
-class DeviceViewController: UIViewController, DevicePageScrollDelegate {
+class DynamicDeviceViewController: UIViewController, DevicePageScrollDelegate {
 
     private let headerView = DeviceHeaderView()
     private var navigationBar: UINavigationBar?
@@ -19,7 +19,7 @@ class DeviceViewController: UIViewController, DevicePageScrollDelegate {
 
     private var pages: [DevicePage] = []
 
-    var deviceName: String = "" {
+    var device: Device? {
         didSet {
             initViews()
         }
@@ -43,7 +43,10 @@ class DeviceViewController: UIViewController, DevicePageScrollDelegate {
     }
 
     fileprivate func initViews() {
-        title = deviceName
+        guard let device = device else {
+            return
+        }
+        title = device.title
         //顶部图片
         view.addSubview(headerView)
         headerView.horizontalToSuperview()
@@ -51,8 +54,7 @@ class DeviceViewController: UIViewController, DevicePageScrollDelegate {
         //TinyConstraint未找到相关用法：后台动态约束
         headerViewTopConstraint = headerView.topAnchor.constraint(equalTo: headerView.superview!.topAnchor)
         headerViewTopConstraint?.isActive = true
-
-        headerView.imageView.image = TagUtility.getDeviceIcon(with: deviceName)
+        headerView.device = device
 
         let containerView = UIView()
         view.addSubview(containerView)
@@ -60,7 +62,7 @@ class DeviceViewController: UIViewController, DevicePageScrollDelegate {
         containerView.topToBottom(of: headerView)
 
         //添加Page View Controller
-        if let type = TagUtility.getDeviceType(with: deviceName) {
+        if let type = TagUtility.getDeviceType(with: device.getShortID()) {
             let deviceType = DeviceModel.sharedInstance?.types.first(where: { $0.type == type })
             //Icon类型的Menu Item
             pages = deviceType?.pages ?? []
@@ -97,22 +99,32 @@ class DeviceViewController: UIViewController, DevicePageScrollDelegate {
 }
 
 // MARK: -Paging View Controller DataSource
-extension DeviceViewController: PagingViewControllerDataSource {
+extension DynamicDeviceViewController: PagingViewControllerDataSource {
+
+    //在最后面+1静态信息页
 
     func pagingViewController<T>(_ pagingViewController: PagingViewController<T>, viewControllerForIndex index: Int) -> UIViewController {
-        let pageVC = DevicePageTableViewController()
-        pageVC.set(with: pages[index], in: deviceName)
-        pageVC.scrollDelegate = self
-        return pageVC
+        if index == pages.count {
+            let tableVC = FixedInfoChildController(style: .plain)
+            tableVC.scrollDelegate = self
+            tableVC.device = device
+            return tableVC
+        } else {
+            let pageVC = DevicePageTableViewController()
+            pageVC.set(with: pages[index], in: device!.getShortID())
+            pageVC.scrollDelegate = self
+            return pageVC
+        }
     }
 
     func pagingViewController<T>(_ pagingViewController: PagingViewController<T>, pagingItemForIndex index: Int) -> T {
-        let icon = "device_\(pages[index].title)"
+        let iconName = (index == pages.count) ? "info" : pages[index].title
+        let icon = "device_\(iconName)"
         return IconItem(icon: icon, index: index) as! T
     }
 
     func numberOfViewControllers<T>(in: PagingViewController<T>) -> Int {
-        return pages.count
+        return pages.count + 1
     }
 
 }

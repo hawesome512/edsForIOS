@@ -54,4 +54,29 @@ extension String {
         }
         return NSAttributedString(string: self, attributes: [NSAttributedString.Key.foregroundColor: edsDefaultColor])
     }
+
+    func separateNameAndUnit() -> (name: String, unit: String?) {
+        let range = NSRange(location: 0, length: self.count)
+        //匹配规则：起始(^)   分组1⃣️（非括号字符）   左括号    分组2⃣️（非括号字符）   右括号    结束($)
+        let regex = try? NSRegularExpression(pattern: "^([^\\(\\)]+)\\(([^\\(\\)]+)\\)$", options: .allowCommentsAndWhitespace)
+        if let result = regex?.firstMatch(in: self, options: [], range: range) {
+            let v = (self as NSString).substring(with: result.range(at: 1))
+            let u = (self as NSString).substring(with: result.range(at: 2))
+            return (v, u)
+        } else {
+            return (self, nil)
+        }
+    }
+
+    func getEDSServletImageUrl() -> URL {
+        return URL(string: "\(EDSConfig.servicePath):8443/EDSServlet/upload/\(self).png")!
+    }
+
+
+    /// 静态方法生成固定长度的随机字符串
+    /// - Parameter length: <#length description#>
+    static func randomString(length: Int) -> String {
+        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        return String((0..<length).map { _ in letters.randomElement()! })
+    }
 }

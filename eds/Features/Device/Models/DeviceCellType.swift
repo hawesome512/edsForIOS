@@ -33,20 +33,29 @@ enum DeviceCellType: String {
     //默认，文字，default是系统关键字
     case list
 
+    //Fixed Page===========================
+    //一般信息
+    case info
+    //二维码
+    case qrcode
+    //工单、异常指令
+    case goto
+
     //特殊定制============================
     //ATS类型设备工作状态显示单元
     case ATSStatus
 
 
     /// 获取表格Cell行高，默认使用屏幕占比ratio*height，分辨率小的情况下使用min
-    func getRowHeight() -> (ratio: CGFloat, min: CGFloat) {
+    func getRowHeight(in tableView: UITableView) -> CGFloat {
+        let height = tableView.frame.height
         switch self {
-        case .bar, .ATSStatus:
-            return (0.25, 240)
-        case .text, .button, .range:
-            return (0.125, 120)
-        case .onoff, .list, .item, .dynamic, .fixed:
-            return (0.0625, 60)
+        case .bar, .ATSStatus, .qrcode:
+            return max(0.25 * height, 240)
+        case .text, .button, .range, .goto:
+            return max(0.125 * height, 120)
+        case .onoff, .list, .item, .dynamic, .fixed, .info:
+            return max(0.0625 * height, 60)
         }
     }
 
@@ -72,6 +81,12 @@ enum DeviceCellType: String {
             return DeviceListCell(style: .default, reuseIdentifier: rawValue)
         case .ATSStatus:
             return DeviceATSStatusCell(style: .default, reuseIdentifier: rawValue)
+        case .qrcode:
+            return FixedQRCodeCell(style: .default, reuseIdentifier: rawValue)
+        case .goto:
+            return FixedGotoCell(style: .default, reuseIdentifier: rawValue)
+        case .info:
+            return FixedInfoCell(style: .default, reuseIdentifier: rawValue)
         }
     }
 }

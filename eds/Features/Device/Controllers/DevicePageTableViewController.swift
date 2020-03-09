@@ -90,8 +90,8 @@ class DevicePageTableViewController: UITableViewController {
         let pageItem = pageModel!.content[indexPath.section]
         //默认使用list
         let cellType = DeviceCellType(rawValue: pageItem.display) ?? DeviceCellType.list
-        let heights = cellType.getRowHeight()
-        return max(heights.ratio * tableView.frame.height, heights.min)
+        return cellType.getRowHeight(in: tableView)
+
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

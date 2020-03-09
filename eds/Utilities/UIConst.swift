@@ -20,3 +20,4 @@ let edsGrayColor = UIColor.systemGray
 //标准间距,水平20，竖直10
 let edsSpace: CGFloat = 20
 let edsVerSpace: CGFloat = 10
+let edsHeight: CGFloat = 44

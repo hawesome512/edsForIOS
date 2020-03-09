@@ -11,7 +11,6 @@ import RxSwift
 
 class DeviceListCell: UITableViewCell, PasswordVerifyDelegate {
 
-    private let space: CGFloat = 20
     private let preferredFont = UIFont.preferredFont(forTextStyle: .title3)
     private let disposeBag = DisposeBag()
 
@@ -32,13 +31,13 @@ class DeviceListCell: UITableViewCell, PasswordVerifyDelegate {
         nameLabel.font = preferredFont
         addSubview(nameLabel)
         nameLabel.centerYToSuperview()
-        nameLabel.leadingToSuperview(offset: space)
+        nameLabel.leadingToSuperview(offset: edsSpace)
         valueLabel.text = String(format: "%d", Tag.nilValue)
         valueLabel.font = preferredFont
         addSubview(valueLabel)
         valueLabel.centerYToSuperview()
         //因cell右边存在accessoryType，space*2,避免其被覆盖
-        valueLabel.trailingToSuperview(offset: space * 2)
+        valueLabel.trailingToSuperview(offset: edsSpace * 2)
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

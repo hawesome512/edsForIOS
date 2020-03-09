@@ -15,7 +15,7 @@ class DeviceTrendTableViewController: UITableViewController {
     func trend(with tags: [Tag], condition: WATagLogRequestCondition?, isAccumulated: Bool) {
         
         let logCondition = condition ?? WATagLogRequestCondition.defaultCondition(with: tags, isAccumulated:isAccumulated)
-        MoyaProvider<WAService>().request(.getTagLog(authority: TagUtility.sharedInstance.tempAuthority, condition: logCondition)) { result in
+        MoyaProvider<WAService>().request(.getTagLog(authority: User.tempInstance.authority!, condition: logCondition)) { result in
             switch result {
             case .success(let response):
                 let logs = JsonUtility.getTagLogValues(data: response.data)

@@ -22,16 +22,13 @@ class TagUtility: MQTTServiceDelegate {
         didSet {
             //获取点列表之后，进行mqtt订阅
             MQTTService.sharedInstance.delegate = self
-            MQTTService.sharedInstance.refreshTagValues(projectName: tempProject)
+            if let projectName = User.tempInstance.getProjectName() {
+                MQTTService.sharedInstance.refreshTagValues(projectName: projectName)
+            }
         }
     }
 
     //MARK:通信>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-    //临时测试，public，其他页面（修改参数）也可以调用
-    public let tempAuthority = "guest:xseec".toBase64()
-    public let tempProjectID = "2/XRD"
-    public let tempProject = "XRD"
 
     /// 从后台导入工程点列表
     func loadProjectTagList() {
@@ -39,7 +36,7 @@ class TagUtility: MQTTServiceDelegate {
         guard tagList.count == 0 else {
             return
         }
-        MoyaProvider<WAService>().request(.getTagList(authority: tempAuthority, projectID: tempProjectID)) { result in
+        MoyaProvider<WAService>().request(.getTagList(authority: User.tempInstance.authority!, projectID: User.tempInstance.projectID!)) { result in
             switch result {
             case .success(let response):
                 //后台返回数据类型[tag?]?👉[tag]
@@ -59,7 +56,7 @@ class TagUtility: MQTTServiceDelegate {
         guard tags.count > 0 else {
             return
         }
-        MoyaProvider<WAService>().request(.getTagValues(authority: tempAuthority, tagList: tags)) { result in
+        MoyaProvider<WAService>().request(.getTagValues(authority: User.tempInstance.authority!, tagList: tags)) { result in
             switch result {
             case .success(let response):
                 self.update(with: JsonUtility.getTagValues(data: response.data))
@@ -134,14 +131,6 @@ class TagUtility: MQTTServiceDelegate {
     }
 
     //MARK:静态方法>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-    /// 获取设备类型图标
-    /// - Parameter name: 设备or点名称，CY_A2_2👉A2
-    static func getDeviceIcon(with name: String) -> UIImage? {
-        let infos = name.components(separatedBy: Tag.deviceSeparator)
-        return infos.count == 3 ? UIImage(named: "device_" + infos[1]) : nil
-    }
-
 
     /// 获取设备类型String
     /// - Parameter name: 设备or点名称

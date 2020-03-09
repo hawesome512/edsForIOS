@@ -82,7 +82,7 @@ extension DeviceButtonCell: DevicePageItemSource, PasswordVerifyDelegate {
 
     //远程控制，每次都必须验证
     func passwordVerified() {
-        MoyaProvider<WAService>().request(.setTagValues(authority: TagUtility.sharedInstance.tempAuthority, tagList: [buttonTag])) { result in
+        MoyaProvider<WAService>().request(.setTagValues(authority: User.tempInstance.authority!, tagList: [buttonTag])) { result in
             switch result {
             case .success(let response):
                 print(String(format: "Update %s value: %b", self.buttonTag.Name, JsonUtility.didSettedValues(data: response.data)))

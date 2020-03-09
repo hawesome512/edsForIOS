@@ -26,10 +26,10 @@ class VerifyUtility {
 
     static func verify(tag: Tag, in container: UITableViewCell&PasswordVerifyDelegate) -> AuthorityResult {
 
-        //待实现，用户权限锁
-        //        if false {
-        //            return .userLocked
-        //        }
+        //用户权限锁
+        if !User.tempInstance.isOperable() {
+            return .userLocked
+        }
 
         let deviceName = TagUtility.getDeviceName(with: tag.Name)!
         let deviceType = TagUtility.getDeviceType(with: deviceName)!

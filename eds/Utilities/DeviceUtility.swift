@@ -18,13 +18,17 @@ class DeviceUtility {
 
     private init() { }
 
+    func remove(devices: [Device]) {
+        deviceList = deviceList.filter { device in !devices.contains(device) }
+    }
+
     /// 从后台导入资产设备列表
     func loadProjectDeviceList() {
         //获取后台服务设备列表请求在生命周期中只有一次
         guard deviceList.count == 0 else {
             return
         }
-        let factor = EDSServiceQueryFactor(id: TagUtility.sharedInstance.tempProjectID)
+        let factor = EDSServiceQueryFactor(id: User.tempInstance.projectID!)
         MoyaProvider<EDSService>().request(.queryDeviceList(factor: factor)) { result in
             switch result {
             case .success(let response):
@@ -42,25 +46,29 @@ class DeviceUtility {
         var result: [Device] = []
         deviceList.filter { $0.level == .room }.forEach {
             result.append($0)
-            result.append(contentsOf: getBranceList(device: $0))
+            result.append(contentsOf: getBranceList(device: $0, visiableOnly: true))
         }
         return result
     }
 
-    private func getBranceList(device: Device) -> [Device] {
+    func getBranceList(device: Device, visiableOnly visiable: Bool) -> [Device] {
         var result: [Device] = []
-        //展开时才添加支路
-        if !device.collapsed {
+        //可视化：展开时才添加支路，实际时：visible=false
+        if (visiable ? !device.collapsed : true) {
             device.getBranches().forEach { branch in
                 if let branchDevice = deviceList.first(where: { $0.id == branch }) {
                     result.append(branchDevice)
                     //若之路还有支路，继续循环
                     if !branchDevice.branch.isEmpty {
-                        result.append(contentsOf: getBranceList(device: branchDevice))
+                        result.append(contentsOf: getBranceList(device: branchDevice, visiableOnly: visiable))
                     }
                 }
             }
         }
         return result
+    }
+
+    func getParent(of child: Device) -> Device? {
+        return deviceList.first { $0.branch.contains(child.getShortID()) }
     }
 }

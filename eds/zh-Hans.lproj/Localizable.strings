@@ -1,5 +1,15 @@
 /* ok */
 "ok" = "好";
+/* cancel */
+"cancel" = "取消";
+/* delete */
+"delete" = "删除";
+/* edit */
+"edit" = "编辑";
+/* workorder */
+"workorder" = "运维工单";
+/* alarm_record */
+"alarm_record" = "异常警报";
 
 /* trend_evaluation */
 "evaluation" = "运行评估";
@@ -22,6 +32,29 @@
 /* trend_bad */
 "bad" = "差";
 
+/* device_add_room */
+"add_room" = "新增配电房";
+/* device_add_info */
+"add_info" = "新增设备资料";
+/* device_info */
+"info" = "设备资料";
+/* device_title */
+"title" = "资料名称";
+/* device_value */
+"value" = "设定值";
+/* device_unit */
+"unit" = "单位，若无则不填写";
+/* device_room_addition */
+"room_addition" = "请输入新增配电房名称";
+/* device_box_addition */
+"box_addition" = "请输入新增配电柜名称";
+/* device_property_addition */
+"property_addition" = "请输入新增设备名称";
+/* device_delete_title */
+"delete_title" = "删除[%@]及所属数据";
+/* device_delete_info */
+"delete_info" = "该操作不可恢复！";
+
 /* device_uncommunicate */
 "uncommunicate" = "非通信型";
 /* device_property */
@@ -35,7 +68,7 @@
 /* device_password_error */
 "password_error" = "密码错误";
 /* device_userLocked */
-"userLocked" = "您没有执行此操作的权限，需向管理员申请授权。";
+"userLocked" = "您没有执行此操作的权限，请向管理员申请授权。";
 /* device_localLocked */
 "localLocked" = "此设备设定为【本地】模式，不能远程控制。";
 /* device_denied */

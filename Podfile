@@ -18,4 +18,6 @@ target 'eds' do
   pod 'TinyConstraints'
   pod 'HGCircularSlider'
   pod 'SwiftDate'
+  pod 'YPImagePicker'
+  pod 'EFQRCode'
 end

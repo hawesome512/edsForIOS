@@ -17,7 +17,7 @@ struct DeviceModel: HandyJSON {
     static let itemInfoSeparator = "/"
     //items中空的项，忽略
     static let itemNil = ""
-    //items中首项为*，表示等差范围数列,尽管数列item可能非常多（上千个）但app中只做粗调，尽量将step步进设大
+    //items中首项为step，表示等差范围数列,尽管数列item可能非常多（上千个）但app中只做粗调，尽量将step步进设大,将可选项限制在20以内
     static let itemStepArray = "step"
     //items中首项为accumulation，表示此list的值为累加值，如电能ep,在DeviceTrendViewController中取condition最后值,并对间隔进行相减处理
     static let itemsAccumulation = "accumulation"

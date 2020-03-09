@@ -13,12 +13,9 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    //全局变量，工程监控点列表
-    lazy var tagList: [Tag] = []
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        //未避免MQTT初始化后马上订阅，将单例初始化提前
+        //为避免MQTT初始化后马上订阅，将单例初始化提前，订阅将在TagUtility中等获取tagList后执行
         print(MQTTService.sharedInstance.description())
         return true
     }

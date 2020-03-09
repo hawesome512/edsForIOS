@@ -44,7 +44,9 @@ enum EDSService {
     //手机验证码
     case verifyPhoneLogin(phoneVerification: HandyJSON)
     //上传图片
-    case upload(fileURL: URL, fileName: String)
+    case upload(data: Data, fileName: String)
+//    case upload(fileURL: URL, fileName: String)
+
 }
 
 extension EDSService: TargetType {
@@ -107,8 +109,9 @@ extension EDSService: TargetType {
         case .updateProject(let edsModel), .updateWorkorder(let edsModel), .updateAlarm(let edsModel), .updateAction(let edsModel), .updateAccount(let edsModel), .updateDevice(let edsModel), .verifyPhoneLogin(let edsModel):
             //post请求，参数在Request Body中
             return .requestParameters(parameters: edsModel.toJSON()!, encoding: JSONEncoding.default)
-        case .upload(let fileURL, let fileName):
-            let imageData = MultipartFormData(provider: .file(fileURL), name: fileName, fileName: fileName, mimeType: "image/*")
+        case .upload(let data, let fileName):
+//            let imageData = MultipartFormData(provider: .file(fileURL), name: fileName, fileName: fileName, mimeType: "image/*")
+            let imageData = MultipartFormData(provider: .data(data), name: fileName, fileName: fileName+".png", mimeType: "image/*")
             return .uploadMultipart([imageData])
         }
     }

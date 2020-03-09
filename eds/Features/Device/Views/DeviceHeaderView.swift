@@ -7,12 +7,29 @@
 //  设备页头图
 
 import UIKit
+import RxSwift
 import TinyConstraints
+import YPImagePicker
+import Moya
+import Kingfisher
 
 class DeviceHeaderView: UIView {
 
     private let cornerGradientLayer = CAGradientLayer()
-    let imageView = UIImageView()
+    private let imageView = UIImageView()
+    private let imageButton = UIButton()
+    private let disposeBag = DisposeBag()
+
+    var device: Device? {
+        didSet {
+            if let imageUrl = device?.image, !imageUrl.isEmpty {
+                imageView.kf.setImage(with: imageUrl.getEDSServletImageUrl())
+                imageView.contentMode = .scaleAspectFill
+            }else{
+                imageView.image = device?.getDefaultImage()
+            }
+        }
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,9 +38,15 @@ class DeviceHeaderView: UIView {
         layer.insertSublayer(cornerGradientLayer, at: 0)
         //默认View为黑色
         backgroundColor = .white
-        imageView.contentMode = .scaleAspectFit
         addSubview(imageView)
-        imageView.edgesToSuperview(insets: .top(20))
+        imageView.edgesToSuperview()
+        imageView.contentMode = .scaleAspectFit
+
+        addSubview(imageButton)
+        imageButton.edges(to: imageView)
+        imageButton.rx.tap.bind(onNext: {
+            self.showPicker()
+        }).disposed(by: disposeBag)
     }
 
     required init?(coder: NSCoder) {
@@ -33,6 +56,39 @@ class DeviceHeaderView: UIView {
     override func layoutSubviews() {
         //渐变层需要约束frame
         cornerGradientLayer.frame = bounds
+    }
+
+    private func showPicker() {
+        var config = YPImagePickerConfiguration()
+        //关闭滤镜，16:9裁剪，限制图片上传尺寸，不将裁减图片保存本地
+        config.showsPhotoFilters = false
+        config.showsCrop = .rectangle(ratio: 16 / 9)
+        config.targetImageSize = .cappedTo(size: 1024)
+        config.shouldSaveNewPicturesToAlbum = false
+        let picker = YPImagePicker(configuration: config)
+        picker.didFinishPicking { [unowned picker] items, _ in
+            if let photo = items.singlePhoto?.image {
+
+                self.imageView.image = photo
+                self.imageView.contentMode = .scaleAspectFill
+                let imageID = User.tempInstance.generateImageID()
+                let moyaProvider = MoyaProvider<EDSService>()
+                moyaProvider.request(.upload(data: photo.pngData()!, fileName: imageID)) { response in
+                    switch(response) {
+                    case .success:
+                        if let device = self.device {
+                            device.image = imageID
+                            moyaProvider.request(.updateDevice(device: device)) { _ in }
+                            print("upload device image success")
+                        }
+                    default:
+                        break
+                    }
+                }
+            }
+            picker.dismiss(animated: true, completion: nil)
+        }
+        window?.rootViewController?.present(picker, animated: true, completion: nil)
     }
 
 }

@@ -8,7 +8,7 @@
 //  Licensed under Apache License 2.0
 //
 //  https://github.com/danielgindi/Charts
-//
+//  方案来源于Charts，📈图标中的标签
 
 import Foundation
 import Charts

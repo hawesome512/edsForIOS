@@ -7,26 +7,27 @@
 //
 
 import UIKit
+import Foundation
 import Moya
 import SwiftyJSON
 import HandyJSON
 import CocoaMQTT
-import Foundation
 import RxSwift
 import RxCocoa
 import SwiftDate
+import EFQRCode
 
 class ViewController: UIViewController {
 
     let disposeBag = DisposeBag()
-    let button = UIButton()
+    let button = ImageButton()
     let label = UILabel()
     var tag: Tag?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
-        //导入数据列表
+        //初始化后台数据，导入数据列表
         TagUtility.sharedInstance.loadProjectTagList()
         DeviceUtility.sharedInstance.loadProjectDeviceList()
     }
@@ -39,10 +40,12 @@ class ViewController: UIViewController {
     fileprivate func initViews() {
         title = "首页"
 
-        button.backgroundColor = .systemBlue
-        button.setTitle("Execute", for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .systemGreen
+        button.setTitle("运维工单", for: .normal)
+        button.setImage(UIImage(systemName: "doc.richtext"), for: .normal)
+//        button.setTitleColor(.white, for: .normal)
         button.rx.tap.bind(onNext: {
+
             //跳转设备列表
             let deviceListVC = DeviceListViewController()
             self.navigationController?.pushViewController(deviceListVC, animated: true)
@@ -50,7 +53,7 @@ class ViewController: UIViewController {
         }).disposed(by: disposeBag)
         view.addSubview(button)
         button.center(in: view)
-        button.width(200)
+        button.width(180)
         button.height(60)
 
         label.text = "0"

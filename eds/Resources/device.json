@@ -12,10 +12,8 @@
 			"alarm":["Ia","Ib","Ic","Ir"],
 			"authority":["CtrlMode/76/local/82/remote","CtrlCode/%04X"],
 			"pages":[
-				 {"title":"overview","content":[
-                        {"name":"status","tags":["Status"],"display":"text","items":["overload","short","instant","ground","","","on/off","trip"],"section":"status"},
-                        {"name":"current","tags":["Ia","Ib","Ic"],"display":"bar","items":["0","green","90","yellow","105","red","120"],"unit":"Ir","section":"current_ratio"}]},
 				 {"title":"realtime","content":[
+                        {"name":"status","tags":["Status"],"display":"text","items":["overload","short","instant","ground","","","on/off","trip"],"section":"status"},
 						{"name":"current","tags":["Ia","Ib","Ic"],"display":"bar","section":"current"},
 						{"name":"current_others","tags":["In","Igf"],"display":"list"},
 						{"name":"voltage","tags":["Ua","Ub","Uc"],"display":"bar","section":"voltage"}]},
@@ -45,10 +43,8 @@
 			"alarm":["Ia","Ib","Ic","Ir"],
 			"authority":["CtrlMode/76/local/82/remote","CtrlCode/%04X"],
 			"pages":[
-				 {"title":"overview","content":[
-						{"name":"status","tags":["Status"],"display":"text","items":["overload","short","instant","ground","","","on/off","trip"],"section":"status"},
-                        {"name":"current","tags":["Ia","Ib","Ic"],"display":"bar","items":["0","green","90","yellow","105","red","120"],"unit":"Ir","section":"current_ratio"}]},
 				 {"title":"realtime","content":[
+                        {"name":"status","tags":["Status"],"display":"text","items":["overload","short","instant","ground","","","on/off","trip"],"section":"status"},
 						{"name":"current","tags":["Ia","Ib","Ic"],"display":"bar","section":"current"},
 						{"name":"current_others","tags":["In","Igf"],"display":"list"},
 						{"name":"voltage","tags":["Ua","Ub","Uc"],"display":"bar","section":"voltage"}]},
@@ -78,11 +74,10 @@
 			"alarm":["Ia","Ib","Ic","Ir"],
 			"authority":["CtrlMode/0/local/1/remote","CtrlCode/%04X"],
 			"pages":[
-				 {"title":"overview","content":[
-						{"name":"status","tags":["Status"],"display":"text","items":["overload","short","instant","ground","","","on/off","trip"],"section":"status"},
-						{"name":"energy","tags":["EP"],"display":"text","section":"EP"},
-						{"name":"demand","tags":["IdA","IdB","IdC"],"display":"bar","items":["0","green","90","yellow","105","red","120"],"unit":"Ir","section":"demand"}]},
 				 {"title":"realtime","content":[
+                        {"name":"status","tags":["Status"],"display":"text","items":["overload","short","instant","ground","","","on/off","trip"],"section":"status"},
+                        {"name":"energy","tags":["EP"],"display":"text","section":"EP"},
+                        {"name":"demand","tags":["IdA","IdB","IdC"],"display":"bar","items":["0","green","90","yellow","105","red","120"],"unit":"Ir","section":"demand"},
 						{"name":"current","tags":["Ia","Ib","Ic"],"display":"bar","section":"current"},
 						{"name":"current_others","tags":["In","Igf"],"display":"list"},
 						{"name":"voltage","tags":["Ua","Ub","Uc"],"display":"bar","section":"voltage"},
@@ -118,10 +113,7 @@
 			"alarm":["Ia","Ib","Ic","IrReal"],
 			"authority":["CtrlMode/76/local/82/remote","CtrlCode/%04X"],
 			"pages":[
-				 {"title":"overview","content":[
-						{"name":"status","tags":["Status"],"display":"text","items":["","","","","","","","","overload","short","instant","ground","","","off/on","trip"],"section":"status"},
-						{"name":"current","tags":["Ia","Ib","Ic"],"display":"bar","items":["0","green","90","yellow","105","red","120"],"unit":"IrReal","section":"current_ratio"}]},
-				 {"title":"realtime","content":[
+				 {"title":"realtime","content":[        {"name":"status","tags":["Status"],"display":"text","items":["","","","","","","","","overload","short","instant","ground","","","off/on","trip"],"section":"status"},
 						{"name":"current","tags":["Ia","Ib","Ic"],"display":"bar","section":"current"},
 						{"name":"current_others","tags":["In","Igf"],"display":"list"}]},
 				 {"title":"parameter","content":[
@@ -150,10 +142,9 @@
 			"alarm":["Ua_1","Ub_1","Uc_1","Ua_2","Ub_2","Uc_2"],
 			"authority":["CtrlMode/76/local/82/remote","CtrlCode/%04X"],
 			"pages":[
-				 {"title":"overview","content":[
-                        {"name":"work","tags":["St2"],"display":"ATSStatus","items":["","1off/1on","1normal/1fault","","2off/2on","2normal/2fault"],"section":"work"},
-                        {"name":"status","tags":["Status"],"display":"text","items":["oil","sources","refuse","ferroelectric","feedback","overload","disturb","rotary"],"section":"status"}]},
 				 {"title":"realtime","content":[
+                        {"name":"work","tags":["St2"],"display":"ATSStatus","items":["","1off/1on","1normal/1fault","","2off/2on","2normal/2fault"],"section":"work"},
+                        {"name":"status","tags":["Status"],"display":"text","items":["oil","sources","refuse","ferroelectric","feedback","overload","disturb","rotary"],"section":"status"},
 						{"name":"source1","tags":["Ua_1","Ub_1","Uc_1"],"display":"bar","section":"source1"},
 						{"name":"source1_quality","tags":["Up_1"],"display":"range","items":["0","green","2","yellow","4","red","10"]},
 						{"name":"F_1","tags":["F_1"],"display":"list"},
