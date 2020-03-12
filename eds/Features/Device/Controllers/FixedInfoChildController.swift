@@ -51,7 +51,8 @@ class FixedInfoChildController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.row {
         case deviceInfos.count:
-            let cell = DeviceCellType.goto.getTableCell()
+            let cell = DeviceCellType.goto.getTableCell() as! FixedGotoCell
+            cell.device = device
             return cell
         case deviceInfos.count + 1:
             let cell = DeviceCellType.qrcode.getTableCell() as! FixedQRCodeCell

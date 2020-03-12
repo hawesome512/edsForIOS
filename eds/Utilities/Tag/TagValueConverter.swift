@@ -63,13 +63,25 @@ class TagValueConverter {
         }
     }
 
+    static func getAlarmText(with alarm: String, device: Device) -> String {
+        let deviceType = TagUtility.getDeviceType(with: device.getShortID())
+        let deviceStatus = DeviceModel.sharedInstance?.types.first { $0.type == deviceType }?.status
+        if let alarmCode = alarm.getAlarmCode(), let items = deviceStatus?.items {
+            return getText(value: Double(alarmCode)!, items: items).text
+        }
+        return alarm
+    }
+
 
     /// 异常详情本地化文本
     /// - Parameter statusText: <#statusText description#>
     private static func getLocalizedAlarmStatusText(_ statusText: String) -> String {
         var status = ""
-        statusText.components(separatedBy: DeviceModel.itemInfoSeparator).forEach {
-            status.append($0.localize(with: prefixDevice) + " ")
+        statusText.components(separatedBy: DeviceModel.itemInfoSeparator).forEach { item in
+            //报警时:on/off不再需要显示
+            if item != "on" && item != "off" {
+                status.append(item.localize(with: prefixDevice) + " ")
+            }
         }
         return status
     }

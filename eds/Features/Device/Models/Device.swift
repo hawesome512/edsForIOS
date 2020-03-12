@@ -9,7 +9,7 @@
 import Foundation
 import HandyJSON
 
-class Device: HandyJSON, Equatable {
+class Device: HandyJSON, Equatable, EDSDelegate {
 
     //工程🆔与时间戳点间隔符号
     private let idSeparator = "-"

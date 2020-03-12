@@ -11,18 +11,28 @@ import Moya
 
 class DeviceTrendTableViewController: UITableViewController {
 
-    //查询历史记录，默认为过去一天24h的平均值
-    func trend(with tags: [Tag], condition: WATagLogRequestCondition?, isAccumulated: Bool) {
-        
-        let logCondition = condition ?? WATagLogRequestCondition.defaultCondition(with: tags, isAccumulated:isAccumulated)
+
+    /// 趋势设置
+    /// - Parameters:
+    ///   - tags: 需要查询的数据点
+    ///   - condition: 查询条件
+    ///   - isAccumulated: 是否是累加值，累加值递减处理相邻数据点
+    ///   - upperLimit: 安全上限
+    ///   - lowerLimit: 安全下限
+    func trend(with tags: [Tag], condition: WATagLogRequestCondition?, isAccumulated: Bool, upperLimit: Double? = nil, lowerLimit: Double? = nil) {
+
+        let logCondition = condition ?? WATagLogRequestCondition.defaultCondition(with: tags, isAccumulated: isAccumulated)
         MoyaProvider<WAService>().request(.getTagLog(authority: User.tempInstance.authority!, condition: logCondition)) { result in
             switch result {
             case .success(let response):
                 let logs = JsonUtility.getTagLogValues(data: response.data)
+                guard let validLogs = logs, validLogs.count > 0 else {
+                    return
+                }
                 let tranformLogs = self.tranformData(sources: logs, isAccumulation: isAccumulated)
-                self.chartCell.setData(tranformLogs, condition: logCondition)
+                self.chartCell.setData(tranformLogs, condition: logCondition, upper: upperLimit, lower: lowerLimit)
                 self.analysisCell.setData(tranformLogs, condition: logCondition)
-                self.evaluationCell.setData(tranformLogs)
+                self.evaluationCell.setData(tranformLogs, upper: upperLimit, lower: lowerLimit)
             default:
                 break
             }
@@ -101,9 +111,9 @@ class DeviceTrendTableViewController: UITableViewController {
                     }
                 }
                 //返回累加值被处理后的值
-                return result.append((source.Name, tranValues))
+                return result.append((source.getTagShortName(), tranValues))
             } else {
-                return result.append((source.Name, doubleValues))
+                return result.append((source.getTagShortName(), doubleValues))
             }
         }
         return result

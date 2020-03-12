@@ -87,6 +87,11 @@
 		46FB866823BAE87800754E88 /* DevicePageItemSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FB866723BAE87800754E88 /* DevicePageItemSource.swift */; };
 		46FB866A23BB17EA00754E88 /* Double-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FB866923BB17EA00754E88 /* Double-Ext.swift */; };
 		46FD463A2384C35500A796BC /* TagUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FD46392384C35500A796BC /* TagUtility.swift */; };
+		46FF950024161B87002E36AD /* AlarmUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FF94FF24161B87002E36AD /* AlarmUtility.swift */; };
+		46FF950224162EDF002E36AD /* AlarmListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FF950124162EDF002E36AD /* AlarmListViewController.swift */; };
+		46FF950424162F8A002E36AD /* AlarmCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FF950324162F8A002E36AD /* AlarmCell.swift */; };
+		46FF950A24171E06002E36AD /* ControllerUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FF950924171E06002E36AD /* ControllerUtility.swift */; };
+		46FF950C241772F8002E36AD /* AlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FF950B241772F8002E36AD /* AlarmViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -174,6 +179,11 @@
 		46FB866723BAE87800754E88 /* DevicePageItemSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicePageItemSource.swift; sourceTree = "<group>"; };
 		46FB866923BB17EA00754E88 /* Double-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double-Ext.swift"; sourceTree = "<group>"; };
 		46FD46392384C35500A796BC /* TagUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagUtility.swift; sourceTree = "<group>"; };
+		46FF94FF24161B87002E36AD /* AlarmUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmUtility.swift; sourceTree = "<group>"; };
+		46FF950124162EDF002E36AD /* AlarmListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListViewController.swift; sourceTree = "<group>"; };
+		46FF950324162F8A002E36AD /* AlarmCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmCell.swift; sourceTree = "<group>"; };
+		46FF950924171E06002E36AD /* ControllerUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerUtility.swift; sourceTree = "<group>"; };
+		46FF950B241772F8002E36AD /* AlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewController.swift; sourceTree = "<group>"; };
 		49A018248F37C60BAB1547D4 /* Pods_eds.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_eds.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE5850CFD0236670BF546995 /* Pods-eds.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eds.debug.xcconfig"; path = "Target Support Files/Pods-eds/Pods-eds.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -334,15 +344,15 @@
 			isa = PBXGroup;
 			children = (
 				4621271323B197A900105664 /* DeviceListViewController.swift */,
-				4621272B23B5CDBA00105664 /* DynamicDeviceViewController.swift */,
 				4621272F23B5D95A00105664 /* DevicePageTableViewController.swift */,
 				46100A9B23C5665300C43D1A /* DeviceItemMeterViewController.swift */,
 				46227A4023C80FF400768799 /* DeviceTrendTableViewController.swift */,
 				469BB71E23CEDAC800A57C51 /* PasswordViewController.swift */,
 				4607DC7923FE093300E35015 /* DeviceAdditionAlertController.swift */,
-				46B4934E240897800066863D /* FixedDeviceViewController.swift */,
-				46B49350240899B50066863D /* FixedInfoChildController.swift */,
 				46DF04AA240CAD6800E3DE65 /* InfoAlertController.swift */,
+				46B49350240899B50066863D /* FixedInfoChildController.swift */,
+				4621272B23B5CDBA00105664 /* DynamicDeviceViewController.swift */,
+				46B4934E240897800066863D /* FixedDeviceViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -400,6 +410,7 @@
 		460F7256236FF53B00CFC7C3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				46FF950324162F8A002E36AD /* AlarmCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -407,6 +418,8 @@
 		460F7257236FF54900CFC7C3 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				46FF950124162EDF002E36AD /* AlarmListViewController.swift */,
+				46FF950B241772F8002E36AD /* AlarmViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -492,6 +505,8 @@
 				469BB72023CEFF6D00A57C51 /* VerifyUtility.swift */,
 				4670902D23D430B8008777ED /* DeviceUtility.swift */,
 				46DC53542411D77400217ECD /* QRCodeUtility.swift */,
+				46FF94FF24161B87002E36AD /* AlarmUtility.swift */,
+				46FF950924171E06002E36AD /* ControllerUtility.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -776,6 +791,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4670902C23D3FD1E008777ED /* Device.swift in Sources */,
+				46FF950A24171E06002E36AD /* ControllerUtility.swift in Sources */,
+				46FF950224162EDF002E36AD /* AlarmListViewController.swift in Sources */,
 				460F726E2371111100CFC7C3 /* WAService.swift in Sources */,
 				4621272C23B5CDBA00105664 /* DynamicDeviceViewController.swift in Sources */,
 				46FB866823BAE87800754E88 /* DevicePageItemSource.swift in Sources */,
@@ -787,6 +804,7 @@
 				46B49351240899B50066863D /* FixedInfoChildController.swift in Sources */,
 				46E0E3D02374074F00116DA2 /* String-Ext.swift in Sources */,
 				460BA6D9237CDB03008E7CDF /* Alarm.swift in Sources */,
+				46FF950C241772F8002E36AD /* AlarmViewController.swift in Sources */,
 				4621272423B19FF400105664 /* DeviceListCell.swift in Sources */,
 				46DC53572411E88A00217ECD /* FixedQRCodeCell.swift in Sources */,
 				46227A3D23C80E1F00768799 /* DeviceTrendAnalysisCell.swift in Sources */,
@@ -819,6 +837,7 @@
 				4621273623B5EF6A00105664 /* DeviceHeaderView.swift in Sources */,
 				46FB866A23BB17EA00754E88 /* Double-Ext.swift in Sources */,
 				46B4934F240897800066863D /* FixedDeviceViewController.swift in Sources */,
+				46FF950024161B87002E36AD /* AlarmUtility.swift in Sources */,
 				4621272123B19FF400105664 /* DeviceAtsStatusCell.swift in Sources */,
 				46100AA223C6D61A00C43D1A /* UIButton-Ext.swift in Sources */,
 				4605D14E2372BF6A00558500 /* Date-Ext.swift in Sources */,
@@ -832,6 +851,7 @@
 				460F7270237113B500CFC7C3 /* StringConst.swift in Sources */,
 				4621273823B60B9800105664 /* CGPoint-Ext.swift in Sources */,
 				4621272623B19FF400105664 /* DeviceBarCell.swift in Sources */,
+				46FF950424162F8A002E36AD /* AlarmCell.swift in Sources */,
 				4621273223B5E8F600105664 /* CAGradientLayer-Ext.swift in Sources */,
 				4621273423B5EA0A00105664 /* UIConst.swift in Sources */,
 				460BA6D5237A934A008E7CDF /* ProjectInfo.swift in Sources */,

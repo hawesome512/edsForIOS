@@ -25,6 +25,10 @@ struct LogTag: HandyJSON {
         Name = name
         DataType = logDataType
     }
+    
+    func getTagShortName() -> String {
+        return Name.components(separatedBy: Tag.nameSeparator)[1]
+    }
 
 }
 
@@ -64,6 +68,18 @@ struct WATagLogRequestCondition: HandyJSON {
         let startTime = Date().add(by: .day, value: -1).dateAtStartOf(.hour).toDateTimeString()
         //record+1个实现完整区间，如1.1 12:00一1.2 12:00
         return WATagLogRequestCondition(startTime: startTime, intervalType: .H, interval: 1, records: 24 + 1, tags: logTags)
+    }
+
+
+    /// 报警查询条件：前后5分钟，最大值
+    /// - Parameters:
+    ///   - tags: <#tags description#>
+    ///   - time: <#time description#>
+    static func alarmCondition(with tags: [Tag], time: String) -> WATagLogRequestCondition {
+        let logTags = tags.map { LogTag(name: $0.Name, logDataType: .Max) }
+        //应当设置local，否则定为0时区的时间
+        let startTime = (time.toDate(nil, region: .local)! - 3.minutes).date.toDateTimeString()
+        return WATagLogRequestCondition(startTime: startTime, intervalType: .S, interval: 5, records: 60, tags: logTags)
     }
 
 

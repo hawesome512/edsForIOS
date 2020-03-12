@@ -15,5 +15,7 @@ let NIL = "null"
 let prefixDevice = "device"
 //本地化跟趋势分析相关的String……
 let prefixTrend = "trend"
+//本地化中跟报警相关String
+let prefixAlarm="alarm"
 
 

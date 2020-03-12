@@ -7,11 +7,15 @@
 //  静态页面单元格：工单和异常跳转指令
 
 import UIKit
+import RxSwift
 
 class FixedGotoCell: UITableViewCell {
 
     private let workorderButton = ImageButton()
     private let alarmButton = ImageButton()
+    private let disposeBag = DisposeBag()
+
+    var device: Device?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -24,15 +28,22 @@ class FixedGotoCell: UITableViewCell {
 
     private func initViews() {
         workorderButton.backgroundColor = .systemGreen
-        workorderButton.setImage(UIImage(systemName: "doc.richtext"), for: .normal)
-        workorderButton.setTitle("workorder".localize(), for: .normal)
+        workorderButton.setImage(Workorder.icon, for: .normal)
+        workorderButton.setTitle(Workorder.description, for: .normal)
         addSubview(workorderButton)
         workorderButton.widthToSuperview(multiplier: 0.5, offset: -edsSpace * 1.5)
         workorderButton.edgesToSuperview(excluding: .leading, insets: .uniform(edsSpace))
 
         alarmButton.backgroundColor = .systemRed
-        alarmButton.setImage(UIImage(systemName: "bell"), for: .normal)
-        alarmButton.setTitle("alarm_record".localize(), for: .normal)
+        alarmButton.setImage(Alarm.icon, for: .normal)
+        alarmButton.setTitle(Alarm.description, for: .normal)
+        alarmButton.rx.tap.bind(onNext: {
+            let alarmListController = AlarmListViewController()
+            if let deviceID = self.device?.getShortID() {
+                alarmListController.filter(with: deviceID)
+            }
+            (self.window?.rootViewController as? UINavigationController)?.pushViewController(alarmListController, animated: true)
+        }).disposed(by: disposeBag)
         addSubview(alarmButton)
         alarmButton.widthToSuperview(multiplier: 0.5, offset: -edsSpace * 1.5)
         alarmButton.edgesToSuperview(excluding: .trailing, insets: .uniform(edsSpace))

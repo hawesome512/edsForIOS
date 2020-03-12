@@ -20,14 +20,14 @@ class DeviceTrendEvaluationCell: UITableViewCell {
     private let overflowLabel = RoundLabel()
     private let evaluationLabel = UILabel()
 
-    func setData(_ logTags: [(name: String, values: [Double])]) {
+    func setData(_ logTags: [(name: String, values: [Double])], upper: Double? = nil, lower: Double? = nil) {
 
         //将所有的值合并一个数值
         var totalValues: [Double] = []
         logTags.forEach {
             totalValues.append(contentsOf: $0.values)
         }
-        //计算平均值，忽略所有通讯无效点
+        //计算平均值时，忽略所有通讯无效点
         let validValues = totalValues.filter { $0 != Tag.nilValue }
 
         //有效点值笔数/所有点的笔数
@@ -35,8 +35,9 @@ class DeviceTrendEvaluationCell: UITableViewCell {
         let communication = TrendFactor.communication(ratio: communicationRatio)
         communicationLabel.backgroundColor = TrendEvaluation.initWith(value: communicationRatio).getItemColor()
 
-        //正常合理值
-        let overflowRatio = 1.0
+        //正常合理值,只要有一个超值，就判定整体运行质量差【0】
+        let safeValues = totalValues.filter { $0 < (upper ?? Double(Int.max)) && $0 > (lower ?? Double(Int.min)) }
+        let overflowRatio = safeValues.count == totalValues.count ? 1.0 : 0.0
         let overflow = TrendFactor.overflow(ratio: overflowRatio)
         overflowLabel.backgroundColor = TrendEvaluation.initWith(value: overflowRatio).getItemColor()
 

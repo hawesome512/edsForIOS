@@ -68,6 +68,17 @@ extension String {
         }
     }
 
+
+    /// 提取异常码：异常[123]👉123
+    func getAlarmCode() -> String? {
+        let range = NSRange(location: 0, length: self.count)
+        let regex = try? NSRegularExpression(pattern: "异常\\[(\\d+)\\]", options: .allowCommentsAndWhitespace)
+        if let result = regex?.firstMatch(in: self, options: [], range: range) {
+            return (self as NSString).substring(with: result.range(at: 1))
+        }
+        return nil
+    }
+
     func getEDSServletImageUrl() -> URL {
         return URL(string: "\(EDSConfig.servicePath):8443/EDSServlet/upload/\(self).png")!
     }

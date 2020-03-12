@@ -36,7 +36,7 @@ class DynamicDeviceViewController: UIViewController, DevicePageScrollDelegate {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.subviews.first?.alpha = 0
     }
-
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         //当前VC的父级vc是navigationController,必须设置如UINavigationController-Ext.swift
         return .lightContent

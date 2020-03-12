@@ -21,3 +21,4 @@ let edsGrayColor = UIColor.systemGray
 let edsSpace: CGFloat = 20
 let edsVerSpace: CGFloat = 10
 let edsHeight: CGFloat = 44
+let edsIconSize: CGFloat = 32

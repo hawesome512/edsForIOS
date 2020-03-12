@@ -18,10 +18,6 @@ class DeviceUtility {
 
     private init() { }
 
-    func remove(devices: [Device]) {
-        deviceList = deviceList.filter { device in !devices.contains(device) }
-    }
-
     /// 从后台导入资产设备列表
     func loadProjectDeviceList() {
         //获取后台服务设备列表请求在生命周期中只有一次
@@ -40,6 +36,14 @@ class DeviceUtility {
                 break
             }
         }
+    }
+
+    func remove(devices: [Device]) {
+        deviceList = deviceList.filter { device in !devices.contains(device) }
+    }
+
+    func getDevice(of shortID: String) -> Device? {
+        return deviceList.first { $0.getShortID() == shortID }
     }
 
     func getVisibleDeviceList() -> [Device] {
@@ -70,5 +74,14 @@ class DeviceUtility {
 
     func getParent(of child: Device) -> Device? {
         return deviceList.first { $0.branch.contains(child.getShortID()) }
+    }
+
+    static func setImage(in imageView: UIImageView, with device: Device) {
+        if !device.image.isEmpty {
+            imageView.kf.setImage(with: device.image.getEDSServletImageUrl())
+            imageView.contentMode = .scaleAspectFill
+        } else {
+            imageView.image = device.getDefaultImage()
+        }
     }
 }

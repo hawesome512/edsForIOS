@@ -20,7 +20,11 @@ class DeviceListViewController: UIViewController {
         super.viewDidLoad()
         initViews()
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.subviews.first?.alpha = 1
+    }
+    
     fileprivate func initViews() {
         //再更新一次动态设备状态点
         updateDeviceStatus()
@@ -121,9 +125,7 @@ extension DeviceListViewController: UITableViewDelegate, UITableViewDataSource {
         //删除设备：弹出框确认▶️删除设备及所属设备▶️更新父级支路
         if editingStyle == .delete {
             let deleteDevice = deviceList[indexPath.row]
-            let title = String(format: "delete_title".localize(with: prefixDevice), arguments: [deleteDevice.title])
-            let alertController = UIAlertController(title: title, message: "delete_info".localize(with: prefixDevice), preferredStyle: .alert)
-            let cancelAction = UIAlertAction(title: "cancel".localize(), style: .cancel, handler: nil)
+            let alertController = ControllerUtility.generateDeletionAlertController(with: deleteDevice.title)
             let okAction = UIAlertAction(title: "delete".localize(), style: .destructive) { _ in
                 var modifiedDevices = [deleteDevice]
                 modifiedDevices.append(contentsOf: DeviceUtility.sharedInstance.getBranceList(device: deleteDevice, visiableOnly: false))
@@ -146,7 +148,6 @@ extension DeviceListViewController: UITableViewDelegate, UITableViewDataSource {
                 tableView.reloadData()
                 print("modify \(modifiedDevices.count) devices.")
             }
-            alertController.addAction(cancelAction)
             alertController.addAction(okAction)
             present(alertController, animated: true, completion: nil)
         }

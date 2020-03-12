@@ -22,12 +22,7 @@ class DeviceHeaderView: UIView {
 
     var device: Device? {
         didSet {
-            if let imageUrl = device?.image, !imageUrl.isEmpty {
-                imageView.kf.setImage(with: imageUrl.getEDSServletImageUrl())
-                imageView.contentMode = .scaleAspectFill
-            }else{
-                imageView.image = device?.getDefaultImage()
-            }
+            DeviceUtility.setImage(in: imageView, with: device!)
         }
     }
 

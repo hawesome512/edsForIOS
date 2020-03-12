@@ -10,6 +10,9 @@ import Foundation
 import HandyJSON
 
 class Workorder: HandyJSON {
+    
+    static let icon = UIImage(systemName: "doc.richtext")
+    static let description = "workorder".localize()
 
     //🆔，e.g.:1/XRD-20181010164444 (ProjectID-创建时间）
     var id: String = ""
@@ -45,6 +48,7 @@ class Workorder: HandyJSON {
         self.start = startTime.toDateStartTimeString()
         self.end = endTime.toDateStartTimeString()
     }
+
 }
 
 //工单状态：未完成，已完成

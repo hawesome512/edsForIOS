@@ -9,7 +9,10 @@
 import Foundation
 import HandyJSON
 
-class Alarm: HandyJSON {
+class Alarm: HandyJSON, EDSDelegate {
+
+    static let icon = UIImage(systemName: "bell")
+    static let description = "alarm".localize()
 
     //🆔，e.g.:1/XRD-20191001121212(ProjectID-时间戳）
     var id = ""
@@ -30,10 +33,18 @@ class Alarm: HandyJSON {
     init(alarmID: String) {
         id = alarmID
     }
+
+    func prepareForDelete() {
+        alarm = ""
+    }
 }
 
 //异常状态：未处理/已处理（将产生异常工单）
 enum AlarmConfirm: Int, HandyJSONEnum {
     case unchecked = 0
     case checked = 1
+
+    func getConfirmColor() -> UIColor {
+        return self == AlarmConfirm.checked ? UIColor.systemGreen : UIColor.systemRed
+    }
 }

@@ -12,6 +12,7 @@ import Charts
 class DeviceTrendChartCell: UITableViewCell {
 
     private let lineChartView = LineChartView()
+    private let activityIndicatorView = UIActivityIndicatorView(style: .large)
     //横坐标基于时间选择条件
     private var condition: WATagLogRequestCondition?
 
@@ -44,8 +45,14 @@ class DeviceTrendChartCell: UITableViewCell {
 
         lineChartView.animate(xAxisDuration: 2.5)
 
+        lineChartView.alpha = 0
         addSubview(lineChartView)
         lineChartView.edgesToSuperview()
+
+        activityIndicatorView.startAnimating()
+        addSubview(activityIndicatorView)
+        activityIndicatorView.centerInSuperview()
+
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -63,7 +70,26 @@ class DeviceTrendChartCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+    func setData(_ logTags: [(name: String, values: [Double])], condition: WATagLogRequestCondition?, upper: Double?, lower: Double?) {
+        lineChartView.leftAxis.removeAllLimitLines()
+        if let upper = upper {
+            let upperLimit = ChartLimitLine(limit: upper)
+            upperLimit.lineColor = .systemRed
+            upperLimit.lineDashLengths = [10, 10]
+            lineChartView.leftAxis.addLimitLine(upperLimit)
+        }
+        if let lower = lower {
+            let lowerLimit = ChartLimitLine(limit: lower)
+            lowerLimit.lineColor = .systemYellow
+            lowerLimit.lineDashLengths = [10, 10]
+            lineChartView.leftAxis.addLimitLine(lowerLimit)
+        }
+        setData(logTags, condition: condition)
+    }
+
     func setData(_ logTags: [(name: String, values: [Double])], condition: WATagLogRequestCondition?) {
+        activityIndicatorView.alpha = 0
+        lineChartView.alpha = 1
         //横坐标时间格式
         self.condition = condition
         lineChartView.xAxis.valueFormatter = self
@@ -73,7 +99,7 @@ class DeviceTrendChartCell: UITableViewCell {
         //调色板
         let colors = ChartColorTemplates.material()
         logTags.forEach { logTag in
-            
+
             let chartValues = logTag.values.enumerated().map {
                 //离线点置-1处理,取至多1位精度
                 return ChartDataEntry(x: Double($0.offset), y: $0.element.roundToPlaces(places: 1))
@@ -85,7 +111,8 @@ class DeviceTrendChartCell: UITableViewCell {
             let color = colors[datas.count % colors.count]
             set.setColor(color)
             set.lineWidth = 2
-            set.drawCirclesEnabled = true
+            //线段太多，不再绘制小圆点
+            set.drawCirclesEnabled = logTags.count == 1 ? true : false
             set.circleColors = [color]
             set.circleRadius = 4
             datas.append(set)

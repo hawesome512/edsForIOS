@@ -7,9 +7,9 @@
 /* edit */
 "edit" = "编辑";
 /* workorder */
-"workorder" = "运维工单";
-/* alarm_record */
-"alarm_record" = "异常警报";
+"workorder" = "工单";
+/* alarm */
+"alarm" = "报警";
 
 /* trend_evaluation */
 "evaluation" = "运行评估";
@@ -84,7 +84,7 @@
 /* device_offline */
 "offline" = "离线";
 /* device_alarm */
-"alarm" = "异常";
+"alarm" = "报警";
 /* device_status */
 "status" = "运行状态";
 /* device_positive */
@@ -303,4 +303,11 @@
 /* device_T5 */
 "T5" = "油机停止·T5";
 
-
+/* alarm_check */
+"check" = "排查";
+/* alarm_checked */
+"checked" = "已排查";
+/* alarm_unchecked */
+"unchecked" = "未排查";
+/* alarm_add_alarm */
+"add_alarm" = "新增报警记录";

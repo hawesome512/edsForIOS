@@ -6,7 +6,7 @@
 //  Copyright © 2019 厦门士林电机有限公司. All rights reserved.
 //  EDS Service实现：工程用户信息，运维工单，异常，操作记录，上传图片，账户管理
 //      ——所有的post格式响应的格式都相同
-//      ——标志属性设计(ProjectInfo.user/Workorder.title/Alarm.alarm/Action.action/ProjectAccount.authority)
+//      ——标志属性设计(ProjectInfo.user/Workorder.title/Alarm.alarm/Action.action/ProjectAccount.authority/Device.account)
 //        1⃣️id不存在且标志属性不为空，新增记录
 //        2⃣️id存在且标志属性为空，删除记录
 //        3⃣️id存在且标志属性不为空，修改记录
@@ -15,6 +15,10 @@
 
 import Moya
 import HandyJSON
+
+protocol EDSDelegate {
+    func prepareForDelete()
+}
 
 enum EDSService {
     //获取工程站点列表
@@ -111,7 +115,7 @@ extension EDSService: TargetType {
             return .requestParameters(parameters: edsModel.toJSON()!, encoding: JSONEncoding.default)
         case .upload(let data, let fileName):
 //            let imageData = MultipartFormData(provider: .file(fileURL), name: fileName, fileName: fileName, mimeType: "image/*")
-            let imageData = MultipartFormData(provider: .data(data), name: fileName, fileName: fileName+".png", mimeType: "image/*")
+            let imageData = MultipartFormData(provider: .data(data), name: fileName, fileName: fileName + ".png", mimeType: "image/*")
             return .uploadMultipart([imageData])
         }
     }
@@ -137,8 +141,12 @@ struct EDSServiceQueryFactor: HandyJSON {
 
     init() { }
 
-    init(id: String) {
+    init(id: String, inRecentQuarter: Bool = false) {
         self.id = id
+        if inRecentQuarter {
+            start = Date().add(by: .month, value: -3).toDateTimeString().toURLEncoding()
+            end = Date().toDateTimeString().toURLEncoding()
+        }
     }
 
     init(id: String, startTime: Date?, endTime: Date?) {

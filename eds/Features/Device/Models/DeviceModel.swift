@@ -53,7 +53,7 @@ struct DeviceType: HandyJSON {
     //状态位，判断设备异常的tag
     var status = Status()
     //异常报警图表中显示的tag列表，Ia/Ib/Ic
-    var alarm: [String] = []
+    var alarm = AlarmMode()
     //远程控制的验证权限,CtrlCode
     var authority: [String] = [String]()
     //设备页面列表,纵览/实时/遥控
@@ -64,6 +64,13 @@ struct Status: HandyJSON {
     //状态info存于开关位中
     var tag: String = ""
     var items: [String]?
+}
+
+struct AlarmMode: HandyJSON {
+    //报警上下限Tag
+    var items: [String] = []
+    var upper: String?
+    var lower: String?
 }
 
 struct DevicePage: HandyJSON {
