@@ -46,12 +46,8 @@ class DevicePageTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let pageItem = pageModel!.content[section]
         if let section = pageItem.section {
-            let view = UIView()
-            let label = UILabel()
-            view.backgroundColor = edsDivideColor
-            label.text = section.localize(with: prefixDevice)
-            view.addSubview(label)
-            label.edgesToSuperview(insets: .uniform(10))
+            let view = SectionHeaderView()
+            view.title = section.localize(with: prefixDevice)
             return view
         } else {
             return nil

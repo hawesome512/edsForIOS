@@ -45,6 +45,13 @@ extension Date {
         dateFormatter.timeZone=NSTimeZone(name: "UTC") as TimeZone?
         return dateFormatter.string(from: self)
     }
+    
+    //格式：3月13 or Mar3
+    func toShortDate()->String{
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMMd"
+        return dateFormatter.string(from: self)
+    }
 
     //Date快速操作时间偏移
     func add(by component: Calendar.Component, value: Int) -> Date {

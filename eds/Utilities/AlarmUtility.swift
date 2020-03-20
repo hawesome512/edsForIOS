@@ -23,8 +23,8 @@ class AlarmUtility {
         guard alarmList.count == 0 else {
             return
         }
-        //获取最近一年的报警记录
-        let factor = EDSServiceQueryFactor(id: User.tempInstance.projectID!, inRecentQuarter: true)
+        //获取最近一季度的报警记录
+        let factor = EDSServiceQueryFactor(id: User.tempInstance.projectID!, in: .halfYear)
         MoyaProvider<EDSService>().request(.queryAlarmList(factor: factor)) { result in
             switch result {
             case .success(let response):

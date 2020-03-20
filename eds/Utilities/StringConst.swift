@@ -17,5 +17,7 @@ let prefixDevice = "device"
 let prefixTrend = "trend"
 //本地化中跟报警相关String
 let prefixAlarm="alarm"
+//本地化中跟工单相关String
+let prefixWorkorder="workorder"
 
 

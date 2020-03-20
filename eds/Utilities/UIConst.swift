@@ -15,10 +15,13 @@ let edsON = UIColor.systemRed
 let edsOFF = UIColor.systemGreen
 let edsAlarm = UIColor.systemYellow
 let edsGrayColor = UIColor.systemGray
+let edsLightGrayColor = UIColor.systemGray3
 
 
 //标准间距,水平20，竖直10
 let edsSpace: CGFloat = 20
-let edsVerSpace: CGFloat = 10
+let edsMinSpace: CGFloat = 10
 let edsHeight: CGFloat = 44
 let edsIconSize: CGFloat = 32
+
+let edsDefaultImage = UIImage(systemName: "photo")

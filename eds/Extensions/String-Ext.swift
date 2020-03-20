@@ -69,6 +69,20 @@ extension String {
     }
 
 
+    /// 分离用户名和电话号码，e.g.:hawesome-123456,hawesome 123456
+    func separateNameAndPhone() -> (name: String, phone: String?) {
+        let range = NSRange(location: 0, length: self.count)
+        let regex = try? NSRegularExpression(pattern: "(\\w+)\\W+(\\d+)", options: .allowCommentsAndWhitespace)
+        if let result = regex?.firstMatch(in: self, options: [], range: range) {
+            let v = (self as NSString).substring(with: result.range(at: 1))
+            let u = (self as NSString).substring(with: result.range(at: 2))
+            return (v, u)
+        } else {
+            return(self, nil)
+        }
+    }
+
+
     /// 提取异常码：异常[123]👉123
     func getAlarmCode() -> String? {
         let range = NSRange(location: 0, length: self.count)
@@ -80,7 +94,9 @@ extension String {
     }
 
     func getEDSServletImageUrl() -> URL {
-        return URL(string: "\(EDSConfig.servicePath):8443/EDSServlet/upload/\(self).png")!
+        //历史遗留，已存在xxx.jpg or xxx.jpeg 数据
+        let image = self.contains(".") ? self : "\(self).png"
+        return URL(string: "\(EDSConfig.servicePath):8443/EDSServlet/upload/\(image)")!
     }
 
 

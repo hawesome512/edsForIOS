@@ -27,7 +27,7 @@ class ImageButton: UIButton {
         contentImage.contentMode = .scaleAspectFit
         contentImage.tintColor = .white
         addSubview(contentImage)
-        contentImage.verticalToSuperview(insets: .vertical(edsVerSpace))
+        contentImage.verticalToSuperview(insets: .vertical(edsMinSpace))
         contentImage.widthToHeight(of: contentImage)
         contentImage.leadingToSuperview()
 
@@ -36,8 +36,8 @@ class ImageButton: UIButton {
         contentLabel.font = UIFont.preferredFont(forTextStyle: .title1) //UIFont.boldSystemFont(ofSize: 34)
         contentLabel.adjustsFontSizeToFitWidth = true
         addSubview(contentLabel)
-        contentLabel.edgesToSuperview(excluding: .left, insets: .uniform(edsVerSpace))
-        contentLabel.leadingToTrailing(of: contentImage, offset: edsVerSpace)
+        contentLabel.edgesToSuperview(excluding: .left, insets: .uniform(edsMinSpace))
+        contentLabel.leadingToTrailing(of: contentImage, offset: edsMinSpace)
     }
 
     override func setImage(_ image: UIImage?, for state: UIControl.State) {

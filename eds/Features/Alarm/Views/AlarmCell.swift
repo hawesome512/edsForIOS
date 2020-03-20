@@ -46,7 +46,7 @@ class AlarmCell: UITableViewCell {
         titleLabel.font = UIFont.preferredFont(forTextStyle: .title1)
         addSubview(titleLabel)
         titleLabel.top(to: deviceImage)
-        titleLabel.leadingToTrailing(of: deviceImage, offset: edsVerSpace)
+        titleLabel.leadingToTrailing(of: deviceImage, offset: edsMinSpace)
 
         statusView.textColor = .white
 //        statusView.innerText = "未排查"
@@ -55,22 +55,22 @@ class AlarmCell: UITableViewCell {
         addSubview(statusView)
         statusView.height(24)
         statusView.centerY(to: titleLabel)
-        statusView.leadingToTrailing(of: titleLabel, offset: edsVerSpace)
+        statusView.leadingToTrailing(of: titleLabel, offset: edsMinSpace)
 
         let deviceIcon = UIImageView()
         deviceIcon.tintColor = .systemGray
-        deviceIcon.image = UIImage(systemName: "bolt.circle")
+        deviceIcon.image = Device.icon
         addSubview(deviceIcon)
         deviceIcon.width(edsIconSize)
         deviceIcon.height(edsIconSize)
-        deviceIcon.topToBottom(of: titleLabel, offset: edsVerSpace)
-        deviceIcon.leadingToTrailing(of: deviceImage, offset: edsVerSpace)
+        deviceIcon.topToBottom(of: titleLabel, offset: edsMinSpace)
+        deviceIcon.leadingToTrailing(of: deviceImage, offset: edsMinSpace)
 
 //        deviceLabel.text = "成型3#4#柜"
         deviceLabel.textColor = .systemGray
         addSubview(deviceLabel)
         deviceLabel.centerY(to: deviceIcon)
-        deviceLabel.leadingToTrailing(of: deviceIcon, offset: edsVerSpace)
+        deviceLabel.leadingToTrailing(of: deviceIcon, offset: edsMinSpace)
 
         let timeImage = UIImageView()
         timeImage.tintColor = .systemGray
@@ -78,14 +78,14 @@ class AlarmCell: UITableViewCell {
         addSubview(timeImage)
         timeImage.width(edsIconSize)
         timeImage.height(edsIconSize)
-        timeImage.topToBottom(of: deviceIcon, offset: edsVerSpace)
-        timeImage.leadingToTrailing(of: deviceImage, offset: edsVerSpace)
+        timeImage.topToBottom(of: deviceIcon, offset: edsMinSpace)
+        timeImage.leadingToTrailing(of: deviceImage, offset: edsMinSpace)
 
 //        timeLabel.text = Date().toDateTimeString()
         timeLabel.textColor = .systemGray
         addSubview(timeLabel)
         timeLabel.centerY(to: timeImage)
-        timeLabel.leadingToTrailing(of: timeImage, offset: edsVerSpace)
+        timeLabel.leadingToTrailing(of: timeImage, offset: edsMinSpace)
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

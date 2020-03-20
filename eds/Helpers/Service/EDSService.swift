@@ -141,11 +141,10 @@ struct EDSServiceQueryFactor: HandyJSON {
 
     init() { }
 
-    init(id: String, inRecentQuarter: Bool = false) {
+    init(id: String, in range: FactorRange = .none) {
         self.id = id
-        if inRecentQuarter {
-            start = Date().add(by: .month, value: -3).toDateTimeString().toURLEncoding()
-            end = Date().toDateTimeString().toURLEncoding()
+        if range != .none {
+            start = Date().add(by: .month, value: -range.rawValue).toDateTimeString().toURLEncoding()
         }
     }
 
@@ -154,4 +153,12 @@ struct EDSServiceQueryFactor: HandyJSON {
         self.start = startTime?.toDateTimeString().toURLEncoding()
         self.end = endTime?.toDateTimeString().toURLEncoding()
     }
+}
+
+enum FactorRange: Int {
+    case none = 0
+    case month = 1
+    case quarter = 3
+    case halfYear = 6
+    case year = 12
 }

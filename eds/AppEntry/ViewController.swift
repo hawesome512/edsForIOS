@@ -16,6 +16,8 @@ import RxSwift
 import RxCocoa
 import SwiftDate
 import EFQRCode
+import YPImagePicker
+import MessageUI
 
 class ViewController: UIViewController {
 
@@ -24,14 +26,19 @@ class ViewController: UIViewController {
     let label = UILabel()
     var tag: Tag?
 
+    var collectionView: UICollectionView?
+    let imageList = (0..<100).map { _ in YPMediaItem.photo(p: YPMediaPhoto(image: UIImage(named: "device_A1")!)) }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
-        
+
         //初始化后台数据，导入数据列表
-        TagUtility.sharedInstance.loadProjectTagList()
-        DeviceUtility.sharedInstance.loadProjectDeviceList()
-        AlarmUtility.sharedInstance.loadProjectAlarmList()
+//        TagUtility.sharedInstance.loadProjectTagList()
+//        DeviceUtility.sharedInstance.loadProjectDeviceList()
+//        AlarmUtility.sharedInstance.loadProjectAlarmList()
+        WorkorderUtility.sharedInstance.loadProjectWorkerorderList()
+        AccountUtility.sharedInstance.loadProjectAccount()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -44,11 +51,12 @@ class ViewController: UIViewController {
 
         button.backgroundColor = .systemGreen
         button.setTitle("运维工单", for: .normal)
-        button.setImage(UIImage(systemName: "doc.richtext"), for: .normal)
-//        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.rx.tap.bind(onNext: {
+
+
             //跳转设备列表
-            let deviceListVC = DeviceListViewController()
+            let deviceListVC = WorkorderListViewController()
             self.navigationController?.pushViewController(deviceListVC, animated: true)
         }).disposed(by: disposeBag)
         view.addSubview(button)
@@ -57,4 +65,7 @@ class ViewController: UIViewController {
         button.height(60)
     }
 }
+
+
+
 

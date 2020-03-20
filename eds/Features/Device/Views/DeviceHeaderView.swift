@@ -16,8 +16,8 @@ import Kingfisher
 class DeviceHeaderView: UIView {
 
     private let cornerGradientLayer = CAGradientLayer()
-    private let imageView = UIImageView()
-    private let imageButton = UIButton()
+    let imageView = UIImageView()
+    let imageButton = UIButton()
     private let disposeBag = DisposeBag()
 
     var device: Device? {

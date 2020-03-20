@@ -55,13 +55,13 @@ class DeviceTrendAnalysisCell: UITableViewCell {
         minLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
         addSubview(minLabel)
         minLabel.leadingToSuperview(offset: edsSpace)
-        minLabel.centerYToSuperview(offset: edsVerSpace)
+        minLabel.centerYToSuperview(offset: edsMinSpace)
 
         minValueLabel.text = "0"
         minValueLabel.font = UIFont.preferredFont(forTextStyle: .headline)
         addSubview(minValueLabel)
         minValueLabel.leadingToSuperview(offset: edsSpace)
-        minValueLabel.topToSuperview(offset: edsVerSpace)
+        minValueLabel.topToSuperview(offset: edsMinSpace)
 
         minTimeLabel.text = Date().toDateTimeString()
         minTimeLabel.textColor = edsGrayColor
@@ -74,13 +74,13 @@ class DeviceTrendAnalysisCell: UITableViewCell {
         maxLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
         addSubview(maxLabel)
         maxLabel.trailingToSuperview(offset: edsSpace)
-        maxLabel.centerYToSuperview(offset: edsVerSpace)
+        maxLabel.centerYToSuperview(offset: edsMinSpace)
 
         maxValueLabel.text = "100"
         maxValueLabel.font = UIFont.preferredFont(forTextStyle: .headline)
         addSubview(maxValueLabel)
         maxValueLabel.trailingToSuperview(offset: edsSpace)
-        maxValueLabel.topToSuperview(offset: edsVerSpace)
+        maxValueLabel.topToSuperview(offset: edsMinSpace)
 
         maxTimeLabel.text = Date().toDateTimeString()
         maxTimeLabel.textColor = edsGrayColor
@@ -93,13 +93,13 @@ class DeviceTrendAnalysisCell: UITableViewCell {
         avgLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
         addSubview(avgLabel)
         avgLabel.centerXToSuperview()
-        avgLabel.centerYToSuperview(offset: edsVerSpace)
+        avgLabel.centerYToSuperview(offset: edsMinSpace)
 
         avgValueLabel.text = "50"
         avgValueLabel.font = UIFont.preferredFont(forTextStyle: .headline)
         addSubview(avgValueLabel)
         avgValueLabel.centerXToSuperview()
-        avgValueLabel.topToSuperview(offset: edsVerSpace)
+        avgValueLabel.topToSuperview(offset: edsMinSpace)
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

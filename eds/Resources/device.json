@@ -9,7 +9,7 @@
 			"producer":"xs",
 			"category":"breaker",
             "status":{"tag":"Status","items":["overload","short","instant","ground","","","on/off","trip"]},
-			"alarm":["Ia","Ib","Ic","Ir"],
+            "alarm":{"items":["Ia","Ib","Ic"],"upper":"Ir"},
 			"authority":["CtrlMode/76/local/82/remote","CtrlCode/%04X"],
 			"pages":[
 				 {"title":"realtime","content":[
@@ -40,7 +40,7 @@
 			"producer":"xs",
 			"category":"breaker",
             "status":{"tag":"Status","items":["overload","short","instant","ground","","","on/off","trip"]},
-			"alarm":["Ia","Ib","Ic","Ir"],
+            "alarm":{"items":["Ia","Ib","Ic"],"upper":"Ir"},
 			"authority":["CtrlMode/76/local/82/remote","CtrlCode/%04X"],
 			"pages":[
 				 {"title":"realtime","content":[
@@ -71,7 +71,7 @@
 			"producer":"xs",
 			"category":"breaker",
             "status":{"tag":"Status","items":["overload","short","instant","ground","","","on/off","trip"]},
-			"alarm":["Ia","Ib","Ic","Ir"],
+            "alarm":{"items":["Ia","Ib","Ic"],"upper":"Ir"},
 			"authority":["CtrlMode/0/local/1/remote","CtrlCode/%04X"],
 			"pages":[
 				 {"title":"realtime","content":[
@@ -110,7 +110,7 @@
 			"producer":"xs",
 			"category":"breaker",
             "status":{"tag":"Status","items":["","","","","","","","","overload","short","instant","ground","","","off/on","trip"]},
-			"alarm":["Ia","Ib","Ic","IrReal"],
+            "alarm":{"items":["Ia","Ib","Ic"],"upper":"IrReal"},
 			"authority":["CtrlMode/76/local/82/remote","CtrlCode/%04X"],
 			"pages":[
 				 {"title":"realtime","content":[        {"name":"status","tags":["Status"],"display":"text","items":["","","","","","","","","overload","short","instant","ground","","","off/on","trip"],"section":"status"},
@@ -139,7 +139,7 @@
 			"producer":"xs",
 			"category":"ats",
             "status":{"tag":"Status","items":["oil","sources","refuse","ferroelectric","feedback","overload","disturb","rotary"]},
-			"alarm":["Ua_1","Ub_1","Uc_1","Ua_2","Ub_2","Uc_2"],
+            "alarm":{"items":["Ua_1","Ub_1","Uc_1","Ua_2","Ub_2","Uc_2"]},
 			"authority":["CtrlMode/76/local/82/remote","CtrlCode/%04X"],
 			"pages":[
 				 {"title":"realtime","content":[
