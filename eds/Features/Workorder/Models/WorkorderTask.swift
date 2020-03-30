@@ -8,13 +8,17 @@
 
 import Foundation
 import UIKit
+import SwiftyJSON
+import HandyJSON
 
 struct WorkorderTask {
     var title: String?
     var state: WorkorderTaskState = .unchecked
 
     init(title: String) {
-        self.title = title
+        //在服务器数据库中任务信息存储格式:任务1_0;任务2_2;……，在任务title中不应包含这两个分隔符号
+        let validTitle = title.replacingOccurrences(of: "_", with: "").replacingOccurrences(of: ";", with: "")
+        self.title = validTitle
     }
 
     func toString() -> String {
@@ -41,4 +45,26 @@ struct WorkorderTask {
 enum WorkorderTaskState: String {
     case unchecked = "0"
     case checked = "1"
+}
+
+struct WorkorderTaskModel: HandyJSON {
+
+    //说明书列表
+    var instructions: [String]?
+    //任务类型
+    var tasks: [WorkorderTaskType]?
+
+    static let sharedInstance: WorkorderTaskModel? = {
+        if let path = Bundle.main.path(forResource: "Workorder", ofType: "json") {
+            if let json = try? JSON(data: Data(contentsOf: URL(fileURLWithPath: path))) {
+                return WorkorderTaskModel.deserialize(from: json.description)
+            }
+        }
+        return nil
+    }()
+}
+
+struct WorkorderTaskType: HandyJSON {
+    var task: String?
+    var items: [String]?
 }

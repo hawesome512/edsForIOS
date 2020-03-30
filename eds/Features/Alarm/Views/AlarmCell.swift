@@ -34,12 +34,14 @@ class AlarmCell: UITableViewCell {
     private var device: Device?
 
     private func initViews() {
+        ViewUtility.addCardEffect(in: self)
+
         deviceImage.contentMode = .scaleAspectFit
 //        deviceImage.image = UIImage(named: "device_A1")
         addSubview(deviceImage)
-        deviceImage.heightToSuperview(offset: -edsSpace)
+        deviceImage.heightToSuperview(offset: -edsSpace * 2)
         deviceImage.widthToHeight(of: deviceImage)
-        deviceImage.leadingToSuperview()
+        deviceImage.leadingToSuperview(offset: edsSpace)
         deviceImage.centerYToSuperview()
 
 //        titleLabel.text = "过载"

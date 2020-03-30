@@ -22,6 +22,7 @@ class SectionHeaderView: UIView {
         backgroundColor = edsDivideColor
         addSubview(label)
         label.edgesToSuperview(insets: .uniform(edsMinSpace))
+        label.font=UIFont.preferredFont(forTextStyle: .headline)
     }
 
     override init(frame: CGRect) {

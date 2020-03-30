@@ -14,7 +14,7 @@ class DeviceListViewController: UIViewController {
 
     private let disposeBag = DisposeBag()
     private let tableView = UITableView()
-    private var deviceList = DeviceUtility.sharedInstance.getVisibleDeviceList()
+    private var deviceList = DeviceUtility.sharedInstance.getProjDeviceList()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,7 +86,7 @@ extension DeviceListViewController: UITableViewDelegate, UITableViewDataSource {
             cell.device = device
             cell.foldButton.rx.tap.bind(onNext: {
                 device.collapsed = !device.collapsed
-                self.deviceList = DeviceUtility.sharedInstance.getVisibleDeviceList()
+                self.deviceList = DeviceUtility.sharedInstance.getProjDeviceList()
                 tableView.reloadData()
             }).disposed(by: disposeBag)
             return cell
@@ -144,7 +144,7 @@ extension DeviceListViewController: UITableViewDelegate, UITableViewDataSource {
                     MoyaProvider<EDSService>().request(.updateDevice(device: device)) { _ in }
                 })
 
-                self.deviceList = DeviceUtility.sharedInstance.getVisibleDeviceList()
+                self.deviceList = DeviceUtility.sharedInstance.getProjDeviceList()
                 tableView.reloadData()
                 print("modify \(modifiedDevices.count) devices.")
             }
@@ -173,7 +173,7 @@ extension DeviceListViewController: AdditionDelegate {
                     case .success(_):
                         //成功新增后，更新资产列表
                         DeviceUtility.sharedInstance.deviceList.append(newDevice)
-                        self.deviceList = DeviceUtility.sharedInstance.getVisibleDeviceList()
+                        self.deviceList = DeviceUtility.sharedInstance.getProjDeviceList()
                         self.tableView.reloadData()
                     default:
                         break

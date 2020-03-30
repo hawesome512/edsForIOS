@@ -28,4 +28,18 @@ class ViewUtility {
         let navHeight = vc.navigationController?.navigationBar.frame.height ?? 0
         return statusHeight + navHeight
     }
+
+    
+    /// 卡片风格的View
+    /// - Parameter container: 先添加卡片风格，然后在容器上添加其他控件
+    static func addCardEffect(in container: UIView) {
+        container.backgroundColor = edsDivideColor
+        let backView = UIView()
+        backView.layer.shadowColor = UIColor.systemGray.cgColor
+        backView.layer.shadowOpacity = 0.5
+        backView.layer.cornerRadius = 5
+        backView.backgroundColor = .white
+        container.addSubview(backView)
+        backView.edgesToSuperview(insets: .uniform(edsMinSpace))
+    }
 }

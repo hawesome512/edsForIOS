@@ -102,7 +102,16 @@
 		46DEF1A3239A00F3008780C3 /* DeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DEF1A2239A00F3008780C3 /* DeviceModel.swift */; };
 		46DF04A9240B983A00E3DE65 /* FixedInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DF04A8240B983A00E3DE65 /* FixedInfoCell.swift */; };
 		46DF04AB240CAD6800E3DE65 /* InfoAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DF04AA240CAD6800E3DE65 /* InfoAlertController.swift */; };
+		46DF40CB242C46B60018F961 /* Workorder.json in Resources */ = {isa = PBXBuildFile; fileRef = 46DF40CA242C46B60018F961 /* Workorder.json */; };
+		46DF40CD242C75090018F961 /* BottomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DF40CC242C75090018F961 /* BottomViewController.swift */; };
+		46DF40CF242C7D080018F961 /* WorkorderAdditionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DF40CE242C7D080018F961 /* WorkorderAdditionViewController.swift */; };
+		46DF40D1242C866D0018F961 /* TextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DF40D0242C866D0018F961 /* TextInputCell.swift */; };
+		46DF40D5242DAB930018F961 /* TaskAdditionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DF40D4242DAB930018F961 /* TaskAdditionCell.swift */; };
+		46DF40D9242DD3D70018F961 /* UIViewController-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DF40D8242DD3D70018F961 /* UIViewController-Ext.swift */; };
+		46DF40DB24304A560018F961 /* DatePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DF40DA24304A560018F961 /* DatePickerController.swift */; };
 		46E0E3D02374074F00116DA2 /* String-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E0E3CF2374074F00116DA2 /* String-Ext.swift */; };
+		46E59DD02429893A00C67E82 /* PhotoCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E59DCF2429893A00C67E82 /* PhotoCollectionViewController.swift */; };
+		46E59DD22429DB7F00C67E82 /* UICollectionViewFlowLayout-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E59DD12429DB7F00C67E82 /* UICollectionViewFlowLayout-Ext.swift */; };
 		46EBD4782374FDAC00D7E6FC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EBD4772374FDAC00D7E6FC /* User.swift */; };
 		46EE431D237153DC00DF22FB /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EE431C237153DC00DF22FB /* Tag.swift */; };
 		46FB866823BAE87800754E88 /* DevicePageItemSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FB866723BAE87800754E88 /* DevicePageItemSource.swift */; };
@@ -218,7 +227,16 @@
 		46DEF1A2239A00F3008780C3 /* DeviceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceModel.swift; sourceTree = "<group>"; };
 		46DF04A8240B983A00E3DE65 /* FixedInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedInfoCell.swift; sourceTree = "<group>"; };
 		46DF04AA240CAD6800E3DE65 /* InfoAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoAlertController.swift; sourceTree = "<group>"; };
+		46DF40CA242C46B60018F961 /* Workorder.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Workorder.json; sourceTree = "<group>"; };
+		46DF40CC242C75090018F961 /* BottomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomViewController.swift; sourceTree = "<group>"; };
+		46DF40CE242C7D080018F961 /* WorkorderAdditionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkorderAdditionViewController.swift; sourceTree = "<group>"; };
+		46DF40D0242C866D0018F961 /* TextInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputCell.swift; sourceTree = "<group>"; };
+		46DF40D4242DAB930018F961 /* TaskAdditionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskAdditionCell.swift; sourceTree = "<group>"; };
+		46DF40D8242DD3D70018F961 /* UIViewController-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController-Ext.swift"; sourceTree = "<group>"; };
+		46DF40DA24304A560018F961 /* DatePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerController.swift; sourceTree = "<group>"; };
 		46E0E3CF2374074F00116DA2 /* String-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String-Ext.swift"; sourceTree = "<group>"; };
+		46E59DCF2429893A00C67E82 /* PhotoCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewController.swift; sourceTree = "<group>"; };
+		46E59DD12429DB7F00C67E82 /* UICollectionViewFlowLayout-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewFlowLayout-Ext.swift"; sourceTree = "<group>"; };
 		46EBD4772374FDAC00D7E6FC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		46EE431C237153DC00DF22FB /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		46FB866723BAE87800754E88 /* DevicePageItemSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicePageItemSource.swift; sourceTree = "<group>"; };
@@ -259,6 +277,8 @@
 				4621273B23B6205200105664 /* UINavigationController-Ext.swift */,
 				46FB866923BB17EA00754E88 /* Double-Ext.swift */,
 				46100AA123C6D61A00C43D1A /* UIButton-Ext.swift */,
+				46E59DD12429DB7F00C67E82 /* UICollectionViewFlowLayout-Ext.swift */,
+				46DF40D8242DD3D70018F961 /* UIViewController-Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -339,6 +359,7 @@
 		460F724A236FF43800CFC7C3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				46DBA51F2421B5AB00CFA7E7 /* PhotoCell.swift */,
 				4607DC7723FCD0AC00E35015 /* AdditionTableHeaderView.swift */,
 				469BB70A23CAC47700A57C51 /* RoundLabel.swift */,
 				4607DC7B23FE0D0500E35015 /* LooseTextField.swift */,
@@ -352,6 +373,9 @@
 		460F724B236FF44000CFC7C3 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				46DF40CC242C75090018F961 /* BottomViewController.swift */,
+				46DF40DA24304A560018F961 /* DatePickerController.swift */,
+				46E59DCF2429893A00C67E82 /* PhotoCollectionViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -434,6 +458,7 @@
 		460F7252236FF50700CFC7C3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				46DF40D3242DAB300018F961 /* Addition */,
 				46FF950F241A0AE9002E36AD /* WorkorderCell.swift */,
 				46DBA50F241F5E2300CFA7E7 /* WorkorderStateCell.swift */,
 				46DBA51324205C9300CFA7E7 /* WorkorderBasicCell.swift */,
@@ -441,7 +466,6 @@
 				46DBA51B2420B1B000CFA7E7 /* WorkorderMessageCell.swift */,
 				46DBA51924209F1400CFA7E7 /* FoldView.swift */,
 				46DBA51D2421B20300CFA7E7 /* WorkorderPhotoCollectionCell.swift */,
-				46DBA51F2421B5AB00CFA7E7 /* PhotoCell.swift */,
 				46DBA52B242361E200CFA7E7 /* WorkorderInfoCell.swift */,
 			);
 			path = Views;
@@ -452,6 +476,7 @@
 			children = (
 				46FF950D241A0AC1002E36AD /* WorkorderListViewController.swift */,
 				46DBA50A241F55D100CFA7E7 /* WorkorderViewController.swift */,
+				46DF40CE242C7D080018F961 /* WorkorderAdditionViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -585,6 +610,7 @@
 			isa = PBXGroup;
 			children = (
 				46DEF19F2399F832008780C3 /* Device.json */,
+				46DF40CA242C46B60018F961 /* Workorder.json */,
 				460F723C236FC14600CFC7C3 /* Assets.xcassets */,
 			);
 			path = Resources;
@@ -739,6 +765,15 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
+		46DF40D3242DAB300018F961 /* Addition */ = {
+			isa = PBXGroup;
+			children = (
+				46DF40D0242C866D0018F961 /* TextInputCell.swift */,
+				46DF40D4242DAB930018F961 /* TaskAdditionCell.swift */,
+			);
+			path = Addition;
+			sourceTree = "<group>";
+		};
 		46FB866D23BB27FB00754E88 /* Tag */ = {
 			isa = PBXGroup;
 			children = (
@@ -836,6 +871,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46DF40CB242C46B60018F961 /* Workorder.json in Resources */,
 				46100AA023C5AA2500C43D1A /* Device.storyboard in Resources */,
 				46100A7823C2CCDB00C43D1A /* Localizable.strings in Resources */,
 				460F7240236FC14600CFC7C3 /* LaunchScreen.storyboard in Resources */,
@@ -924,7 +960,9 @@
 				460F7234236FC14500CFC7C3 /* AppDelegate.swift in Sources */,
 				46DBA53C242490B300CFA7E7 /* AccountUtility.swift in Sources */,
 				46227A4123C80FF400768799 /* DeviceTrendTableViewController.swift in Sources */,
+				46DF40CF242C7D080018F961 /* WorkorderAdditionViewController.swift in Sources */,
 				460BA6D7237BCC23008E7CDF /* Workorder.swift in Sources */,
+				46DF40CD242C75090018F961 /* BottomViewController.swift in Sources */,
 				468BC3C423823738008BD62C /* MQTTService.swift in Sources */,
 				4670902E23D430B8008777ED /* DeviceUtility.swift in Sources */,
 				4621273A23B60BE100105664 /* UIColor-Ext.swift in Sources */,
@@ -932,10 +970,12 @@
 				46FF950E241A0AC1002E36AD /* WorkorderListViewController.swift in Sources */,
 				46EE431D237153DC00DF22FB /* Tag.swift in Sources */,
 				4607DC7A23FE093300E35015 /* DeviceAdditionAlertController.swift in Sources */,
+				46DF40D5242DAB930018F961 /* TaskAdditionCell.swift in Sources */,
 				460BA6D1237A4775008E7CDF /* JsonUtility.swift in Sources */,
 				468BC3CA23829BA4008BD62C /* MQTTTag.swift in Sources */,
 				460BA6DB237CE08A008E7CDF /* Action.swift in Sources */,
 				469BB70D23CAEBB800A57C51 /* TrendEvaluation.swift in Sources */,
+				46DF40DB24304A560018F961 /* DatePickerController.swift in Sources */,
 				46227A3F23C80FA500768799 /* DeviceTrendEvaluationCell.swift in Sources */,
 				469BB70B23CAC47700A57C51 /* RoundLabel.swift in Sources */,
 				46DBA51C2420B1B000CFA7E7 /* WorkorderMessageCell.swift in Sources */,
@@ -944,6 +984,7 @@
 				46DBA534242475A300CFA7E7 /* Account.swift in Sources */,
 				4607DC7823FCD0AD00E35015 /* AdditionTableHeaderView.swift in Sources */,
 				46DBA5242422081D00CFA7E7 /* WorkorderSectionType.swift in Sources */,
+				46E59DD22429DB7F00C67E82 /* UICollectionViewFlowLayout-Ext.swift in Sources */,
 				46DBA52C242361E200CFA7E7 /* WorkorderInfoCell.swift in Sources */,
 				460F7236236FC14500CFC7C3 /* SceneDelegate.swift in Sources */,
 				46DBA5222421E9A200CFA7E7 /* WorkorderFlow.swift in Sources */,
@@ -951,6 +992,7 @@
 				469BB71923CEA1C800A57C51 /* PasswordView.swift in Sources */,
 				460BA6DF237D2C9A008E7CDF /* PhoneVerification.swift in Sources */,
 				46FF9510241A0AE9002E36AD /* WorkorderCell.swift in Sources */,
+				46DF40D9242DD3D70018F961 /* UIViewController-Ext.swift in Sources */,
 				4621273623B5EF6A00105664 /* DeviceHeaderView.swift in Sources */,
 				46FB866A23BB17EA00754E88 /* Double-Ext.swift in Sources */,
 				46B4934F240897800066863D /* FixedDeviceViewController.swift in Sources */,
@@ -960,6 +1002,7 @@
 				46100AA223C6D61A00C43D1A /* UIButton-Ext.swift in Sources */,
 				4605D14E2372BF6A00558500 /* Date-Ext.swift in Sources */,
 				4621271F23B19FF400105664 /* DeviceTextCell.swift in Sources */,
+				46E59DD02429893A00C67E82 /* PhotoCollectionViewController.swift in Sources */,
 				468BC3C623824B50008BD62C /* MQTTConfig.swift in Sources */,
 				46DC53552411D77400217ECD /* QRCodeUtility.swift in Sources */,
 				46227A3B23C80D4F00768799 /* DeviceTrendChartCell.swift in Sources */,
@@ -992,6 +1035,7 @@
 				46DBA52A24221EF100CFA7E7 /* WorkorderInfo.swift in Sources */,
 				4607DC7C23FE0D0500E35015 /* LooseTextField.swift in Sources */,
 				46FD463A2384C35500A796BC /* TagUtility.swift in Sources */,
+				46DF40D1242C866D0018F961 /* TextInputCell.swift in Sources */,
 				46DBA50B241F55D100CFA7E7 /* WorkorderViewController.swift in Sources */,
 				46DBA52624220CF100CFA7E7 /* WorkorderMessage.swift in Sources */,
 				460BA6DD237CFE94008E7CDF /* ProjectAccount.swift in Sources */,

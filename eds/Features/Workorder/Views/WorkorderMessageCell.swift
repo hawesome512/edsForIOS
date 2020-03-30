@@ -17,7 +17,7 @@ class WorkorderMessageCell: UITableViewCell {
 
     var message: WorkorderMessage? {
         didSet {
-            if let name = message?.user?.name {
+            if let name = message?.name {
                 nameLabel.text = name
                 if let photo = AccountUtility.sharedInstance.getPhone(by: name)?.photo {
                     userImage.kf.setImage(with: photo.getEDSServletImageUrl(), placeholder: edsDefaultImage)
@@ -34,6 +34,7 @@ class WorkorderMessageCell: UITableViewCell {
         userImage.layer.borderWidth = 2
 //        userImage.image = UIImage(named: "device_A1")
         userImage.contentMode = .scaleAspectFit
+        userImage.tintColor = .systemGray
         addSubview(userImage)
         userImage.width(edsHeight)
         userImage.height(edsHeight)
@@ -48,6 +49,15 @@ class WorkorderMessageCell: UITableViewCell {
         addSubview(nameLabel)
         nameLabel.top(to: userImage)
         nameLabel.leadingToTrailing(of: userImage, offset: edsSpace)
+
+        let levelImage = UIImageView()
+        levelImage.tintColor = .systemRed
+        levelImage.image = UIImage(named: "manager")?.withRenderingMode(.alwaysTemplate)
+        addSubview(levelImage)
+        levelImage.width(edsHeight / 2)
+        levelImage.height(edsHeight / 2)
+        levelImage.centerY(to: nameLabel)
+        levelImage.leadingToTrailing(of: nameLabel)
 
         timeLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
         timeLabel.textColor = .systemGray

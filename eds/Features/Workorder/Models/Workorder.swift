@@ -32,7 +32,7 @@ class Workorder: HandyJSON {
     var start: String = ""
     //计划执行截止时间，e.g.:2019-10-01 00:00:00
     var end: String = ""
-    //运维地点
+    //资产范围
     var location: String = ""
     //执行指定责任人，e.g.:hs-18734831111(名字-电话）
     var worker: String = ""
@@ -47,20 +47,14 @@ class Workorder: HandyJSON {
     //审核人
     var auditor: String = ""
 
-    required init() { }
-
-    init(workorderID: String, title: String, startTime: Date, endTime: Date) {
-        //创建工单必填项
-        self.id = workorderID
-        self.title = title
-        self.start = startTime.toDateStartTimeString()
-        self.end = endTime.toDateStartTimeString()
+    required init() {
+        self.id = AccountUtility.sharedInstance.generateID()
     }
 
     func getTimeRange() -> String {
         let startDate = start.toDate()?.toFormat(Workorder.shortDate) ?? ""
         let endDate = end.toDate()?.toFormat(Workorder.shortDate) ?? ""
-        return "\(startDate) - \(endDate)"
+        return String(format: "time_range".localize(with: prefixWorkorder), startDate, endDate)
     }
 
     func getTimeState() -> (icon: UIImage?, color: UIColor) {
@@ -79,13 +73,17 @@ class Workorder: HandyJSON {
     }
 
     func getMessages() -> [WorkorderMessage] {
-        let messages = log.components(separatedBy: separator).map { WorkorderMessage.generate(with: $0) }
+        let messages = log.components(separatedBy: separator).map { WorkorderMessage.decode(with: $0) }
         return messages.filter { $0 != nil } as! [WorkorderMessage]
     }
 
     func getTasks() -> [WorkorderTask] {
         let tasks = task.components(separatedBy: separator).map { WorkorderTask.generate(with: $0) }
         return tasks.filter { $0 != nil } as! [WorkorderTask]
+    }
+
+    func setTasks(_ tasks: [String]) {
+        task = tasks.map { WorkorderTask(title: $0).toString() }.joined(separator: separator)
     }
 
     func getInfos() -> [WorkorderInfo] {
@@ -98,6 +96,12 @@ class Workorder: HandyJSON {
             return [URL]()
         }
         return image.components(separatedBy: separator).map { $0.getEDSServletImageUrl() }
+    }
+
+    func prepareSaved() -> Bool {
+        //核对必要信息是否完善
+        let nessary = [id, title, task, start, end]
+        return !nessary.contains { $0.isEmpty }
     }
 }
 
@@ -114,7 +118,7 @@ enum WorkorderState: Int, HandyJSONEnum, CaseIterable {
 }
 
 //工单类型：计划任务，异常维护，随工追加，EDS系统工单
-enum WorkorderType: Int, HandyJSONEnum {
+enum WorkorderType: Int, HandyJSONEnum, CaseIterable {
     case plan = 0
     case alarm = 1
     case additional = 2

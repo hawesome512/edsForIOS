@@ -24,6 +24,7 @@ class AlarmListViewController: UITableViewController {
         super.viewDidLoad()
 
         title = Alarm.description
+        tableView.separatorStyle = .none
         //记录排序切换：默认（未排查，已排查）
         let reverseButton = UIBarButtonItem()
         reverseButton.image = UIImage(systemName: "arrow.up.arrow.down")
@@ -47,7 +48,7 @@ class AlarmListViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
+        return 170
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -105,7 +106,7 @@ class AlarmListViewController: UITableViewController {
         tableView.reloadRows(at: [indexPath], with: .automatic)
         MoyaProvider<EDSService>().request(.updateAlarm(alarm: alarm)) { _ in }
     }
-    
+
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return UIView()
     }
@@ -125,7 +126,7 @@ class AlarmListViewController: UITableViewController {
 }
 
 extension AlarmListViewController: AdditionDelegate {
-    
+
     func add(inParent parent: Device?) {
         //新增报警记录
 

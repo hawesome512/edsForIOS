@@ -11,10 +11,16 @@ import Moya
 
 class AccountUtility {
 
+    private let idCount = 5
+
     //单例，只允许存在一个实例
     static let sharedInstance = AccountUtility()
 
+    //当前登录工程
     var account: Account?
+    //当前登录手机用户
+    var phone: Phone?
+    //当前工程账户拥有的子账户列表
     var phoneList: [Phone] = []
 
     private init() { }
@@ -35,6 +41,7 @@ class AccountUtility {
 
                 self.account = (tempList?.filter { $0 != nil } as! [Account]).first
                 self.phoneList = self.account?.getPhones() ?? []
+                self.phone = self.phoneList.first
                 print("AccountUtility:Load project account.")
             default:
                 break
@@ -46,5 +53,15 @@ class AccountUtility {
         //兼容旧数据，name和phone在一起：e.g.:徐海生-100000000000
         let validName = name.separateNameAndPhone().name
         return phoneList.first { $0.name == validName }
+    }
+
+    //EDS Service工单、记录等数据模型需要ID
+    func generateID() -> String {
+        return "\(account?.id ?? NIL)-\(String.randomString(length: idCount))"
+    }
+
+    func generateImageID() -> String {
+        let project = account?.id.replacingOccurrences(of: "/", with: "_")
+        return "\(project ?? NIL)_\(String.randomString(length: idCount))"
     }
 }

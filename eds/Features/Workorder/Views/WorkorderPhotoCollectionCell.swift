@@ -11,7 +11,7 @@ import Kingfisher
 
 class WorkorderPhotoCollectionCell: UITableViewCell {
 
-    var imageUrls = [URL]()
+    var photoURLs = [URL]()
     var photoHeight: CGFloat = 120
 
     private let rightImage = UIImageView()
@@ -26,6 +26,7 @@ class WorkorderPhotoCollectionCell: UITableViewCell {
     }()
 
     private func initViews() {
+
         collectionView.register(PhotoCell.self, forCellWithReuseIdentifier: String(describing: PhotoCell.self))
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -62,12 +63,13 @@ class WorkorderPhotoCollectionCell: UITableViewCell {
 extension WorkorderPhotoCollectionCell: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageUrls.count
+        return photoURLs.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PhotoCell.self), for: indexPath) as! PhotoCell
-        cell.contentImage.kf.setImage(with: imageUrls[indexPath.row], placeholder: edsDefaultImage)
+        cell.url = photoURLs[indexPath.row]
+        cell.setBorder()
         return cell
     }
 
@@ -75,6 +77,15 @@ extension WorkorderPhotoCollectionCell: UICollectionViewDataSource, UICollection
         let count: CGFloat = traitCollection.horizontalSizeClass == .compact ? 3 : 6
         let width = (collectionView.bounds.width - edsMinSpace * (count + 1)) / count
         return CGSize(width: width, height: photoHeight)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if photoURLs.count > 0 {
+            let photosVC = PhotoCollectionViewController()
+            photosVC.photoURLs = photoURLs
+            photosVC.offsetIndex = indexPath.row
+            (window?.rootViewController as? UINavigationController)?.pushViewController(photosVC, animated: true)
+        }
     }
 
 

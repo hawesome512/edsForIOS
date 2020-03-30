@@ -46,11 +46,14 @@ class DeviceUtility {
         return deviceList.first { $0.getShortID() == shortID }
     }
 
-    func getVisibleDeviceList() -> [Device] {
+
+    /// 获取工程资产树
+    /// - Parameter visiableOnly: 默认折叠
+    func getProjDeviceList(visiableOnly: Bool = true) -> [Device] {
         var result: [Device] = []
         deviceList.filter { $0.level == .room }.forEach {
             result.append($0)
-            result.append(contentsOf: getBranceList(device: $0, visiableOnly: true))
+            result.append(contentsOf: getBranceList(device: $0, visiableOnly: visiableOnly))
         }
         return result
     }
@@ -82,6 +85,20 @@ class DeviceUtility {
             imageView.contentMode = .scaleAspectFill
         } else {
             imageView.image = device.getDefaultImage()
+        }
+    }
+
+    func indentDeviceListText() -> [String] {
+        let devices = getProjDeviceList(visiableOnly: false)
+        return devices.map {
+            switch $0.level {
+            case .room:
+                return $0.title
+            case .box:
+                return String((0..<6).map { _ in return " " }) + $0.title
+            default:
+                return String((0..<12).map { _ in return " " }) + $0.title
+            }
         }
     }
 }

@@ -39,9 +39,11 @@ class WorkorderCell: UITableViewCell {
 
     private func initViews() {
 
+        ViewUtility.addCardEffect(in: self)
+
         titleLabel.font = UIFont.preferredFont(forTextStyle: .title1)
         addSubview(titleLabel)
-        titleLabel.topToSuperview(offset: edsSpace)
+        titleLabel.topToSuperview(offset: edsSpace * 1.5)
         titleLabel.leadingToSuperview(offset: edsSpace)
 
         typeLabel.textColor = .white

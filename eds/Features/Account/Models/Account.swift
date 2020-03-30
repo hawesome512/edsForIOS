@@ -13,6 +13,7 @@ class Account: HandyJSON {
 
     let phoneSeparator = ";"
 
+    // MARK: - EDSService
     //🆔，e.g.：1/XRD
     var id = ""
     //权限
@@ -23,7 +24,7 @@ class Account: HandyJSON {
     var device = 0
     //手机账户信息
     var phone = ""
-
+    
     required init() { }
 
     func getPhones() -> [Phone] {

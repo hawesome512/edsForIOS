@@ -15,6 +15,7 @@ class WorkorderListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = false
+        tableView.separatorStyle = .none
         tableView.register(WorkorderCell.self, forCellReuseIdentifier: Workorder.description)
     }
 
@@ -36,7 +37,7 @@ class WorkorderListViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
+        return 170
     }
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -50,7 +51,7 @@ class WorkorderListViewController: UITableViewController {
         let workorderVC = WorkorderViewController()
         workorderVC.workorder = workorderList[indexPath.row]
         navigationController?.pushViewController(workorderVC, animated: true)
-        
+
         tableView.deselectRow(at: indexPath, animated: true)
     }
 

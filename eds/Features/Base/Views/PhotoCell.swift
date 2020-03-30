@@ -7,21 +7,34 @@
 //
 
 import UIKit
+import Kingfisher
 
 class PhotoCell: UICollectionViewCell {
 
     let contentImage = UIImageView()
+    let indexLabel = RoundLabel()
+
+    var url: URL? {
+        didSet {
+            contentImage.kf.setImage(with: url, placeholder: edsDefaultImage)
+        }
+    }
 
     private func initViews() {
         contentImage.clipsToBounds = true
-        contentImage.contentMode = .scaleAspectFill
+        contentImage.contentMode = .scaleAspectFit
+        //加载动画
+        contentImage.kf.indicatorType = .activity
         //设置tineColor，默认图片颜色
         contentImage.tintColor = edsLightGrayColor
-        contentImage.layer.borderColor = edsLightGrayColor.cgColor
-        contentImage.layer.borderWidth = 1
 //        contentImage.image = UIImage(named: "device_A1")
         addSubview(contentImage)
         contentImage.edgesToSuperview()
+
+        indexLabel.backgroundColor = edsLightGrayColor.withAlphaComponent(0.5)
+        addSubview(indexLabel)
+        indexLabel.centerXToSuperview()
+        indexLabel.bottomToSuperview(offset: -edsSpace)
     }
 
     override init(frame: CGRect) {
@@ -32,5 +45,12 @@ class PhotoCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    public func setBorder() {
+        contentImage.layer.borderColor = edsLightGrayColor.cgColor
+        contentImage.layer.borderWidth = 1
+        contentImage.contentMode = .scaleAspectFill
+    }
+
 
 }

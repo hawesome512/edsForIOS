@@ -8,18 +8,23 @@
 
 import UIKit
 import RxSwift
+import YPImagePicker
+import Kingfisher
 
-class WorkorderViewController: UITableViewController {
+class WorkorderViewController: UIViewController {
 
     private var flows: [WorkorderFlow] = []
     private var tasks: [WorkorderTask] = []
     private var messages: [WorkorderMessage] = []
     private var infos: [WorkorderInfo] = []
-    private var images: [URL] = []
+    private var photos: [URL] = []
+
+    private let tableView = UITableView()
 
     //任务/留言太多时折叠处理
     private var foldViews: [WorkorderSectionType: FoldView] = [.task: FoldView(), .message: FoldView()]
     private let disposeBag = DisposeBag()
+
 
     var workorder: Workorder? {
         didSet {
@@ -29,7 +34,7 @@ class WorkorderViewController: UITableViewController {
                 tasks = workorder.getTasks()
                 messages = workorder.getMessages()
                 infos = workorder.getInfos()
-                images = workorder.getImageURLs()
+                photos = workorder.getImageURLs()
 
                 initFoldView(type: .task, total: tasks.count)
                 initFoldView(type: .message, total: messages.count)
@@ -49,29 +54,45 @@ class WorkorderViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        navigationController?.navigationBar.prefersLargeTitles = false
-        tableView.rowHeight = UITableView.automaticDimension
+        initViews()
     }
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    private func initViews() {
+
+        navigationController?.navigationBar.prefersLargeTitles = false
+
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.dataSource = self
+        tableView.delegate = self
+        view.addSubview(tableView)
+        tableView.edgesToSuperview()
+    }
+
+}
+
+extension WorkorderViewController: UITableViewDataSource, UITableViewDelegate {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return WorkorderSectionType.allCases.count
     }
 
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let type = WorkorderSectionType(rawValue: section)!
         let view = SectionHeaderView()
         switch type {
         case .message:
             //e.g.:留言(10)
-            view.title = String(format: type.getSectionTitle()!, messages.count)
+            view.title = type.getSectionTitle()! + "(\(messages.count))"
+        case .task:
+            view.title = type.getSectionTitle()! + "(\(tasks.count))"
+        case .photo:
+            view.title = type.getSectionTitle()! + "(\(photos.count))"
         default:
             view.title = type.getSectionTitle()
         }
         return view
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let type = WorkorderSectionType(rawValue: section)!
         switch type {
         case .task, .message:
@@ -83,7 +104,7 @@ class WorkorderViewController: UITableViewController {
         }
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let type = WorkorderSectionType(rawValue: indexPath.section)!
         switch type {
         case .state:
@@ -100,7 +121,7 @@ class WorkorderViewController: UITableViewController {
             return cell
         case .photo:
             let cell = WorkorderPhotoCollectionCell()
-            cell.imageUrls = images
+            cell.photoURLs = photos
             return cell
         case .info:
             let cell = WorkorderInfoCell()
@@ -117,13 +138,13 @@ class WorkorderViewController: UITableViewController {
         }
     }
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
 
-    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let type = WorkorderSectionType(rawValue: section)!
         switch type {
         case .task, .message:
@@ -133,7 +154,7 @@ class WorkorderViewController: UITableViewController {
         }
     }
 
-    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         let type = WorkorderSectionType(rawValue: section)!
         switch type {
         case .task, .message:
