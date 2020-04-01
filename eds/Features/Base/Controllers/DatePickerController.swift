@@ -13,8 +13,15 @@ import UIKit
 import RxCocoa
 import RxSwift
 
+
+protocol PickerDelegate {
+    func picked(results: [Date])
+    func pickerCanceled()
+}
+
 class DatePickerController: BottomViewController {
 
+    var delegate: PickerDelegate?
     var items: [String] = []
     //默认时间先后有顺序，下一个时间不早于前一个时间，暂不处理无序时间
     var timeSequence = true
@@ -45,11 +52,11 @@ class DatePickerController: BottomViewController {
         picker.datePickerMode = .date
         contentView.addSubview(picker)
         picker.centerInSuperview()
-
         //重选上一个日期
         preButton.setBackgroundImage(UIImage(systemName: "chevron.compact.left"), for: .normal)
         preButton.rx.tap.bind(onNext: {
             self.index = (self.index == 0) ? self.index : self.index - 1
+            self.pickerChanged()
         }).disposed(by: disposeBag)
         contentView.addSubview(preButton)
         preButton.width(edsIconSize)
@@ -65,6 +72,7 @@ class DatePickerController: BottomViewController {
                 self.dismiss(animated: true, completion: nil)
             }
             self.index = (self.index == self.items.count - 1) ? self.index : self.index + 1
+            self.pickerChanged()
         }).disposed(by: disposeBag)
         contentView.addSubview(nextButton)
         nextButton.width(edsIconSize)
@@ -83,6 +91,14 @@ class DatePickerController: BottomViewController {
 
         //需要设置默认值，才能出发首次发布订阅，实现初始化界面
         index = 0
+    }
+
+    private func pickerChanged() {
+        //增加动画效果，避免页面在切换过程中过于死板好像没有变化
+        picker.alpha = 0
+        UIView.animate(withDuration: 1) {
+            self.picker.alpha = 1
+        }
     }
 
 }

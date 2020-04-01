@@ -10,13 +10,18 @@ import Foundation
 import HandyJSON
 import SwiftDate
 
-class Workorder: HandyJSON {
+class Workorder: HandyJSON, Comparable {
 
-    static let shortDate = "MMMdd"
+
     static let icon = UIImage(systemName: "doc.richtext")
     static let description = "workorder".localize()
 
     private let separator = ";"
+
+    //是否是新增工单，新增工单增加角标
+    var added = false
+
+// MARK: -EDSService
 
     //🆔，e.g.:1/XRD-20181010164444 (ProjectID-创建时间）
     var id: String = ""
@@ -48,12 +53,18 @@ class Workorder: HandyJSON {
     var auditor: String = ""
 
     required init() {
-        self.id = AccountUtility.sharedInstance.generateID()
+        id = AccountUtility.sharedInstance.generateID()
     }
 
     func getTimeRange() -> String {
-        let startDate = start.toDate()?.toFormat(Workorder.shortDate) ?? ""
-        let endDate = end.toDate()?.toFormat(Workorder.shortDate) ?? ""
+        let startDate = start.toDate()?.date.toDateString() ?? ""
+        let endDate = end.toDate()?.date.toDateString() ?? ""
+        return String(format: "time_range".localize(with: prefixWorkorder), startDate, endDate)
+    }
+
+    func getShortTimeRange() -> String {
+        let startDate = start.toDate()?.date.toShortDateString() ?? ""
+        let endDate = end.toDate()?.date.toShortDateString() ?? ""
         return String(format: "time_range".localize(with: prefixWorkorder), startDate, endDate)
     }
 
@@ -98,10 +109,40 @@ class Workorder: HandyJSON {
         return image.components(separatedBy: separator).map { $0.getEDSServletImageUrl() }
     }
 
+    func setState(with newState: WorkorderState, by name: String) {
+        //流程不能回退，避免此情况：已经执行了，工单再被派发
+        let newFlow = WorkorderFlow.toFormat(state: newState, name: name)
+        if newState.rawValue > state.rawValue {
+            flow += separator + newFlow
+        } else if newState.rawValue == state.rawValue {
+            var temps = flow.components(separatedBy: separator)
+            temps[temps.count - 1] = newFlow
+            flow = temps.joined(separator: separator)
+        }
+        state = newState
+    }
+
     func prepareSaved() -> Bool {
         //核对必要信息是否完善
         let nessary = [id, title, task, start, end]
         return !nessary.contains { $0.isEmpty }
+    }
+
+    func prepareDeleted() {
+        title = ""
+    }
+
+
+    // MARK: -工单列表排序
+    static func < (lhs: Workorder, rhs: Workorder) -> Bool {
+        if let left = lhs.start.toDate(), let right = rhs.start.toDate() {
+            return left.isBeforeDate(right, granularity: .second)
+        }
+        return true
+    }
+
+    static func == (lhs: Workorder, rhs: Workorder) -> Bool {
+        return lhs.start == rhs.start
     }
 }
 

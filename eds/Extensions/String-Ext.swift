@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension String {
 
@@ -98,7 +99,6 @@ extension String {
         let image = self.contains(".") ? self : "\(self).png"
         return URL(string: "\(EDSConfig.servicePath):8443/EDSServlet/upload/\(image)")!
     }
-
 
     /// 静态方法生成固定长度的随机字符串
     /// - Parameter length: <#length description#>

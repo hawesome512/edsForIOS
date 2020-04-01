@@ -10,6 +10,8 @@
 		0788B1ED30AE519DE223717B /* Pods_eds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A018248F37C60BAB1547D4 /* Pods_eds.framework */; };
 		4605D14C237297E100558500 /* LogTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4605D14B237297E100558500 /* LogTag.swift */; };
 		4605D14E2372BF6A00558500 /* Date-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4605D14D2372BF6A00558500 /* Date-Ext.swift */; };
+		4607ACE52432D6D000C13C57 /* CornerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4607ACE42432D6D000C13C57 /* CornerView.swift */; };
+		4607ACE824331F1F00C13C57 /* ShareController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4607ACE724331F1F00C13C57 /* ShareController.swift */; };
 		4607DC7823FCD0AD00E35015 /* AdditionTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4607DC7723FCD0AC00E35015 /* AdditionTableHeaderView.swift */; };
 		4607DC7A23FE093300E35015 /* DeviceAdditionAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4607DC7923FE093300E35015 /* DeviceAdditionAlertController.swift */; };
 		4607DC7C23FE0D0500E35015 /* LooseTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4607DC7B23FE0D0500E35015 /* LooseTextField.swift */; };
@@ -131,6 +133,8 @@
 		11812BFF5D5618F49FD03B4D /* Pods-eds.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eds.release.xcconfig"; path = "Target Support Files/Pods-eds/Pods-eds.release.xcconfig"; sourceTree = "<group>"; };
 		4605D14B237297E100558500 /* LogTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogTag.swift; sourceTree = "<group>"; };
 		4605D14D2372BF6A00558500 /* Date-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date-Ext.swift"; sourceTree = "<group>"; };
+		4607ACE42432D6D000C13C57 /* CornerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerView.swift; sourceTree = "<group>"; };
+		4607ACE724331F1F00C13C57 /* ShareController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareController.swift; sourceTree = "<group>"; };
 		4607DC7723FCD0AC00E35015 /* AdditionTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionTableHeaderView.swift; sourceTree = "<group>"; };
 		4607DC7923FE093300E35015 /* DeviceAdditionAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceAdditionAlertController.swift; sourceTree = "<group>"; };
 		4607DC7B23FE0D0500E35015 /* LooseTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LooseTextField.swift; sourceTree = "<group>"; };
@@ -366,6 +370,7 @@
 				46DC535A2412412F00217ECD /* ImageButton.swift */,
 				46DBA5112420524200CFA7E7 /* SectionHeaderView.swift */,
 				46DBA5172420995200CFA7E7 /* CheckBox.swift */,
+				4607ACE42432D6D000C13C57 /* CornerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -376,6 +381,7 @@
 				46DF40CC242C75090018F961 /* BottomViewController.swift */,
 				46DF40DA24304A560018F961 /* DatePickerController.swift */,
 				46E59DCF2429893A00C67E82 /* PhotoCollectionViewController.swift */,
+				4607ACE724331F1F00C13C57 /* ShareController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -973,6 +979,7 @@
 				46DF40D5242DAB930018F961 /* TaskAdditionCell.swift in Sources */,
 				460BA6D1237A4775008E7CDF /* JsonUtility.swift in Sources */,
 				468BC3CA23829BA4008BD62C /* MQTTTag.swift in Sources */,
+				4607ACE52432D6D000C13C57 /* CornerView.swift in Sources */,
 				460BA6DB237CE08A008E7CDF /* Action.swift in Sources */,
 				469BB70D23CAEBB800A57C51 /* TrendEvaluation.swift in Sources */,
 				46DF40DB24304A560018F961 /* DatePickerController.swift in Sources */,
@@ -984,6 +991,7 @@
 				46DBA534242475A300CFA7E7 /* Account.swift in Sources */,
 				4607DC7823FCD0AD00E35015 /* AdditionTableHeaderView.swift in Sources */,
 				46DBA5242422081D00CFA7E7 /* WorkorderSectionType.swift in Sources */,
+				4607ACE824331F1F00C13C57 /* ShareController.swift in Sources */,
 				46E59DD22429DB7F00C67E82 /* UICollectionViewFlowLayout-Ext.swift in Sources */,
 				46DBA52C242361E200CFA7E7 /* WorkorderInfoCell.swift in Sources */,
 				460F7236236FC14500CFC7C3 /* SceneDelegate.swift in Sources */,

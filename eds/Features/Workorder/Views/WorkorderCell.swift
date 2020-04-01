@@ -20,26 +20,37 @@ class WorkorderCell: UITableViewCell {
     private let timeLabel = UILabel()
     private let stateImageView = UIImageView()
 //    private let sceneImageView = UIImageView()
+    //新建的工单有一个角标表示新建
+    private let cornerView = CornerView()
 
     var workorder: Workorder? {
         didSet {
             if let workorder = workorder {
                 titleLabel.text = workorder.title
+
+                typeLabel.alpha = 0.8
                 typeLabel.innerText = workorder.type.getText()
                 typeLabel.backgroundColor = workorder.type.getColor()
                 deviceLabel.text = workorder.location
-                timeLabel.text = workorder.getTimeRange()
+                timeLabel.text = workorder.getShortTimeRange()
                 let state = workorder.getTimeState()
                 stateImageView.image = state.icon
                 stateImageView.tintColor = state.color
                 workerLabel.text = workorder.worker.separateNameAndPhone().name
+                cornerView.alpha = workorder.added ? 1 : 0
             }
         }
     }
 
     private func initViews() {
 
-        ViewUtility.addCardEffect(in: self)
+        let backView = ViewUtility.addCardEffect(in: self)
+        backView.addSubview(cornerView)
+        cornerView.topToSuperview(offset: -2)
+        cornerView.trailingToSuperview(offset: -2)
+        cornerView.width(60)
+        cornerView.height(40)
+        cornerView.title = "new".localize()
 
         titleLabel.font = UIFont.preferredFont(forTextStyle: .title1)
         addSubview(titleLabel)

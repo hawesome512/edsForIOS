@@ -34,7 +34,7 @@ class AlarmCell: UITableViewCell {
     private var device: Device?
 
     private func initViews() {
-        ViewUtility.addCardEffect(in: self)
+        let _ = ViewUtility.addCardEffect(in: self)
 
         deviceImage.contentMode = .scaleAspectFit
 //        deviceImage.image = UIImage(named: "device_A1")

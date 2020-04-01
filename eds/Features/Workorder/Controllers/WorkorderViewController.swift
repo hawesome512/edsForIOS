@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import YPImagePicker
 import Kingfisher
+import Moya
 
 class WorkorderViewController: UIViewController {
 
@@ -114,6 +115,8 @@ extension WorkorderViewController: UITableViewDataSource, UITableViewDelegate {
         case .basic:
             let cell = WorkorderBasicCell()
             cell.workorder = workorder
+            cell.delegate = self
+            cell.viewController = self
             return cell
         case .task:
             let cell = WorkorderTaskCell()
@@ -158,9 +161,34 @@ extension WorkorderViewController: UITableViewDataSource, UITableViewDelegate {
         let type = WorkorderSectionType(rawValue: section)!
         switch type {
         case .task, .message:
-            return foldViews[type]!.getRowNumber() <= FoldView.limitCount ? 0 : UITableView.automaticDimension
+            return foldViews[type]!.getRowNumber() < FoldView.limitCount ? 0 : UITableView.automaticDimension
         default:
             return 0
+        }
+    }
+}
+
+extension WorkorderViewController: DistributionDelegate {
+    func distributed() {
+        let name = AccountUtility.sharedInstance.phone?.name ?? NIL
+        workorder?.setState(with: .distributed, by: name)
+        updateWorkorder()
+    }
+
+    func updateWorkorder() {
+        guard let workorder = workorder else {
+            return
+        }
+        MoyaProvider<EDSService>().request(.updateWorkorder(workorder: workorder)) { result in
+            switch result {
+            case .success(let response):
+                if JsonUtility.didUpdatedEDSServiceSuccess(data: response.data) {
+                    WorkorderUtility.sharedInstance.update(with: workorder)
+                    self.tableView.reloadData()
+                }
+            default:
+                break
+            }
         }
     }
 }

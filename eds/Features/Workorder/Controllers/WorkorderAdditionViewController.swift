@@ -9,6 +9,10 @@
 import UIKit
 import Moya
 
+protocol WorkorderAdditionDelegate {
+    func added(workorder: Workorder)
+}
+
 class WorkorderAdditionViewController: UITableViewController {
 
     //数据上传过程的指示器
@@ -28,6 +32,7 @@ class WorkorderAdditionViewController: UITableViewController {
     private var tasks: [String] = []
 
     var workorder = Workorder()
+    var delegate: WorkorderAdditionDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,7 +67,7 @@ class WorkorderAdditionViewController: UITableViewController {
         //目标大标题显示无效，猜测跟TableVC冲突，待细研究 20.03.30 by.hs
         doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneAction))
         navigationItem.rightBarButtonItem = doneButton!
-        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.prefersLargeTitles = false
     }
 
     private func initCells() {
@@ -97,7 +102,6 @@ class WorkorderAdditionViewController: UITableViewController {
     }
 
     @objc func doneAction() {
-
         initWorkorder()
         saveWorkorder()
     }
@@ -116,6 +120,7 @@ extension WorkorderAdditionViewController {
         }
         //不能在此次初始化工单，因为建议时间在其他地方赋值
         //workorder = Workorder()
+        workorder.added = true
         workorder.title = inputs[0].text
         workorder.type = WorkorderType(rawValue: inputs[1].selectedIndex)!
         workorder.location = inputs[2].text
@@ -130,11 +135,22 @@ extension WorkorderAdditionViewController {
         //tasks在新增任务的时候已设定至tasks
         workorder.setTasks(tasks)
         //创建人即当前登录用户
-        workorder.creator = AccountUtility.sharedInstance.phone?.name ?? ""
+        if let userName = AccountUtility.sharedInstance.phone?.name {
+            //尽管默认工单状态即为.created，但是调用setState(with:by:)可以存档流程记录
+            workorder.setState(with: .created, by: userName)
+            workorder.creator = userName
+            //当创建与执行为同一人时，省略派发通知流程，因本人创建，默认知道该工单存在
+            if userName == workorder.worker {
+                workorder.setState(with: .distributed, by: userName)
+            }
+        }
+
     }
 
     private func saveWorkorder() {
-        
+        //进度条在顶部
+        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+
         //信息不完整,必要工单信息：id(自动生成),title,start,end,task
         guard workorder.prepareSaved() else {
             let title = "imcomplete".localize(with: prefixWorkorder)
@@ -145,7 +161,7 @@ extension WorkorderAdditionViewController {
             present(alertVC, animated: true, completion: nil)
             return
         }
-        
+
         indicator.alpha = 1
         doneButton?.isEnabled = false
         MoyaProvider<EDSService>().request(.updateWorkorder(workorder: workorder)) { result in
@@ -154,8 +170,8 @@ extension WorkorderAdditionViewController {
             switch result {
             case .success(let response):
                 if JsonUtility.didUpdatedEDSServiceSuccess(data: response.data) {
-                    //加入工单列表中
-                    WorkorderUtility.sharedInstance.workorderList.insert(self.workorder, at: 0)
+                    //回调
+                    self.delegate?.added(workorder: self.workorder)
                     //在navigationController中退出发生如下
                     self.navigationController?.popViewController(animated: true)
                 }
@@ -234,13 +250,11 @@ extension WorkorderAdditionViewController: TextInputCellDelegate, TaskAdditionCe
 
     //选择好有效日期
     func picked(results: [Date]) {
-        let startDate = results.first?.toFormat(Workorder.shortDate) ?? ""
-        let endDate = results.last?.toFormat(Workorder.shortDate) ?? ""
         //format: 3月10 - 3月31
         let cell = textInputCells[dateCellIndex]
-        cell.textField.text = String(format: "time_range".localize(with: prefixWorkorder), startDate, endDate)
         workorder.start = results[0].toDateTimeString()
         workorder.end = results[1].toDateTimeString()
+        cell.textField.text = workorder.getTimeRange()
     }
 
     //新增任务

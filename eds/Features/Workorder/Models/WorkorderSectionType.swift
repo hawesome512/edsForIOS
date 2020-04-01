@@ -22,7 +22,7 @@ enum WorkorderSectionType: Int, CaseIterable {
 
     func getSectionTitle() -> String? {
         switch self {
-        case .state, .task, .photo, .message:
+        case .state, .task, .photo, .message, .basic:
             return String(describing: self).localize(with: prefixWorkorder)
         default:
             return nil

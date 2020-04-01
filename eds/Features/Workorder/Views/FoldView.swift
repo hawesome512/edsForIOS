@@ -28,7 +28,6 @@ class FoldView: UIView {
         foldButton.width(edsIconSize)
         foldButton.height(edsIconSize)
         foldButton.centerXToSuperview()
-
         setImage()
     }
 

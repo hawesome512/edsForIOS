@@ -22,7 +22,7 @@ struct WorkorderFlow {
     init(state: WorkorderState, workorder: Workorder) {
         self.state = state
         //默认填写截止时间
-        date = workorder.end.toDate()?.toFormat(Workorder.shortDate)
+        date = workorder.end.toDate()?.date.toShortDate()
 
         //判定时效性
         switch state.rawValue {
@@ -50,8 +50,13 @@ struct WorkorderFlow {
         let regex = try? NSRegularExpression(pattern: pattern, options: .allowCommentsAndWhitespace)
         if let result = regex?.firstMatch(in: flow, options: [], range: range) {
             let dateTime = (flow as NSString).substring(with: result.range(at: 2))
-            date = dateTime.toDate()?.toFormat(Workorder.shortDate)
+            date = dateTime.toDate()?.date.toShortDate()
         }
+    }
+
+    static func toFormat(state: WorkorderState, name: String) -> String {
+        //工单流程存档:类型_时间_操作，e.g.:0_2020-12-12 12:12:12_徐海生
+        return String(format: "%d_%@_%@", state.rawValue, Date().toDateTimeString(), name)
     }
 }
 

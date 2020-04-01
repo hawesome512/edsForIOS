@@ -30,14 +30,19 @@ class WorkorderUtility {
             case .success(let response):
                 //后台返回数据类型[Workorder?]?👉[Workorder]
                 let tempList = JsonUtility.getEDSServiceList(with: response.data, type: [Workorder]())
-                self.workorderList = (tempList?.filter { $0 != nil })! as! [Workorder]
-                //排序
+                //按执行时间的先后排序，逆序
+                self.workorderList = ((tempList?.filter { $0 != nil })! as! [Workorder]).sorted().reversed()
 
-                
                 print("WorkorderUtility:Load project workorder list in recent quarter.")
             default:
                 break
             }
+        }
+    }
+
+    func update(with workorder: Workorder) {
+        if let index = workorderList.firstIndex(where: { $0.id == workorder.id }) {
+            workorderList[index] = workorder
         }
     }
 }

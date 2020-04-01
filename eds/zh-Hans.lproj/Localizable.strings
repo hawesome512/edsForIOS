@@ -10,14 +10,16 @@
 "workorder" = "工单";
 /* alarm */
 "alarm" = "报警";
-/* telephone */
-"telephone" = "电话";
+/* phone */
+"phone" = "电话";
 /* sms */
 "sms" = "短信";
 /* mail */
 "mail" = "邮件";
 /* wechat */
 "wechat" = "微信";
+/* new */
+"new" = "新";
 
 /* trend_evaluation */
 "evaluation" = "运行评估";
@@ -342,6 +344,8 @@
 "state" = "工单流程";
 /* workorder_task */
 "task" = "任务清单";
+/* workorder_basic */
+"basic" = "执行信息";
 /* workorder_photo */
 "photo" = "执行记录";
 /* workorder_message */
@@ -365,6 +369,10 @@
 /* workorder_add_task */
 "add_task" = "新增任务";
 /* workorder_time_range */
-"time_range" = "%@ - %@";
+"time_range" = "%@→%@";
 /* workorder_imcomplete */
 "imcomplete" = "请完善必要的工单信息";
+/* workorder_distribution */
+"distribution" = "%@：\r\n   你好！\r\n   你有一条待执行的工单！\r\n   工单主旨：%@\r\n   建议时间：%@\r\n   资产范围：%@\r\n   工单编号：%@\r\n\r\n请使用EDS云管理APP执行此工单，谢谢！";
+/* workorder_distribution_title */
+"distribution_title" = "EDS工单派发通知";

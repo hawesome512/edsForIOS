@@ -9,10 +9,6 @@
 import UIKit
 
 
-protocol PickerDelegate {
-    func picked(results: [Date])
-    func pickerCanceled()
-}
 
 class BottomViewController: UIViewController {
 
@@ -26,8 +22,6 @@ class BottomViewController: UIViewController {
     let titleLabel = UILabel()
     var viewHeight = UIScreen.main.bounds.height / 3
     var isPresenting = false
-
-    var delegate: PickerDelegate?
 
     init() {
         super.init(nibName: nil, bundle: nil)

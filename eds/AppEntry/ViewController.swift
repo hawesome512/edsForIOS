@@ -23,16 +23,10 @@ class ViewController: UIViewController {
 
     let disposeBag = DisposeBag()
     let button = ImageButton()
-    let label = UILabel()
-    var tag: Tag?
-
-    var collectionView: UICollectionView?
-    let imageList = (0..<100).map { _ in YPMediaItem.photo(p: YPMediaPhoto(image: UIImage(named: "device_A1")!)) }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
-
         //初始化后台数据，导入数据列表
         TagUtility.sharedInstance.loadProjectTagList()
         DeviceUtility.sharedInstance.loadProjectDeviceList()
@@ -53,9 +47,8 @@ class ViewController: UIViewController {
         button.setTitle("运维工单", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.rx.tap.bind(onNext: {
-
             //跳转设备列表
-            let deviceListVC = WorkorderAdditionViewController() //WorkorderListViewController()
+            let deviceListVC = WorkorderListViewController()
             self.navigationController?.pushViewController(deviceListVC, animated: true)
         }).disposed(by: disposeBag)
         view.addSubview(button)
@@ -65,7 +58,6 @@ class ViewController: UIViewController {
 
     }
 }
-
 
 
 
