@@ -11,12 +11,14 @@ import Kingfisher
 
 class PhotoCell: UICollectionViewCell {
 
+    let deleteButton = UIButton()
     let contentImage = UIImageView()
     let indexLabel = RoundLabel()
 
     var url: URL? {
         didSet {
-            contentImage.kf.setImage(with: url, placeholder: edsDefaultImage)
+            contentImage.kf.setImage(with: url)
+//            contentImage.kf.setImage(with: url, placeholder: edsDefaultImage)
         }
     }
 
@@ -27,7 +29,7 @@ class PhotoCell: UICollectionViewCell {
         contentImage.kf.indicatorType = .activity
         //设置tineColor，默认图片颜色
         contentImage.tintColor = edsLightGrayColor
-//        contentImage.image = UIImage(named: "device_A1")
+//        contentImage.image = UIImage(systemName: "plus")
         addSubview(contentImage)
         contentImage.edgesToSuperview()
 
@@ -35,6 +37,16 @@ class PhotoCell: UICollectionViewCell {
         addSubview(indexLabel)
         indexLabel.centerXToSuperview()
         indexLabel.bottomToSuperview(offset: -edsSpace)
+
+        deleteButton.setImage(UIImage(systemName: "xmark"), for: .normal)
+        deleteButton.tintColor = .white
+        deleteButton.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+        addSubview(deleteButton)
+        deleteButton.height(edsIconSize)
+        deleteButton.width(edsIconSize)
+        deleteButton.topToSuperview(offset: 0)
+        deleteButton.trailingToSuperview(offset: 0)
+        deleteButton.alpha = 0
     }
 
     override init(frame: CGRect) {

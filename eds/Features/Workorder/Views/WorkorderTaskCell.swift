@@ -21,7 +21,7 @@ class WorkorderTaskCell: UITableViewCell {
     }
 
     private let titleLabel = UILabel()
-    private let checkBox = CheckBox()
+    let checkBox = CheckBox()
 
     private func initViews() {
 

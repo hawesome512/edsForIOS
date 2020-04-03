@@ -20,6 +20,8 @@
 "wechat" = "微信";
 /* new */
 "new" = "新";
+/* save */
+"save" = "保存";
 
 /* trend_evaluation */
 "evaluation" = "运行评估";
@@ -343,9 +345,9 @@
 /* workorder_state */
 "state" = "工单流程";
 /* workorder_task */
-"task" = "任务清单";
+"task" = "执行清单";
 /* workorder_basic */
-"basic" = "执行信息";
+"basic" = "派发信息";
 /* workorder_photo */
 "photo" = "执行记录";
 /* workorder_message */

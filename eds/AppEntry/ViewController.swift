@@ -19,7 +19,7 @@ import EFQRCode
 import YPImagePicker
 import MessageUI
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDelegate {
 
     let disposeBag = DisposeBag()
     let button = ImageButton()
@@ -28,21 +28,21 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         initViews()
         //初始化后台数据，导入数据列表
-        TagUtility.sharedInstance.loadProjectTagList()
-        DeviceUtility.sharedInstance.loadProjectDeviceList()
-        AlarmUtility.sharedInstance.loadProjectAlarmList()
+//        TagUtility.sharedInstance.loadProjectTagList()
+//        DeviceUtility.sharedInstance.loadProjectDeviceList()
+//        AlarmUtility.sharedInstance.loadProjectAlarmList()
         WorkorderUtility.sharedInstance.loadProjectWorkerorderList()
         AccountUtility.sharedInstance.loadProjectAccount()
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setToolbarHidden(true, animated: animated)
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemBlue]
     }
 
     fileprivate func initViews() {
         title = "首页"
-
         button.backgroundColor = .systemGreen
         button.setTitle("运维工单", for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -58,6 +58,5 @@ class ViewController: UIViewController {
 
     }
 }
-
 
 

@@ -15,6 +15,8 @@ class Workorder: HandyJSON, Comparable {
 
     static let icon = UIImage(systemName: "doc.richtext")
     static let description = "workorder".localize()
+    //允许上传的图片数量限制
+    static let imageLimit = 12
 
     private let separator = ";"
 

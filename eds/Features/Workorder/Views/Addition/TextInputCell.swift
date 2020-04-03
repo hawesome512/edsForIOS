@@ -127,16 +127,4 @@ class TextInputCell: UITableViewCell, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         return textField.resignFirstResponder()
     }
-
-//    func addInputCancelButton() {
-//        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: edsIconSize))
-//        let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-//        let cancel = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelInput))
-//        toolbar.setItems([space, cancel], animated: false)
-//        textField.inputAccessoryView = toolbar
-//    }
-//
-//    @objc func cancelInput() {
-//        textField.resignFirstResponder()
-//    }
 }

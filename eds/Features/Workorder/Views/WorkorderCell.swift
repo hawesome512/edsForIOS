@@ -64,7 +64,7 @@ class WorkorderCell: UITableViewCell {
         typeLabel.leadingToTrailing(of: titleLabel, offset: edsMinSpace)
 
         workerIcon.tintColor = .systemGray
-        workerIcon.image = UIImage(systemName: "person.crop.circle")
+        workerIcon.image = UIImage(systemName: "person")
         addSubview(workerIcon)
         workerIcon.width(edsIconSize)
         workerIcon.height(edsIconSize)

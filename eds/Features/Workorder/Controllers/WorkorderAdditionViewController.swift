@@ -68,6 +68,7 @@ class WorkorderAdditionViewController: UITableViewController {
         doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneAction))
         navigationItem.rightBarButtonItem = doneButton!
         navigationController?.navigationBar.prefersLargeTitles = false
+
     }
 
     private func initCells() {
@@ -104,6 +105,10 @@ class WorkorderAdditionViewController: UITableViewController {
     @objc func doneAction() {
         initWorkorder()
         saveWorkorder()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        tableView.endEditing(true)
     }
 
 }

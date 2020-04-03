@@ -8,9 +8,12 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 import YPImagePicker
 import Kingfisher
 import Moya
+import CallKit
+import MessageUI
 
 class WorkorderViewController: UIViewController {
 
@@ -26,6 +29,16 @@ class WorkorderViewController: UIViewController {
     private var foldViews: [WorkorderSectionType: FoldView] = [.task: FoldView(), .message: FoldView()]
     private let disposeBag = DisposeBag()
 
+    //电话派发工单，监听电话接通状态
+    private let callObserver = CXCallObserver()
+
+    //执行
+    private var executing = false {
+        didSet {
+            executedState.accept(executing)
+        }
+    }
+    private var executedState = BehaviorRelay<Bool>(value: false)
 
     var workorder: Workorder? {
         didSet {
@@ -56,9 +69,12 @@ class WorkorderViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
+        initBarItems()
     }
 
     private func initViews() {
+
+        callObserver.setDelegate(self, queue: DispatchQueue.main)
 
         navigationController?.navigationBar.prefersLargeTitles = false
 
@@ -67,6 +83,28 @@ class WorkorderViewController: UIViewController {
         tableView.delegate = self
         view.addSubview(tableView)
         tableView.edgesToSuperview()
+    }
+
+    private func initBarItems() {
+        let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let distribute = UIBarButtonItem(title: WorkorderState.distributed.getText(), style: .plain, target: self, action: #selector(selectDistribution))
+        let execute = UIBarButtonItem(title: WorkorderState.executed.getText(), style: .plain, target: self, action: #selector(executeWorkorder))
+        let audit = UIBarButtonItem(title: WorkorderState.audited.getText(), style: .plain, target: self, action: nil)
+        let record = UIBarButtonItem(title: "message".localize(with: prefixWorkorder), style: .plain, target: self, action: nil)
+        toolbarItems = [distribute, space, execute, space, audit, space, record]
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setToolbarHidden(false, animated: animated)
+        navigationController?.toolbar.barStyle = .black
+        navigationController?.toolbar.tintColor = .white
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        //结束后必须隐藏toolBar，否则前一个调用的vc底部将存在空白toolbar
+        navigationController?.setToolbarHidden(true, animated: animated)
+        navigationController?.toolbar.barStyle = .default
+        navigationController?.toolbar.tintColor = edsDefaultColor
     }
 
 }
@@ -115,16 +153,23 @@ extension WorkorderViewController: UITableViewDataSource, UITableViewDelegate {
         case .basic:
             let cell = WorkorderBasicCell()
             cell.workorder = workorder
-            cell.delegate = self
             cell.viewController = self
             return cell
         case .task:
             let cell = WorkorderTaskCell()
             cell.task = tasks[indexPath.row]
+            //非执行状态不可点击
+            executedState.asObservable().bind(onNext: { executing in
+                cell.checkBox.isEnabled = executing
+            }).disposed(by: disposeBag)
+            //将任务清单确认情况保存至tasks等待上传
+            cell.checkBox.selectedState.asObservable().bind(onNext: { selected in
+                self.tasks[indexPath.row].state = selected ? .checked : .unchecked
+            }).disposed(by: disposeBag)
             return cell
         case .photo:
             let cell = WorkorderPhotoCollectionCell()
-            cell.photoURLs = photos
+            cell.photoSource.urls = photos
             return cell
         case .info:
             let cell = WorkorderInfoCell()
@@ -168,12 +213,7 @@ extension WorkorderViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-extension WorkorderViewController: DistributionDelegate {
-    func distributed() {
-        let name = AccountUtility.sharedInstance.phone?.name ?? NIL
-        workorder?.setState(with: .distributed, by: name)
-        updateWorkorder()
-    }
+extension WorkorderViewController {
 
     func updateWorkorder() {
         guard let workorder = workorder else {
@@ -190,5 +230,85 @@ extension WorkorderViewController: DistributionDelegate {
                 break
             }
         }
+    }
+}
+
+
+// MARK: - 派发工单
+extension WorkorderViewController: ShareDelegate, CXCallObserverDelegate, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate {
+
+    //派发方式选择界面：电话/短信/邮件/微信等等
+    @objc func selectDistribution() {
+        let shareVC = ShareController()
+        shareVC.titleLabel.text = WorkorderState.distributed.getText()
+        shareVC.delegate = self
+        present(shareVC, animated: true, completion: nil)
+    }
+
+    //获取已选择的派发方式
+    func share(with shareType: ShareType) {
+        guard let workorder = workorder, let executor = AccountUtility.sharedInstance.getPhone(by: workorder.worker) else {
+            return
+        }
+        let sentContent = String(format: "distribution".localize(with: prefixWorkorder), executor.name!, workorder.title, workorder.getShortTimeRange(), workorder.location, workorder.id)
+        switch shareType {
+        case .phone:
+            ShareUtility.callPhone(to: executor.number!)
+        case .sms:
+            ShareUtility.sendSMS(to: executor.number!, with: sentContent, imageData: nil, in: self)
+        case .mail:
+            let imageData = QRCodeUtility.generate(with: .workorder, param: workorder.id)?.pngData()
+            ShareUtility.sendMail(to: executor.email!, title: "distribution_title".localize(with: prefixWorkorder), content: sentContent, imageData: imageData, in: self)
+        default:
+            break
+        }
+    }
+
+    //监听电话派发的状态
+    func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
+        //已经接通电话，已经结束通话，电话派发工单成功
+        if call.hasConnected && call.hasEnded {
+            distributed()
+        }
+    }
+
+    //短信派发状态
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        //发送短信成功
+        if result == .sent {
+            distributed()
+        }
+        controller.dismiss(animated: true, completion: nil)
+    }
+
+    //邮件派发状态
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        //发送邮件成功
+        if result == .sent {
+            distributed()
+        }
+        controller.dismiss(animated: true, completion: nil)
+    }
+
+    //派发成功
+    func distributed() {
+        //只有新建状态下的派发，才需要上传数据。其他即为二次派发
+        guard workorder?.state == WorkorderState.created else {
+            return
+        }
+        let name = AccountUtility.sharedInstance.phone?.name ?? NIL
+        workorder?.setState(with: .distributed, by: name)
+        updateWorkorder()
+    }
+}
+
+//MARK: -执行工单
+extension WorkorderViewController {
+
+    @objc func executeWorkorder() {
+        executing = !executing
+        //不能直接更改title，只能替换
+        let title = executing ? "save".localize() : WorkorderState.executed.getText()
+        toolbarItems?[2] = UIBarButtonItem(title: title, style: .plain, target: self, action: #selector(executeWorkorder))
     }
 }

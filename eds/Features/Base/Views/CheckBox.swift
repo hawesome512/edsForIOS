@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 
 class CheckBox: UIButton {
 
@@ -18,8 +19,10 @@ class CheckBox: UIButton {
             tintColor = isSelected ? UIColor.systemRed : UIColor.systemGray
             let image = isSelected ? "checkmark.square.fill" : "square"
             setBackgroundImage(UIImage(systemName: image), for: .normal)
+            selectedState.accept(isSelected)
         }
     }
+    var selectedState = BehaviorRelay<Bool>(value: false)
 
     override init(frame: CGRect) {
         super.init(frame: frame)

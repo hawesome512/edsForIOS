@@ -9,10 +9,35 @@
 import UIKit
 import Foundation
 
+struct PhotoSource {
+    //图片来源：本机选择资源在前，网络资源在后
+    var images: [UIImage] = []
+    var urls: [URL] = []
+
+    func getTotal() -> Int {
+        return images.count + urls.count
+    }
+
+    func setImage(in view: UIImageView, at row: Int) {
+        if row < images.count {
+            view.image = images[row]
+        } else {
+            view.kf.setImage(with: urls[row - images.count])
+        }
+    }
+
+    mutating func removeImage(at row: Int) {
+        if row < images.count {
+            images.remove(at: row)
+        } else {
+            urls.remove(at: row - images.count)
+        }
+    }
+}
 
 class PhotoCollectionViewController: UIViewController {
 
-    var photoURLs = [URL]()
+    var photoSource = PhotoSource()
 
     //起始偏移
     var offsetIndex = 0
@@ -61,13 +86,13 @@ class PhotoCollectionViewController: UIViewController {
 extension PhotoCollectionViewController: UICollectionViewDataSource, UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photoURLs.count
+        return photoSource.getTotal()
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PhotoCell.self), for: indexPath) as! PhotoCell
-        cell.url = photoURLs[indexPath.row]
-        cell.indexLabel.innerText = "\(indexPath.row + 1)/\(photoURLs.count)"
+        photoSource.setImage(in: cell.contentImage, at: indexPath.row)
+        cell.indexLabel.innerText = "\(indexPath.row + 1)/\(photoSource.getTotal())"
         return cell
     }
 
