@@ -90,17 +90,29 @@ class Workorder: HandyJSON, Comparable {
         return messages.filter { $0 != nil } as! [WorkorderMessage]
     }
 
+    func setMessage(_ messages: [WorkorderMessage]) {
+        log = messages.map { $0.toString() }.joined(separator: separator)
+    }
+
     func getTasks() -> [WorkorderTask] {
         let tasks = task.components(separatedBy: separator).map { WorkorderTask.generate(with: $0) }
         return tasks.filter { $0 != nil } as! [WorkorderTask]
     }
 
-    func setTasks(_ tasks: [String]) {
-        task = tasks.map { WorkorderTask(title: $0).toString() }.joined(separator: separator)
+    func setTasks(titles: [String]) {
+        task = titles.map { WorkorderTask(title: $0).toString() }.joined(separator: separator)
+    }
+
+    func setTasks(_ tasks: [WorkorderTask]) {
+        task = tasks.map { $0.toString() }.joined(separator: separator)
     }
 
     func getInfos() -> [WorkorderInfo] {
         return WorkorderInfo.generateInfos(with: self)
+    }
+
+    func setImages(_ images: [String]) {
+        image = images.joined(separator: separator)
     }
 
     func getImageURLs() -> [URL] {
@@ -126,7 +138,7 @@ class Workorder: HandyJSON, Comparable {
 
     func prepareSaved() -> Bool {
         //核对必要信息是否完善
-        let nessary = [id, title, task, start, end]
+        let nessary = [id, title, task, start, end, worker, auditor]
         return !nessary.contains { $0.isEmpty }
     }
 

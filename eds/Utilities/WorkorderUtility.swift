@@ -43,6 +43,12 @@ class WorkorderUtility {
     func update(with workorder: Workorder) {
         if let index = workorderList.firstIndex(where: { $0.id == workorder.id }) {
             workorderList[index] = workorder
+        } else {
+            workorderList.insert(workorder, at: 0)
         }
+    }
+
+    func get(by id: String) -> Workorder? {
+        return workorderList.first(where: { $0.id == id })
     }
 }

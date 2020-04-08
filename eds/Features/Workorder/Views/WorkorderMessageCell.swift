@@ -7,6 +7,12 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+
+protocol MessageDelegate {
+    func delete(message: WorkorderMessage)
+}
 
 class WorkorderMessageCell: UITableViewCell {
 
@@ -14,7 +20,11 @@ class WorkorderMessageCell: UITableViewCell {
     private let nameLabel = UILabel()
     private let timeLabel = UILabel()
     private let messageLabel = UILabel()
+    let deleteButton = UIButton()
+    let levelImage = UIImageView()
+    private let disposeBag = DisposeBag()
 
+    private var messageType: MessageType = .text
     var message: WorkorderMessage? {
         didSet {
             if let name = message?.name {
@@ -24,9 +34,13 @@ class WorkorderMessageCell: UITableViewCell {
                 }
             }
             timeLabel.text = message?.date
-            messageLabel.text = message?.content
+            if let types = message?.getType() {
+                messageLabel.attributedText = types.attrText
+                messageType = types.type
+            }
         }
     }
+    var delegate: MessageDelegate?
 
     private func initViews() {
 
@@ -50,12 +64,11 @@ class WorkorderMessageCell: UITableViewCell {
         nameLabel.top(to: userImage)
         nameLabel.leadingToTrailing(of: userImage, offset: edsSpace)
 
-        let levelImage = UIImageView()
         levelImage.tintColor = .systemRed
         levelImage.image = UIImage(named: "manager")?.withRenderingMode(.alwaysTemplate)
         addSubview(levelImage)
-        levelImage.width(edsHeight / 2)
-        levelImage.height(edsHeight / 2)
+        levelImage.width(edsSpace)
+        levelImage.height(edsSpace)
         levelImage.centerY(to: nameLabel)
         levelImage.leadingToTrailing(of: nameLabel)
 
@@ -73,6 +86,17 @@ class WorkorderMessageCell: UITableViewCell {
         messageLabel.bottomToSuperview(offset: -edsMinSpace)
         messageLabel.leadingToTrailing(of: userImage, offset: edsSpace)
         messageLabel.trailingToSuperview(offset: edsSpace)
+
+        deleteButton.setBackgroundImage(UIImage(systemName: "xmark"), for: .normal)
+        deleteButton.tintColor = .systemGray
+        deleteButton.rx.tap.asObservable().bind(onNext: {
+            self.delegate?.delete(message: self.message!)
+        }).disposed(by: disposeBag)
+        addSubview(deleteButton)
+        deleteButton.width(edsSpace)
+        deleteButton.height(edsSpace)
+        deleteButton.top(to: userImage)
+        deleteButton.trailingToSuperview(offset: edsMinSpace)
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -88,6 +112,24 @@ class WorkorderMessageCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+        if selected {
+            guard let content = message?.content else {
+                return
+            }
+            switch messageType {
+            case .instruction:
+                ShareUtility.openWeb(content.getEDSServletWorkorderDocUrl())
+            case .alarm:
+                if let alarm = AlarmUtility.sharedInstance.get(by: content) {
+                    let alarmVC = AlarmViewController()
+                    alarmVC.alarm = alarm
+                    (window?.rootViewController as? UINavigationController)?.pushViewController(alarmVC, animated: true)
+                }
+                break
+            default:
+                break
+            }
+        }
     }
 
 }

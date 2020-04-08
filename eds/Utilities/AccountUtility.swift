@@ -41,7 +41,7 @@ class AccountUtility {
 
                 self.account = (tempList?.filter { $0 != nil } as! [Account]).first
                 self.phoneList = self.account?.getPhones() ?? []
-                self.phone = self.phoneList.first
+                self.phone = self.phoneList.last
                 print("AccountUtility:Load project account.")
             default:
                 break

@@ -12,8 +12,8 @@ class AlarmCell: UITableViewCell {
 
     private let deviceImage = UIImageView()
     private let statusView = RoundLabel()
-    private let titleLabel = UILabel()
-    private let deviceLabel = UILabel()
+    let titleLabel = UILabel()
+    let deviceLabel = UILabel()
     private let timeLabel = UILabel()
 
     var alarm: Alarm? {
@@ -101,13 +101,6 @@ class AlarmCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        if selected, let device = device, let alarm = alarm {
-
-            let alarmController = AlarmViewController()
-            alarmController.config = (device, alarm)
-            alarmController.title = "\(device.title) \(titleLabel.text ?? "")"
-            (window?.rootViewController as? UINavigationController)?.pushViewController(alarmController, animated: true)
-        }
         // Configure the view for the selected state
     }
 

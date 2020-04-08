@@ -59,8 +59,8 @@ class PhotoCell: UICollectionViewCell {
     }
 
     public func setBorder() {
-        contentImage.layer.borderColor = edsLightGrayColor.cgColor
-        contentImage.layer.borderWidth = 1
+//        contentImage.layer.borderColor = edsLightGrayColor.cgColor
+//        contentImage.layer.borderWidth = 1
         contentImage.contentMode = .scaleAspectFill
     }
 

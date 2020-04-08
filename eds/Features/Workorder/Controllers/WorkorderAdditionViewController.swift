@@ -13,7 +13,7 @@ protocol WorkorderAdditionDelegate {
     func added(workorder: Workorder)
 }
 
-class WorkorderAdditionViewController: UITableViewController {
+class WorkorderAdditionViewController: UITableViewController, UINavigationBarDelegate {
 
     //数据上传过程的指示器
     private let indicator = UIActivityIndicatorView(style: .large)
@@ -43,7 +43,6 @@ class WorkorderAdditionViewController: UITableViewController {
     }
 
     private func initViews() {
-
         title = "add_workorder".localize(with: prefixWorkorder)
 
         dateItems.append("start_time".localize(with: prefixWorkorder))
@@ -68,7 +67,7 @@ class WorkorderAdditionViewController: UITableViewController {
         doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneAction))
         navigationItem.rightBarButtonItem = doneButton!
         navigationController?.navigationBar.prefersLargeTitles = false
-
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismissAction))
     }
 
     private func initCells() {
@@ -100,6 +99,18 @@ class WorkorderAdditionViewController: UITableViewController {
             }
             return cell
         }
+        setInitValues()
+    }
+
+    private func setInitValues() {
+        //报警工单模板
+        guard !workorder.title.isEmpty else {
+            return
+        }
+        textInputCells[0].textField.text = workorder.title
+        textInputCells[1].textField.text = workorder.type.getText()
+        textInputCells[1].dropDown.selectRow(workorder.type.rawValue)
+        textInputCells[2].textField.text = workorder.location
     }
 
     @objc func doneAction() {
@@ -107,8 +118,27 @@ class WorkorderAdditionViewController: UITableViewController {
         saveWorkorder()
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
+    //为了保证弹出的键盘可以被正常关闭，做如下操作：弹出确认框前取消tableView编辑状态，将关闭键盘
+    //禁止左滑返回，必须调用dismissAction
+    //如果tableView.endEdit触发关闭键盘后马上dismiss VC，键盘并不会被正常关闭，将一直留在APP页面中，影响正常使用
+    @objc func dismissAction() {
         tableView.endEditing(true)
+        let alertVC = UIAlertController(title: "cancel_alert".localize(), message: nil, preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "cancel".localize(), style: .cancel) { _ in
+            self.navigationController?.popViewController(animated: true)
+        }
+        let edit = UIAlertAction(title: "edit".localize(), style: .default, handler: nil)
+        alertVC.addAction(cancel)
+        alertVC.addAction(edit)
+        present(alertVC, animated: true, completion: nil)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
 
 }
@@ -134,11 +164,13 @@ extension WorkorderAdditionViewController {
         workorder.auditor = inputs[5].text
         if inputs[6].selectedIndex != 0 {
             //作业文档第一项为“无”
-            var msg = WorkorderMessage.encode(with: inputs[6].text)
-            workorder.log = msg.toString()
+            let msg = WorkorderMessage.encode(with: inputs[6].text)
+            var msgs = workorder.getMessages()
+            msgs.append(msg)
+            workorder.setMessage(msgs)
         }
         //tasks在新增任务的时候已设定至tasks
-        workorder.setTasks(tasks)
+        workorder.setTasks(titles: tasks)
         //创建人即当前登录用户
         if let userName = AccountUtility.sharedInstance.phone?.name {
             //尽管默认工单状态即为.created，但是调用setState(with:by:)可以存档流程记录
@@ -159,7 +191,7 @@ extension WorkorderAdditionViewController {
         //信息不完整,必要工单信息：id(自动生成),title,start,end,task
         guard workorder.prepareSaved() else {
             let title = "imcomplete".localize(with: prefixWorkorder)
-            let message = ["title", "proper_time", "task"].map { $0.localize(with: prefixWorkorder) }.joined(separator: "/")
+            let message = ["title", "proper_time", "task", "executed", "audited"].map { $0.localize(with: prefixWorkorder) }.joined(separator: "/")
             let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
             let okAction = UIAlertAction(title: "ok".localize(), style: .default, handler: nil)
             alertVC.addAction(okAction)

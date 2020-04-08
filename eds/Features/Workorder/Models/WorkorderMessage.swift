@@ -18,12 +18,11 @@ struct WorkorderMessage {
 
     private init() { }
 
-    mutating func toString() -> String {
+    func toString() -> String {
         //因英文状态下分号为分隔符，content自身的分隔符要移除
-        content = content?.replacingOccurrences(of: ";", with: " ")
-        return "\(name!)_\(date!)_\(content!)"
+        let validContent = content?.replacingOccurrences(of: ";", with: " ")
+        return "\(name!)_\(date!)_\(validContent!)"
     }
-
 
     /// 从服务器中返回的数据解析到APP中
     /// - Parameter message: <#message description#>
@@ -55,4 +54,34 @@ struct WorkorderMessage {
         msg.date = Date().toDateTimeString()
         return msg
     }
+
+    func getType() -> (type: MessageType, attrText: NSAttributedString?) {
+        guard let content = content else {
+            return (.text, nil)
+        }
+        let range = NSRange(location: 0, length: content.count)
+        //报警ID：2/XRD-20200101010101
+        var pattern = "\\d/\\w{3}-\\d+"
+        var regex = try? NSRegularExpression(pattern: pattern, options: .allowCommentsAndWhitespace)
+        let attrText = NSMutableAttributedString(string: content, attributes: [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue])
+        if let _ = regex?.firstMatch(in: content, options: [], range: range) {
+            attrText.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.systemYellow, range: range)
+            return (.alarm, attrText)
+        }
+        //参考文件：配电房巡检制度.pdf
+        pattern = "\\.pdf$"
+        regex = try? NSRegularExpression(pattern: pattern, options: .allowCommentsAndWhitespace)
+        if let _ = regex?.firstMatch(in: content, options: [], range: range) {
+            attrText.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.systemBlue, range: range)
+            return (.instruction, attrText)
+        }
+        return (.text, NSAttributedString(string: content, attributes: nil))
+    }
+}
+
+//留言类型：网页（EDSServlet/upload/workorder文档、视频、网页），报警工单中报警ID，普通文本
+enum MessageType {
+    case instruction
+    case alarm
+    case text
 }

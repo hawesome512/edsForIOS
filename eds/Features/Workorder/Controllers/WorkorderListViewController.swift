@@ -14,6 +14,8 @@ class WorkorderListViewController: UITableViewController, WorkorderAdditionDeleg
 
     var workorderList: [Workorder] = []
 
+    var deviceFilter: String?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
@@ -32,7 +34,12 @@ class WorkorderListViewController: UITableViewController, WorkorderAdditionDeleg
 
     override func viewWillAppear(_ animated: Bool) {
         //从工单页面（已修改更新）返回时，刷新列表数据
-        workorderList = WorkorderUtility.sharedInstance.workorderList
+        workorderList = WorkorderUtility.sharedInstance.workorderList.filter { workorder in
+            guard let filter = deviceFilter else {
+                return true
+            }
+            return workorder.location.contains(filter)
+        }
     }
 
     // MARK: - Table view data source
@@ -94,7 +101,7 @@ class WorkorderListViewController: UITableViewController, WorkorderAdditionDeleg
 
     func added(workorder: Workorder) {
         workorderList.insert(workorder, at: 0)
-        WorkorderUtility.sharedInstance.workorderList = workorderList
+        WorkorderUtility.sharedInstance.update(with: workorder)
         tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
     }
 

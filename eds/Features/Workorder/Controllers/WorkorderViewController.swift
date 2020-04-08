@@ -21,9 +21,11 @@ class WorkorderViewController: UIViewController {
     private var tasks: [WorkorderTask] = []
     private var messages: [WorkorderMessage] = []
     private var infos: [WorkorderInfo] = []
-    private var photos: [URL] = []
+    private var photoSource = PhotoSource()
 
     private let tableView = UITableView()
+    private let progressView = UIProgressView()
+    private var progressCount = 0
 
     //任务/留言太多时折叠处理
     private var foldViews: [WorkorderSectionType: FoldView] = [.task: FoldView(), .message: FoldView()]
@@ -33,12 +35,16 @@ class WorkorderViewController: UIViewController {
     private let callObserver = CXCallObserver()
 
     //执行
+    private let executeBarIndex = 2
     private var executing = false {
         didSet {
             executedState.accept(executing)
         }
     }
+    //执行保存（图片）过程的指示器
+    private let indicator = UIActivityIndicatorView(style: .medium)
     private var executedState = BehaviorRelay<Bool>(value: false)
+    private let accountName = AccountUtility.sharedInstance.phone?.name ?? NIL
 
     var workorder: Workorder? {
         didSet {
@@ -48,7 +54,7 @@ class WorkorderViewController: UIViewController {
                 tasks = workorder.getTasks()
                 messages = workorder.getMessages()
                 infos = workorder.getInfos()
-                photos = workorder.getImageURLs()
+                photoSource.urls = workorder.getImageURLs()
 
                 initFoldView(type: .task, total: tasks.count)
                 initFoldView(type: .message, total: messages.count)
@@ -58,6 +64,7 @@ class WorkorderViewController: UIViewController {
 
     private func initFoldView(type: WorkorderSectionType, total: Int) {
         if let view = foldViews[type] {
+            //任务清单的count保持不变，但留言可以增减，需更新totalCount
             view.totalCount = total
             view.foldButton.rx.tap.bind(onNext: {
                 view.folded = !view.folded
@@ -76,25 +83,53 @@ class WorkorderViewController: UIViewController {
 
         callObserver.setDelegate(self, queue: DispatchQueue.main)
 
-        navigationController?.navigationBar.prefersLargeTitles = false
-
         tableView.rowHeight = UITableView.automaticDimension
         tableView.dataSource = self
         tableView.delegate = self
         view.addSubview(tableView)
         tableView.edgesToSuperview()
+
+        progressView.progressTintColor = .systemRed
+        navigationController?.toolbar.addSubview(progressView)
+        progressView.edgesToSuperview(excluding: .bottom)
+        progressView.height(4)
+
+        indicator.startAnimating()
+
+        //工单处于创建状态，执行人进入工单，自动新增已派发状态，可直接执行
+        if workorder?.state == .created && workorder?.worker == accountName {
+            workorder?.setState(with: .distributed, by: accountName)
+        }
     }
+
 
     private func initBarItems() {
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let distribute = UIBarButtonItem(title: WorkorderState.distributed.getText(), style: .plain, target: self, action: #selector(selectDistribution))
         let execute = UIBarButtonItem(title: WorkorderState.executed.getText(), style: .plain, target: self, action: #selector(executeWorkorder))
-        let audit = UIBarButtonItem(title: WorkorderState.audited.getText(), style: .plain, target: self, action: nil)
-        let record = UIBarButtonItem(title: "message".localize(with: prefixWorkorder), style: .plain, target: self, action: nil)
+        let audit = UIBarButtonItem(title: WorkorderState.audited.getText(), style: .plain, target: self, action: #selector(auditWorkorder))
+        let record = UIBarButtonItem(title: "message".localize(with: prefixWorkorder), style: .plain, target: self, action: #selector(leaveMessage))
         toolbarItems = [distribute, space, execute, space, audit, space, record]
+
+        updateBarItems()
+    }
+
+    private func updateBarItems() {
+        guard let state = workorder?.state else {
+            return
+        }
+        //尚未执行，所有人都可以派发
+        toolbarItems?[0].isEnabled = (state.rawValue < WorkorderState.executed.rawValue)
+        //必须是本人且尚未审核才可以执行
+        toolbarItems?[2].isEnabled = (workorder!.worker == accountName && state.rawValue < WorkorderState.audited.rawValue)
+        //必须是本人，且已执行的才可以审核
+        toolbarItems?[4].isEnabled = (workorder!.auditor == accountName && state.rawValue == WorkorderState.executed.rawValue)
+        //所有人都可以留言
     }
 
     override func viewWillAppear(_ animated: Bool) {
+
+        navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.setToolbarHidden(false, animated: animated)
         navigationController?.toolbar.barStyle = .black
         navigationController?.toolbar.tintColor = .white
@@ -124,7 +159,7 @@ extension WorkorderViewController: UITableViewDataSource, UITableViewDelegate {
         case .task:
             view.title = type.getSectionTitle()! + "(\(tasks.count))"
         case .photo:
-            view.title = type.getSectionTitle()! + "(\(photos.count))"
+            view.title = type.getSectionTitle()! + "(\(photoSource.getTotal()))"
         default:
             view.title = type.getSectionTitle()
         }
@@ -169,7 +204,10 @@ extension WorkorderViewController: UITableViewDataSource, UITableViewDelegate {
             return cell
         case .photo:
             let cell = WorkorderPhotoCollectionCell()
-            cell.photoSource.urls = photos
+            cell.photoSource = photoSource
+            executedState.asObservable().bind(onNext: { executing in
+                cell.executing = executing
+            }).disposed(by: disposeBag)
             return cell
         case .info:
             let cell = WorkorderInfoCell()
@@ -177,7 +215,12 @@ extension WorkorderViewController: UITableViewDataSource, UITableViewDelegate {
             return cell
         case .message:
             let cell = WorkorderMessageCell()
-            cell.message = messages[indexPath.row]
+            let msg = messages[indexPath.row]
+            cell.message = msg
+            cell.delegate = self
+            //只可删除自己的留言
+            cell.deleteButton.alpha = msg.name == accountName ? 1 : 0
+            cell.levelImage.alpha = msg.name == workorder?.auditor ? 1 : 0
             return cell
         case .qrcode:
             let cell = FixedQRCodeCell()
@@ -213,6 +256,7 @@ extension WorkorderViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
+// MARK: - 更新工单
 extension WorkorderViewController {
 
     func updateWorkorder() {
@@ -220,11 +264,16 @@ extension WorkorderViewController {
             return
         }
         MoyaProvider<EDSService>().request(.updateWorkorder(workorder: workorder)) { result in
+
+            self.progressView.progress = 0
+
             switch result {
             case .success(let response):
                 if JsonUtility.didUpdatedEDSServiceSuccess(data: response.data) {
                     WorkorderUtility.sharedInstance.update(with: workorder)
+                    self.flows = workorder.getFlows()
                     self.tableView.reloadData()
+                    self.updateBarItems()
                 }
             default:
                 break
@@ -296,19 +345,112 @@ extension WorkorderViewController: ShareDelegate, CXCallObserverDelegate, MFMess
         guard workorder?.state == WorkorderState.created else {
             return
         }
-        let name = AccountUtility.sharedInstance.phone?.name ?? NIL
-        workorder?.setState(with: .distributed, by: name)
+        workorder?.setState(with: .distributed, by: accountName)
         updateWorkorder()
     }
 }
 
-//MARK: -执行工单
+//MARK: - 执行工单
 extension WorkorderViewController {
 
     @objc func executeWorkorder() {
+        if executing {
+            uploadImages()
+        } else {
+            //不能直接更改title，只能替换
+            let title = "save".localize()
+            toolbarItems?[executeBarIndex] = UIBarButtonItem(title: title, style: .plain, target: self, action: #selector(executeWorkorder))
+        }
         executing = !executing
-        //不能直接更改title，只能替换
-        let title = executing ? "save".localize() : WorkorderState.executed.getText()
-        toolbarItems?[2] = UIBarButtonItem(title: title, style: .plain, target: self, action: #selector(executeWorkorder))
+    }
+
+    func uploadImages() {
+        //上传指示器
+        toolbarItems?[executeBarIndex] = UIBarButtonItem(customView: indicator)
+        progressCount = 0
+
+        let indexPath = IndexPath(row: 0, section: WorkorderSectionType.photo.rawValue)
+        let photoCell = tableView.cellForRow(at: indexPath)! as! WorkorderPhotoCollectionCell
+        let images = photoCell.photoSource.images
+        guard images.count > 0 else {
+            prepareUpdateWorkorder(uploadedImages: [])
+            return
+        }
+        var uploadedImages: [(name: String, image: UIImage)] = []
+        images.forEach { image in
+            let fileName = AccountUtility.sharedInstance.generateImageID()
+            MoyaProvider<EDSService>().request(.upload(data: image.pngData()!, fileName: fileName)) { result in
+                switch result {
+                case .success(let response):
+                    if JsonUtility.didUpdatedEDSServiceSuccess(data: response.data) {
+                        uploadedImages.append((fileName, image))
+                    }
+                default:
+                    break
+                }
+                self.progressCount += 1
+                self.progressView.progress = Float(self.progressCount) / Float(images.count + 1)
+                if self.progressCount == images.count {
+                    self.prepareUpdateWorkorder(uploadedImages: uploadedImages)
+                }
+            }
+        }
+    }
+
+    func prepareUpdateWorkorder(uploadedImages: [(name: String, image: UIImage)]) {
+        //更新工单任务和图片信息
+        photoSource.images = uploadedImages.map { $0.image }
+        var newImages = uploadedImages.map { $0.name }
+        newImages.append(contentsOf: photoSource.urls.map { $0.absoluteString.getImageNameFromURL() })
+        workorder?.setImages(newImages)
+        workorder?.setTasks(tasks)
+        workorder?.setState(with: .executed, by: accountName)
+        updateWorkorder()
+
+        let title = WorkorderState.executed.getText()
+        toolbarItems?[executeBarIndex] = UIBarButtonItem(title: title, style: .plain, target: self, action: #selector(executeWorkorder))
+    }
+}
+
+// MARK: - 审核&留言
+extension WorkorderViewController: MessageDelegate {
+
+
+    @objc func auditWorkorder() {
+        workorder?.setState(with: .audited, by: accountName)
+        updateWorkorder()
+    }
+
+    @objc func leaveMessage() {
+        let msgVC = UIAlertController(title: "message".localize(with: prefixWorkorder), message: nil, preferredStyle: .alert)
+        msgVC.addTextField { _ in }
+        let cancel = UIAlertAction(title: "cancel".localize(), style: .cancel, handler: nil)
+        let save = UIAlertAction(title: "save".localize(), style: .default) { _ in
+            if let message = msgVC.textFields?.first?.text, !message.isEmpty {
+                self.messages.append(WorkorderMessage.encode(with: message))
+                self.foldViews[.message]?.totalCount = self.messages.count
+                self.workorder?.setMessage(self.messages)
+                self.updateWorkorder()
+            }
+        }
+        msgVC.addAction(cancel)
+        msgVC.addAction(save)
+        present(msgVC, animated: true, completion: nil)
+    }
+
+
+    func delete(message: WorkorderMessage) {
+        guard let index = messages.firstIndex(where: { $0.toString() == message.toString() }) else {
+            return
+        }
+        let deleteVC = ControllerUtility.generateDeletionAlertController(with: "message".localize(with: prefixWorkorder))
+        let deleteAction = UIAlertAction(title: "delete".localize(), style: .destructive) { _ in
+            self.messages.remove(at: index)
+            self.foldViews[.message]?.totalCount = self.messages.count
+            self.workorder?.setMessage(self.messages)
+            self.updateWorkorder()
+        }
+        deleteVC.addAction(deleteAction)
+        present(deleteVC, animated: true, completion: nil)
     }
 }

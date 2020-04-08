@@ -13,9 +13,9 @@ class AlarmViewController: UIViewController {
     let headerView = DeviceHeaderView()
     let trendController = DeviceTrendTableViewController()
 
-    var config: (device: Device, alarm: Alarm)? {
+    var alarm: Alarm? {
         didSet {
-            if let device = config?.device, let alarm = config?.alarm {
+            if let alarm = alarm, let device = DeviceUtility.sharedInstance.getDevice(of: alarm.device) {
                 headerView.device = device
                 let deviceType = DeviceModel.sharedInstance?.types.first { $0.type == TagUtility.getDeviceType(with: device.getShortID()) }
                 if let alarmMode = deviceType?.alarm {
@@ -58,6 +58,11 @@ class AlarmViewController: UIViewController {
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemBlue]
+    }
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         //当前VC的父级vc是navigationController,必须设置如UINavigationController-Ext.swift
         return .lightContent

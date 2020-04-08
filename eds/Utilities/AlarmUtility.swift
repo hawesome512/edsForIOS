@@ -43,11 +43,19 @@ class AlarmUtility {
         }
     }
 
+    func get(by id: String) -> Alarm? {
+        return alarmList.first { $0.id == id }
+    }
+
     func check(with id: String) {
         alarmList.first { $0.id == id }?.confirm = .checked
     }
 
     func remove(with id: String) {
         alarmList.removeAll { $0.id == id }
+    }
+
+    func workorder(_ id: String, workorderID: String) {
+        alarmList.first { $0.id == id }?.report = workorderID
     }
 }

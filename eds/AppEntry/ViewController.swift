@@ -27,10 +27,11 @@ class ViewController: UIViewController, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
+        
         //初始化后台数据，导入数据列表
-//        TagUtility.sharedInstance.loadProjectTagList()
-//        DeviceUtility.sharedInstance.loadProjectDeviceList()
-//        AlarmUtility.sharedInstance.loadProjectAlarmList()
+        TagUtility.sharedInstance.loadProjectTagList()
+        DeviceUtility.sharedInstance.loadProjectDeviceList()
+        AlarmUtility.sharedInstance.loadProjectAlarmList()
         WorkorderUtility.sharedInstance.loadProjectWorkerorderList()
         AccountUtility.sharedInstance.loadProjectAccount()
     }
@@ -48,7 +49,7 @@ class ViewController: UIViewController, UITableViewDelegate {
         button.setTitleColor(.white, for: .normal)
         button.rx.tap.bind(onNext: {
             //跳转设备列表
-            let deviceListVC = WorkorderListViewController()
+            let deviceListVC = DeviceListViewController()
             self.navigationController?.pushViewController(deviceListVC, animated: true)
         }).disposed(by: disposeBag)
         view.addSubview(button)

@@ -17,7 +17,11 @@ class WorkorderPhotoCollectionCell: UITableViewCell {
 
     //图片来源：本机选择，网络
     var photoSource = PhotoSource()
-    var executing = true
+    var executing = false {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     private let photoHeight: CGFloat = 120
     private let countLimit = 12
 
@@ -79,7 +83,8 @@ extension WorkorderPhotoCollectionCell: UICollectionViewDataSource, UICollection
         let total = photoSource.getTotal()
         let count = executing ? total + 1 : total
         rightImage.alpha = CGFloat(count) > horShowLimit ? 1 : 0
-        return count
+        //哪怕为空，非执行状态，至少也显示一张图片
+        return max(count, 1)
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -132,6 +137,10 @@ extension WorkorderPhotoCollectionCell: UICollectionViewDataSource, UICollection
                 }
             }
             window?.rootViewController?.present(picker, animated: true, completion: nil)
+            return
+        }
+        guard photoSource.getTotal() != 0 else {
+            //图集为空，点击无效
             return
         }
         let photosVC = PhotoCollectionViewController()

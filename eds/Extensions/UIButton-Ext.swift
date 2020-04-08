@@ -15,6 +15,8 @@ extension UIButton {
     override open var isEnabled: Bool {
         didSet {
             backgroundColor = backgroundColor?.withAlphaComponent(isEnabled ? 1 : 0.5)
+            //及时更新背景颜色状态的改变
+            layoutSubviews()
         }
     }
 }

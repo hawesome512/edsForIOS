@@ -14,6 +14,7 @@ class AlarmListViewController: UITableViewController {
 
     private var alarmList = AlarmUtility.sharedInstance.alarmList
     private let disposeBag = DisposeBag()
+    private var workorderAlarm: Alarm?
 
     //从设备页调整过来，只显示此设备记录
     func filter(with device: String) {
@@ -69,7 +70,7 @@ class AlarmListViewController: UITableViewController {
             completionHandler(true)
         }
         let workorderAction = UIContextualAction(style: .normal, title: Workorder.description) { _, _, completionHandler in
-
+            self.workorder(alarm, at: indexPath)
             completionHandler(true)
         }
         deleteAction.image = UIImage(systemName: "trash")
@@ -107,30 +108,59 @@ class AlarmListViewController: UITableViewController {
         MoyaProvider<EDSService>().request(.updateAlarm(alarm: alarm)) { _ in }
     }
 
+    private func workorder(_ alarm: Alarm, at indexPath: IndexPath) {
+        let id = alarm.report
+        //已存在工单，直接打开
+        if !id.isEmpty, let workorder = WorkorderUtility.sharedInstance.get(by: id) {
+            let workorderVC = WorkorderViewController()
+            workorderVC.workorder = workorder
+            navigationController?.pushViewController(workorderVC, animated: true)
+        } else {
+            workorderAlarm = alarm
+            let workorder = Workorder()
+            let cell = tableView.cellForRow(at: indexPath) as! AlarmCell
+            workorder.title = cell.titleLabel.text ?? ""
+            workorder.type = .alarm
+            if let device = DeviceUtility.sharedInstance.getDevice(of: alarm.device) {
+                workorder.location = device.title
+            }
+            let message = WorkorderMessage.encode(with: alarm.id)
+            workorder.setMessage([message])
+            let additionVC = WorkorderAdditionViewController()
+            additionVC.workorder = workorder
+            additionVC.delegate = self
+            navigationController?.pushViewController(additionVC, animated: true)
+        }
+
+    }
+
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return UIView()
     }
 
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = AdditionTableHeaderView()
-        headerView.title.text = "add_alarm".localize(with: prefixAlarm)
-        headerView.delegate = self
-        return headerView
-    }
-
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+        let alarmVC = AlarmViewController()
+        alarmVC.alarm = alarmList[indexPath.row]
+        if let cell = tableView.cellForRow(at: indexPath) as? AlarmCell {
+            alarmVC.title = (cell.deviceLabel.text ?? "") + " " + (cell.titleLabel.text ?? "")
+        }
+        navigationController?.pushViewController(alarmVC, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
 }
 
-extension AlarmListViewController: AdditionDelegate {
-
-    func add(inParent parent: Device?) {
-        //新增报警记录
-
+// MARK: - 新增工单
+extension AlarmListViewController: WorkorderAdditionDelegate {
+    func added(workorder: Workorder) {
+        workorderAlarm!.report = workorder.id
+        WorkorderUtility.sharedInstance.update(with: workorder)
+        AlarmUtility.sharedInstance.workorder(workorderAlarm!.id, workorderID: workorder.id)
+        alarmList = AlarmUtility.sharedInstance.alarmList
+        MoyaProvider<EDSService>().request(.updateAlarm(alarm: workorderAlarm!)) { _ in }
     }
 
+
 }
+
 

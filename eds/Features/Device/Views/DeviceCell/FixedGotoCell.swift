@@ -30,6 +30,11 @@ class FixedGotoCell: UITableViewCell {
         workorderButton.backgroundColor = .systemGreen
         workorderButton.setImage(Workorder.icon, for: .normal)
         workorderButton.setTitle(Workorder.description, for: .normal)
+        workorderButton.rx.tap.bind(onNext: {
+            let workorderListController = WorkorderListViewController()
+            workorderListController.deviceFilter = self.device?.title
+            (self.window?.rootViewController as? UINavigationController)?.pushViewController(workorderListController, animated: true)
+        }).disposed(by: disposeBag)
         addSubview(workorderButton)
         workorderButton.widthToSuperview(multiplier: 0.5, offset: -edsSpace * 1.5)
         workorderButton.edgesToSuperview(excluding: .leading, insets: .uniform(edsSpace))

@@ -19,6 +19,10 @@ struct PhotoSource {
     }
 
     func setImage(in view: UIImageView, at row: Int) {
+        guard images.count > 0 || urls.count > 0 else {
+            view.image = edsDefaultImage
+            return
+        }
         if row < images.count {
             view.image = images[row]
         } else {

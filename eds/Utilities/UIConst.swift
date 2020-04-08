@@ -24,4 +24,4 @@ let edsMinSpace: CGFloat = 10
 let edsHeight: CGFloat = 44
 let edsIconSize: CGFloat = 32
 
-let edsDefaultImage = UIImage(systemName: "photo")
+let edsDefaultImage = UIImage(named: "photo")

@@ -14,6 +14,19 @@ import MessageUI
 class ShareUtility {
 
 
+    /// 用浏览器打开网页
+    /// - Parameter path: <#path description#>
+    static func openWeb(_ path: String) {
+        //URL中可能包含中文，需转码处理
+        let validPath = path.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? NIL
+        if let url = URL(string: validPath), UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+            print("invalid url")
+        }
+    }
+
+
     /// 拨打电话，使用CXCallObserver监听同行状态
     /// - Parameter number: 电话号码
     static func callPhone(to number: String) {

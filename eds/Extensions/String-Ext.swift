@@ -42,7 +42,8 @@ extension String {
     /// 本地化
     /// - Parameter prefix: 前缀，e.g.：device_status
     func localize(with prefix: String = "") -> String {
-        return NSLocalizedString(self, comment: prefix.isEmpty ? self : "\(prefix)_\(self)")
+        let value = prefix.isEmpty ? self : "\(prefix)_\(self)"
+        return NSLocalizedString(value, comment: value)
     }
 
     /// Name带单位时格式化文本，单位：灰色
@@ -98,6 +99,14 @@ extension String {
         //历史遗留，已存在xxx.jpg or xxx.jpeg 数据
         let image = self.contains(".") ? self : "\(self).png"
         return URL(string: "\(EDSConfig.servicePath):8443/EDSServlet/upload/\(image)")!
+    }
+
+    func getEDSServletWorkorderDocUrl() -> String {
+        return "\(EDSConfig.servicePath):8443/EDSServlet/upload/workorder/\(self)"
+    }
+
+    func getImageNameFromURL() -> String {
+        return self.components(separatedBy: "/").last ?? NIL
     }
 
     /// 静态方法生成固定长度的随机字符串

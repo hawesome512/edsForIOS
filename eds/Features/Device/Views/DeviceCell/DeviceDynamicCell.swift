@@ -58,7 +58,7 @@ class DeviceDynamicCell: UITableViewCell {
             tag?.showValue.asObservable().throttle(.seconds(1), scheduler: MainScheduler.instance).subscribe(onNext: { showValue in
                 if let status = TagValueConverter.getText(value: showValue, items: deviceModel.status.items).status {
                     self.statusView.backgroundColor = status.getStatusColor()
-                    let text = status.getStatusText().localize(with: prefixDevice)
+                    let text = status.getStatusText()
                     //圆角Label,text应当适当缩进，简易处理：在text前后添加空格，使lable.width变大
                     self.statusView.innerText = text //.text = "  \(text)  "
 

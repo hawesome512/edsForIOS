@@ -31,13 +31,13 @@ class ImageButton: UIButton {
         contentImage.widthToHeight(of: contentImage)
         contentImage.leadingToSuperview()
 
-        contentLabel.textAlignment = .right
+//        contentLabel.textAlignment = .right
         contentLabel.textColor = .white
         contentLabel.font = UIFont.preferredFont(forTextStyle: .title1) //UIFont.boldSystemFont(ofSize: 34)
         contentLabel.adjustsFontSizeToFitWidth = true
         addSubview(contentLabel)
         contentLabel.edgesToSuperview(excluding: .left, insets: .uniform(edsMinSpace))
-        contentLabel.leadingToTrailing(of: contentImage, offset: edsMinSpace)
+        contentLabel.leadingToTrailing(of: contentImage, offset: edsSpace)
     }
 
     override func setImage(_ image: UIImage?, for state: UIControl.State) {
