@@ -42,6 +42,12 @@ class AlarmViewController: UIViewController {
         return (upper, lower)
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+        initViews()
+    }
+
     fileprivate func initViews() {
 
         view.addSubview(headerView)
@@ -57,7 +63,7 @@ class AlarmViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemBlue]
@@ -67,14 +73,6 @@ class AlarmViewController: UIViewController {
         //当前VC的父级vc是navigationController,必须设置如UINavigationController-Ext.swift
         return .lightContent
     }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        initViews()
-    }
-
 
 }
 

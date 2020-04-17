@@ -66,7 +66,7 @@ class DeviceItemMeterViewController: UIViewController {
 
         tag.showValue.asObservable().throttle(.seconds(1), scheduler: MainScheduler.instance).subscribe(onNext: {
             var tagValue = $0
-            self.titleLabel.text = pageItem.name.localize(with: prefixDevice) + ":\(tagValue.clean)"
+            self.titleLabel.text = pageItem.name.localize() + ":\(tagValue.clean)"
             //单位换算
             if let unitValue = unitTag?.getValue() {
                 tagValue = tagValue / unitValue
@@ -75,7 +75,7 @@ class DeviceItemMeterViewController: UIViewController {
             let index = items.firstIndex(of: tagValue.clean) ?? self.getNearestIndex(items, tagValue)
             self.circularSlider.endPointValue = CGFloat(index)
             self.valueLabel.text = items[index]
-            self.updateButton.isEnabled = true
+//            self.updateButton.isEnabled = true
         }).disposed(by: disposeBag)
 
         updateButton.rx.tap.subscribe({ _ in
@@ -91,8 +91,8 @@ class DeviceItemMeterViewController: UIViewController {
                 return
             }
             let newTag = Tag(name: tag.Name, value: newValue)
-            self.valueLabel.text = "updating".localize(with: prefixDevice)
-            self.updateButton.isEnabled = false
+            self.valueLabel.text = "updating".localize()
+//            self.updateButton.isEnabled = false
             MoyaProvider<WAService>().request(.setTagValues(authority: User.tempInstance.authority!, tagList: [newTag])) { result in
                 switch result {
                 case .success(let response):
@@ -107,7 +107,7 @@ class DeviceItemMeterViewController: UIViewController {
         case .granted:
             break
         default:
-            authorityLabel.text = authority.rawValue.localize(with: prefixTrend)
+            authorityLabel.text = authority.rawValue.localize()
             updateButton.isEnabled = false
             circularSlider.isEnabled = false
         }
@@ -116,7 +116,7 @@ class DeviceItemMeterViewController: UIViewController {
 
     private func initDefaultViews() {
         updateButton.isEnabled = false
-        updateButton.setTitle("update".localize(with: prefixDevice), for: .normal)
+        updateButton.setTitle("update".localize(), for: .normal)
         updateButton.layer.cornerRadius = updateButton.bounds.height / 2
         circularSlider.trackColor = edsDivideColor
         circularSlider.endPointValue = 0

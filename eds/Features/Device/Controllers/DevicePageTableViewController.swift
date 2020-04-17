@@ -17,6 +17,7 @@ protocol DevicePageScrollDelegate {
 class DevicePageTableViewController: UITableViewController {
 
     var scrollDelegate: DevicePageScrollDelegate?
+    var parentVC: UIViewController?
 
     //设备子页面配置模型
     func set(with pageModel: DevicePage, in deviceName: String) {
@@ -47,7 +48,7 @@ class DevicePageTableViewController: UITableViewController {
         let pageItem = pageModel!.content[section]
         if let section = pageItem.section {
             let view = SectionHeaderView()
-            view.title = section.localize(with: prefixDevice)
+            view.title = section.localize()
             return view
         } else {
             return nil
@@ -67,7 +68,7 @@ class DevicePageTableViewController: UITableViewController {
         let pageItem = pageModel!.content[section]
         //默认使用list
         let cellType = DeviceCellType(rawValue: pageItem.display) ?? DeviceCellType.list
-        return (cellType.getTableCell() as! DevicePageItemSource).getNumerOfRows(with: pageItem)
+        return (cellType.getTableCell(parentVC: parentVC) as! DevicePageItemSource).getNumerOfRows(with: pageItem)
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -75,7 +76,7 @@ class DevicePageTableViewController: UITableViewController {
         //默认使用list
         let cellType = DeviceCellType(rawValue: pageItem.display) ?? DeviceCellType.list
         //不使用tableview.deusea...,rxswift订阅容易出现混乱,如A cell的pageItem被N cell使用了
-        let cell = cellType.getTableCell()
+        let cell = cellType.getTableCell(parentVC: parentVC)
         let tags = TagUtility.sharedInstance.getTagList(by: pageItem.tags, in: deviceName)
         (cell as? DevicePageItemSource)?.initViews(with: pageItem, rx: tags, rowIndex: indexPath.row)
         return cell

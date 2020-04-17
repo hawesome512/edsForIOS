@@ -61,16 +61,20 @@ enum DeviceCellType: String {
 
 
     /// 生成Cell
-    func getTableCell() -> UITableViewCell {
+    func getTableCell(parentVC: UIViewController?) -> UITableViewCell {
         switch self {
         case .fixed:
             return DeviceFixedCell(style: .default, reuseIdentifier: rawValue)
         case .dynamic:
             return DeviceDynamicCell(style: .default, reuseIdentifier: rawValue)
         case .bar:
-            return DeviceBarCell(style: .default, reuseIdentifier: rawValue)
+            let cell = DeviceBarCell(style: .default, reuseIdentifier: rawValue)
+            cell.parentVC = parentVC
+            return cell
         case .button:
-            return DeviceButtonCell(style: .default, reuseIdentifier: rawValue)
+            let cell = DeviceButtonCell(style: .default, reuseIdentifier: rawValue)
+            cell.parentVC = parentVC
+            return cell
         case .onoff:
             return DeviceOnOffCell(style: .default, reuseIdentifier: rawValue)
         case .range:
@@ -78,7 +82,9 @@ enum DeviceCellType: String {
         case .text:
             return DeviceTextCell(style: .default, reuseIdentifier: rawValue)
         case .list, .item:
-            return DeviceListCell(style: .default, reuseIdentifier: rawValue)
+            let cell = DeviceListCell(style: .default, reuseIdentifier: rawValue)
+            cell.parentVC = parentVC
+            return cell
         case .ATSStatus:
             return DeviceATSStatusCell(style: .default, reuseIdentifier: rawValue)
         case .qrcode:

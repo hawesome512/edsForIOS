@@ -12,17 +12,18 @@ import RxSwift
 
 class DeviceBarCell: UITableViewCell {
 
-    private let space: CGFloat = 20
     private var barChartView: BarChartView!
     private let disposeBag = DisposeBag()
     //传递给DeviceTrendViewController，标题和记录点
     private var barTags: [Tag] = []
     private var isAccumulated = false
 
+    var parentVC: UIViewController?
+
     fileprivate func initViews() {
         barChartView = BarChartView()
         addSubview(barChartView)
-        barChartView.edgesToSuperview(insets: .uniform(space))
+        barChartView.edgesToSuperview(insets: .uniform(edsSpace))
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -93,7 +94,7 @@ class DeviceBarCell: UITableViewCell {
             BarChartDataEntry(x: Double($0.offset), y: $0.element)
         }
         //values太小时，若在柱状图下面绘制将遮挡xAxis的Labels
-        let drawValueAbove = values.max()! <= barChartView.leftAxis.axisMaximum * 0.3
+        let drawValueAbove = values.max()! <= barChartView.leftAxis.axisMaximum * 0.15
         barChartView.drawValueAboveBarEnabled = drawValueAbove
         if let set = barChartView.data?.dataSets.first as? BarChartDataSet {
             //更新
@@ -120,7 +121,7 @@ class DeviceBarCell: UITableViewCell {
         }
         let trendViewController = DeviceTrendTableViewController()
         trendViewController.trend(with: barTags, condition: nil, isAccumulated: isAccumulated)
-        (self.window?.rootViewController as? UINavigationController)?.pushViewController(trendViewController, animated: true)
+        parentVC?.navigationController?.pushViewController(trendViewController, animated: true)
 
     }
 
@@ -161,7 +162,7 @@ class BarAxisFormatter: IAxisValueFormatter {
     }
 
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-        return items[Int(value)].localize(with: prefixDevice)
+        return items[Int(value)].localize()
     }
 
 }

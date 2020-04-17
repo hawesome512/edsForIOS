@@ -23,10 +23,8 @@ class FixedInfoChildController: UITableViewController {
     }
     var deviceInfos: [DeviceInfo] = []
 
-    //因为FixedChild不是独立Controller，不建议直接present弹出框，获取根Controller
-    private lazy var rootViewController: UIViewController? = {
-        return self.view.window?.rootViewController
-    }()
+    //因为FixedChild不是独立Controller，不建议直接present弹出框，获取父Controller
+    var parentVC: UIViewController?
 
     override init(style: UITableView.Style) {
         super.init(style: style)
@@ -51,15 +49,16 @@ class FixedInfoChildController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.row {
         case deviceInfos.count:
-            let cell = DeviceCellType.goto.getTableCell() as! FixedGotoCell
+            let cell = DeviceCellType.goto.getTableCell(parentVC: parentVC) as! FixedGotoCell
             cell.device = device
+            cell.parentVC = parentVC
             return cell
         case deviceInfos.count + 1:
-            let cell = DeviceCellType.qrcode.getTableCell() as! FixedQRCodeCell
+            let cell = DeviceCellType.qrcode.getTableCell(parentVC: parentVC) as! FixedQRCodeCell
             cell.qrImageView.image = QRCodeUtility.generate(with: .device, param: device!.getShortID())
             return cell
         default:
-            let cell = DeviceCellType.info.getTableCell() as! FixedInfoCell
+            let cell = DeviceCellType.info.getTableCell(parentVC: parentVC) as! FixedInfoCell
             cell.nameLabel.attributedText = deviceInfos[indexPath.row].title.formatNameAndUnit()
             cell.valueLabel.text = deviceInfos[indexPath.row].value
             return cell
@@ -97,13 +96,13 @@ class FixedInfoChildController: UITableViewController {
             ppc.sourceRect = cell.bounds
         }
 
-        rootViewController?.present(menuController, animated: true, completion: nil)
+        parentVC?.navigationController?.present(menuController, animated: true, completion: nil)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = AdditionTableHeaderView()
-        headerView.title.text = "add_info".localize(with: prefixDevice)
+        headerView.title.text = "add_info".localize()
         headerView.delegate = self
         return headerView
     }
@@ -129,14 +128,14 @@ class FixedInfoChildController: UITableViewController {
         }
         infoAlertController.addAction(cancel)
         infoAlertController.addAction(ok)
-        rootViewController?.present(infoAlertController, animated: true, completion: nil)
+        parentVC?.navigationController?.present(infoAlertController, animated: true, completion: nil)
     }
 
     private func showDeleteController(didSelectRowAt indexPath: IndexPath) {
         let deleteInfo = deviceInfos[indexPath.row]
         let name = deleteInfo.title.separateNameAndUnit().name
-        let title = String(format: "delete_title".localize(with: prefixDevice), arguments: [name])
-        let alertController = UIAlertController(title: title, message: "delete_info".localize(with: prefixDevice), preferredStyle: .alert)
+        let title = String(format: "delete_title".localize(), arguments: [name])
+        let alertController = UIAlertController(title: title, message: "delete_info".localize(), preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "cancel".localize(), style: .cancel, handler: nil)
         let okAction = UIAlertAction(title: "delete".localize(), style: .destructive) { _ in
             self.deviceInfos.remove(at: indexPath.row)
@@ -145,7 +144,7 @@ class FixedInfoChildController: UITableViewController {
         }
         alertController.addAction(cancelAction)
         alertController.addAction(okAction)
-        rootViewController?.present(alertController, animated: true, completion: nil)
+        parentVC?.navigationController?.present(alertController, animated: true, completion: nil)
     }
 
     private func update() {

@@ -64,14 +64,14 @@ class PasswordViewController: UIViewController, PasswordViewDelegate {
         passwordView.heightToWidth(of: passwordView, multiplier: 0.18)
         passwordView.centerInSuperview()
 
-        titleLabel.text = "password_title".localize(with: prefixDevice)
+        titleLabel.text = "password_title".localize()
         titleLabel.font = UIFont.preferredFont(forTextStyle: .largeTitle)
         titleLabel.textColor = edsDefaultColor
         view.addSubview(titleLabel)
         titleLabel.leadingToSuperview(offset: edsSpace)
         titleLabel.topToSuperview(offset: edsSpace)
 
-        errorLabel.text = "password_error".localize(with: prefixDevice)
+        errorLabel.text = "password_error".localize()
         errorLabel.textColor = .systemRed
         //输入错误提示框默认不显示，只要密码输入错误时才显示
         errorLabel.alpha = 0

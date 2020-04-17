@@ -80,7 +80,7 @@ class TagValueConverter {
         statusText.components(separatedBy: DeviceModel.itemInfoSeparator).forEach { item in
             //报警时:on/off不再需要显示
             if item != "on" && item != "off" {
-                status.append(item.localize(with: prefixDevice) + " ")
+                status.append(item.localize() + " ")
             }
         }
         return status
@@ -166,15 +166,15 @@ enum DeviceStatusType: String {
     func getStatusText() -> String {
         switch self {
         case .offline:
-            return "offline".localize(with: "device")
+            return "offline".localize()
         case .off:
-            return "off".localize(with: "device")
+            return "off".localize()
         case .on:
-            return "on".localize(with: "device")
+            return "on".localize()
         case .alarm:
-            return "alarm".localize(with: "device")
+            return "alarm".localize()
         case .normal:
-            return "normal".localize(with: "device")
+            return "normal".localize()
         }
     }
 }

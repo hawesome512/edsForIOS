@@ -24,7 +24,7 @@ enum AuthorityResult: String {
 
 class VerifyUtility {
 
-    static func verify(tag: Tag, in container: UITableViewCell&PasswordVerifyDelegate) -> AuthorityResult {
+    static func verify(tag: Tag, delegate: PasswordVerifyDelegate, parentVC: UIViewController?) -> AuthorityResult {
 
         //用户权限锁
         if !User.tempInstance.isOperable() {
@@ -53,10 +53,10 @@ class VerifyUtility {
         if let codeTag = codeTag {
             //codeInfos:[CtrlCode,%04X],16进制，4位长度,进行密码验证
             let psdVC = PasswordViewController()
-            psdVC.delegate = container
+            psdVC.delegate = delegate
             let needFormatted = codeInfos?.count == 2
             psdVC.validPassword = needFormatted ? String(format: codeInfos![1], Int(codeTag.getValue())) : codeTag.getValue().clean
-            container.window?.rootViewController?.present(psdVC, animated: true, completion: nil)
+            parentVC?.present(psdVC, animated: true, completion: nil)
             return .verifying
         }
 

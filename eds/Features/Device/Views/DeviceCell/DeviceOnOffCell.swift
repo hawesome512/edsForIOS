@@ -60,7 +60,7 @@ class DeviceOnOffCell: UITableViewCell {
 extension DeviceOnOffCell: DevicePageItemSource {
     func initViews(with pageItem: DevicePageItem, rx tags: [Tag], rowIndex: Int) {
         if let tag = tags.first {
-            nameLabel.text = pageItem.name.localize(with: prefixDevice)
+            nameLabel.text = pageItem.name.localize()
 
             tag.showValue.asObservable().throttle(.seconds(1), scheduler: MainScheduler.instance).subscribe(onNext: {
                 let isOn = TagValueConverter.getSwitch(value: $0, items: pageItem.items)
@@ -69,7 +69,7 @@ extension DeviceOnOffCell: DevicePageItemSource {
                     let infos = item.components(separatedBy: DeviceModel.itemInfoSeparator)
                     //["1/false/true"]
                     if infos.count == 3 {
-                        self.extraLabel.text = "\(pageItem.name)_\(isOn ? infos[2] : infos[1])".localize(with: prefixDevice)
+                        self.extraLabel.text = "\(pageItem.name)_\(isOn ? infos[2] : infos[1])".localize()
                         return
                     }
                 }
@@ -78,7 +78,7 @@ extension DeviceOnOffCell: DevicePageItemSource {
 
             valueSwitch.rx.controlEvent(.valueChanged).throttle(.seconds(1), scheduler: MainScheduler.instance).withLatestFrom(valueSwitch.rx.value).subscribe(onNext: {
                 if let newValue = TagValueConverter.setSwitch(tagValue: tag.Value, isOn: $0, items: pageItem.items) {
-                    self.extraLabel.text = "updating".localize(with: prefixDevice)
+                    self.extraLabel.text = "updating".localize()
                     //tag.Value = newValue,直接赋值，value将直接显示在extraLabel中不表示真实的后台修改值
                     let newTag = Tag(name: tag.Name, value: newValue)
                     MoyaProvider<WAService>().request(.setTagValues(authority: User.tempInstance.authority!, tagList: [newTag])) { result in

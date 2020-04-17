@@ -29,18 +29,6 @@ class DeviceDynamicCell: UITableViewCell {
         }
     }
 
-//    public var deviceName: String? {
-//        didSet {
-//            if let deviceName = deviceName {
-////                if let image = TagUtility.getDeviceIcon(with: deviceName) {
-////                    deviceImageView.image = image
-////                }
-//                nameLabel.text = deviceName
-//                setStatus(with: deviceName)
-//            }
-//        }
-//    }
-
     var device: Device? {
         didSet {
             if let device = device {

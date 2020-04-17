@@ -17,6 +17,8 @@ class DeviceButtonCell: UITableViewCell {
     private let disposeBag = DisposeBag()
     private var buttonTag = Tag()
 
+    var parentVC: UIViewController?
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
@@ -53,7 +55,7 @@ extension DeviceButtonCell: DevicePageItemSource, PasswordVerifyDelegate {
                         if tags.count != 0 {
                             //发送指令：0xAAAA/0x5555,json中已配置为十进制
                             self.buttonTag = Tag(name: tags[0].Name, value: infos[1])
-                            authorityResult = VerifyUtility.verify(tag: tags[0], in: self)
+                            authorityResult = VerifyUtility.verify(tag: tags[0], delegate: self, parentVC: self.parentVC)
                         }
                         self.showVerifiedMessage(authority: authorityResult)
 
@@ -95,10 +97,10 @@ extension DeviceButtonCell: DevicePageItemSource, PasswordVerifyDelegate {
     func showVerifiedMessage(authority: AuthorityResult) {
         switch authority {
         case .localLocked, .userLocked:
-            let alertController = UIAlertController(title: "denied".localize(with: prefixDevice), message: authority.rawValue.localize(with: prefixDevice), preferredStyle: .alert)
+            let alertController = UIAlertController(title: "denied".localize(), message: authority.rawValue.localize(), preferredStyle: .alert)
             let cancel = UIAlertAction(title: NSLocalizedString("ok", comment: "ok"), style: .cancel, handler: nil)
             alertController.addAction(cancel)
-            window?.rootViewController?.present(alertController, animated: true, completion: nil)
+            parentVC?.navigationController?.present(alertController, animated: true, completion: nil)
         default:
             break
         }

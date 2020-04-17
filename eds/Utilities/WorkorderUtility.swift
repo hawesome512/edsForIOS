@@ -32,7 +32,6 @@ class WorkorderUtility {
                 let tempList = JsonUtility.getEDSServiceList(with: response.data, type: [Workorder]())
                 //按执行时间的先后排序，逆序
                 self.workorderList = ((tempList?.filter { $0 != nil })! as! [Workorder]).sorted().reversed()
-
                 print("WorkorderUtility:Load project workorder list in recent quarter.")
             default:
                 break
@@ -51,4 +50,13 @@ class WorkorderUtility {
     func get(by id: String) -> Workorder? {
         return workorderList.first(where: { $0.id == id })
     }
+
+    //获取权重最高的工单
+    func getMyWorkorder() -> Workorder? {
+        let accountName = AccountUtility.sharedInstance.phone?.name
+        return workorderList.sorted(by: { (lhs, rhs) -> Bool in
+            lhs.calWeightCoefficient(with: accountName) > rhs.calWeightCoefficient(with: accountName)
+        }).first
+    }
+
 }

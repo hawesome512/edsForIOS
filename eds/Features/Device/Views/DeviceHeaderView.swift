@@ -19,7 +19,8 @@ class DeviceHeaderView: UIView {
     let imageView = UIImageView()
     let imageButton = UIButton()
     private let disposeBag = DisposeBag()
-
+    
+    var parentVC: UIViewController?
     var device: Device? {
         didSet {
             DeviceUtility.setImage(in: imageView, with: device!)
@@ -83,7 +84,7 @@ class DeviceHeaderView: UIView {
             }
             picker.dismiss(animated: true, completion: nil)
         }
-        window?.rootViewController?.present(picker, animated: true, completion: nil)
+        parentVC?.navigationController?.present(picker, animated: true, completion: nil)
     }
 
 }

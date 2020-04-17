@@ -12,17 +12,16 @@ import RxSwift
 
 class AlarmListViewController: UITableViewController {
 
-    private var alarmList = AlarmUtility.sharedInstance.alarmList
+    private var alarmList = [Alarm]()
     private let disposeBag = DisposeBag()
     private var workorderAlarm: Alarm?
 
     //从设备页调整过来，只显示此设备记录
-    func filter(with device: String) {
-        alarmList = alarmList.filter { $0.device == device }
-    }
+    var deviceFilter: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        alarmList = AlarmUtility.sharedInstance.alarmList
 
         title = Alarm.description
         tableView.separatorStyle = .none
@@ -37,8 +36,12 @@ class AlarmListViewController: UITableViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        navigationController?.navigationBar.subviews.first?.alpha = 1
-        navigationController?.navigationBar.prefersLargeTitles = false
+        alarmList = AlarmUtility.sharedInstance.alarmList.filter { alarm in
+            guard let filter = deviceFilter else {
+                return true
+            }
+            return alarm.device == filter
+        }
     }
 
     // MARK: - Table view data source
@@ -49,7 +52,7 @@ class AlarmListViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 170
+        return edsCardHeight
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -114,6 +117,7 @@ class AlarmListViewController: UITableViewController {
         if !id.isEmpty, let workorder = WorkorderUtility.sharedInstance.get(by: id) {
             let workorderVC = WorkorderViewController()
             workorderVC.workorder = workorder
+            workorderVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(workorderVC, animated: true)
         } else {
             workorderAlarm = alarm
@@ -129,6 +133,7 @@ class AlarmListViewController: UITableViewController {
             let additionVC = WorkorderAdditionViewController()
             additionVC.workorder = workorder
             additionVC.delegate = self
+            additionVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(additionVC, animated: true)
         }
 
@@ -144,6 +149,7 @@ class AlarmListViewController: UITableViewController {
         if let cell = tableView.cellForRow(at: indexPath) as? AlarmCell {
             alarmVC.title = (cell.deviceLabel.text ?? "") + " " + (cell.titleLabel.text ?? "")
         }
+        alarmVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(alarmVC, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
     }

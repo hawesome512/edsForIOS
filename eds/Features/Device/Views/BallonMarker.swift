@@ -192,7 +192,7 @@ open class BalloonMarker: MarkerImage
     open func setLabel(_ newLabel: String)
     {
         //离线时显示，特殊处理
-        label = newLabel == "\(Tag.nilValue)" ? "offline".localize(with: prefixDevice) : newLabel
+        label = newLabel == "\(Tag.nilValue)" ? "offline".localize() : newLabel
 
         _drawAttributes.removeAll()
         _drawAttributes[.font] = self.font

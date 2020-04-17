@@ -42,6 +42,7 @@ class WorkorderListViewController: UITableViewController, WorkorderAdditionDeleg
         }
     }
 
+
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -61,12 +62,13 @@ class WorkorderListViewController: UITableViewController, WorkorderAdditionDeleg
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 170
+        return edsCardHeight
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let workorderVC = WorkorderViewController()
         workorderVC.workorder = workorderList[indexPath.row]
+        workorderVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(workorderVC, animated: true)
 
         tableView.deselectRow(at: indexPath, animated: true)
@@ -91,6 +93,7 @@ class WorkorderListViewController: UITableViewController, WorkorderAdditionDeleg
     @objc func addWorkorder() {
         let addVC = WorkorderAdditionViewController()
         addVC.delegate = self
+        addVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(addVC, animated: true)
     }
 

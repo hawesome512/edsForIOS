@@ -22,6 +22,8 @@ class DeviceListCell: UITableViewCell, PasswordVerifyDelegate {
     //是否累加值，在DeviceTrendViewController使用
     private var isAccumulated = false
 
+    var parentVC: UIViewController?
+
     fileprivate func initViews() {
         //cell右边icon样式“>"
         accessoryType = .disclosureIndicator
@@ -56,12 +58,13 @@ class DeviceListCell: UITableViewCell, PasswordVerifyDelegate {
         }
         //参数修改页面or趋势评估页面
         if isItemCell() {
-            let authorityResult = VerifyUtility.verify(tag: listTag!, in: self)
+            let authorityResult = VerifyUtility.verify(tag: listTag!, delegate: self, parentVC: parentVC)
             presentMeterViewController(authority: authorityResult)
         } else {
             let trendViewController = DeviceTrendTableViewController()
+            trendViewController.title = nameLabel.text
             trendViewController.trend(with: [listTag!], condition: nil, isAccumulated: isAccumulated)
-            (self.window?.rootViewController as? UINavigationController)?.pushViewController(trendViewController, animated: true)
+            parentVC?.navigationController?.pushViewController(trendViewController, animated: true)
         }
     }
 
@@ -87,7 +90,7 @@ class DeviceListCell: UITableViewCell, PasswordVerifyDelegate {
         let itemMeterViewController = UIStoryboard(name: "Device", bundle: nil).instantiateViewController(withIdentifier: String(describing: DeviceItemMeterViewController.self)) as! DeviceItemMeterViewController
         itemMeterViewController.initViews(with: pageItem!, tag: listTag!, authority: authority)
         //导航的方式打开新vc
-        (self.window?.rootViewController as? UINavigationController)?.pushViewController(itemMeterViewController, animated: true)
+        parentVC?.navigationController?.pushViewController(itemMeterViewController, animated: true)
     }
 }
 
@@ -106,12 +109,12 @@ extension DeviceListCell: DevicePageItemSource {
         }
         //默认使用pageItem.name(更方便自定义，如ACB的Ir(A)与MCCB的Ir(In)显示不同
         let tagTitle = tags.count == 1 ? pageItem.name : tag.getTagShortName()
-        nameLabel.attributedText = tagTitle.localize(with: prefixDevice).formatNameAndUnit()
+        nameLabel.attributedText = tagTitle.localize().formatNameAndUnit()
         tag.showValue.asObservable().throttle(.seconds(1), scheduler: MainScheduler.instance).subscribe(onNext: {
             var value = $0.clean
-            //List模式时：items有值时，显示固定转换值，items里包含转换信息
-            if let items = pageItem.items, DeviceCellType(rawValue: pageItem.display) == .list {
-                value = TagValueConverter.getFixedText(value: $0, items: items).localize(with: prefixDevice)
+            //List模式时：items有值时，显示固定转换值，items里包含转换信息(排除累加值的情况）
+            if let items = pageItem.items, items.first != DeviceModel.itemsAccumulation, DeviceCellType(rawValue: pageItem.display) == .list {
+                value = TagValueConverter.getFixedText(value: $0, items: items).localize()
             }
             self.valueLabel.text = value
         }).disposed(by: disposeBag)

@@ -14,6 +14,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
         // Override point for customization after application launch.
         //为避免MQTT初始化后马上订阅，将单例初始化提前，订阅将在TagUtility中等获取tagList后执行
         print(MQTTService.sharedInstance.description())

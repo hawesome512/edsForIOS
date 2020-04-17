@@ -22,6 +22,7 @@ class WorkorderPhotoCollectionCell: UITableViewCell {
             collectionView.reloadData()
         }
     }
+    var parentVC: UIViewController?
     private let photoHeight: CGFloat = 120
     private let countLimit = 12
 
@@ -136,7 +137,7 @@ extension WorkorderPhotoCollectionCell: UICollectionViewDataSource, UICollection
                     collectionView.reloadData()
                 }
             }
-            window?.rootViewController?.present(picker, animated: true, completion: nil)
+            parentVC?.navigationController?.present(picker, animated: true, completion: nil)
             return
         }
         guard photoSource.getTotal() != 0 else {
@@ -146,7 +147,7 @@ extension WorkorderPhotoCollectionCell: UICollectionViewDataSource, UICollection
         let photosVC = PhotoCollectionViewController()
         photosVC.photoSource = photoSource
         photosVC.offsetIndex = executing ? indexPath.row - 1: indexPath.row
-        (window?.rootViewController as? UINavigationController)?.pushViewController(photosVC, animated: true)
+        parentVC?.navigationController?.pushViewController(photosVC, animated: true)
     }
 
 

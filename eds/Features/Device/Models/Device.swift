@@ -12,6 +12,7 @@ import HandyJSON
 class Device: HandyJSON, Equatable, EDSDelegate {
 
     static let icon = UIImage(systemName: "bolt.circle")
+    static let description = "property".localize()
 
     //工程🆔与时间戳点间隔符号
     private let idSeparator = "-"

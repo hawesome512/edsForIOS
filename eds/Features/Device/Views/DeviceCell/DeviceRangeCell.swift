@@ -137,7 +137,7 @@ class DeviceRangeCell: UITableViewCell {
 
 extension DeviceRangeCell: DevicePageItemSource {
     func initViews(with pageItem: DevicePageItem, rx tags: [Tag], rowIndex: Int) {
-        nameLabel.text = pageItem.name.localize(with: prefixDevice)
+        nameLabel.attributedText = pageItem.name.localize().formatNameAndUnit()
         if let items = pageItem.items {
             self.items = items
             tags[0].showValue.asObservable().throttle(.seconds(1), scheduler: MainScheduler.instance).subscribe(onNext: {

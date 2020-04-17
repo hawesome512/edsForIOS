@@ -73,7 +73,7 @@ class DeviceFixedCell: UITableViewCell {
         levelLabel.textColor = .systemGray
         levelLabel.layer.borderColor = UIColor.systemGray3.cgColor
         levelLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
-        levelLabel.innerText = "uncommunicate".localize(with: prefixDevice)
+        levelLabel.innerText = "uncommunicate".localize()
         addSubview(levelLabel)
         levelLabel.top(to: nameLabel)
         levelLabel.height(24)

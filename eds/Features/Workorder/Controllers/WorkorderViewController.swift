@@ -128,7 +128,7 @@ class WorkorderViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-
+        
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.setToolbarHidden(false, animated: animated)
         navigationController?.toolbar.barStyle = .black
@@ -205,6 +205,7 @@ extension WorkorderViewController: UITableViewDataSource, UITableViewDelegate {
         case .photo:
             let cell = WorkorderPhotoCollectionCell()
             cell.photoSource = photoSource
+            cell.parentVC = self
             executedState.asObservable().bind(onNext: { executing in
                 cell.executing = executing
             }).disposed(by: disposeBag)
@@ -218,6 +219,7 @@ extension WorkorderViewController: UITableViewDataSource, UITableViewDelegate {
             let msg = messages[indexPath.row]
             cell.message = msg
             cell.delegate = self
+            cell.parentVC = self
             //只可删除自己的留言
             cell.deleteButton.alpha = msg.name == accountName ? 1 : 0
             cell.levelImage.alpha = msg.name == workorder?.auditor ? 1 : 0

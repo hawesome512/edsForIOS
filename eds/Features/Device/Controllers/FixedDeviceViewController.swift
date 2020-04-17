@@ -28,9 +28,16 @@ class FixedDeviceViewController: UIViewController, DevicePageScrollDelegate {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.subviews.first?.alpha = 0
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: edsDefaultColor]
+        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationController?.navigationBar.subviews.first?.alpha = 1
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -48,9 +55,11 @@ class FixedDeviceViewController: UIViewController, DevicePageScrollDelegate {
         headerViewTopConstraint = headerView.topAnchor.constraint(equalTo: headerView.superview!.topAnchor)
         headerViewTopConstraint?.isActive = true
         headerView.device = device
+        headerView.parentVC = self
 
         view.addSubview(fixedVC.view)
         fixedVC.device = device
+        fixedVC.parentVC = self
         fixedVC.view.edgesToSuperview(excluding: .top)
         fixedVC.view.topToBottom(of: headerView)
 

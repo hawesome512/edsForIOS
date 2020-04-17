@@ -146,6 +146,30 @@ class Workorder: HandyJSON, Comparable {
         title = ""
     }
 
+    // MARK: - 工单权重
+    //权重系数,满分100，值越大越相关，用于排序跟当前用户最相关的工单，显示在首页中：
+    //工单状态因子（30）：已审核-10，已执行-10，已派发-10，已完成的工单因子为0
+    //截止时间因子（40）：限定±1月，设定day=now-截止，-day*2/30 或 -day/30
+    //关联因子（30）：本人创建+10，执行+10，审核+10
+    func calWeightCoefficient(with accountName: String? = nil) -> Int {
+        var factor: Int = 100
+        factor = factor - state.rawValue * 10
+        if let name = accountName, !name.isEmpty {
+            let rolers = [creator, worker, auditor].filter { $0 != name }
+            factor = factor - rolers.count * 10
+        }
+        if let endDate = end.toDate() {
+            if let deltaDay = (DateInRegion(Date(), region: .current) - endDate).toUnit(.day) {
+                //截止日期已经过期的权重更大,截止日期离得近的（deltaDay越小）权重更大
+                let ratio: Double = deltaDay > 0 ? 1 : 2
+                //ratio(:2)*20=满级权重（40），±1月（30）
+                let dateFactor = min(Double(abs(deltaDay)), 30) / 30 * ratio * 20
+                factor = factor - Int(dateFactor)
+            }
+        }
+        return factor
+    }
+
 
     // MARK: -工单列表排序
     static func < (lhs: Workorder, rhs: Workorder) -> Bool {
@@ -158,6 +182,7 @@ class Workorder: HandyJSON, Comparable {
     static func == (lhs: Workorder, rhs: Workorder) -> Bool {
         return lhs.start == rhs.start
     }
+
 }
 
 //工单状态：创建，派发，执行，审核，实现CI协议方便遍历

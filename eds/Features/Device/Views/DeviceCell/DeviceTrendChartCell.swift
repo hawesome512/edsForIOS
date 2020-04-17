@@ -11,10 +11,11 @@ import Charts
 
 class DeviceTrendChartCell: UITableViewCell {
 
-    private let lineChartView = LineChartView()
+    let lineChartView = LineChartView()
     private let activityIndicatorView = UIActivityIndicatorView(style: .large)
     //横坐标基于时间选择条件
     private var condition: WATagLogRequestCondition?
+    private var dateItem: EnergyDateItem?
 
     private func initViews() {
 
@@ -84,15 +85,29 @@ class DeviceTrendChartCell: UITableViewCell {
             lowerLimit.lineDashLengths = [10, 10]
             lineChartView.leftAxis.addLimitLine(lowerLimit)
         }
-        setData(logTags, condition: condition)
+        self.condition = condition
+        lineChartView.xAxis.valueFormatter = self
+        setData(logTags)
     }
 
     func setData(_ logTags: [(name: String, values: [Double])], condition: WATagLogRequestCondition?) {
-        activityIndicatorView.alpha = 0
-        lineChartView.alpha = 1
         //横坐标时间格式
         self.condition = condition
         lineChartView.xAxis.valueFormatter = self
+        setData(logTags)
+    }
+
+    func setData(_ logTags: [(name: String, values: [Double])], dateItem: EnergyDateItem) {
+        self.dateItem = dateItem
+        lineChartView.xAxis.valueFormatter = self
+        setData(logTags)
+    }
+
+    func setData(_ logTags: [(name: String, values: [Double])]) {
+        UIView.animate(withDuration: 0.5, animations: {
+            self.activityIndicatorView.alpha = 0
+            self.lineChartView.alpha = 1
+        })
 
         lineChartView.data?.clearValues()
         var datas: [LineChartDataSet] = []
@@ -110,11 +125,11 @@ class DeviceTrendChartCell: UITableViewCell {
             //顺序取出调色板颜色
             let color = colors[datas.count % colors.count]
             set.setColor(color)
-            set.lineWidth = 2
+            set.lineWidth = 3
             //线段太多，不再绘制小圆点
             set.drawCirclesEnabled = logTags.count == 1 ? true : false
             set.circleColors = [color]
-            set.circleRadius = 4
+            set.circleRadius = 5
             datas.append(set)
         }
         //只有一条线时，填充渐变色块
@@ -132,15 +147,26 @@ class DeviceTrendChartCell: UITableViewCell {
         lineChartView.data = data
     }
 
+
+    func prepareRequestData() {
+        UIView.animate(withDuration: 0.5, animations: {
+            self.activityIndicatorView.alpha = 1
+            self.lineChartView.alpha = 0
+        })
+    }
+
 }
 
 extension DeviceTrendChartCell: IAxisValueFormatter {
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-        guard let condition = condition else {
-            return value.clean
-        }
         let index = Int(value)
-        return condition.getShortTimeString(with: index)
+        if let dateItem = dateItem {
+            return dateItem.getShortTimeString(with: index)
+        }
+        if let condition = condition {
+            return condition.getShortTimeString(with: index)
+        }
+        return value.clean
     }
 
 

@@ -41,6 +41,7 @@ class WorkorderMessageCell: UITableViewCell {
         }
     }
     var delegate: MessageDelegate?
+    var parentVC: UIViewController?
 
     private func initViews() {
 
@@ -123,7 +124,7 @@ class WorkorderMessageCell: UITableViewCell {
                 if let alarm = AlarmUtility.sharedInstance.get(by: content) {
                     let alarmVC = AlarmViewController()
                     alarmVC.alarm = alarm
-                    (window?.rootViewController as? UINavigationController)?.pushViewController(alarmVC, animated: true)
+                    parentVC?.navigationController?.pushViewController(alarmVC, animated: true)
                 }
                 break
             default:

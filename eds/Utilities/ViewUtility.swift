@@ -38,10 +38,26 @@ class ViewUtility {
         backView.layer.shadowColor = UIColor.systemGray.cgColor
         backView.layer.shadowOpacity = 0.5
         backView.layer.cornerRadius = 5
+        backView.clipsToBounds = true
         backView.backgroundColor = .white
         container.addSubview(backView)
         backView.edgesToSuperview(insets: .uniform(edsMinSpace))
         return backView
+    }
+
+
+    /// 增加幻彩毛玻璃效果
+    /// - Parameter container: <#container description#>
+    static func addColorEffect(in container: UIView) {
+        let backgroundImage = UIImageView()
+        backgroundImage.image = UIImage(named: "background")
+        backgroundImage.contentMode = .scaleAspectFill
+        let blurEffect = UIBlurEffect(style: .systemThinMaterialDark)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        backgroundImage.addSubview(blurEffectView)
+        blurEffectView.edgesToSuperview()
+        container.addSubview(backgroundImage)
+        backgroundImage.edgesToSuperview()
     }
 
 }

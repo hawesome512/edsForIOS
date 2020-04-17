@@ -75,6 +75,7 @@ class WorkorderAdditionViewController: UITableViewController, UINavigationBarDel
         textInputCells = rows.enumerated().map { row in
             let cell = TextInputCell()
             cell.title = row.element.localize(with: prefixWorkorder)
+            cell.parentVC = self
             switch row.offset {
             case 1:
                 cell.items = WorkorderType.allCases.map { $0.getText() }

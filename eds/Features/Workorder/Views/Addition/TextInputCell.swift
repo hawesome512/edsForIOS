@@ -47,7 +47,7 @@ class TextInputCell: UITableViewCell, UITextFieldDelegate {
         }
     }
     var delegate: TextInputCellDelegate?
-
+    var parentVC: UIViewController?
 
     //选择日期
     var dates: [String] = []
@@ -100,7 +100,7 @@ class TextInputCell: UITableViewCell, UITextFieldDelegate {
                 let pickerVC = DatePickerController()
                 pickerVC.items = self.dates
                 pickerVC.delegate = self.datePickerDelegate
-                self.window?.rootViewController?.present(pickerVC, animated: true, completion: nil)
+                self.parentVC?.navigationController?.present(pickerVC, animated: true, completion: nil)
             }
         }).disposed(by: disposeBag)
     }

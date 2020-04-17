@@ -16,7 +16,7 @@ class DeviceAdditionAlertController: UIAlertController {
 
     //新增设备（.fixed,.dynamic)时，可选设备列表：非通信型+通信型设备列表
     lazy var deviceList: [String] = {
-        var devices = ["uncommunicate".localize(with: prefixDevice)]
+        var devices = ["uncommunicate".localize()]
         devices.append(contentsOf: TagUtility.sharedInstance.getDeviceList())
         return devices
     }()
@@ -85,10 +85,10 @@ class DeviceAdditionAlertController: UIAlertController {
         if let device = device {
             controller.parentDevice = device
             //新增时，device不可能为fixed/dynamic
-            title = ((device.level == .room) ? "box_addition" : "property_addition").localize(with: prefixDevice)
+            title = ((device.level == .room) ? "box_addition" : "property_addition").localize()
         } else {
             //device为nil,新增配电房
-            title = "room_addition".localize(with: prefixDevice)
+            title = "room_addition".localize()
         }
         controller.titleLable.text = title
 

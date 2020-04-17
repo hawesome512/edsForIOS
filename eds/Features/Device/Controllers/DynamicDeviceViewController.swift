@@ -36,7 +36,13 @@ class DynamicDeviceViewController: UIViewController, DevicePageScrollDelegate {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.subviews.first?.alpha = 0
     }
-    
+
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: edsDefaultColor]
+        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationController?.navigationBar.subviews.first?.alpha = 1
+    }
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         //当前VC的父级vc是navigationController,必须设置如UINavigationController-Ext.swift
         return .lightContent
@@ -48,6 +54,7 @@ class DynamicDeviceViewController: UIViewController, DevicePageScrollDelegate {
         }
         title = device.title
         //顶部图片
+        headerView.parentVC = self
         view.addSubview(headerView)
         headerView.horizontalToSuperview()
         headerView.height(to: view, multiplier: 0.3)
@@ -108,11 +115,13 @@ extension DynamicDeviceViewController: PagingViewControllerDataSource {
             let tableVC = FixedInfoChildController(style: .plain)
             tableVC.scrollDelegate = self
             tableVC.device = device
+            tableVC.parentVC = self
             return tableVC
         } else {
             let pageVC = DevicePageTableViewController()
             pageVC.set(with: pages[index], in: device!.getShortID())
             pageVC.scrollDelegate = self
+            pageVC.parentVC = self
             return pageVC
         }
     }

@@ -34,14 +34,14 @@ class InfoAlertController: UIAlertController {
         title = "\n\n\n\n\n\n\n\n"
         titleLable.font = UIFont.preferredFont(forTextStyle: .headline)
         titleLable.textAlignment = .center
-        titleLable.text = "info".localize(with: prefixDevice)
+        titleLable.text = "info".localize()
         view.addSubview(titleLable)
         titleLable.edgesToSuperview(excluding: .bottom, insets: .uniform(edsSpace))
 
         //AlertController整个背景有透明度0.7
         nameField.backgroundColor = UIColor.systemGray3.withAlphaComponent(0.7)
         nameField.font = UIFont.preferredFont(forTextStyle: .body)
-        nameField.placeholder = "title".localize(with: prefixDevice)
+        nameField.placeholder = "title".localize()
         nameField.becomeFirstResponder()
         view.addSubview(nameField)
         nameField.horizontalToSuperview(insets: .horizontal(edsSpace))
@@ -49,14 +49,14 @@ class InfoAlertController: UIAlertController {
 
         valueField.backgroundColor = UIColor.systemGray3.withAlphaComponent(0.7)
         valueField.font = UIFont.preferredFont(forTextStyle: .body)
-        valueField.placeholder = "value".localize(with: prefixDevice)
+        valueField.placeholder = "value".localize()
         view.addSubview(valueField)
         valueField.horizontalToSuperview(insets: .horizontal(edsSpace))
         valueField.topToBottom(of: nameField, offset: edsSpace)
 
         unitField.backgroundColor = UIColor.systemGray3.withAlphaComponent(0.7)
         unitField.font = UIFont.preferredFont(forTextStyle: .body)
-        unitField.placeholder = "unit".localize(with: prefixDevice)
+        unitField.placeholder = "unit".localize()
         view.addSubview(unitField)
         unitField.horizontalToSuperview(insets: .horizontal(edsSpace))
         unitField.topToBottom(of: valueField, offset: edsSpace)

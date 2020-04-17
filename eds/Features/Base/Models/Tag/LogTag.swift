@@ -12,6 +12,8 @@ import SwiftDate
 
 struct LogTag: HandyJSON {
 
+    static let nilValue = "#"
+
     // Name……等未采用Swift语法～小驼峰命名，是为了方便HandyJSON将Tag转化为符合WA的Json格式
     var Name: String = NIL
     // 数据类型：取时间段内的最后值、最小值、最大值、平均值
@@ -25,7 +27,7 @@ struct LogTag: HandyJSON {
         Name = name
         DataType = logDataType
     }
-    
+
     func getTagShortName() -> String {
         return Name.components(separatedBy: Tag.nameSeparator)[1]
     }

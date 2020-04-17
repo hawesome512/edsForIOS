@@ -16,6 +16,7 @@ class FixedGotoCell: UITableViewCell {
     private let disposeBag = DisposeBag()
 
     var device: Device?
+    var parentVC: UIViewController?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -33,7 +34,7 @@ class FixedGotoCell: UITableViewCell {
         workorderButton.rx.tap.bind(onNext: {
             let workorderListController = WorkorderListViewController()
             workorderListController.deviceFilter = self.device?.title
-            (self.window?.rootViewController as? UINavigationController)?.pushViewController(workorderListController, animated: true)
+            self.parentVC?.navigationController?.pushViewController(workorderListController, animated: true)
         }).disposed(by: disposeBag)
         addSubview(workorderButton)
         workorderButton.widthToSuperview(multiplier: 0.5, offset: -edsSpace * 1.5)
@@ -44,10 +45,8 @@ class FixedGotoCell: UITableViewCell {
         alarmButton.setTitle(Alarm.description, for: .normal)
         alarmButton.rx.tap.bind(onNext: {
             let alarmListController = AlarmListViewController()
-            if let deviceID = self.device?.getShortID() {
-                alarmListController.filter(with: deviceID)
-            }
-            (self.window?.rootViewController as? UINavigationController)?.pushViewController(alarmListController, animated: true)
+            alarmListController.deviceFilter = self.device?.getShortID()
+            self.parentVC?.navigationController?.pushViewController(alarmListController, animated: true)
         }).disposed(by: disposeBag)
         addSubview(alarmButton)
         alarmButton.widthToSuperview(multiplier: 0.5, offset: -edsSpace * 1.5)

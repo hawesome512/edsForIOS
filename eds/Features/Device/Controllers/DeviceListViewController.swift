@@ -14,22 +14,18 @@ class DeviceListViewController: UIViewController {
 
     private let disposeBag = DisposeBag()
     private let tableView = UITableView()
-    private var deviceList = DeviceUtility.sharedInstance.getProjDeviceList()
+    private var deviceList = [Device]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        navigationController?.navigationBar.subviews.first?.alpha = 1
-    }
-    
+
     fileprivate func initViews() {
         //再更新一次动态设备状态点
         updateDeviceStatus()
         //设定导航栏
-        title = "property".localize(with: prefixDevice)
+        title = "property".localize()
         navigationController?.navigationBar.prefersLargeTitles = false
 
         //TableView初始化配置
@@ -40,7 +36,10 @@ class DeviceListViewController: UIViewController {
         tableView.delegate = self
         view.addSubview(tableView)
         tableView.edgesToSuperview()
+    }
 
+    override func viewWillAppear(_ animated: Bool) {
+        deviceList = DeviceUtility.sharedInstance.getProjDeviceList()
     }
 
     //MARK:可通讯设备更新状态位数据
@@ -99,10 +98,12 @@ extension DeviceListViewController: UITableViewDelegate, UITableViewDataSource {
         if device.level == .dynamic {
             let dynamicVC = DynamicDeviceViewController()
             dynamicVC.device = device
+            dynamicVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(dynamicVC, animated: true)
         } else {
             let fixedVC = FixedDeviceViewController()
             fixedVC.device = device
+            fixedVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(fixedVC, animated: true)
         }
 
@@ -116,7 +117,7 @@ extension DeviceListViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = AdditionTableHeaderView()
-        headerView.title.text = "add_room".localize(with: prefixDevice)
+        headerView.title.text = "add_room".localize()
         headerView.delegate = self
         return headerView
     }
