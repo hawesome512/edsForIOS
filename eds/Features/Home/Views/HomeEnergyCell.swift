@@ -16,6 +16,25 @@ class HomeEnergyCell: UITableViewCell {
     let ratioView = HomeRatioView()
     let slider = HorSliderView()
 
+    var energyData: EnergyData? {
+        didSet {
+            guard let data = self.energyData else {
+                return
+            }
+            let currentTotal = data.getCurrentTotalValue()
+            let lastPeriod = data.getLastPeriodTotalValue()
+            currentView.value = currentTotal.roundToPlaces(places: 0).clean
+            lastView.value = lastPeriod.roundToPlaces(places: 0).clean
+            ratioView.value = data.getLinkRatio().roundToPlaces(places: 0)
+
+            //当未设定能耗指标时，选择上期总值为指标
+            let current = data.getCurrentTotalValue()
+            let last = data.getLastTotalValue()
+            let ratio = last == 0 ? 0 : (current / last * 100).roundToPlaces(places: 0)
+            slider.value = CGFloat(ratio)
+        }
+    }
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         initViews()
@@ -40,7 +59,7 @@ class HomeEnergyCell: UITableViewCell {
 
         let energyLabel = UILabel()
         energyLabel.textColor = .white
-        energyLabel.text = "energy".localize()
+        energyLabel.text = "energy".localize(with: prefixHome)
         energyLabel.font = UIFont.preferredFont(forTextStyle: .title3)
         contentView.addSubview(energyLabel)
         energyLabel.centerY(to: energyImage)

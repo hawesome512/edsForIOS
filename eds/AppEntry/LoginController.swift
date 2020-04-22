@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 import Moya
-
+import SwiftDate
 class LoginController: UIViewController {
 
     private let disposeBag = DisposeBag()
@@ -17,15 +17,15 @@ class LoginController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
-
+        
         // Do any additional setup after loading the view.
         //初始化后台数据，导入数据列表
-        TagUtility.sharedInstance.loadProjectTagList()
-        DeviceUtility.sharedInstance.loadProjectDeviceList()
-        AlarmUtility.sharedInstance.loadProjectAlarmList()
-        WorkorderUtility.sharedInstance.loadProjectWorkerorderList()
-        AccountUtility.sharedInstance.loadProjectAccount()
-        
+//        TagUtility.sharedInstance.loadProjectTagList()
+//        DeviceUtility.sharedInstance.loadProjectDeviceList()
+//        AlarmUtility.sharedInstance.loadProjectAlarmList()
+//        WorkorderUtility.sharedInstance.loadProjectWorkerorderList()
+//        AccountUtility.sharedInstance.loadProjectAccount()
+        EnergyUtility.sharedInstance.loadProjectEnergyData()
     }
 
     private func initViews() {

@@ -9,7 +9,7 @@
 import Foundation
 import SwiftDate
 
-struct EnergyDateItem {
+struct EnergyDateItem: Equatable {
     let dateType: EnergySegmentType
     let date: DateInRegion
 
@@ -67,9 +67,9 @@ struct EnergyDateItem {
         case .day:
             return 24
         case .month:
-            return (date-1.months).monthDays * 24
+            return (date-1.months).monthDays
         case .year:
-            return 12
+            return 12//(date-1.years).isLeapYear ? 366 : 365
         }
     }
 
@@ -89,8 +89,9 @@ struct EnergyDateItem {
         case .year:
             let start = (date - 1.years).dateAtStartOf(.year)
             let startTime = start.date.toDateTimeString()
-            let records = (getEndDate() - start).toUnit(.month) ?? 0
-            return WATagLogRequestCondition(startTime: startTime, intervalType: .M, interval: 1, records: records + 1, tags: tags)
+            //不能按月来查询，先按日来查询，再合并
+            let records = (getEndDate() - start).toUnit(.day) ?? 0
+            return WATagLogRequestCondition(startTime: startTime, intervalType: .D, interval: 1, records: records + 1, tags: tags)
         }
     }
 
@@ -110,5 +111,9 @@ struct EnergyDateItem {
             end = (date + 1.years).dateAtStartOf(.year)//date.dateAtEndOf(.year)
         }
         return end.isAfterDate(now, granularity: .second) ? now : end
+    }
+    
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.dateType == rhs.dateType && lhs.date == rhs.date
     }
 }

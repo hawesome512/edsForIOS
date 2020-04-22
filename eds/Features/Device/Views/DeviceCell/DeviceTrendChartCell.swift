@@ -23,7 +23,6 @@ class DeviceTrendChartCell: UITableViewCell {
         lineChartView.dragEnabled = true
         lineChartView.setScaleEnabled(true)
         lineChartView.pinchZoomEnabled = true
-
         lineChartView.xAxis.gridLineDashLengths = [10, 10]
         lineChartView.xAxis.gridLineDashPhase = 0
         lineChartView.xAxis.labelPosition = .bottom
@@ -104,6 +103,7 @@ class DeviceTrendChartCell: UITableViewCell {
     }
 
     func setData(_ logTags: [(name: String, values: [Double])]) {
+        lineChartView.highlightValue(nil, callDelegate: false)
         UIView.animate(withDuration: 0.5, animations: {
             self.activityIndicatorView.alpha = 0
             self.lineChartView.alpha = 1
@@ -125,11 +125,11 @@ class DeviceTrendChartCell: UITableViewCell {
             //顺序取出调色板颜色
             let color = colors[datas.count % colors.count]
             set.setColor(color)
-            set.lineWidth = 3
+            set.lineWidth = 2
             //线段太多，不再绘制小圆点
             set.drawCirclesEnabled = logTags.count == 1 ? true : false
             set.circleColors = [color]
-            set.circleRadius = 5
+            set.circleRadius = 4
             datas.append(set)
         }
         //只有一条线时，填充渐变色块

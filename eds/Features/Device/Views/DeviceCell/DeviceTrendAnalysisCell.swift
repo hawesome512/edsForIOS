@@ -54,11 +54,11 @@ class DeviceTrendAnalysisCell: UITableViewCell {
             return
         }
         if let max = values.max(), let maxIndex = values.firstIndex(of: max) {
-            maxValueLabel.text = max.roundToPlaces().clean
+            maxValueLabel.text = max.clean
             maxTimeLabel.text = date.getLongTimeString(with: maxIndex)
         }
         if let min = values.min(), let minIndex = values.firstIndex(of: min) {
-            minValueLabel.text = min.roundToPlaces().clean
+            minValueLabel.text = min.clean
             minTimeLabel.text = date.getLongTimeString(with: minIndex)
         }
         let avg = values.reduce(0, +) / Double(values.count)

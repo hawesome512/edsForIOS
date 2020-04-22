@@ -24,7 +24,7 @@ enum EnergyCellType: Int, CaseIterable {
         results[.analysis] = DeviceTrendAnalysisCell()
         results[.ratio] = EnergyRatioCell()
         results[.time] = EnergyTimeCell()
-        results[.branch] = DeviceBarCell()
+        results[.branch] = EnergyBranchCell()
         return results
     }
 }

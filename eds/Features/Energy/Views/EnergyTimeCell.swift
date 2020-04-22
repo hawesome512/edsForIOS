@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RxSwift
 
 class EnergyTimeCell: UITableViewCell {
 
@@ -19,6 +20,40 @@ class EnergyTimeCell: UITableViewCell {
     private let minMoneyLabel = UILabel()
     private let maxMoneyLabel = UILabel()
     private let avgMoneyLabel = UILabel()
+    private let disposeBag = DisposeBag()
+
+    var parentVC: UIViewController?
+
+    func setData(_ data: EnergyData) {
+        let total = data.getCurrentTotalValue()
+        if total == 0 {
+            minValueLabel.text = "0%"
+            avgValueLabel.text = "0%"
+            maxValueLabel.text = "0%"
+            minMoneyLabel.text = "¥ 0"
+            avgMoneyLabel.text = "¥ 0"
+            maxMoneyLabel.text = "¥ 0"
+        }
+
+        let timeData = data.calTimePrice()
+        let minTotal = timeData[.valley]!
+        let minRatio = total == 0 ? 0 : minTotal / total * 100
+        minValueLabel.text = minRatio.roundToPlaces(places: 0).clean + "%"
+        let minMoney = Double(minTotal) * EnergyPrice.valley.getPrice()
+        minMoneyLabel.text = "¥ \(minMoney.roundToPlaces(places: 0).clean)"
+
+        let avgTotal = timeData[.plain]!
+        let avgRatio =  total == 0 ? 0 : avgTotal / total * 100
+        avgValueLabel.text = avgRatio.roundToPlaces(places: 0).clean + "%"
+        let avgMoney = Double(avgTotal) * EnergyPrice.plain.getPrice()
+        avgMoneyLabel.text = "¥ \(avgMoney.roundToPlaces(places: 0).clean)"
+
+        let maxTotal = timeData[.peek]!
+        let maxRatio =  total == 0 ? 0 : maxTotal / total * 100
+        maxValueLabel.text = maxRatio.roundToPlaces(places: 0).clean + "%"
+        let maxMoney = Double(maxTotal) * EnergyPrice.peek.getPrice()
+        maxMoneyLabel.text = "¥ \(maxMoney.roundToPlaces(places: 0).clean)"
+    }
 
     private func initViews() {
 
@@ -32,7 +67,8 @@ class EnergyTimeCell: UITableViewCell {
         timeIcon.topToSuperview(offset: edsMinSpace)
 
         let timeLabel = UILabel()
-        timeLabel.text = "time".localize(with: prefixEnergy)
+        let title = "time".localize(with: prefixEnergy)
+        timeLabel.text = title
         timeLabel.font = UIFont.preferredFont(forTextStyle: .title3)
         addSubview(timeLabel)
         timeLabel.leadingToTrailing(of: timeIcon, offset: edsMinSpace)
@@ -41,10 +77,17 @@ class EnergyTimeCell: UITableViewCell {
         let tipButton = UIButton()
         tipButton.tintColor = .systemGray3
         tipButton.setBackgroundImage(UIImage(systemName: "info.circle.fill"), for: .normal)
+        tipButton.rx.tap.bind(onNext: {
+            let message = "time_alert".localize(with: prefixEnergy)
+            let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "ok".localize(), style: .cancel, handler: nil)
+            alertVC.addAction(okAction)
+            self.parentVC?.present(alertVC, animated: true, completion: nil)
+        }).disposed(by: disposeBag)
         addSubview(tipButton)
         tipButton.width(edsSpace)
         tipButton.height(edsSpace)
-        tipButton.leadingToTrailing(of: timeLabel,offset:2)
+        tipButton.leadingToTrailing(of: timeLabel, offset: 2)
         tipButton.centerY(to: timeIcon, offset: -6)
 
         //低谷

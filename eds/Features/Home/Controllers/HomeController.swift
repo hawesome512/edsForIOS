@@ -72,7 +72,7 @@ class HomeController: UIViewController {
         updateNavigationBar()
         myWorkorder = WorkorderUtility.sharedInstance.getMyWorkorder()
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.navigationBar.subviews.first?.alpha = 1
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(1)]
@@ -110,7 +110,8 @@ extension HomeController: UITableViewDataSource, UITableViewDelegate {
             cell.parentVC = self
             return cell
         case 1:
-            let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: HomeEnergyCell.self), for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: HomeEnergyCell.self), for: indexPath) as! HomeEnergyCell
+            cell.energyData = EnergyUtility.sharedInstance.energyBranch?.energyData
             return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: HomeWorkorderCell.self), for: indexPath) as! HomeWorkorderCell
@@ -121,6 +122,12 @@ extension HomeController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
+        case 1:
+            let energyVC = EnergyController()
+            //copy传递副本，在用电分析中branch.energyData会更改，不能影响EnergyUtility.energyBranch
+            energyVC.energyBranch = EnergyUtility.sharedInstance.energyBranch?.copy()
+            energyVC.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(energyVC, animated: true)
         case 2:
             let workorderVC = WorkorderViewController()
             workorderVC.workorder = myWorkorder

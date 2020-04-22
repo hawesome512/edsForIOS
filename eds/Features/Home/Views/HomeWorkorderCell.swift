@@ -24,7 +24,7 @@ class HomeWorkorderCell: UITableViewCell {
             stateImage.tintColor = state.color
             stateImage.image = state.icon
             //步进100/4=25
-            let step = slider.maxValue - CGFloat(WorkorderState.allCases.count)
+            let step = slider.maxValue / CGFloat(WorkorderState.allCases.count)
             slider.value = (CGFloat(workorder.state.rawValue) + 1) * step
         }
     }

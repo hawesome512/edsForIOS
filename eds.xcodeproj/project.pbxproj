@@ -63,6 +63,9 @@
 		46227A4323C8231300768799 /* BallonMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46227A4223C8231300768799 /* BallonMarker.swift */; };
 		46227A4523C82A4C00768799 /* ViewUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46227A4423C82A4C00768799 /* ViewUtility.swift */; };
 		462D23AE23C076C500C28F15 /* IconPagingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462D23AD23C076C500C28F15 /* IconPagingCell.swift */; };
+		462E0DEB244D237900A2F17E /* EnergyPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462E0DEA244D237900A2F17E /* EnergyPrice.swift */; };
+		462E0DED244D882900A2F17E /* EnergyBranchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462E0DEC244D882800A2F17E /* EnergyBranchCell.swift */; };
+		462E0DEF244E8BF500A2F17E /* EnergyBranch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462E0DEE244E8BF500A2F17E /* EnergyBranch.swift */; };
 		4670902C23D3FD1E008777ED /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4670902B23D3FD1E008777ED /* Device.swift */; };
 		4670902E23D430B8008777ED /* DeviceUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4670902D23D430B8008777ED /* DeviceUtility.swift */; };
 		468BC3C423823738008BD62C /* MQTTService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468BC3C323823738008BD62C /* MQTTService.swift */; };
@@ -217,6 +220,9 @@
 		46227A4223C8231300768799 /* BallonMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BallonMarker.swift; sourceTree = "<group>"; };
 		46227A4423C82A4C00768799 /* ViewUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewUtility.swift; sourceTree = "<group>"; };
 		462D23AD23C076C500C28F15 /* IconPagingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconPagingCell.swift; sourceTree = "<group>"; };
+		462E0DEA244D237900A2F17E /* EnergyPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyPrice.swift; sourceTree = "<group>"; };
+		462E0DEC244D882800A2F17E /* EnergyBranchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyBranchCell.swift; sourceTree = "<group>"; };
+		462E0DEE244E8BF500A2F17E /* EnergyBranch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyBranch.swift; sourceTree = "<group>"; };
 		4670902B23D3FD1E008777ED /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		4670902D23D430B8008777ED /* DeviceUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceUtility.swift; sourceTree = "<group>"; };
 		468BC3C323823738008BD62C /* MQTTService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MQTTService.swift; sourceTree = "<group>"; };
@@ -595,6 +601,8 @@
 				46FF9E492446ECCE000F5AB2 /* EnergySegmentType.swift */,
 				46FF9E4E24470B5B000F5AB2 /* EnergyDateItem.swift */,
 				46FF9E5624498A83000F5AB2 /* EnergyData.swift */,
+				462E0DEA244D237900A2F17E /* EnergyPrice.swift */,
+				462E0DEE244E8BF500A2F17E /* EnergyBranch.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -606,6 +614,7 @@
 				46FF9E4B2446F83C000F5AB2 /* DateCollectionCell.swift */,
 				46FF9E50244809EA000F5AB2 /* EnergyRatioCell.swift */,
 				46FF9E5224482C5B000F5AB2 /* EnergyTimeCell.swift */,
+				462E0DEC244D882800A2F17E /* EnergyBranchCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1023,10 +1032,12 @@
 				46FF950224162EDF002E36AD /* AlarmListViewController.swift in Sources */,
 				46FF9E3C244442DD000F5AB2 /* DeviceClass.swift in Sources */,
 				460F726E2371111100CFC7C3 /* WAService.swift in Sources */,
+				462E0DED244D882900A2F17E /* EnergyBranchCell.swift in Sources */,
 				4621272C23B5CDBA00105664 /* DynamicDeviceViewController.swift in Sources */,
 				46FB866823BAE87800754E88 /* DevicePageItemSource.swift in Sources */,
 				4621272023B19FF400105664 /* DeviceFixedCell.swift in Sources */,
 				46DBA5282422114F00CFA7E7 /* WorkorderTask.swift in Sources */,
+				462E0DEF244E8BF500A2F17E /* EnergyBranch.swift in Sources */,
 				4605D14C237297E100558500 /* LogTag.swift in Sources */,
 				4621272A23B332B500105664 /* TagValueConverter.swift in Sources */,
 				46FB267F24403AF50080362C /* HomeEnergyCell.swift in Sources */,
@@ -1067,6 +1078,7 @@
 				46DBA52E242461C600CFA7E7 /* Phone.swift in Sources */,
 				46FF950E241A0AC1002E36AD /* WorkorderListViewController.swift in Sources */,
 				46EE431D237153DC00DF22FB /* Tag.swift in Sources */,
+				462E0DEB244D237900A2F17E /* EnergyPrice.swift in Sources */,
 				46FF9E51244809EA000F5AB2 /* EnergyRatioCell.swift in Sources */,
 				4607DC7A23FE093300E35015 /* DeviceAdditionAlertController.swift in Sources */,
 				46DF40D5242DAB930018F961 /* TaskAdditionCell.swift in Sources */,

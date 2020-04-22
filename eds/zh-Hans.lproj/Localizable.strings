@@ -31,9 +31,11 @@
 /* cancel_alert */
 "cancel_alert" = "尚未保存";
 
-/* home_current_month */
+/* home_energy */
+"home_energy" = "用电";
+/* home_current */
 "home_current" = "本月用电";
-/* home_last_month */
+/* home_last */
 "home_last" = "上月同期";
 /* home_ratio */
 "home_ratio" = "环比";
@@ -44,6 +46,8 @@
 /* home_none */
 "home_none" = "无任务";
 
+/* energy_title */
+"energy_title" = "用电分析";
 /* energy_day */
 "energy_day" = "日";
 /* energy_month */
@@ -64,6 +68,10 @@
 "energy_plain" = "平段";
 /* energy_peak */
 "energy_peak" = "高峰";
+/* energy_branch */
+"energy_branch" = "支路用电占比(%)";
+/* energy_time_alert */
+"energy_time_alert" = "仅供参考，EDS使用单一电价预估费用：\r\n●低谷(00:00-07:00,23:00-24:00):\r\n¥0.4/kW.h\r\n●平段(07:00-08:00,11:00-18:00):\r\n¥0.8/kW.h\r\n●高峰(08:00-11:00,18:00-23:00):\r\n¥1.2/kW.h\r\n注1：各地峰谷电价、时段政策不同，且未考虑大工业供电二部制电价、功率因素调整等，具体请咨询当地电业局。\r\n注2:年模式无法分析用电时段占比。";
 
 /* trend_evaluation */
 "trend_evaluation" = "运行评估";

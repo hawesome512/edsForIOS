@@ -19,8 +19,8 @@ class EnergySegmentCell: UITableViewCell {
     private let disposeBag = DisposeBag()
     private let cellID = String(describing: DateCollectionCell.self)
     private var dates: [EnergyDateItem] = []
-    private var selectedType: EnergySegmentType = .month
     var delegate: DateSegmentDelegate?
+    var dateItem: EnergyDateItem?
 
     private let dateSegment = UISegmentedControl(items: EnergySegmentType.allCases.map { $0.getText() })
     private let collectionView: UICollectionView = {
@@ -46,7 +46,6 @@ class EnergySegmentCell: UITableViewCell {
             guard let type = EnergySegmentType(rawValue: index) else {
                 return
             }
-            self.selectedType = type
             let dates = type.getDates()
             self.dates = dates
             self.collectionView.reloadData()
@@ -66,9 +65,6 @@ class EnergySegmentCell: UITableViewCell {
         collectionView.height(edsHeight)
         collectionView.topToBottom(of: dateSegment)
 
-        //默认月模式
-        dateSegment.selectedSegmentIndex = selectedType.rawValue
-        dates = selectedType.getDates()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -79,18 +75,19 @@ class EnergySegmentCell: UITableViewCell {
 
     //首次选择并调整到最新项（最右边）,只有在视图加载出来后跳转才能生效
     override func layoutSubviews() {
-        if let row = collectionView.indexPathsForSelectedItems?.first?.row, row == dates.count - 1{
-            let indexPath = IndexPath(row: row, section: 0)
+        if let dateType = dateItem?.dateType {
+            dateSegment.selectedSegmentIndex = dateType.rawValue
+            dates = dateType.getDates()
+            let index = dates.firstIndex(where: { $0 == dateItem }) ?? 0
+            let indexPath = IndexPath(row: index, section: 0)
             collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .right)
-        }
-    }
-
-    func selectRecentDate() {
-        guard let _ = collectionView.indexPathsForSelectedItems?.first else {
+        } else {
+            //默认月模式
+            let selectedType: EnergySegmentType = .month
+            dateSegment.selectedSegmentIndex = selectedType.rawValue
+            dates = selectedType.getDates()
             let indexPath = IndexPath(row: dates.count - 1, section: 0)
             collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .right)
-            delegate?.pick(dateItem: dates.last!)
-            return
         }
     }
 

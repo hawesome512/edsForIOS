@@ -9,21 +9,57 @@
 import UIKit
 import SwiftDate
 import Moya
+import Charts
 
 class EnergyController: UITableViewController {
 
     var cells = EnergyCellType.getAllCells()
+    var energyBranch: EnergyBranch? {
+        didSet {
+            guard let branch = self.energyBranch, let data = branch.energyData else {
+                return
+            }
+            //如果支路没有值，请求数据
+            if branch.branches.count > 0 && branch.branches[0].energyData == nil {
+                pick(dateItem: data.dateItem)
+                return
+            }
+            title = self.energyBranch?.title
+            let chartCell = cells[.chart] as! DeviceTrendChartCell
+            let analysisCell = cells[.analysis] as! DeviceTrendAnalysisCell
+            let ratioCell = cells[.ratio] as! EnergyRatioCell
+            let timeCell = cells[.time] as! EnergyTimeCell
+            let branchCell = cells[.branch] as! EnergyBranchCell
+            chartCell.setData(data.chartValues, dateItem: data.dateItem)
+            analysisCell.setEnergyData(data.getCurrentValues(), date: data.dateItem)
+            ratioCell.setData(data: data)
+            timeCell.setData(data)
+            branchCell.setEnergyData(branch)
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        initViews()
+    }
+
+    private func initViews() {
         tableView.allowsSelection = false
+        let branchBUtton = UIBarButtonItem(image: UIImage(named: "branch"), style: .plain, target: self, action: #selector(editBranch))
+        navigationItem.rightBarButtonItem = branchBUtton
+    }
+
+    @objc func editBranch() {
+
     }
 
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return cells.count
+        //若没有支路，则不没有支路占比cell
+        let branchCount = energyBranch?.branches.count ?? 0
+        return branchCount == 0 ? cells.count - 1: cells.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -31,8 +67,8 @@ class EnergyController: UITableViewController {
         switch cellType {
         case .segment:
             let cell = cells[cellType]! as! EnergySegmentCell
+            cell.dateItem = energyBranch?.energyData?.dateItem
             cell.delegate = self
-            cell.selectRecentDate()
             return cell
         case .chart:
             let cell = cells[cellType]! as! DeviceTrendChartCell
@@ -45,9 +81,11 @@ class EnergyController: UITableViewController {
             return cell
         case .time:
             let cell = cells[cellType]! as! EnergyTimeCell
+            cell.parentVC = self
             return cell
         case .branch:
-            let cell = cells[cellType]! as! DeviceBarCell
+            let cell = cells[cellType]! as! EnergyBranchCell
+            cell.barChartView.delegate = self
             return cell
         }
     }
@@ -61,38 +99,30 @@ class EnergyController: UITableViewController {
             return max(height, 240)
         case .analysis:
             return 120
-        case .branch:
-            return 160
         default:
             return tableView.estimatedRowHeight
         }
     }
 }
 
-extension EnergyController: DateSegmentDelegate {
+extension EnergyController: DateSegmentDelegate, ChartViewDelegate {
 
     //选择能耗日期模式
     func pick(dateItem: EnergyDateItem) {
 
-        let chartCell = cells[.chart] as! DeviceTrendChartCell
-        chartCell.prepareRequestData()
-        let analysisCell = cells[.analysis] as! DeviceTrendAnalysisCell
-        let ratioCell = cells[.ratio] as! EnergyRatioCell
+        guard let branch = energyBranch else {
+            return
+        }
+
+        (cells[.chart] as! DeviceTrendChartCell).prepareRequestData()
 
         let authority = User.tempInstance.authority!
-        let tag = LogTag(name: "XS_A3_1:EP", logDataType: .Last)
-        let condition = dateItem.getLogRequestCondition(with: [tag])
+        let condition = dateItem.getLogRequestCondition(with: branch.getLogTags())
         MoyaProvider<WAService>().request(.getTagLog(authority: authority, condition: condition)) { result in
             switch result {
             case .success(let response):
                 let results = JsonUtility.getTagLogValues(data: response.data) ?? []
-                guard let values = results.first??.Values else {
-                    return
-                }
-                let energyData = EnergyUtility.getEnergyData(with: values, dateItem: dateItem)
-                chartCell.setData(energyData.chartValues, dateItem: dateItem)
-                analysisCell.setEnergyData(energyData.getCurrentValues(), date: dateItem)
-                ratioCell.setData(data: energyData)
+                self.energyBranch = EnergyUtility.updateBranchData(in: branch, with: results, dateItem: dateItem)
                 break
             default:
                 break
@@ -100,5 +130,14 @@ extension EnergyController: DateSegmentDelegate {
         }
     }
 
+    //选择支路
+    func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
+        //取消高亮
+        chartView.highlightValue(nil, callDelegate: false)
+        let branchIndex = Int(entry.x)
+        let branchVC = EnergyController()
+        branchVC.energyBranch = energyBranch?.branches[branchIndex]
+        navigationController?.pushViewController(branchVC, animated: true)
+    }
 
 }

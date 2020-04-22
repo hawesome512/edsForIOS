@@ -7,10 +7,19 @@
 //  能耗查询数据转换模型
 
 import Foundation
+import SwiftDate
 
-struct EnergyData {
+class EnergyData {
+    var dateItem: EnergyDateItem
     //上一期和当前期的曲线值
     var chartValues: [(name: String, values: [Double])] = []
+    //支路占比,
+//    var branchData: Dictionary<String, Double> = ["1F": 25, "2F": 40, "3F": 35]
+
+    init(_ dateItem: EnergyDateItem, chartValues: [(name: String, values: [Double])]) {
+        self.dateItem = dateItem
+        self.chartValues = chartValues
+    }
 
     //当前期数据
     func getCurrentValues() -> [Double] {
@@ -45,6 +54,21 @@ struct EnergyData {
     func getLinkRatio() -> Double {
         let last = getLastPeriodTotalValue()
         let delta = getCurrentTotalValue() - last
-        return last == 0 ? 0 : delta / last * 100
+        return last == 0 ? 0 : delta / last * 100.0
+    }
+
+    //分时能耗
+    func calTimePrice() -> Dictionary<EnergyPrice, Double> {
+        var data = [EnergyPrice.valley: 0.0, EnergyPrice.plain: 0.0, EnergyPrice.peek: 0.0]
+        //年摸索，数值不能精细到hour,不能进行分时统计
+        guard dateItem.dateType != .year else {
+            return data
+        }
+        getCurrentValues().enumerated().forEach { (offset, element) in
+            let date = dateItem.date + offset.hours
+            let priceType = EnergyPrice(hourOfDay: date.hour)
+            data[priceType] = data[priceType]! + element
+        }
+        return data
     }
 }
