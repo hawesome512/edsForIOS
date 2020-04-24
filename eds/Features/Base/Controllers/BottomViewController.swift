@@ -20,6 +20,7 @@ class BottomViewController: UIViewController {
 
     let contentView = UIView()
     let titleLabel = UILabel()
+    let dismissButton = UIButton()
     var viewHeight = UIScreen.main.bounds.height / 3
     var isPresenting = false
 
@@ -50,7 +51,6 @@ class BottomViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(BottomViewController.handleTap(_:)))
         backdropView.addGestureRecognizer(tapGesture)
 
-        let dismissButton = UIButton()
         dismissButton.tintColor = .systemGray
         dismissButton.addTarget(self, action: #selector(handleTap(_:)), for: .touchDown)
         dismissButton.setBackgroundImage(UIImage(systemName: "chevron.compact.down"), for: .normal)

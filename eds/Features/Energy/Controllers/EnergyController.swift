@@ -16,6 +16,8 @@ class EnergyController: UITableViewController {
     var cells = EnergyCellType.getAllCells()
     var energyBranch: EnergyBranch? {
         didSet {
+            title = self.energyBranch?.title
+            //最顶级支路title=用电分析，在子支路中不能规划支路
             guard let branch = self.energyBranch, let data = branch.energyData else {
                 return
             }
@@ -24,7 +26,6 @@ class EnergyController: UITableViewController {
                 pick(dateItem: data.dateItem)
                 return
             }
-            title = self.energyBranch?.title
             let chartCell = cells[.chart] as! DeviceTrendChartCell
             let analysisCell = cells[.analysis] as! DeviceTrendAnalysisCell
             let ratioCell = cells[.ratio] as! EnergyRatioCell
@@ -50,7 +51,8 @@ class EnergyController: UITableViewController {
     }
 
     @objc func editBranch() {
-
+        let branchVC = EnergyBranchController()
+        navigationController?.pushViewController(branchVC, animated: true)
     }
 
     // MARK: - Table view data source
@@ -122,7 +124,7 @@ extension EnergyController: DateSegmentDelegate, ChartViewDelegate {
             switch result {
             case .success(let response):
                 let results = JsonUtility.getTagLogValues(data: response.data) ?? []
-                self.energyBranch = EnergyUtility.updateBranchData(in: branch, with: results, dateItem: dateItem)
+                self.energyBranch = BasicUtility.updateBranchData(in: branch, with: results, dateItem: dateItem)
                 break
             default:
                 break

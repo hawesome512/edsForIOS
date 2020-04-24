@@ -17,7 +17,7 @@ class LoginController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
-        
+
         // Do any additional setup after loading the view.
         //初始化后台数据，导入数据列表
 //        TagUtility.sharedInstance.loadProjectTagList()
@@ -25,7 +25,7 @@ class LoginController: UIViewController {
 //        AlarmUtility.sharedInstance.loadProjectAlarmList()
 //        WorkorderUtility.sharedInstance.loadProjectWorkerorderList()
 //        AccountUtility.sharedInstance.loadProjectAccount()
-        EnergyUtility.sharedInstance.loadProjectEnergyData()
+        BasicUtility.sharedInstance.loadProjectBasicInfo()
     }
 
     private func initViews() {

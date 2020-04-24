@@ -10,16 +10,21 @@
 
 import Foundation
 
-class EnergyBranch {
+class EnergyBranch: Equatable {
 
+    static let tagName = "EP"
     static let itemSeparator = ";"
     static let branchSeparator = "/"
+    static let branchLimit = 10
+    //为避免系统复杂，支路不应超过3级，即id.count≦limit，公司、厂区、部门
+    static let levelLimit = 3
 
     //e.g.: 第1⃣️级:0，第2⃣️级：00/01，第3⃣️级：000/001/002 or 010/011/012
     var id: String = ""
     var tagName: String = ""
     var title: String = ""
     var energyData: EnergyData?
+    //支路太多不利于分析、显示即一次性数据请求，限制支路最多为10（0～9），后续有需求在更新（0～9a~zA~Z)
     var branches = [EnergyBranch]()
 
     func getLogTags() -> [LogTag] {
@@ -29,6 +34,15 @@ class EnergyBranch {
         }
         tags.append(contentsOf: branches.map { LogTag(name: $0.tagName, logDataType: .Last) })
         return tags
+    }
+
+    func getAllBranches() -> [EnergyBranch] {
+        var childBranches = [EnergyBranch]()
+        branches.forEach { element in
+            childBranches.append(element)
+            childBranches.append(contentsOf: element.getAllBranches())
+        }
+        return childBranches
     }
 
     func isValidTag() -> Bool {
@@ -86,5 +100,9 @@ class EnergyBranch {
         return branches.map {
             $0.id + EnergyBranch.branchSeparator + $0.tagName + EnergyBranch.branchSeparator + $0.title
         }.joined(separator: EnergyBranch.itemSeparator)
+    }
+
+    static func == (lhs: EnergyBranch, rhs: EnergyBranch) -> Bool {
+        return lhs.id == rhs.id && lhs.tagName == rhs.tagName && lhs.title == rhs.title
     }
 }

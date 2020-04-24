@@ -35,4 +35,15 @@ class ControllerUtility {
         return YPImagePicker(configuration: config)
 
     }
+
+    static func generateSaveAlertController(navigationController: UINavigationController?) -> UIAlertController {
+        let alertVC = UIAlertController(title: "cancel_alert".localize(), message: nil, preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "cancel".localize(), style: .cancel) { _ in
+            navigationController?.popViewController(animated: true)
+        }
+        let edit = UIAlertAction(title: "edit".localize(), style: .default, handler: nil)
+        alertVC.addAction(cancel)
+        alertVC.addAction(edit)
+        return alertVC
+    }
 }

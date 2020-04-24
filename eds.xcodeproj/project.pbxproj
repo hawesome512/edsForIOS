@@ -66,6 +66,15 @@
 		462E0DEB244D237900A2F17E /* EnergyPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462E0DEA244D237900A2F17E /* EnergyPrice.swift */; };
 		462E0DED244D882900A2F17E /* EnergyBranchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462E0DEC244D882800A2F17E /* EnergyBranchCell.swift */; };
 		462E0DEF244E8BF500A2F17E /* EnergyBranch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462E0DEE244E8BF500A2F17E /* EnergyBranch.swift */; };
+		462E0DF1245116BD00A2F17E /* EnergyBranchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462E0DF0245116BD00A2F17E /* EnergyBranchController.swift */; };
+		462E0DF3245135A200A2F17E /* BranchPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462E0DF2245135A200A2F17E /* BranchPickerController.swift */; };
+		462E0DF524526AB700A2F17E /* Basic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462E0DF424526AB700A2F17E /* Basic.swift */; };
+		462E0DF7245273AD00A2F17E /* Notice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462E0DF6245273AD00A2F17E /* Notice.swift */; };
+		462E0DFB2452979C00A2F17E /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 462E0DFA2452979C00A2F17E /* MapKit.framework */; };
+		462E0DFD2452992B00A2F17E /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462E0DFC2452992B00A2F17E /* MapController.swift */; };
+		462E0DFF2452B25F00A2F17E /* NoticeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462E0DFE2452B25F00A2F17E /* NoticeController.swift */; };
+		462E0E012452B3A300A2F17E /* NoticeMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462E0E002452B3A300A2F17E /* NoticeMessageCell.swift */; };
+		462E0E032452B73500A2F17E /* NoticeAdditionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462E0E022452B73500A2F17E /* NoticeAdditionCell.swift */; };
 		4670902C23D3FD1E008777ED /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4670902B23D3FD1E008777ED /* Device.swift */; };
 		4670902E23D430B8008777ED /* DeviceUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4670902D23D430B8008777ED /* DeviceUtility.swift */; };
 		468BC3C423823738008BD62C /* MQTTService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468BC3C323823738008BD62C /* MQTTService.swift */; };
@@ -155,7 +164,7 @@
 		46FF9E4F24470B5B000F5AB2 /* EnergyDateItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FF9E4E24470B5B000F5AB2 /* EnergyDateItem.swift */; };
 		46FF9E51244809EA000F5AB2 /* EnergyRatioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FF9E50244809EA000F5AB2 /* EnergyRatioCell.swift */; };
 		46FF9E5324482C5B000F5AB2 /* EnergyTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FF9E5224482C5B000F5AB2 /* EnergyTimeCell.swift */; };
-		46FF9E5524484D11000F5AB2 /* EnergyUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FF9E5424484D11000F5AB2 /* EnergyUtility.swift */; };
+		46FF9E5524484D11000F5AB2 /* BasicUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FF9E5424484D11000F5AB2 /* BasicUtility.swift */; };
 		46FF9E5724498A83000F5AB2 /* EnergyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FF9E5624498A83000F5AB2 /* EnergyData.swift */; };
 /* End PBXBuildFile section */
 
@@ -223,6 +232,15 @@
 		462E0DEA244D237900A2F17E /* EnergyPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyPrice.swift; sourceTree = "<group>"; };
 		462E0DEC244D882800A2F17E /* EnergyBranchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyBranchCell.swift; sourceTree = "<group>"; };
 		462E0DEE244E8BF500A2F17E /* EnergyBranch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyBranch.swift; sourceTree = "<group>"; };
+		462E0DF0245116BD00A2F17E /* EnergyBranchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyBranchController.swift; sourceTree = "<group>"; };
+		462E0DF2245135A200A2F17E /* BranchPickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchPickerController.swift; sourceTree = "<group>"; };
+		462E0DF424526AB700A2F17E /* Basic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Basic.swift; sourceTree = "<group>"; };
+		462E0DF6245273AD00A2F17E /* Notice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notice.swift; sourceTree = "<group>"; };
+		462E0DFA2452979C00A2F17E /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		462E0DFC2452992B00A2F17E /* MapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
+		462E0DFE2452B25F00A2F17E /* NoticeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeController.swift; sourceTree = "<group>"; };
+		462E0E002452B3A300A2F17E /* NoticeMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeMessageCell.swift; sourceTree = "<group>"; };
+		462E0E022452B73500A2F17E /* NoticeAdditionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeAdditionCell.swift; sourceTree = "<group>"; };
 		4670902B23D3FD1E008777ED /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		4670902D23D430B8008777ED /* DeviceUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceUtility.swift; sourceTree = "<group>"; };
 		468BC3C323823738008BD62C /* MQTTService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MQTTService.swift; sourceTree = "<group>"; };
@@ -312,7 +330,7 @@
 		46FF9E4E24470B5B000F5AB2 /* EnergyDateItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyDateItem.swift; sourceTree = "<group>"; };
 		46FF9E50244809EA000F5AB2 /* EnergyRatioCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyRatioCell.swift; sourceTree = "<group>"; };
 		46FF9E5224482C5B000F5AB2 /* EnergyTimeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyTimeCell.swift; sourceTree = "<group>"; };
-		46FF9E5424484D11000F5AB2 /* EnergyUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyUtility.swift; sourceTree = "<group>"; };
+		46FF9E5424484D11000F5AB2 /* BasicUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicUtility.swift; sourceTree = "<group>"; };
 		46FF9E5624498A83000F5AB2 /* EnergyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyData.swift; sourceTree = "<group>"; };
 		49A018248F37C60BAB1547D4 /* Pods_eds.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_eds.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE5850CFD0236670BF546995 /* Pods-eds.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eds.debug.xcconfig"; path = "Target Support Files/Pods-eds/Pods-eds.debug.xcconfig"; sourceTree = "<group>"; };
@@ -323,6 +341,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				462E0DFB2452979C00A2F17E /* MapKit.framework in Frameworks */,
 				0788B1ED30AE519DE223717B /* Pods_eds.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -623,6 +642,8 @@
 			isa = PBXGroup;
 			children = (
 				46FF9E432446E87C000F5AB2 /* EnergyController.swift */,
+				462E0DF0245116BD00A2F17E /* EnergyBranchController.swift */,
+				462E0DF2245135A200A2F17E /* BranchPickerController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -684,7 +705,7 @@
 				46FF9511241A0B1B002E36AD /* WorkorderUtility.swift */,
 				46DBA53B242490B300CFA7E7 /* AccountUtility.swift */,
 				46DBA53D242498E500CFA7E7 /* ShareUtility.swift */,
-				46FF9E5424484D11000F5AB2 /* EnergyUtility.swift */,
+				46FF9E5424484D11000F5AB2 /* BasicUtility.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -713,6 +734,8 @@
 			isa = PBXGroup;
 			children = (
 				46FB2672243EF58E0080362C /* Home.swift */,
+				462E0DF424526AB700A2F17E /* Basic.swift */,
+				462E0DF6245273AD00A2F17E /* Notice.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -729,6 +752,8 @@
 				46FB268424405CE00080362C /* HomeRatioView.swift */,
 				46FF9E3724441342000F5AB2 /* HomeWorkorderCell.swift */,
 				46FF9E412445664E000F5AB2 /* HomeDeviceListHeaderView.swift */,
+				462E0E002452B3A300A2F17E /* NoticeMessageCell.swift */,
+				462E0E022452B73500A2F17E /* NoticeAdditionCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -738,6 +763,8 @@
 			children = (
 				46FB2670243EF40B0080362C /* HomeController.swift */,
 				46FF9E3924443E15000F5AB2 /* HomeDeviceListController.swift */,
+				462E0DFC2452992B00A2F17E /* MapController.swift */,
+				462E0DFE2452B25F00A2F17E /* NoticeController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -901,6 +928,7 @@
 		5978C339660E598E17C2ED54 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				462E0DFA2452979C00A2F17E /* MapKit.framework */,
 				49A018248F37C60BAB1547D4 /* Pods_eds.framework */,
 			);
 			name = Frameworks;
@@ -1049,6 +1077,7 @@
 				46E0E3D02374074F00116DA2 /* String-Ext.swift in Sources */,
 				460BA6D9237CDB03008E7CDF /* Alarm.swift in Sources */,
 				46FF950C241772F8002E36AD /* AlarmViewController.swift in Sources */,
+				462E0DF524526AB700A2F17E /* Basic.swift in Sources */,
 				4621272423B19FF400105664 /* DeviceListCell.swift in Sources */,
 				46DBA51E2421B20300CFA7E7 /* WorkorderPhotoCollectionCell.swift in Sources */,
 				46DC53572411E88A00217ECD /* FixedQRCodeCell.swift in Sources */,
@@ -1064,6 +1093,7 @@
 				4621272523B19FF400105664 /* DeviceRangeCell.swift in Sources */,
 				4621273C23B6205200105664 /* UINavigationController-Ext.swift in Sources */,
 				46FB2671243EF40B0080362C /* HomeController.swift in Sources */,
+				462E0DF7245273AD00A2F17E /* Notice.swift in Sources */,
 				46FB2673243EF58E0080362C /* Home.swift in Sources */,
 				460F7234236FC14500CFC7C3 /* AppDelegate.swift in Sources */,
 				46DBA53C242490B300CFA7E7 /* AccountUtility.swift in Sources */,
@@ -1082,25 +1112,30 @@
 				46FF9E51244809EA000F5AB2 /* EnergyRatioCell.swift in Sources */,
 				4607DC7A23FE093300E35015 /* DeviceAdditionAlertController.swift in Sources */,
 				46DF40D5242DAB930018F961 /* TaskAdditionCell.swift in Sources */,
+				462E0E012452B3A300A2F17E /* NoticeMessageCell.swift in Sources */,
 				460BA6D1237A4775008E7CDF /* JsonUtility.swift in Sources */,
 				468BC3CA23829BA4008BD62C /* MQTTTag.swift in Sources */,
 				4607ACE52432D6D000C13C57 /* CornerView.swift in Sources */,
 				460BA6DB237CE08A008E7CDF /* Action.swift in Sources */,
 				469BB70D23CAEBB800A57C51 /* TrendEvaluation.swift in Sources */,
+				462E0DF1245116BD00A2F17E /* EnergyBranchController.swift in Sources */,
+				462E0DFD2452992B00A2F17E /* MapController.swift in Sources */,
 				46DF40DB24304A560018F961 /* DatePickerController.swift in Sources */,
 				46227A3F23C80FA500768799 /* DeviceTrendEvaluationCell.swift in Sources */,
-				46FF9E5524484D11000F5AB2 /* EnergyUtility.swift in Sources */,
+				46FF9E5524484D11000F5AB2 /* BasicUtility.swift in Sources */,
 				469BB70B23CAC47700A57C51 /* RoundLabel.swift in Sources */,
 				46DBA51C2420B1B000CFA7E7 /* WorkorderMessageCell.swift in Sources */,
 				46DBA51424205C9300CFA7E7 /* WorkorderBasicCell.swift in Sources */,
 				46DC53592411E8D600217ECD /* FixedGotoCell.swift in Sources */,
 				46DBA534242475A300CFA7E7 /* Account.swift in Sources */,
 				4607DC7823FCD0AD00E35015 /* AdditionTableHeaderView.swift in Sources */,
+				462E0DF3245135A200A2F17E /* BranchPickerController.swift in Sources */,
 				46DBA5242422081D00CFA7E7 /* WorkorderSectionType.swift in Sources */,
 				4607ACE824331F1F00C13C57 /* ShareController.swift in Sources */,
 				46FF9E462446E8C1000F5AB2 /* EnergyCellType.swift in Sources */,
 				46E59DD22429DB7F00C67E82 /* UICollectionViewFlowLayout-Ext.swift in Sources */,
 				46FF9E3A24443E15000F5AB2 /* HomeDeviceListController.swift in Sources */,
+				462E0E032452B73500A2F17E /* NoticeAdditionCell.swift in Sources */,
 				46FF9E3E2444607F000F5AB2 /* DynamicDeviceModel.swift in Sources */,
 				46DBA52C242361E200CFA7E7 /* WorkorderInfoCell.swift in Sources */,
 				46FF9E4C2446F83C000F5AB2 /* DateCollectionCell.swift in Sources */,
@@ -1168,6 +1203,7 @@
 				46DBA52624220CF100CFA7E7 /* WorkorderMessage.swift in Sources */,
 				460BA6DD237CFE94008E7CDF /* ProjectAccount.swift in Sources */,
 				46DF04A9240B983A00E3DE65 /* FixedInfoCell.swift in Sources */,
+				462E0DFF2452B25F00A2F17E /* NoticeController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

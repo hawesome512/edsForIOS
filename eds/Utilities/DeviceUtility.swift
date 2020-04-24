@@ -46,6 +46,10 @@ class DeviceUtility {
         return deviceList.first { $0.getShortID() == shortID }
     }
 
+    func getRalatedDevices(deviceNames: [String]) -> [Device] {
+        return deviceList.filter { deviceNames.contains($0.getShortID()) }
+    }
+
 
     /// 获取工程资产树
     /// - Parameter visiableOnly: 默认折叠

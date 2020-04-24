@@ -10,17 +10,37 @@ import Foundation
 import Moya
 import SwiftDate
 
-class EnergyUtility {
+class BasicUtility {
 
-    static let sharedInstance = EnergyUtility()
+    static let sharedInstance = BasicUtility()
 
     var energyBranch: EnergyBranch?
+    var basic: Basic?
 
     private init() { }
 
-    func loadProjectEnergyData() {
-        //临时，模拟支路
-        initBranch()
+    func loadProjectBasicInfo() {
+        guard let id = User.tempInstance.projectID else {
+            return
+        }
+        let factor = EDSServiceQueryFactor(id: id)
+        MoyaProvider<EDSService>().request(.queryProjectInfoList(factor: factor)) { result in
+            switch result {
+            case .success(let response):
+                self.basic = JsonUtility.getEDSServiceList(with: response.data, type: [Basic]())?.first ?? nil
+                self.loadProjectEnergyData()
+                print("load project basic info")
+            default:
+                break
+            }
+        }
+    }
+
+    private func loadProjectEnergyData() {
+        guard let basic = basic else {
+            return
+        }
+        initBranch(branchInfo: basic.energy)
 
         guard let energyBranch = energyBranch else {
             return
@@ -39,7 +59,7 @@ class EnergyUtility {
                 guard results.count == logTags.count else {
                     return
                 }
-                let _ = EnergyUtility.updateBranchData(in: energyBranch, with: results, dateItem: dateItem)
+                let _ = BasicUtility.updateBranchData(in: energyBranch, with: results, dateItem: dateItem)
                 print("loaded project energy data")
                 break
             default:
@@ -48,8 +68,18 @@ class EnergyUtility {
         }
     }
 
-    func initBranch() {
-        let branches = EnergyBranch.getLevelBranches("0/XS_A3_1:EP/士林厂;1/XS_A3_1:EP/成宇厂;00/XS_A3_1:EP/1F;01/XS_A3_1:EP/2F;02/XS_A3_1:EP/3F;")
+    func setNotice(_ notice: Notice) {
+        guard let basic = basic else {
+            return
+        }
+        basic.notice = notice.toString()
+        MoyaProvider<EDSService>().request(.updateProject(projectInfo: basic)) { _ in }
+    }
+
+    // MARK: - 用电支路
+
+    private func initBranch(branchInfo: String) {
+        let branches = EnergyBranch.getLevelBranches(branchInfo)
         switch branches.count {
         case 0:
             return
@@ -68,12 +98,12 @@ class EnergyUtility {
         var childOffset = 0
         if branch.isValidTag() {
             let values = logData[0]?.Values ?? []
-            branch.energyData = EnergyUtility.getEnergyData(values: values, dateItem: dateItem)
+            branch.energyData = BasicUtility.getEnergyData(values: values, dateItem: dateItem)
             childOffset = 1
         }
         for i in 0..<branch.branches.count {
             let values = logData[i + childOffset]?.Values ?? []
-            let data = EnergyUtility.getEnergyData(values: values, dateItem: dateItem)
+            let data = BasicUtility.getEnergyData(values: values, dateItem: dateItem)
             branch.branches[i].energyData = data
         }
         //

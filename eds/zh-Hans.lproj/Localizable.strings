@@ -28,6 +28,8 @@
 "new" = "新";
 /* save */
 "save" = "保存";
+/* confirm */
+"confirm" = "确认";
 /* cancel_alert */
 "cancel_alert" = "尚未保存";
 
@@ -45,7 +47,23 @@
 "home_workorder" = "我的工单";
 /* home_none */
 "home_none" = "无任务";
+/* home_notice_title */
+"home_notice_title" = "公告栏";
+/* home_notice_null */
+"home_notice_none" = "无公告";
+/* home_notice_new */
+"home_notice_new" = "发布新公告";
+/* home_notice_message */
+"home_notice_message" = "公告内容";
+/* home_notice_time */
+"home_notice_time" = "失效时间";
+/* home_notice_confirm */
+"home_notice_confirm" = "发布";
+/* home_notice_imcomplete */
+"home_notice_imcomplete" = "请完善必要的公告信息";
 
+/* energy_addition */
+"energy_addition" = "新增支路";
 /* energy_title */
 "energy_title" = "用电分析";
 /* energy_day */
@@ -72,6 +90,10 @@
 "energy_branch" = "支路用电占比(%)";
 /* energy_time_alert */
 "energy_time_alert" = "仅供参考，EDS使用单一电价预估费用：\r\n●低谷(00:00-07:00,23:00-24:00):\r\n¥0.4/kW.h\r\n●平段(07:00-08:00,11:00-18:00):\r\n¥0.8/kW.h\r\n●高峰(08:00-11:00,18:00-23:00):\r\n¥1.2/kW.h\r\n注1：各地峰谷电价、时段政策不同，且未考虑大工业供电二部制电价、功率因素调整等，具体请咨询当地电业局。\r\n注2:年模式无法分析用电时段占比。";
+/* energy_edit */
+"energy_edit" = "编辑支路";
+/* energy_limit */
+"energy_limit" = "最多可添加%d条支路，请先删减本层其他支路！";
 
 /* trend_evaluation */
 "trend_evaluation" = "运行评估";

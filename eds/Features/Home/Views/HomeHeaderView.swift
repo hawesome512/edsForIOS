@@ -7,14 +7,31 @@
 //
 
 import UIKit
+import Kingfisher
 
 class HomeHeaderView: UIView {
 
     let bannerImage = UIImageView()
     let titleLabel = UILabel()
     let locationButton = UIButton()
-    let messageButton = UIButton()
-    let messageLabel = UILabel()
+    let noticeButton = UIButton()
+    let noticeLabel = UILabel()
+
+    var basic: Basic? {
+        didSet {
+            guard let basic = self.basic else {
+                return
+            }
+            titleLabel.text = basic.user
+            let imageURL = basic.banner.getEDSServletImageUrl()
+            bannerImage.kf.setImage(with: imageURL, placeholder: UIImage(named: "banner_default"))
+            if let notice = Notice.getNotice(with: basic.notice) {
+                noticeLabel.text = notice.message
+            } else {
+                noticeLabel.text = ""
+            }
+        }
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,22 +45,31 @@ class HomeHeaderView: UIView {
     private func initViews() {
 
         bannerImage.contentMode = .scaleAspectFill
-        bannerImage.image = UIImage(named: "banner")
+        bannerImage.image = UIImage(named: "banner_default")
         addSubview(bannerImage)
         bannerImage.edgesToSuperview()
 
-        messageLabel.text = "5月1日 0:00～6:00 系统维护，部分功能将受影响！"
-        messageLabel.textAlignment = .right
-        messageLabel.textColor = .systemYellow
-        addSubview(messageLabel)
-        messageLabel.edgesToSuperview(excluding: .top, insets: .uniform(edsMinSpace))
+//        messageLabel.text = "5月1日 0:00～6:00 系统维护，部分功能将受影响！"
+        noticeLabel.textColor = .systemYellow
+        noticeLabel.textAlignment = .right
+        addSubview(noticeLabel)
+        noticeLabel.bottomToSuperview(offset: -edsMinSpace)
+        noticeLabel.horizontalToSuperview(insets: .horizontal(edsSpace))
 
-        titleLabel.text = "厦门士林电机"
+//        titleLabel.text = "厦门士林电机"
         titleLabel.textColor = .white
         titleLabel.font = UIFont.preferredFont(forTextStyle: .largeTitle)
         addSubview(titleLabel)
         titleLabel.leadingToSuperview(offset: edsSpace)
-        titleLabel.bottomToTop(of: messageLabel, offset: -edsMinSpace)
+        titleLabel.bottomToTop(of: noticeLabel, offset: -edsMinSpace)
+
+        noticeButton.setBackgroundImage(UIImage(systemName: "speaker.2"), for: .normal)
+        noticeButton.tintColor = .white
+        addSubview(noticeButton)
+        noticeButton.width(edsIconSize)
+        noticeButton.height(edsIconSize)
+        noticeButton.trailingToSuperview(offset: edsSpace)
+        noticeButton.centerY(to: titleLabel)
 
         locationButton.tintColor = .white
         locationButton.setBackgroundImage(UIImage(named: "location")?.withTintColor(.white), for: .normal)
@@ -52,14 +78,6 @@ class HomeHeaderView: UIView {
         locationButton.height(edsIconSize)
         locationButton.leadingToTrailing(of: titleLabel, offset: edsMinSpace)
         locationButton.centerY(to: titleLabel)
-
-        messageButton.setBackgroundImage(UIImage(systemName: "speaker.2"), for: .normal)
-        messageButton.tintColor = .systemYellow
-        addSubview(messageButton)
-        messageButton.width(edsIconSize)
-        messageButton.height(edsIconSize)
-        messageButton.trailingToSuperview(offset: edsSpace)
-        messageButton.centerY(to: titleLabel)
 
     }
 

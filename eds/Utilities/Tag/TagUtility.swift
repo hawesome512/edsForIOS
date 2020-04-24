@@ -75,6 +75,11 @@ class TagUtility: MQTTServiceDelegate {
 
     //MARK:便捷方法>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
+    //查找所有含能耗的设备监控点（“EP”）
+    func getEnergyDeviceList() -> [String] {
+        return tagList.filter { $0.getTagShortName() == EnergyBranch.tagName }.map { $0.getDeviceName() }
+    }
+
     /// 获取设备列表（淡化设备概念，用[String]
     func getDeviceList() -> [String] {
         var deviceNames: [String] = []

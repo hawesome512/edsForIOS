@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import RxSwift
 
 class HomeController: UIViewController {
 
     private let headerView = HomeHeaderView()
+    private let disposeBag = DisposeBag()
     //头图↕️偏移当约束
     private var headerViewTopConstraint: NSLayoutConstraint?
 
@@ -26,7 +28,7 @@ class HomeController: UIViewController {
     private func initViews() {
 
         //此处不设置title,因title将影响tab bar item的title,在本页中它应一直保持为“首页”
-        navigationItem.title = "厦门士林电机"
+        navigationItem.title = BasicUtility.sharedInstance.basic?.user
         navigationController?.navigationBar.subviews.first?.alpha = 0
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.clear]
 
@@ -34,6 +36,18 @@ class HomeController: UIViewController {
         navigationItem.rightBarButtonItem = qrButton
 
         //顶部图片
+        //打开地图页面
+        headerView.locationButton.rx.tap.bind(onNext: {
+            let mapVC = MapController()
+            mapVC.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(mapVC, animated: true)
+        }).disposed(by: disposeBag)
+        //打开公告页面
+        headerView.noticeButton.rx.tap.bind(onNext: {
+            let noticeVC = NoticeController()
+            noticeVC.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(noticeVC, animated: true)
+        }).disposed(by: disposeBag)
         view.addSubview(headerView)
         headerView.horizontalToSuperview()
         headerView.height(to: view, multiplier: 0.3)
@@ -70,7 +84,9 @@ class HomeController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         //从其他页面返回此页面时，导航栏样式可能被更改
         updateNavigationBar()
+        headerView.basic = BasicUtility.sharedInstance.basic
         myWorkorder = WorkorderUtility.sharedInstance.getMyWorkorder()
+        tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -111,7 +127,7 @@ extension HomeController: UITableViewDataSource, UITableViewDelegate {
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: HomeEnergyCell.self), for: indexPath) as! HomeEnergyCell
-            cell.energyData = EnergyUtility.sharedInstance.energyBranch?.energyData
+            cell.energyData = BasicUtility.sharedInstance.energyBranch?.energyData
             return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: HomeWorkorderCell.self), for: indexPath) as! HomeWorkorderCell
@@ -125,7 +141,7 @@ extension HomeController: UITableViewDataSource, UITableViewDelegate {
         case 1:
             let energyVC = EnergyController()
             //copy传递副本，在用电分析中branch.energyData会更改，不能影响EnergyUtility.energyBranch
-            energyVC.energyBranch = EnergyUtility.sharedInstance.energyBranch?.copy()
+            energyVC.energyBranch = BasicUtility.sharedInstance.energyBranch?.copy()
             energyVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(energyVC, animated: true)
         case 2:
