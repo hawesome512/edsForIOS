@@ -19,7 +19,7 @@ class DeviceHeaderView: UIView {
     let imageView = UIImageView()
     let imageButton = UIButton()
     private let disposeBag = DisposeBag()
-    
+
     var parentVC: UIViewController?
     var device: Device? {
         didSet {
@@ -55,19 +55,13 @@ class DeviceHeaderView: UIView {
     }
 
     private func showPicker() {
-        var config = YPImagePickerConfiguration()
-        //关闭滤镜，16:9裁剪，限制图片上传尺寸，不将裁减图片保存本地
-        config.showsPhotoFilters = false
-        config.showsCrop = .rectangle(ratio: 16 / 9)
-        config.targetImageSize = .cappedTo(size: 1024)
-        config.shouldSaveNewPicturesToAlbum = false
-        let picker = YPImagePicker(configuration: config)
+        let picker = ControllerUtility.generateImagePicker(maxCount: 1, showCrop: true)
         picker.didFinishPicking { [unowned picker] items, _ in
             if let photo = items.singlePhoto?.image {
 
                 self.imageView.image = photo
                 self.imageView.contentMode = .scaleAspectFill
-                let imageID = User.tempInstance.generateImageID()
+                let imageID = AccountUtility.sharedInstance.generateImageID()
                 let moyaProvider = MoyaProvider<EDSService>()
                 moyaProvider.request(.upload(data: photo.pngData()!, fileName: imageID)) { response in
                     switch(response) {

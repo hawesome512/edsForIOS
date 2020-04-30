@@ -13,6 +13,7 @@ class NoticeMessageCell: UITableViewCell {
 
     let messageLabel = UILabel()
     let clearButton = UIButton()
+    var parentVC: UIViewController?
     private let disposeBag = DisposeBag()
     private var notice: Notice?
     var noticeText: String? {
@@ -44,7 +45,8 @@ class NoticeMessageCell: UITableViewCell {
         clearButton.tintColor = .systemGray
         clearButton.setBackgroundImage(UIImage(systemName: "xmark"), for: .normal)
         clearButton.rx.tap.bind(onNext: {
-
+            BasicUtility.sharedInstance.updateNotice(NIL)
+            self.parentVC?.navigationController?.popViewController(animated: true)
         }).disposed(by: disposeBag)
         addSubview(clearButton)
         clearButton.width(edsSpace)

@@ -115,10 +115,11 @@ extension EnergyController: DateSegmentDelegate, ChartViewDelegate {
         guard let branch = energyBranch else {
             return
         }
+        guard let authority = AccountUtility.sharedInstance.account?.authority else {
+            return
+        }
 
         (cells[.chart] as! DeviceTrendChartCell).prepareRequestData()
-
-        let authority = User.tempInstance.authority!
         let condition = dateItem.getLogRequestCondition(with: branch.getLogTags())
         MoyaProvider<WAService>().request(.getTagLog(authority: authority, condition: condition)) { result in
             switch result {

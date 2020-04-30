@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		0788B1ED30AE519DE223717B /* Pods_eds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49A018248F37C60BAB1547D4 /* Pods_eds.framework */; };
+		46036A632459065A00E59E41 /* MineHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46036A622459065A00E59E41 /* MineHeaderView.swift */; };
+		46036A67245953CF00E59E41 /* MineSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46036A66245953CF00E59E41 /* MineSectionModel.swift */; };
+		46036A69245A527600E59E41 /* AccountListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46036A68245A527600E59E41 /* AccountListController.swift */; };
+		46036A6B245A549500E59E41 /* AccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46036A6A245A549500E59E41 /* AccountCell.swift */; };
+		46036A6D245AB37700E59E41 /* AccountAdditionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46036A6C245AB37700E59E41 /* AccountAdditionController.swift */; };
 		4605D14C237297E100558500 /* LogTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4605D14B237297E100558500 /* LogTag.swift */; };
 		4605D14E2372BF6A00558500 /* Date-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4605D14D2372BF6A00558500 /* Date-Ext.swift */; };
 		4607ACE52432D6D000C13C57 /* CornerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4607ACE42432D6D000C13C57 /* CornerView.swift */; };
@@ -17,11 +22,9 @@
 		4607DC7C23FE0D0500E35015 /* LooseTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4607DC7B23FE0D0500E35015 /* LooseTextField.swift */; };
 		460BA6D1237A4775008E7CDF /* JsonUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460BA6D0237A4775008E7CDF /* JsonUtility.swift */; };
 		460BA6D3237A7ABB008E7CDF /* EDSService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460BA6D2237A7ABB008E7CDF /* EDSService.swift */; };
-		460BA6D5237A934A008E7CDF /* ProjectInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460BA6D4237A934A008E7CDF /* ProjectInfo.swift */; };
 		460BA6D7237BCC23008E7CDF /* Workorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460BA6D6237BCC23008E7CDF /* Workorder.swift */; };
 		460BA6D9237CDB03008E7CDF /* Alarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460BA6D8237CDB03008E7CDF /* Alarm.swift */; };
 		460BA6DB237CE08A008E7CDF /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460BA6DA237CE08A008E7CDF /* Action.swift */; };
-		460BA6DD237CFE94008E7CDF /* ProjectAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460BA6DC237CFE94008E7CDF /* ProjectAccount.swift */; };
 		460BA6DF237D2C9A008E7CDF /* PhoneVerification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460BA6DE237D2C9A008E7CDF /* PhoneVerification.swift */; };
 		460F7234236FC14500CFC7C3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460F7233236FC14500CFC7C3 /* AppDelegate.swift */; };
 		460F7236236FC14500CFC7C3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460F7235236FC14500CFC7C3 /* SceneDelegate.swift */; };
@@ -126,7 +129,6 @@
 		46E0E3D02374074F00116DA2 /* String-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E0E3CF2374074F00116DA2 /* String-Ext.swift */; };
 		46E59DD02429893A00C67E82 /* PhotoCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E59DCF2429893A00C67E82 /* PhotoCollectionViewController.swift */; };
 		46E59DD22429DB7F00C67E82 /* UICollectionViewFlowLayout-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E59DD12429DB7F00C67E82 /* UICollectionViewFlowLayout-Ext.swift */; };
-		46EBD4782374FDAC00D7E6FC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EBD4772374FDAC00D7E6FC /* User.swift */; };
 		46EE431D237153DC00DF22FB /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EE431C237153DC00DF22FB /* Tag.swift */; };
 		46FB2671243EF40B0080362C /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FB2670243EF40B0080362C /* HomeController.swift */; };
 		46FB2673243EF58E0080362C /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FB2672243EF58E0080362C /* Home.swift */; };
@@ -170,6 +172,11 @@
 
 /* Begin PBXFileReference section */
 		11812BFF5D5618F49FD03B4D /* Pods-eds.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eds.release.xcconfig"; path = "Target Support Files/Pods-eds/Pods-eds.release.xcconfig"; sourceTree = "<group>"; };
+		46036A622459065A00E59E41 /* MineHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineHeaderView.swift; sourceTree = "<group>"; };
+		46036A66245953CF00E59E41 /* MineSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineSectionModel.swift; sourceTree = "<group>"; };
+		46036A68245A527600E59E41 /* AccountListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountListController.swift; sourceTree = "<group>"; };
+		46036A6A245A549500E59E41 /* AccountCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCell.swift; sourceTree = "<group>"; };
+		46036A6C245AB37700E59E41 /* AccountAdditionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountAdditionController.swift; sourceTree = "<group>"; };
 		4605D14B237297E100558500 /* LogTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogTag.swift; sourceTree = "<group>"; };
 		4605D14D2372BF6A00558500 /* Date-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date-Ext.swift"; sourceTree = "<group>"; };
 		4607ACE42432D6D000C13C57 /* CornerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerView.swift; sourceTree = "<group>"; };
@@ -179,11 +186,9 @@
 		4607DC7B23FE0D0500E35015 /* LooseTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LooseTextField.swift; sourceTree = "<group>"; };
 		460BA6D0237A4775008E7CDF /* JsonUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonUtility.swift; sourceTree = "<group>"; };
 		460BA6D2237A7ABB008E7CDF /* EDSService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EDSService.swift; sourceTree = "<group>"; };
-		460BA6D4237A934A008E7CDF /* ProjectInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectInfo.swift; sourceTree = "<group>"; };
 		460BA6D6237BCC23008E7CDF /* Workorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workorder.swift; sourceTree = "<group>"; };
 		460BA6D8237CDB03008E7CDF /* Alarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alarm.swift; sourceTree = "<group>"; };
 		460BA6DA237CE08A008E7CDF /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
-		460BA6DC237CFE94008E7CDF /* ProjectAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectAccount.swift; sourceTree = "<group>"; };
 		460BA6DE237D2C9A008E7CDF /* PhoneVerification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneVerification.swift; sourceTree = "<group>"; };
 		460F7230236FC14500CFC7C3 /* EDS云管理.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EDS云管理.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		460F7233236FC14500CFC7C3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -292,7 +297,6 @@
 		46E0E3CF2374074F00116DA2 /* String-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String-Ext.swift"; sourceTree = "<group>"; };
 		46E59DCF2429893A00C67E82 /* PhotoCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewController.swift; sourceTree = "<group>"; };
 		46E59DD12429DB7F00C67E82 /* UICollectionViewFlowLayout-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewFlowLayout-Ext.swift"; sourceTree = "<group>"; };
-		46EBD4772374FDAC00D7E6FC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		46EE431C237153DC00DF22FB /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		46FB2670243EF40B0080362C /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		46FB2672243EF58E0080362C /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
@@ -430,11 +434,6 @@
 			isa = PBXGroup;
 			children = (
 				46FD463723836D5700A796BC /* Tag */,
-				460BA6DA237CE08A008E7CDF /* Action.swift */,
-				46EBD4772374FDAC00D7E6FC /* User.swift */,
-				460BA6DC237CFE94008E7CDF /* ProjectAccount.swift */,
-				460BA6DE237D2C9A008E7CDF /* PhoneVerification.swift */,
-				460BA6D4237A934A008E7CDF /* ProjectInfo.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -662,6 +661,7 @@
 			isa = PBXGroup;
 			children = (
 				46FB2674243EF61B0080362C /* Mine.swift */,
+				46036A66245953CF00E59E41 /* MineSectionModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -669,6 +669,7 @@
 		460F725E236FF5B700CFC7C3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				46036A622459065A00E59E41 /* MineHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -867,9 +868,11 @@
 		46DBA53624248B1800CFA7E7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				460BA6DA237CE08A008E7CDF /* Action.swift */,
 				46DBA533242475A300CFA7E7 /* Account.swift */,
 				46DBA52D242461C600CFA7E7 /* Phone.swift */,
 				46DBA53924248D2E00CFA7E7 /* UserLevel.swift */,
+				460BA6DE237D2C9A008E7CDF /* PhoneVerification.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -877,6 +880,7 @@
 		46DBA53724248B2300CFA7E7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				46036A6A245A549500E59E41 /* AccountCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -884,6 +888,8 @@
 		46DBA53824248B2A00CFA7E7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				46036A68245A527600E59E41 /* AccountListController.swift */,
+				46036A6C245AB37700E59E41 /* AccountAdditionController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1071,6 +1077,7 @@
 				46FB267F24403AF50080362C /* HomeEnergyCell.swift in Sources */,
 				46FF9E5324482C5B000F5AB2 /* EnergyTimeCell.swift in Sources */,
 				46FF9E402445433E000F5AB2 /* LoginController.swift in Sources */,
+				46036A69245A527600E59E41 /* AccountListController.swift in Sources */,
 				4621272223B19FF400105664 /* DeviceButtonCell.swift in Sources */,
 				4621272323B19FF400105664 /* DeviceOnOffCell.swift in Sources */,
 				46B49351240899B50066863D /* FixedInfoChildController.swift in Sources */,
@@ -1148,6 +1155,7 @@
 				460BA6DF237D2C9A008E7CDF /* PhoneVerification.swift in Sources */,
 				46FF9E5724498A83000F5AB2 /* EnergyData.swift in Sources */,
 				46FF9510241A0AE9002E36AD /* WorkorderCell.swift in Sources */,
+				46036A6D245AB37700E59E41 /* AccountAdditionController.swift in Sources */,
 				46DF40D9242DD3D70018F961 /* UIViewController-Ext.swift in Sources */,
 				4621273623B5EF6A00105664 /* DeviceHeaderView.swift in Sources */,
 				46FB866A23BB17EA00754E88 /* Double-Ext.swift in Sources */,
@@ -1157,6 +1165,7 @@
 				4621272123B19FF400105664 /* DeviceAtsStatusCell.swift in Sources */,
 				46100AA223C6D61A00C43D1A /* UIButton-Ext.swift in Sources */,
 				4605D14E2372BF6A00558500 /* Date-Ext.swift in Sources */,
+				46036A6B245A549500E59E41 /* AccountCell.swift in Sources */,
 				4621271F23B19FF400105664 /* DeviceTextCell.swift in Sources */,
 				46E59DD02429893A00C67E82 /* PhotoCollectionViewController.swift in Sources */,
 				468BC3C623824B50008BD62C /* MQTTConfig.swift in Sources */,
@@ -1180,7 +1189,6 @@
 				46FB2679243F013C0080362C /* HomeHeaderView.swift in Sources */,
 				46FF9512241A0B1C002E36AD /* WorkorderUtility.swift in Sources */,
 				4621273423B5EA0A00105664 /* UIConst.swift in Sources */,
-				460BA6D5237A934A008E7CDF /* ProjectInfo.swift in Sources */,
 				46227A4523C82A4C00768799 /* ViewUtility.swift in Sources */,
 				46DBA53A24248D2E00CFA7E7 /* UserLevel.swift in Sources */,
 				4621272823B1A71A00105664 /* DeviceCellType.swift in Sources */,
@@ -1188,10 +1196,11 @@
 				460F727223711D8900CFC7C3 /* EDSConfig.swift in Sources */,
 				46FB26832440537E0080362C /* HomeEnergyView.swift in Sources */,
 				4621271423B197A900105664 /* DeviceListViewController.swift in Sources */,
-				46EBD4782374FDAC00D7E6FC /* User.swift in Sources */,
+				46036A67245953CF00E59E41 /* MineSectionModel.swift in Sources */,
 				462D23AE23C076C500C28F15 /* IconPagingCell.swift in Sources */,
 				46DBA5182420995200CFA7E7 /* CheckBox.swift in Sources */,
 				4621273023B5D95A00105664 /* DevicePageTableViewController.swift in Sources */,
+				46036A632459065A00E59E41 /* MineHeaderView.swift in Sources */,
 				46DBA5202421B5AB00CFA7E7 /* PhotoCell.swift in Sources */,
 				46DF04AB240CAD6800E3DE65 /* InfoAlertController.swift in Sources */,
 				46DBA52A24221EF100CFA7E7 /* WorkorderInfo.swift in Sources */,
@@ -1201,7 +1210,6 @@
 				46DF40D1242C866D0018F961 /* TextInputCell.swift in Sources */,
 				46DBA50B241F55D100CFA7E7 /* WorkorderViewController.swift in Sources */,
 				46DBA52624220CF100CFA7E7 /* WorkorderMessage.swift in Sources */,
-				460BA6DD237CFE94008E7CDF /* ProjectAccount.swift in Sources */,
 				46DF04A9240B983A00E3DE65 /* FixedInfoCell.swift in Sources */,
 				462E0DFF2452B25F00A2F17E /* NoticeController.swift in Sources */,
 			);

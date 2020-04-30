@@ -81,7 +81,10 @@ extension DeviceOnOffCell: DevicePageItemSource {
                     self.extraLabel.text = "updating".localize()
                     //tag.Value = newValue,直接赋值，value将直接显示在extraLabel中不表示真实的后台修改值
                     let newTag = Tag(name: tag.Name, value: newValue)
-                    MoyaProvider<WAService>().request(.setTagValues(authority: User.tempInstance.authority!, tagList: [newTag])) { result in
+                    guard let authority = AccountUtility.sharedInstance.account?.authority else {
+                        return
+                    }
+                    MoyaProvider<WAService>().request(.setTagValues(authority: authority, tagList: [newTag])) { result in
                         switch result {
                         case .success(let response):
                             print(JsonUtility.didSettedValues(data: response.data))

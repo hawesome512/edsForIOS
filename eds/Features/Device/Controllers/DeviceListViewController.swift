@@ -162,11 +162,11 @@ extension DeviceListViewController: AdditionDelegate {
         let alertController = DeviceAdditionAlertController.initController(device: inParent)
         //因需要处理ok之后到逻辑，故不在DeviceAdditionAlertController里面添加OKAction
         let okAction = UIAlertAction(title: "ok".localize(), style: .default) { _ in
-            if let proj = User.tempInstance.projectID, let title = alertController.nameField.text {
+            if let projID = AccountUtility.sharedInstance.account?.id, let title = alertController.nameField.text {
                 //新建Device
-                let id = "\(proj)-\(alertController.getAddedDeviceId())"
+                let id = "\(projID)-\(alertController.getAddedDeviceId())"
                 let newDevice = Device(deviceID: id)
-                newDevice.account = proj
+                newDevice.account = projID
                 newDevice.title = title
                 newDevice.level = alertController.getAddedDeviceLevel()
                 MoyaProvider<EDSService>().request(.updateDevice(device: newDevice)) { response in

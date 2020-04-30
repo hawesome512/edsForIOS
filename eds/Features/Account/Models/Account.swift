@@ -24,10 +24,19 @@ class Account: HandyJSON {
     var device = 0
     //手机账户信息
     var phone = ""
-    
+
     required init() { }
 
     func getPhones() -> [Phone] {
-        return phone.components(separatedBy: phoneSeparator).map { Phone(with: $0) }
+        return phone.components(separatedBy: phoneSeparator).map { Phone(with: $0) }.sorted()
+    }
+
+    func setPhone(phones: [Phone]) {
+        phone = phones.map { $0.toString() ?? NIL }.joined(separator: phoneSeparator)
+    }
+
+    //e.g.:XRD
+    func getProjectName() -> String? {
+        return id.components(separatedBy: "/").last
     }
 }

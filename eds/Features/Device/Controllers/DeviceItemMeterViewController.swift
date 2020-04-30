@@ -79,7 +79,7 @@ class DeviceItemMeterViewController: UIViewController {
         }).disposed(by: disposeBag)
 
         updateButton.rx.tap.subscribe({ _ in
-            guard var newValue = self.valueLabel.text else {
+            guard var newValue = self.valueLabel.text, let authority = AccountUtility.sharedInstance.account?.authority else {
                 return
             }
             //单位换算
@@ -93,7 +93,7 @@ class DeviceItemMeterViewController: UIViewController {
             let newTag = Tag(name: tag.Name, value: newValue)
             self.valueLabel.text = "updating".localize()
 //            self.updateButton.isEnabled = false
-            MoyaProvider<WAService>().request(.setTagValues(authority: User.tempInstance.authority!, tagList: [newTag])) { result in
+            MoyaProvider<WAService>().request(.setTagValues(authority: authority, tagList: [newTag])) { result in
                 switch result {
                 case .success(let response):
                     print("update \(newTag.Name) value to \(newTag.Value!):\(JsonUtility.didSettedValues(data: response.data))")
@@ -102,7 +102,7 @@ class DeviceItemMeterViewController: UIViewController {
                 }
             }
         }).disposed(by: disposeBag)
-        
+
         switch authority {
         case .granted:
             break

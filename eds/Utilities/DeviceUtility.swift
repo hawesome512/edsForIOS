@@ -21,10 +21,10 @@ class DeviceUtility {
     /// 从后台导入资产设备列表
     func loadProjectDeviceList() {
         //获取后台服务设备列表请求在生命周期中只有一次
-        guard deviceList.count == 0 else {
+        guard deviceList.count == 0,let projID = AccountUtility.sharedInstance.account?.id else {
             return
         }
-        let factor = EDSServiceQueryFactor(id: User.tempInstance.projectID!)
+        let factor = EDSServiceQueryFactor(id: projID)
         MoyaProvider<EDSService>().request(.queryDeviceList(factor: factor)) { result in
             switch result {
             case .success(let response):

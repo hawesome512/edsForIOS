@@ -22,7 +22,7 @@ class TagUtility: MQTTServiceDelegate {
         didSet {
             //获取点列表之后，进行mqtt订阅
             MQTTService.sharedInstance.delegate = self
-            if let projectName = User.tempInstance.getProjectName() {
+            if let projectName = AccountUtility.sharedInstance.account?.getProjectName() {
                 MQTTService.sharedInstance.refreshTagValues(projectName: projectName)
             }
         }
@@ -33,10 +33,10 @@ class TagUtility: MQTTServiceDelegate {
     /// 从后台导入工程点列表
     func loadProjectTagList() {
         //获取后台服务点列表请求在生命周期中只有一次
-        guard tagList.count == 0 else {
+        guard tagList.count == 0, let account = AccountUtility.sharedInstance.account else {
             return
         }
-        MoyaProvider<WAService>().request(.getTagList(authority: User.tempInstance.authority!, projectID: User.tempInstance.projectID!)) { result in
+        MoyaProvider<WAService>().request(.getTagList(authority: account.authority, projectID: account.id)) { result in
             switch result {
             case .success(let response):
                 //后台返回数据类型[tag?]?👉[tag]
@@ -53,10 +53,10 @@ class TagUtility: MQTTServiceDelegate {
     /// 更新点值
     /// - Parameter tags: 需要更新的点列表
     func updateTagList(with tags: [Tag]) {
-        guard tags.count > 0 else {
+        guard tags.count > 0, let authority = AccountUtility.sharedInstance.account?.authority else {
             return
         }
-        MoyaProvider<WAService>().request(.getTagValues(authority: User.tempInstance.authority!, tagList: tags)) { result in
+        MoyaProvider<WAService>().request(.getTagValues(authority: authority, tagList: tags)) { result in
             switch result {
             case .success(let response):
                 self.update(with: JsonUtility.getTagValues(data: response.data))

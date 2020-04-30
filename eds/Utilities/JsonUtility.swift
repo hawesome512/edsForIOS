@@ -11,6 +11,7 @@ import SwiftyJSON
 import HandyJSON
 import CocoaMQTT
 
+/// <#Description#>
 class JsonUtility {
 
     //MARK: - WAService---------------------------
@@ -71,6 +72,12 @@ class JsonUtility {
             return (PhoneVerificationResult(rawValue: code), message)
         }
         return nil
+    }
+
+    //EDS Service手机验证登录成功后获取相对应的工程账号信息
+    class func getPhoneAccount(data: Data) -> Account? {
+        let jsonString = String(data: data, encoding: .utf8)?.removeNull().replacingOccurrences(of: "\"[", with: "").replacingOccurrences(of: "]\"", with: "")
+        return Account.deserialize(from: jsonString, designatedPath: "message")
     }
 
     //MARK: - MQTTService---------------------------

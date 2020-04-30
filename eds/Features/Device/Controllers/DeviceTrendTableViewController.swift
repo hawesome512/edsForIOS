@@ -20,9 +20,12 @@ class DeviceTrendTableViewController: UITableViewController {
     ///   - upperLimit: 安全上限
     ///   - lowerLimit: 安全下限
     func trend(with tags: [Tag], condition: WATagLogRequestCondition?, isAccumulated: Bool, upperLimit: Double? = nil, lowerLimit: Double? = nil) {
-
+        
+        guard let authority = AccountUtility.sharedInstance.account?.authority else {
+            return
+        }
         let logCondition = condition ?? WATagLogRequestCondition.defaultCondition(with: tags, isAccumulated: isAccumulated)
-        MoyaProvider<WAService>().request(.getTagLog(authority: User.tempInstance.authority!, condition: logCondition)) { result in
+        MoyaProvider<WAService>().request(.getTagLog(authority: authority, condition: logCondition)) { result in
             switch result {
             case .success(let response):
                 let logs = JsonUtility.getTagLogValues(data: response.data)

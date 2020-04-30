@@ -49,7 +49,7 @@ struct WorkorderMessage {
         //过滤留言信息主体中可能存在的分隔符
         let validContent = content.replacingOccurrences(of: WorkorderMessage.separator, with: " ")
         var msg = WorkorderMessage()
-        msg.name = AccountUtility.sharedInstance.phone?.name
+        msg.name = AccountUtility.sharedInstance.loginedPhone?.name
         msg.content = validContent
         msg.date = Date().toDateTimeString()
         return msg

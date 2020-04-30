@@ -13,11 +13,12 @@ import EFQRCode
 class QRCodeUtility {
 
     static func generate(with type: QRCodeType, param: String) -> UIImage? {
-        if let node = User.tempInstance.projectID, let key = User.tempInstance.authority {
-            let content = "Node:\(node);Key:\(key);Type:\(type.rawValue);Param:\(param)"
-            if let qrImage = EFQRCode.generate(content: content, foregroundColor: edsDefaultColor.cgColor, watermark: UIImage(named: "wave")?.cgImage, watermarkMode: .scaleAspectFit) {
-                return UIImage(cgImage: qrImage)
-            }
+        guard let account = AccountUtility.sharedInstance.account else {
+            return nil
+        }
+        let content = "Node:\(account.id);Key:\(account.authority);Type:\(type.rawValue);Param:\(param)"
+        if let qrImage = EFQRCode.generate(content: content, foregroundColor: edsDefaultColor.cgColor, watermark: UIImage(named: "wave")?.cgImage, watermarkMode: .scaleAspectFit) {
+            return UIImage(cgImage: qrImage)
         }
         return nil
     }

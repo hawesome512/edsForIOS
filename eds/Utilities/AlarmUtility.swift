@@ -20,11 +20,11 @@ class AlarmUtility {
     /// 从后台导入报警列表
     func loadProjectAlarmList() {
         //获取后台服务设备列表请求在生命周期中只有一次
-        guard alarmList.count == 0 else {
+        guard alarmList.count == 0, let projID = AccountUtility.sharedInstance.account?.id else {
             return
         }
         //获取最近一季度的报警记录
-        let factor = EDSServiceQueryFactor(id: User.tempInstance.projectID!, in: .halfYear)
+        let factor = EDSServiceQueryFactor(id: projID, in: .halfYear)
         MoyaProvider<EDSService>().request(.queryAlarmList(factor: factor)) { result in
             switch result {
             case .success(let response):

@@ -173,7 +173,7 @@ extension WorkorderAdditionViewController {
         //tasks在新增任务的时候已设定至tasks
         workorder.setTasks(titles: tasks)
         //创建人即当前登录用户
-        if let userName = AccountUtility.sharedInstance.phone?.name {
+        if let userName = AccountUtility.sharedInstance.loginedPhone?.name {
             //尽管默认工单状态即为.created，但是调用setState(with:by:)可以存档流程记录
             workorder.setState(with: .created, by: userName)
             workorder.creator = userName
@@ -191,7 +191,7 @@ extension WorkorderAdditionViewController {
 
         //信息不完整,必要工单信息：id(自动生成),title,start,end,task
         guard workorder.prepareSaved() else {
-            let title = "imcomplete".localize(with: prefixWorkorder)
+            let title = "imcomplete".localize()
             let message = ["title", "proper_time", "task", "executed", "audited"].map { $0.localize(with: prefixWorkorder) }.joined(separator: "/")
             let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
             let okAction = UIAlertAction(title: "ok".localize(), style: .default, handler: nil)

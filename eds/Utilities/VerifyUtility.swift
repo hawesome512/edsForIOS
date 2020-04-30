@@ -27,7 +27,7 @@ class VerifyUtility {
     static func verify(tag: Tag, delegate: PasswordVerifyDelegate, parentVC: UIViewController?) -> AuthorityResult {
 
         //用户权限锁
-        if !User.tempInstance.isOperable() {
+        guard let phone = AccountUtility.sharedInstance.loginedPhone, phone.isOperable() else {
             return .userLocked
         }
 

@@ -18,13 +18,14 @@ class LoginController: UIViewController {
         super.viewDidLoad()
         initViews()
 
+
         // Do any additional setup after loading the view.
         //初始化后台数据，导入数据列表
-//        TagUtility.sharedInstance.loadProjectTagList()
-//        DeviceUtility.sharedInstance.loadProjectDeviceList()
-//        AlarmUtility.sharedInstance.loadProjectAlarmList()
-//        WorkorderUtility.sharedInstance.loadProjectWorkerorderList()
-//        AccountUtility.sharedInstance.loadProjectAccount()
+        AccountUtility.sharedInstance.loadProjectAccount(accountID: "2/XRD", phoneNumber: "18759282157")
+        TagUtility.sharedInstance.loadProjectTagList()
+        DeviceUtility.sharedInstance.loadProjectDeviceList()
+        AlarmUtility.sharedInstance.loadProjectAlarmList()
+        WorkorderUtility.sharedInstance.loadProjectWorkerorderList()
         BasicUtility.sharedInstance.loadProjectBasicInfo()
     }
 

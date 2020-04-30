@@ -44,7 +44,7 @@ class WorkorderViewController: UIViewController {
     //执行保存（图片）过程的指示器
     private let indicator = UIActivityIndicatorView(style: .medium)
     private var executedState = BehaviorRelay<Bool>(value: false)
-    private let accountName = AccountUtility.sharedInstance.phone?.name ?? NIL
+    private let accountName = AccountUtility.sharedInstance.loginedPhone?.name ?? NIL
 
     var workorder: Workorder? {
         didSet {
@@ -309,7 +309,7 @@ extension WorkorderViewController: ShareDelegate, CXCallObserverDelegate, MFMess
             ShareUtility.sendSMS(to: executor.number!, with: sentContent, imageData: nil, in: self)
         case .mail:
             let imageData = QRCodeUtility.generate(with: .workorder, param: workorder.id)?.pngData()
-            ShareUtility.sendMail(to: executor.email!, title: "distribution_title".localize(with: prefixWorkorder), content: sentContent, imageData: imageData, in: self)
+            ShareUtility.sendMail(to: executor.email, title: "distribution_title".localize(with: prefixWorkorder), content: sentContent, imageData: imageData, in: self)
         default:
             break
         }

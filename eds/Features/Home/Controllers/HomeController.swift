@@ -36,18 +36,7 @@ class HomeController: UIViewController {
         navigationItem.rightBarButtonItem = qrButton
 
         //顶部图片
-        //打开地图页面
-        headerView.locationButton.rx.tap.bind(onNext: {
-            let mapVC = MapController()
-            mapVC.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(mapVC, animated: true)
-        }).disposed(by: disposeBag)
-        //打开公告页面
-        headerView.noticeButton.rx.tap.bind(onNext: {
-            let noticeVC = NoticeController()
-            noticeVC.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(noticeVC, animated: true)
-        }).disposed(by: disposeBag)
+        headerView.parentVC = self
         view.addSubview(headerView)
         headerView.horizontalToSuperview()
         headerView.height(to: view, multiplier: 0.3)

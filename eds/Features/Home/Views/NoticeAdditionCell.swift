@@ -70,9 +70,9 @@ class NoticeAdditionCell: UITableViewCell, UITextFieldDelegate, PickerDelegate {
                 self.parentVC?.present(inputsVC, animated: true, completion: nil)
                 return
             }
-            let author = AccountUtility.sharedInstance.phone?.name ?? NIL
+            let author = AccountUtility.sharedInstance.loginedPhone?.name ?? NIL
             let notice = Notice(message: message, author: author, deadline: self.pickedDate)
-            BasicUtility.sharedInstance.setNotice(notice)
+            BasicUtility.sharedInstance.updateNotice(notice.toString())
             self.parentVC?.navigationController?.popViewController(animated: true)
         }).disposed(by: disposeBag)
         addSubview(noticeButton)

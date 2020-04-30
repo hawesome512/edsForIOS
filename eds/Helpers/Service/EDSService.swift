@@ -86,7 +86,7 @@ extension EDSService: TargetType {
         case .updateDevice:
             return "/UpdateDeviceServlet"
         case .verifyPhoneLogin:
-            return "/QueryPhoneServlet"
+            return "/QueryPhoneServlet2"
         case .upload:
             return "/UploadServlet"
         }

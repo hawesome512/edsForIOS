@@ -20,11 +20,11 @@ class WorkorderUtility {
 /// 从后台导入列表
     func loadProjectWorkerorderList() {
         //获取后台服务设备列表请求在生命周期中只有一次
-        guard workorderList.count == 0 else {
+        guard workorderList.count == 0, let projID = AccountUtility.sharedInstance.account?.id else {
             return
         }
         //获取最近一季度的报警记录
-        let factor = EDSServiceQueryFactor(id: User.tempInstance.projectID!, in: .none)
+        let factor = EDSServiceQueryFactor(id: projID, in: .none)
         MoyaProvider<EDSService>().request(.queryWorkorderList(factor: factor)) { result in
             switch result {
             case .success(let response):
@@ -53,7 +53,7 @@ class WorkorderUtility {
 
     //获取权重最高的工单
     func getMyWorkorder() -> Workorder? {
-        let accountName = AccountUtility.sharedInstance.phone?.name
+        let accountName = AccountUtility.sharedInstance.loginedPhone?.name
         return workorderList.sorted(by: { (lhs, rhs) -> Bool in
             lhs.calWeightCoefficient(with: accountName) > rhs.calWeightCoefficient(with: accountName)
         }).first

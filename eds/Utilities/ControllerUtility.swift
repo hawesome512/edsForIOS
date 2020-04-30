@@ -20,13 +20,15 @@ class ControllerUtility {
         return alertController
     }
 
-    static func generateImagePicker(maxCount: Int) -> YPImagePicker {
+    static func generateImagePicker(maxCount: Int, showCrop: Bool = false) -> YPImagePicker {
 
         var config = YPImagePickerConfiguration()
         //关闭滤镜，16:9裁剪，限制图片上传尺寸，不将裁减图片保存本地
         config.showsPhotoFilters = false
         config.onlySquareImagesFromCamera = false
-        //        config.showsCrop = .rectangle(ratio: 16 / 9)
+        if showCrop {
+            config.showsCrop = .rectangle(ratio: 16 / 9)
+        }
         config.targetImageSize = .cappedTo(size: 1024)
         config.shouldSaveNewPicturesToAlbum = false
         config.library.maxNumberOfItems = maxCount
@@ -44,6 +46,18 @@ class ControllerUtility {
         let edit = UIAlertAction(title: "edit".localize(), style: .default, handler: nil)
         alertVC.addAction(cancel)
         alertVC.addAction(edit)
+        return alertVC
+    }
+
+    static func generateInputAlertController(title: String, delegate: UITextFieldDelegate?) -> UIAlertController {
+        let alertVC = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        alertVC.addTextField(configurationHandler: { textField in
+            textField.returnKeyType = .done
+            textField.delegate = delegate
+            textField.becomeFirstResponder()
+        })
+        let cancel = UIAlertAction(title: "cancel".localize(), style: .cancel, handler: nil)
+        alertVC.addAction(cancel)
         return alertVC
     }
 }
