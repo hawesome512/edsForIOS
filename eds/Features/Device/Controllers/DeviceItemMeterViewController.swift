@@ -105,7 +105,9 @@ class DeviceItemMeterViewController: UIViewController {
 
         switch authority {
         case .granted:
-            break
+            authorityLabel.text = nil
+            updateButton.isEnabled = true
+            circularSlider.isEnabled = true
         default:
             authorityLabel.text = authority.rawValue.localize()
             updateButton.isEnabled = false

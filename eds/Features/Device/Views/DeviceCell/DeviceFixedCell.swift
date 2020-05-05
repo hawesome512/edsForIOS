@@ -40,12 +40,14 @@ class DeviceFixedCell: UITableViewCell {
                 nameLabel.textColor = device.getTintColor()
                 levelLabel.alpha = (device.level == DeviceLevel.fixed) ? 1 : 0
                 deviceImageView.image = device.getIcon()
-                
-                let accessoryButton = device.getAccessoryView()
-                accessoryButton?.rx.tap.bind(onNext: {
-                    self.delegate?.add(inParent: device)
-                }).disposed(by: disposeBag)
-                accessoryView = accessoryButton
+
+                if AccountUtility.sharedInstance.isOperable() {
+                    let accessoryButton = device.getAccessoryView()
+                    accessoryButton?.rx.tap.bind(onNext: {
+                        self.delegate?.add(inParent: device)
+                    }).disposed(by: disposeBag)
+                    accessoryView = accessoryButton
+                }
             }
         }
     }

@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import RxSwift
 
 class AccountListController: UITableViewController, AdditionDelegate {
 
+    private let disposeBag = DisposeBag()
     var accountList = [Phone]()
 
     override func viewDidLoad() {
@@ -22,6 +24,13 @@ class AccountListController: UITableViewController, AdditionDelegate {
         tableView.tableFooterView = UIView()
         tableView.rowHeight = tableView.estimatedRowHeight
         tableView.register(AccountCell.self, forCellReuseIdentifier: String(describing: AccountCell.self))
+
+        ActionUtility.sharedInstance.loadProjectActionList()
+        ActionUtility.sharedInstance.successfulLoaded.bind(onNext: { loaded in
+            if loaded {
+                self.tableView.reloadData()
+            }
+        }).disposed(by: disposeBag)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -94,12 +103,17 @@ class AccountListController: UITableViewController, AdditionDelegate {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: AccountCell.self), for: indexPath) as! AccountCell
-        cell.phone = accountList[indexPath.row]
+        let phone = accountList[indexPath.row]
+        cell.phone = phone
         return cell
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+        if let username = accountList[indexPath.row].name {
+            let actionListVC = ActionListController()
+            actionListVC.actionList = ActionUtility.sharedInstance.getAction(by: username)
+            present(actionListVC, animated: true, completion: nil)
+        }
         tableView.deselectRow(at: indexPath, animated: true)
     }
 

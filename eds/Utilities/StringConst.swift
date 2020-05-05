@@ -23,5 +23,7 @@ let prefixWorkorder = "workorder"
 let prefixHome = "home"
 //本地化中跟能耗相关String
 let prefixEnergy = "energy"
+//本地化中跟记录相关String
+let prefixAction = "action"
 
 

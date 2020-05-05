@@ -14,6 +14,7 @@ import Moya
 class MineHeaderView: UIView, UITextFieldDelegate {
 
     private let disposeBag = DisposeBag()
+    private var profileTopConstraint: NSLayoutConstraint?
 
     let nameLabel = UILabel()
     let profileImage = UIImageView()
@@ -28,7 +29,7 @@ class MineHeaderView: UIView, UITextFieldDelegate {
                 return
             }
             let profileURL = phone.photo.getEDSServletImageUrl()
-            profileImage.kf.setImage(with: profileURL, placeholder: UIImage(named: "AppIcon"))
+            profileImage.kf.setImage(with: profileURL, placeholder: UIImage(named: "eds"))
             nameLabel.text = phone.name
             levelLabel.text = phone.level.getText()
             levelImage.image = phone.level.getIcon()?.withTintColor(.white, renderingMode: .alwaysTemplate)
@@ -57,14 +58,17 @@ class MineHeaderView: UIView, UITextFieldDelegate {
         addSubview(bgImage)
         bgImage.edgesToSuperview()
 
-        profileImage.image = UIImage(named: "AppIcon")
+        profileImage.image =  UIImage(named: "eds")
         profileImage.layer.masksToBounds = true
         profileImage.layer.borderColor = UIColor.white.cgColor
         profileImage.layer.borderWidth = 2
         addSubview(profileImage)
         profileImage.heightToSuperview(multiplier: 0.4)
         profileImage.widthToHeight(of: profileImage)
-        profileImage.topToSuperview(usingSafeArea: true)
+//        profileImage.topToSuperview(usingSafeArea: true)
+        //TinyConstraint未找到相关用法：后台动态约束
+        profileTopConstraint = profileImage.topAnchor.constraint(equalTo: profileImage.superview!.topAnchor)
+        profileTopConstraint?.isActive = true
         profileImage.centerXToSuperview()
 
         let bottomView = UIView()
@@ -86,7 +90,7 @@ class MineHeaderView: UIView, UITextFieldDelegate {
         levelLabel.textColor = .white
         levelLabel.font = UIFont.preferredFont(forTextStyle: .title1)
         bottomView.addSubview(levelLabel)
-        levelLabel.leadingToTrailing(of: levelImage, offset: edsMinSpace)
+        levelLabel.leadingToTrailing(of: levelImage)
         levelLabel.centerYToSuperview()
 
         emailLabel.text = "shihlineds@xseec.cn"
@@ -98,6 +102,7 @@ class MineHeaderView: UIView, UITextFieldDelegate {
 
         let emailImage = UIImageView()
         emailImage.image = UIImage(systemName: "envelope")
+        emailImage.contentMode = .scaleAspectFit
         emailImage.tintColor = .white
         bottomView.addSubview(emailImage)
         emailImage.centerY(to: emailLabel)
@@ -132,8 +137,10 @@ class MineHeaderView: UIView, UITextFieldDelegate {
         nameLabel.topToBottom(of: profileImage)
         nameLabel.trailingToLeading(of: emailImage, offset: edsMinSpace, relation: .equalOrGreater)
     }
-
+    
     override func draw(_ rect: CGRect) {
+        let statusHeight = parentVC?.view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+        profileTopConstraint?.constant = statusHeight + edsMinSpace
         let radius = profileImage.bounds.height / 2
         profileImage.layer.cornerRadius = radius
     }

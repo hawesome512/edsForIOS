@@ -41,6 +41,9 @@ class DeviceHeaderView: UIView {
         addSubview(imageButton)
         imageButton.edges(to: imageView)
         imageButton.rx.tap.bind(onNext: {
+            guard AccountUtility.sharedInstance.isOperable() else {
+                return
+            }
             self.showPicker()
         }).disposed(by: disposeBag)
     }

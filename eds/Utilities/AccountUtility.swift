@@ -8,6 +8,7 @@
 
 import Foundation
 import Moya
+import RxCocoa
 
 class AccountUtility {
 
@@ -23,6 +24,7 @@ class AccountUtility {
     var phoneList: [Phone] = []
     //当前登录手机用户
     var loginedPhone: Phone?
+    var successfulLoaded = BehaviorRelay<Bool>(value: false)
 
     private init() { }
 
@@ -38,7 +40,6 @@ class AccountUtility {
         if let _ = account {
             return
         }
-        //获取最近一季度的报警记录
         let factor = EDSServiceQueryFactor(id: accountID)
         MoyaProvider<EDSService>().request(.queryAccountList(factor: factor)) { result in
             switch result {
@@ -48,7 +49,14 @@ class AccountUtility {
 
                 if let account = (tempList?.filter { $0 != nil } as! [Account]).first {
                     self.loginSucceeded(account, phoneNumber: phoneNumber)
+                    //登录成功后开始载入数据
+                    TagUtility.sharedInstance.loadProjectTagList()
+                    DeviceUtility.sharedInstance.loadProjectDeviceList()
+                    AlarmUtility.sharedInstance.loadProjectAlarmList()
+                    WorkorderUtility.sharedInstance.loadProjectWorkerorderList()
+                    BasicUtility.sharedInstance.loadProjectBasicInfo()
                 }
+                self.successfulLoaded.accept(true)
                 print("AccountUtility:Load project account.")
             default:
                 break
@@ -68,6 +76,15 @@ class AccountUtility {
         //兼容旧数据，name和phone在一起：e.g.:徐海生-100000000000
         let validName = name.separateNameAndPhone().name
         return phoneList.first { $0.name == validName }
+    }
+
+    
+    /// 验证当前用户是否有操作权限
+    func isOperable() -> Bool {
+        guard let level = loginedPhone?.level else {
+            return false
+        }
+        return level <= UserLevel.phoneOperator
     }
 
     //EDS Service工单、记录等数据模型需要ID

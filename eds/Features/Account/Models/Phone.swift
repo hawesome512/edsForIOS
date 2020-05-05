@@ -49,9 +49,9 @@ class Phone: Comparable {
         return number + infoSeparator + "\(level.rawValue)" + infoSeparator + name + infoSeparator + photo + infoSeparator + email
     }
 
-    func isOperable() -> Bool {
-        return level.rawValue <= UserLevel.phoneOperator.rawValue
-    }
+//    func isOperable() -> Bool {
+//        return level.rawValue <= UserLevel.phoneOperator.rawValue
+//    }
 
     //当前管理员用户可以升降操作员和观察员的权限，不能修改自己的权限，自能转移管理员
     func switchLevel() {

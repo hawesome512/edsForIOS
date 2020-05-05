@@ -9,6 +9,7 @@
 import Foundation
 import Moya
 import SwiftDate
+import RxCocoa
 
 class BasicUtility {
 
@@ -16,6 +17,8 @@ class BasicUtility {
 
     var energyBranch: EnergyBranch?
     var basic: Basic?
+    var successfulLoadedBasicInfo = BehaviorRelay<Bool>(value: false)
+    var successfulLoadedEnergyData = BehaviorRelay<Bool>(value: false)
 
     private init() { }
 
@@ -28,6 +31,7 @@ class BasicUtility {
             switch result {
             case .success(let response):
                 self.basic = JsonUtility.getEDSServiceList(with: response.data, type: [Basic]())?.first ?? nil
+                self.successfulLoadedBasicInfo.accept(true)
                 self.loadProjectEnergyData()
                 print("load project basic info")
             default:
@@ -62,6 +66,7 @@ class BasicUtility {
                     return
                 }
                 let _ = BasicUtility.updateBranchData(in: energyBranch, with: results, dateItem: dateItem)
+                self.successfulLoadedEnergyData.accept(true)
                 print("loaded project energy data")
                 break
             default:

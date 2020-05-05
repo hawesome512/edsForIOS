@@ -14,7 +14,8 @@
 import Foundation
 import HandyJSON
 
-enum UserLevel: Int, HandyJSONEnum {
+enum UserLevel: Int, HandyJSONEnum, Comparable {
+
     //工程管理员
     case systemAdmin = 0
     //管理员
@@ -66,5 +67,10 @@ enum UserLevel: Int, HandyJSONEnum {
 
     func getText() -> String {
         return String(describing: self).localize()
+    }
+
+
+    static func < (lhs: UserLevel, rhs: UserLevel) -> Bool {
+        return lhs.rawValue < rhs.rawValue
     }
 }

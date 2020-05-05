@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import MessageUI
 
 class MineController: UIViewController {
 
@@ -110,10 +111,35 @@ extension MineController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 0 && indexPath.section == 0 {
-            let accountListVC = AccountListController()
-            accountListVC.hidesBottomBarWhenPushed = true
-            navigationController?.pushViewController(accountListVC, animated: true)
+        if let sectionModel = MineSectionModel(rawValue: indexPath.section) {
+            switch sectionModel {
+            case .user:
+                if indexPath.row == 0 {
+                    let accountListVC = AccountListController()
+                    accountListVC.hidesBottomBarWhenPushed = true
+                    navigationController?.pushViewController(accountListVC, animated: true)
+                } else {
+                    let qrcodeVC = AccountQRCodeController()
+                    qrcodeVC.hidesBottomBarWhenPushed = true
+                    navigationController?.pushViewController(qrcodeVC, animated: true)
+                }
+            case .eds:
+                if indexPath.row == 0 {
+                    let aboutVC = AboutController()
+                    aboutVC.hidesBottomBarWhenPushed = true
+                    navigationController?.pushViewController(aboutVC, animated: true)
+                } else if indexPath.row == 1 {
+                    let helpVC = HelpListController()
+                    helpVC.hidesBottomBarWhenPushed = true
+                    present(helpVC, animated: true, completion: nil)
+                } else {
+                    let emailAddress = "haisheng.xu@xseec.cn"
+                    let title = "feedbackEDS".localize()
+                    ShareUtility.sendMail(to: emailAddress, title: title, content: "", imageData: nil, in: self)
+                }
+            default:
+                break
+            }
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -148,4 +174,11 @@ extension MineController: UITableViewDataSource, UITableViewDelegate {
         }
     }
 
+}
+
+extension MineController: MFMailComposeViewControllerDelegate {
+    //邮件派发状态
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
+    }
 }

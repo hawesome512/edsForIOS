@@ -129,6 +129,15 @@
 		46E0E3D02374074F00116DA2 /* String-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E0E3CF2374074F00116DA2 /* String-Ext.swift */; };
 		46E59DD02429893A00C67E82 /* PhotoCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E59DCF2429893A00C67E82 /* PhotoCollectionViewController.swift */; };
 		46E59DD22429DB7F00C67E82 /* UICollectionViewFlowLayout-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E59DD12429DB7F00C67E82 /* UICollectionViewFlowLayout-Ext.swift */; };
+		46E9062A245FA67400DE7AE3 /* ActionUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E90629245FA67400DE7AE3 /* ActionUtility.swift */; };
+		46E9062C245FCA8E00DE7AE3 /* ActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E9062B245FCA8E00DE7AE3 /* ActionCell.swift */; };
+		46E9062E245FDEAA00DE7AE3 /* ActionListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E9062D245FDEAA00DE7AE3 /* ActionListController.swift */; };
+		46E90630245FEF3800DE7AE3 /* AccountQRCodeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E9062F245FEF3800DE7AE3 /* AccountQRCodeController.swift */; };
+		46EDC79224610EDB00F2F9EE /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EDC79124610EDB00F2F9EE /* AboutController.swift */; };
+		46EDC79424614D8400F2F9EE /* EDSResourceUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EDC79324614D8400F2F9EE /* EDSResourceUtility.swift */; };
+		46EDC796246151FE00F2F9EE /* Help.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EDC795246151FE00F2F9EE /* Help.swift */; };
+		46EDC7982461599700F2F9EE /* HelpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EDC7972461599700F2F9EE /* HelpCell.swift */; };
+		46EDC79A24615C3D00F2F9EE /* HelpListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EDC79924615C3D00F2F9EE /* HelpListController.swift */; };
 		46EE431D237153DC00DF22FB /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EE431C237153DC00DF22FB /* Tag.swift */; };
 		46FB2671243EF40B0080362C /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FB2670243EF40B0080362C /* HomeController.swift */; };
 		46FB2673243EF58E0080362C /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FB2672243EF58E0080362C /* Home.swift */; };
@@ -297,6 +306,15 @@
 		46E0E3CF2374074F00116DA2 /* String-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String-Ext.swift"; sourceTree = "<group>"; };
 		46E59DCF2429893A00C67E82 /* PhotoCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewController.swift; sourceTree = "<group>"; };
 		46E59DD12429DB7F00C67E82 /* UICollectionViewFlowLayout-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewFlowLayout-Ext.swift"; sourceTree = "<group>"; };
+		46E90629245FA67400DE7AE3 /* ActionUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionUtility.swift; sourceTree = "<group>"; };
+		46E9062B245FCA8E00DE7AE3 /* ActionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCell.swift; sourceTree = "<group>"; };
+		46E9062D245FDEAA00DE7AE3 /* ActionListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionListController.swift; sourceTree = "<group>"; };
+		46E9062F245FEF3800DE7AE3 /* AccountQRCodeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountQRCodeController.swift; sourceTree = "<group>"; };
+		46EDC79124610EDB00F2F9EE /* AboutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutController.swift; sourceTree = "<group>"; };
+		46EDC79324614D8400F2F9EE /* EDSResourceUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EDSResourceUtility.swift; sourceTree = "<group>"; };
+		46EDC795246151FE00F2F9EE /* Help.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Help.swift; sourceTree = "<group>"; };
+		46EDC7972461599700F2F9EE /* HelpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpCell.swift; sourceTree = "<group>"; };
+		46EDC79924615C3D00F2F9EE /* HelpListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpListController.swift; sourceTree = "<group>"; };
 		46EE431C237153DC00DF22FB /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		46FB2670243EF40B0080362C /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		46FB2672243EF58E0080362C /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
@@ -660,6 +678,7 @@
 		460F725D236FF5AF00CFC7C3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				46EDC795246151FE00F2F9EE /* Help.swift */,
 				46FB2674243EF61B0080362C /* Mine.swift */,
 				46036A66245953CF00E59E41 /* MineSectionModel.swift */,
 			);
@@ -669,6 +688,7 @@
 		460F725E236FF5B700CFC7C3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				46EDC7972461599700F2F9EE /* HelpCell.swift */,
 				46036A622459065A00E59E41 /* MineHeaderView.swift */,
 			);
 			path = Views;
@@ -677,7 +697,10 @@
 		460F725F236FF5BE00CFC7C3 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				46EDC79924615C3D00F2F9EE /* HelpListController.swift */,
 				46FB2676243EF69C0080362C /* MineController.swift */,
+				46E9062F245FEF3800DE7AE3 /* AccountQRCodeController.swift */,
+				46EDC79124610EDB00F2F9EE /* AboutController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -707,6 +730,8 @@
 				46DBA53B242490B300CFA7E7 /* AccountUtility.swift */,
 				46DBA53D242498E500CFA7E7 /* ShareUtility.swift */,
 				46FF9E5424484D11000F5AB2 /* BasicUtility.swift */,
+				46E90629245FA67400DE7AE3 /* ActionUtility.swift */,
+				46EDC79324614D8400F2F9EE /* EDSResourceUtility.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -881,6 +906,7 @@
 			isa = PBXGroup;
 			children = (
 				46036A6A245A549500E59E41 /* AccountCell.swift */,
+				46E9062B245FCA8E00DE7AE3 /* ActionCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -890,6 +916,7 @@
 			children = (
 				46036A68245A527600E59E41 /* AccountListController.swift */,
 				46036A6C245AB37700E59E41 /* AccountAdditionController.swift */,
+				46E9062D245FDEAA00DE7AE3 /* ActionListController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1087,7 +1114,9 @@
 				462E0DF524526AB700A2F17E /* Basic.swift in Sources */,
 				4621272423B19FF400105664 /* DeviceListCell.swift in Sources */,
 				46DBA51E2421B20300CFA7E7 /* WorkorderPhotoCollectionCell.swift in Sources */,
+				46E9062C245FCA8E00DE7AE3 /* ActionCell.swift in Sources */,
 				46DC53572411E88A00217ECD /* FixedQRCodeCell.swift in Sources */,
+				46EDC796246151FE00F2F9EE /* Help.swift in Sources */,
 				46227A3D23C80E1F00768799 /* DeviceTrendAnalysisCell.swift in Sources */,
 				46DBA53E242498E500CFA7E7 /* ShareUtility.swift in Sources */,
 				460F7238236FC14500CFC7C3 /* MainController.swift in Sources */,
@@ -1095,6 +1124,7 @@
 				46FF9E482446EB5C000F5AB2 /* EnergySegmentCell.swift in Sources */,
 				46DEF1A3239A00F3008780C3 /* DeviceModel.swift in Sources */,
 				46FF9E422445664E000F5AB2 /* HomeDeviceListHeaderView.swift in Sources */,
+				46EDC79224610EDB00F2F9EE /* AboutController.swift in Sources */,
 				46FF9E442446E87C000F5AB2 /* EnergyController.swift in Sources */,
 				46DC535B2412412F00217ECD /* ImageButton.swift in Sources */,
 				4621272523B19FF400105664 /* DeviceRangeCell.swift in Sources */,
@@ -1104,9 +1134,11 @@
 				46FB2673243EF58E0080362C /* Home.swift in Sources */,
 				460F7234236FC14500CFC7C3 /* AppDelegate.swift in Sources */,
 				46DBA53C242490B300CFA7E7 /* AccountUtility.swift in Sources */,
+				46EDC79A24615C3D00F2F9EE /* HelpListController.swift in Sources */,
 				46227A4123C80FF400768799 /* DeviceTrendTableViewController.swift in Sources */,
 				46DF40CF242C7D080018F961 /* WorkorderAdditionViewController.swift in Sources */,
 				460BA6D7237BCC23008E7CDF /* Workorder.swift in Sources */,
+				46E9062E245FDEAA00DE7AE3 /* ActionListController.swift in Sources */,
 				46DF40CD242C75090018F961 /* BottomViewController.swift in Sources */,
 				468BC3C423823738008BD62C /* MQTTService.swift in Sources */,
 				4670902E23D430B8008777ED /* DeviceUtility.swift in Sources */,
@@ -1141,8 +1173,10 @@
 				4607ACE824331F1F00C13C57 /* ShareController.swift in Sources */,
 				46FF9E462446E8C1000F5AB2 /* EnergyCellType.swift in Sources */,
 				46E59DD22429DB7F00C67E82 /* UICollectionViewFlowLayout-Ext.swift in Sources */,
+				46E90630245FEF3800DE7AE3 /* AccountQRCodeController.swift in Sources */,
 				46FF9E3A24443E15000F5AB2 /* HomeDeviceListController.swift in Sources */,
 				462E0E032452B73500A2F17E /* NoticeAdditionCell.swift in Sources */,
+				46E9062A245FA67400DE7AE3 /* ActionUtility.swift in Sources */,
 				46FF9E3E2444607F000F5AB2 /* DynamicDeviceModel.swift in Sources */,
 				46DBA52C242361E200CFA7E7 /* WorkorderInfoCell.swift in Sources */,
 				46FF9E4C2446F83C000F5AB2 /* DateCollectionCell.swift in Sources */,
@@ -1164,9 +1198,11 @@
 				46DBA51624207FB500CFA7E7 /* WorkorderTaskCell.swift in Sources */,
 				4621272123B19FF400105664 /* DeviceAtsStatusCell.swift in Sources */,
 				46100AA223C6D61A00C43D1A /* UIButton-Ext.swift in Sources */,
+				46EDC79424614D8400F2F9EE /* EDSResourceUtility.swift in Sources */,
 				4605D14E2372BF6A00558500 /* Date-Ext.swift in Sources */,
 				46036A6B245A549500E59E41 /* AccountCell.swift in Sources */,
 				4621271F23B19FF400105664 /* DeviceTextCell.swift in Sources */,
+				46EDC7982461599700F2F9EE /* HelpCell.swift in Sources */,
 				46E59DD02429893A00C67E82 /* PhotoCollectionViewController.swift in Sources */,
 				468BC3C623824B50008BD62C /* MQTTConfig.swift in Sources */,
 				46DC53552411D77400217ECD /* QRCodeUtility.swift in Sources */,

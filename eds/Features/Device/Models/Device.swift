@@ -55,7 +55,7 @@ class Device: HandyJSON, Equatable, EDSDelegate {
     }
 
     func getInfos() -> [DeviceInfo] {
-        return infos.components(separatedBy: listSeparator).map { DeviceInfo(info: $0) }
+        return infos.components(separatedBy: listSeparator).map { DeviceInfo.initInfo(with: $0) }.filter { $0 != nil } as! [DeviceInfo]
     }
 
     func setInfos(infos: [DeviceInfo]) {
@@ -166,13 +166,19 @@ enum DeviceLevel: Int, HandyJSONEnum {
 struct DeviceInfo {
 
     static let infoSeparator = ":"
-    var title: String
-    var value: String
+    var title: String = ""
+    var value: String = ""
 
-    init(info: String) {
+    static func initInfo(with info: String) -> DeviceInfo? {
         let infos = info.components(separatedBy: DeviceInfo.infoSeparator)
-        title = infos[0]
-        value = infos[1]
+        if infos.count == 2 {
+            var deviceInfo = DeviceInfo()
+            deviceInfo.title = infos[0]
+            deviceInfo.value = infos[1]
+            return deviceInfo
+        } else {
+            return nil
+        }
     }
 
     func toString() -> String {

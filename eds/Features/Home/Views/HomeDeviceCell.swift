@@ -78,14 +78,23 @@ class HomeDeviceCell: UITableViewCell {
             }
         }
 
-        //Observable.of(array)👉多个通讯设备状态点数组订阅
-        let dynamicTags = DeviceUtility.sharedInstance.getDynamicTags()
-        Observable.from(dynamicTags.map { $0.tag.showValue }).merge().subscribe(onNext: { _ in
-            //订阅到状态点变化，更新设备分类
-            self.classfiedDevices = DeviceUtility.sharedInstance.classifyDevice(dynamicStates: dynamicTags)
-            self.classfiedDevices.forEach { item in
-                self.deviceViews[item.key]?.valueLabel.text = "\(item.value.count)"
+        //点列表和设备列表加载完成后再出发
+        let loadedTaglist = TagUtility.sharedInstance.successfulLoadedTagList
+        let loadedDeviceList = DeviceUtility.sharedInstance.successfulLoaded
+        Observable.zip(loadedTaglist, loadedDeviceList).bind(onNext: { (loadedTags, loadedDevices) in
+            guard loadedTags == true, loadedDevices == true else {
+                return
             }
+            //Observable.of(array)👉多个通讯设备状态点数组订阅
+            let dynamicTags = DeviceUtility.sharedInstance.getDynamicTags()
+            Observable.from(dynamicTags.map { $0.tag.showValue }).merge().subscribe(onNext: { _ in
+                //订阅到状态点变化，更新设备分类
+                self.classfiedDevices = DeviceUtility.sharedInstance.classifyDevice(dynamicStates: dynamicTags)
+                self.classfiedDevices.forEach { item in
+                    self.deviceViews[item.key]?.valueLabel.text = "\(item.value.count)"
+                }
+            }).disposed(by: self.disposeBag)
+
         }).disposed(by: disposeBag)
     }
 

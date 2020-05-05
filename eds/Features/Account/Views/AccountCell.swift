@@ -19,7 +19,7 @@ class AccountCell: UITableViewCell {
     let phoneLabel = UILabel()
     let emailLabel = UILabel()
     let actionLabel = UILabel()
-    let actionButton = UIButton()
+    let actionButton = UIImageView()
     let levelLabel = UILabel()
     let levelButton = UIButton()
 
@@ -40,6 +40,9 @@ class AccountCell: UITableViewCell {
             phoneLabel.text = phone.number
             emailLabel.text = phone.email
             phoneLevel = phone.level
+            if let action = ActionUtility.sharedInstance.getAction(by: phone.name ?? NIL).first {
+                actionLabel.text = action.getShortInfo()
+            }
         }
     }
 
@@ -67,6 +70,8 @@ class AccountCell: UITableViewCell {
         profileImage.image = UIImage(named: "AppIcon")
         profileImage.layer.masksToBounds = true
         profileImage.layer.cornerRadius = edsHeight / 2
+        profileImage.layer.borderWidth = 2
+        profileImage.layer.borderColor = edsDefaultColor.cgColor
         addSubview(profileImage)
         profileImage.width(edsHeight)
         profileImage.height(edsHeight)
@@ -106,7 +111,7 @@ class AccountCell: UITableViewCell {
 //        emailImage.leadingToTrailing(of: phoneLabel, offset: edsSpace)
 
         emailLabel.text = "shihlineds@xseec.cn"
-        emailLabel.adjustsFontSizeToFitWidth = true
+//        emailLabel.adjustsFontSizeToFitWidth = true
         emailLabel.textColor = .systemGray
         addSubview(emailLabel)
         emailLabel.centerY(to: emailImage)
@@ -124,7 +129,7 @@ class AccountCell: UITableViewCell {
         actionImage.topToBottom(of: phoneImage, offset: edsMinSpace)
         actionImage.bottomToSuperview(offset: -edsMinSpace)
 
-        actionButton.setBackgroundImage(UIImage(systemName: "chevron.right.circle.fill"), for: .normal)
+        actionButton.image = UIImage(systemName: "chevron.right.circle.fill")
         actionButton.tintColor = edsDefaultColor
         addSubview(actionButton)
         actionButton.width(edsIconSize)

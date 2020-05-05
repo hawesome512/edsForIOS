@@ -8,12 +8,14 @@
 
 import Foundation
 import Moya
+import RxCocoa
 
 class WorkorderUtility {
     //通过单列调取工单列表
     var workorderList: [Workorder] = []
     //单例，只允许存在一个实例
     static let sharedInstance = WorkorderUtility()
+    var successfulLoaded = BehaviorRelay<Bool>(value: false)
 
     private init() { }
 
@@ -32,6 +34,7 @@ class WorkorderUtility {
                 let tempList = JsonUtility.getEDSServiceList(with: response.data, type: [Workorder]())
                 //按执行时间的先后排序，逆序
                 self.workorderList = ((tempList?.filter { $0 != nil })! as! [Workorder]).sorted().reversed()
+                self.successfulLoaded.accept(true)
                 print("WorkorderUtility:Load project workorder list in recent quarter.")
             default:
                 break

@@ -27,7 +27,7 @@ class NoticeMessageCell: UITableViewCell {
             messageLabel.text = notice!.message
             messageLabel.textColor = .darkText
             messageLabel.font = UIFont.preferredFont(forTextStyle: .headline)
-            clearButton.alpha = 1
+            clearButton.alpha = AccountUtility.sharedInstance.isOperable() ? 1 : 0
         }
     }
 

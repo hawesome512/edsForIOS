@@ -53,6 +53,23 @@ class HomeController: UIViewController {
         view.addSubview(tableView)
         tableView.edgesToSuperview(excluding: .top)
         tableView.topToBottom(of: headerView)
+
+        BasicUtility.sharedInstance.successfulLoadedBasicInfo.bind(onNext: { loaded in
+            if loaded {
+                self.headerView.basic = BasicUtility.sharedInstance.basic
+            }
+        }).disposed(by: disposeBag)
+        BasicUtility.sharedInstance.successfulLoadedEnergyData.bind(onNext: { loaded in
+            if loaded {
+                self.tableView.reloadRows(at: [IndexPath(row: 1, section: 0)], with: .automatic)
+            }
+        }).disposed(by: disposeBag)
+        WorkorderUtility.sharedInstance.successfulLoaded.bind(onNext: { loaded in
+            if loaded {
+                self.myWorkorder = WorkorderUtility.sharedInstance.getMyWorkorder()
+                self.tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
+            }
+        }).disposed(by: disposeBag)
     }
 
     @objc func scanQRCode() { }
@@ -73,9 +90,6 @@ class HomeController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         //从其他页面返回此页面时，导航栏样式可能被更改
         updateNavigationBar()
-        headerView.basic = BasicUtility.sharedInstance.basic
-        myWorkorder = WorkorderUtility.sharedInstance.getMyWorkorder()
-        tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
     }
 
     override func viewWillDisappear(_ animated: Bool) {

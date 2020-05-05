@@ -116,13 +116,25 @@ extension DeviceListViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard AccountUtility.sharedInstance.isOperable() else {
+            return nil
+        }
         let headerView = AdditionTableHeaderView()
         headerView.title.text = "add_room".localize()
         headerView.delegate = self
         return headerView
     }
 
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        guard AccountUtility.sharedInstance.isOperable() else {
+            return 0
+        }
+        return tableView.estimatedRowHeight
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) { guard AccountUtility.sharedInstance.isOperable() else {
+            return
+        }
         //删除设备：弹出框确认▶️删除设备及所属设备▶️更新父级支路
         if editingStyle == .delete {
             let deleteDevice = deviceList[indexPath.row]

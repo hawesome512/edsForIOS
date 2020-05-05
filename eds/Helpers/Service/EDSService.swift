@@ -49,7 +49,6 @@ enum EDSService {
     case verifyPhoneLogin(phoneVerification: HandyJSON)
     //上传图片
     case upload(data: Data, fileName: String)
-//    case upload(fileURL: URL, fileName: String)
 
 }
 

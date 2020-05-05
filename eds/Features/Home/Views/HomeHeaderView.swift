@@ -56,6 +56,9 @@ class HomeHeaderView: UIView, UITextFieldDelegate {
     private func initViews() {
 
         bannerImage.rx.tap.bind(onNext: {
+            guard AccountUtility.sharedInstance.isOperable() else {
+                return
+            }
             //编辑弹出菜单
             let menuVC = UIAlertController(title: "edit".localize(), message: nil, preferredStyle: .actionSheet)
             //头图
@@ -134,6 +137,7 @@ class HomeHeaderView: UIView, UITextFieldDelegate {
 
 //        titleLabel.text = "厦门士林电机"
         titleLabel.textColor = .white
+        titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.font = UIFont.preferredFont(forTextStyle: .largeTitle)
         addSubview(titleLabel)
         titleLabel.leadingToSuperview(offset: edsSpace)
@@ -158,6 +162,7 @@ class HomeHeaderView: UIView, UITextFieldDelegate {
         locationButton.width(edsIconSize)
         locationButton.height(edsIconSize)
         locationButton.leadingToTrailing(of: titleLabel, offset: edsMinSpace)
+        locationButton.trailingToLeading(of: noticeButton, offset: -edsSpace, relation: .equalOrLess)
         locationButton.centerY(to: titleLabel)
         locationButton.rx.tap.bind(onNext: {
             let mapVC = MapController()

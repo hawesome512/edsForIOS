@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DeviceAdditionAlertController: UIAlertController {
+class DeviceAdditionAlertController: UIAlertController, UITextFieldDelegate {
 
     let titleLable = UILabel()
     let nameField = LooseTextField()
@@ -40,6 +40,8 @@ class DeviceAdditionAlertController: UIAlertController {
         nameField.backgroundColor = UIColor.systemGray3.withAlphaComponent(0.7)
         nameField.font = UIFont.preferredFont(forTextStyle: .body)
         nameField.becomeFirstResponder()
+        nameField.returnKeyType = .done
+        nameField.delegate = self
         view.addSubview(nameField)
         nameField.horizontalToSuperview(insets: .horizontal(edsSpace))
         nameField.topToBottom(of: titleLable, offset: edsSpace)
@@ -57,6 +59,14 @@ class DeviceAdditionAlertController: UIAlertController {
             //uiaction(ok/cancel)等控件height=44
             devicePicker.bottomToSuperview(offset: -edsHeight)
         }
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        view.center = view.center.offset(x: 0, y: -60)
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
     }
 
     func getAddedDeviceId() -> String {

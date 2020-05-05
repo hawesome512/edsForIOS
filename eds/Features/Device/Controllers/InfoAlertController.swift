@@ -8,7 +8,7 @@
 
 import UIKit
 
-class InfoAlertController: UIAlertController {
+class InfoAlertController: UIAlertController, UITextFieldDelegate {
 
     private let titleLable = UILabel()
     private let nameField = LooseTextField()
@@ -43,6 +43,10 @@ class InfoAlertController: UIAlertController {
         nameField.font = UIFont.preferredFont(forTextStyle: .body)
         nameField.placeholder = "title".localize()
         nameField.becomeFirstResponder()
+        nameField.returnKeyType = .next
+        nameField.delegate = self
+        nameField.tag = 0
+        nameField.clearButtonMode = .whileEditing
         view.addSubview(nameField)
         nameField.horizontalToSuperview(insets: .horizontal(edsSpace))
         nameField.topToBottom(of: titleLable, offset: edsSpace)
@@ -50,6 +54,10 @@ class InfoAlertController: UIAlertController {
         valueField.backgroundColor = UIColor.systemGray3.withAlphaComponent(0.7)
         valueField.font = UIFont.preferredFont(forTextStyle: .body)
         valueField.placeholder = "value".localize()
+        valueField.returnKeyType = .next
+        valueField.delegate = self
+        valueField.tag = 1
+        valueField.clearButtonMode = .whileEditing
         view.addSubview(valueField)
         valueField.horizontalToSuperview(insets: .horizontal(edsSpace))
         valueField.topToBottom(of: nameField, offset: edsSpace)
@@ -57,9 +65,25 @@ class InfoAlertController: UIAlertController {
         unitField.backgroundColor = UIColor.systemGray3.withAlphaComponent(0.7)
         unitField.font = UIFont.preferredFont(forTextStyle: .body)
         unitField.placeholder = "unit".localize()
+        unitField.returnKeyType = .done
+        unitField.delegate = self
+        valueField.clearButtonMode = .whileEditing
+        unitField.tag = 2
         view.addSubview(unitField)
         unitField.horizontalToSuperview(insets: .horizontal(edsSpace))
         unitField.topToBottom(of: valueField, offset: edsSpace)
+    }
+
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        view.center = view.center.offset(x: 0, y: -60)
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        let newTag = textField.tag + 1
+        if let nextField = view.viewWithTag(newTag) as? UITextField {
+            nextField.becomeFirstResponder()
+        }
+        return textField.resignFirstResponder()
     }
 
     func getDeviceInfo() -> DeviceInfo? {
@@ -76,7 +100,7 @@ class InfoAlertController: UIAlertController {
                 return deviceInfo
             } else {
                 info.append(contentsOf: DeviceInfo.infoSeparator + value)
-                return DeviceInfo(info: info)
+                return DeviceInfo.initInfo(with: info)
             }
         }
         return nil

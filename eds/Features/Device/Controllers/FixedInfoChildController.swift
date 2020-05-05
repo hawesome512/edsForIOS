@@ -77,6 +77,10 @@ class FixedInfoChildController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        guard AccountUtility.sharedInstance.isOperable() else {
+            return
+        }
 
         let menuController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let editAction = UIAlertAction(title: "edit".localize(), style: .default) { _ in
@@ -97,14 +101,23 @@ class FixedInfoChildController: UITableViewController {
         }
 
         parentVC?.navigationController?.present(menuController, animated: true, completion: nil)
-        tableView.deselectRow(at: indexPath, animated: true)
     }
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard AccountUtility.sharedInstance.isOperable() else {
+            return nil
+        }
         let headerView = AdditionTableHeaderView()
         headerView.title.text = "add_info".localize()
         headerView.delegate = self
         return headerView
+    }
+
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        guard AccountUtility.sharedInstance.isOperable() else {
+            return 0
+        }
+        return tableView.estimatedRowHeight
     }
 
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {

@@ -10,11 +10,14 @@
 import Foundation
 import Moya
 import CocoaMQTT
+import RxCocoa
 
 class TagUtility: MQTTServiceDelegate {
 
     //单例，只允许存在一个实例
     static let sharedInstance = TagUtility()
+    var successfulLoadedTagList = BehaviorRelay<Bool>(value: false)
+    var successfulUpdatedTagList = BehaviorRelay<Bool>(value: false)
 
     private init() { }
 
@@ -43,6 +46,7 @@ class TagUtility: MQTTServiceDelegate {
                 let tempList = JsonUtility.getTagList(data: response.data)
                 self.tagList = (tempList?.filter { $0 != nil })! as! [Tag]
                 self.updateTagList(with: self.tagList)
+                self.successfulLoadedTagList.accept(true)
                 print("TagUtility:Load project tag list.")
             default:
                 break
@@ -60,6 +64,7 @@ class TagUtility: MQTTServiceDelegate {
             switch result {
             case .success(let response):
                 self.update(with: JsonUtility.getTagValues(data: response.data))
+                self.successfulUpdatedTagList.accept(true)
                 print("TagUtility:Update \(tags.count) tag values.")
             default:
                 break

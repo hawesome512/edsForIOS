@@ -62,6 +62,9 @@ class AlarmListViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        guard AccountUtility.sharedInstance.isOperable() else {
+            return nil
+        }
         let alarm = alarmList[indexPath.row]
 
         let deleteAction = UIContextualAction(style: .destructive, title: "delete".localize()) { _, _, completionHandler in

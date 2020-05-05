@@ -29,7 +29,11 @@ class WorkorderListViewController: UITableViewController, WorkorderAdditionDeleg
         tableView.register(WorkorderCell.self, forCellReuseIdentifier: Workorder.description)
         let reverseButton = UIBarButtonItem(image: UIImage(systemName: "arrow.up.arrow.down"), style: .plain, target: self, action: #selector(reverseWorkorder))
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addWorkorder))
-        navigationItem.rightBarButtonItems = [addButton, reverseButton]
+        if AccountUtility.sharedInstance.isOperable() {
+            navigationItem.rightBarButtonItems = [addButton, reverseButton]
+        } else {
+            navigationItem.rightBarButtonItems = [reverseButton]
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -74,9 +78,14 @@ class WorkorderListViewController: UITableViewController, WorkorderAdditionDeleg
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            let workorder = workorderList[indexPath.row]
+
+
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        guard AccountUtility.sharedInstance.isOperable() else {
+            return nil
+        }
+        let deleteAction = UIContextualAction(style: .destructive, title: "delete".localize()) { _, _, completionHandler in
+            let workorder = self.workorderList[indexPath.row]
             let deleteVC = ControllerUtility.generateDeletionAlertController(with: workorder.title)
             let deleteAction = UIAlertAction(title: "delete".localize(), style: .destructive) { _ in
                 workorder.prepareDeleted()
@@ -86,8 +95,10 @@ class WorkorderListViewController: UITableViewController, WorkorderAdditionDeleg
                 tableView.deleteRows(at: [indexPath], with: .automatic)
             }
             deleteVC.addAction(deleteAction)
-            present(deleteVC, animated: true, completion: nil)
+            self.present(deleteVC, animated: true, completion: nil)
+            completionHandler(true)
         }
+        return UISwipeActionsConfiguration(actions: [deleteAction])
     }
 
     @objc func addWorkorder() {

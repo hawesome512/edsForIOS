@@ -95,14 +95,24 @@ extension String {
         return nil
     }
 
+
+    /// EDS图片在服务器中的地址
     func getEDSServletImageUrl() -> URL {
         //历史遗留，已存在xxx.jpg or xxx.jpeg 数据
         let image = self.contains(".") ? self : "\(self).png"
         return URL(string: "\(EDSConfig.servicePath):8443/EDSServlet/upload/\(image)")!
     }
 
+
+    /// EDS运维指导文件在服务器中的地址
     func getEDSServletWorkorderDocUrl() -> String {
         return "\(EDSConfig.servicePath):8443/EDSServlet/upload/workorder/\(self)"
+    }
+
+
+    /// EDS使用教程文件在服务器中的地址
+    func getEDSServletHelpURL() -> String {
+        return "\(EDSConfig.servicePath):8443/EDSServlet/upload/help/\(self)"
     }
 
     func getImageNameFromURL() -> String {

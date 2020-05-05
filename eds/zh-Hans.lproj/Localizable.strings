@@ -66,7 +66,7 @@
 /* profile */
 "profile" = "头像";
 /* addAccount */
-"addAccount" = "新增用户";
+"addAccount" = "新增成员";
 /* withoutAction */
 "withoutAction" = "尚无用户记录";
 /* transferAccount */
@@ -77,6 +77,14 @@
 "addAccountLimit" = "管理组最多允许%d个用户，请先删除现有用户,或向EDS服务申请扩容！";
 /* imcomplete */
 "imcomplete" = "请完善必要的信息";
+/* QRCodeHelp */
+"QRCodeHelp" = "此二维码动态生成，在%@前有效，截屏无效。";
+/* aboutCompany */
+"aboutCompany" = "福建省厦门市集美区孙坂南路92、94、96号\r\nTEL：0592-6100660   FAX：0592-6100661\r\n士林电机厂股份有限公司 %d © All rights reserved.";
+/* aboutDescription */
+"aboutDescription" = "EDS创新型云管理平台，提供中低压配电领域全新电力监控解决方案，具有低成本、易部署、高兼容、灵活扩容等优势，实现电气系统智能、便捷、安全地运行。";
+/* aboutMore */
+"aboutMore" = "了解更多EDS功能👉";
 
 /* home_energy */
 "home_energy" = "用电";
@@ -531,3 +539,8 @@
 "workorder_distribution" = "%@：\r\n   你好！\r\n   你有一条待执行的工单！\r\n   工单主旨：%@\r\n   建议时间：%@\r\n   资产范围：%@\r\n   工单编号：%@\r\n\r\n请使用EDS云管理APP执行此工单，谢谢！";
 /* workorder_distribution_title */
 "workorder_distribution_title" = "EDS工单派发通知";
+
+/* action_login */
+"action_login" = "登录EDS";
+/* action_other */
+"action_other" = "其他操作";

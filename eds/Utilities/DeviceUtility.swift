@@ -8,6 +8,7 @@
 
 import Foundation
 import Moya
+import RxCocoa
 
 class DeviceUtility {
 
@@ -15,13 +16,14 @@ class DeviceUtility {
     var deviceList: [Device] = []
     //单例，只允许存在一个实例
     static let sharedInstance = DeviceUtility()
+    var successfulLoaded = BehaviorRelay<Bool>(value: false)
 
     private init() { }
 
     /// 从后台导入资产设备列表
     func loadProjectDeviceList() {
         //获取后台服务设备列表请求在生命周期中只有一次
-        guard deviceList.count == 0,let projID = AccountUtility.sharedInstance.account?.id else {
+        guard deviceList.count == 0, let projID = AccountUtility.sharedInstance.account?.id else {
             return
         }
         let factor = EDSServiceQueryFactor(id: projID)
@@ -31,6 +33,7 @@ class DeviceUtility {
                 //后台返回数据类型[tag?]?👉[tag]
                 let tempList = JsonUtility.getEDSServiceList(with: response.data, type: [Device]())
                 self.deviceList = (tempList?.filter { $0 != nil })! as! [Device]
+                self.successfulLoaded.accept(true)
                 print("TagUtility:Load project device list.")
             default:
                 break

@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import Moya
 import SwiftDate
+
 class LoginController: UIViewController {
 
     private let disposeBag = DisposeBag()
@@ -17,32 +18,50 @@ class LoginController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
-
-
-        // Do any additional setup after loading the view.
-        //初始化后台数据，导入数据列表
-        AccountUtility.sharedInstance.loadProjectAccount(accountID: "2/XRD", phoneNumber: "18759282157")
-        TagUtility.sharedInstance.loadProjectTagList()
-        DeviceUtility.sharedInstance.loadProjectDeviceList()
-        AlarmUtility.sharedInstance.loadProjectAlarmList()
-        WorkorderUtility.sharedInstance.loadProjectWorkerorderList()
-        BasicUtility.sharedInstance.loadProjectBasicInfo()
     }
 
     private func initViews() {
+
+        let projField = UITextField()
+        let numberField = UITextField()
 
         let button = UIButton()
         button.setTitle("登录", for: .normal)
         button.backgroundColor = .systemBlue
         button.rx.tap.bind(onNext: {
 
-            let mainVC = MainController()
-            mainVC.modalPresentationStyle = .fullScreen
-            self.present(mainVC, animated: true, completion: nil)
+            guard let projID = projField.text, let number = numberField.text else {
+                return
+            }
+            AccountUtility.sharedInstance.loadProjectAccount(accountID: projID, phoneNumber: number)
+            AccountUtility.sharedInstance.successfulLoaded.bind(onNext: { loaded in
+                if loaded {
+                    let mainVC = MainController()
+                    mainVC.modalPresentationStyle = .fullScreen
+                    self.present(mainVC, animated: true, completion: nil)
+                }
+            }).disposed(by: self.disposeBag)
+
         }).disposed(by: disposeBag)
         view.addSubview(button)
         button.centerInSuperview()
         button.height(60)
         button.widthToSuperview(multiplier: 0.8)
+
+        projField.text = "2/XRD"
+        projField.backgroundColor = .systemGray3
+        view.addSubview(projField)
+        projField.height(60)
+        projField.bottomToTop(of: button, offset: -edsSpace)
+        projField.width(to: button)
+        projField.centerX(to: button)
+
+        numberField.text = "18759282157"
+        numberField.backgroundColor = .systemGray3
+        view.addSubview(numberField)
+        numberField.height(60)
+        numberField.bottomToTop(of: projField, offset: -edsSpace)
+        numberField.centerX(to: button)
+        numberField.width(to: button)
     }
 }
