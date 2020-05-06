@@ -25,6 +25,7 @@ class AccountUtility {
     //当前登录手机用户
     var loginedPhone: Phone?
     var successfulLoaded = BehaviorRelay<Bool>(value: false)
+    var successfulVerified = BehaviorRelay<Bool>(value: false)
 
     private init() { }
 
@@ -32,6 +33,38 @@ class AccountUtility {
         self.account = account
         phoneList = account.getPhones()
         loginedPhone = phoneList.first(where: { $0.number == phoneNumber })
+    }
+
+    func verifyCode(_ phoneNumber: String, code: String? = nil, controller: UIViewController) {
+        let phone = PhoneVerification(phoneNumber: phoneNumber)
+        if let code = code {
+            phone.code = code
+        }
+        MoyaProvider<EDSService>().request(.verifyPhoneLogin(phoneVerification: phone)) { result in
+            switch result {
+            case .success(let response):
+                //验证成功
+                if let account = JsonUtility.getPhoneAccount(data: response.data) {
+                    self.loginSucceeded(account, phoneNumber: phoneNumber)
+                    self.successfulVerified.accept(true)
+                    print("verify phone number and code success.")
+                    //登录成功后开始载入数据
+                    TagUtility.sharedInstance.loadProjectTagList()
+                    DeviceUtility.sharedInstance.loadProjectDeviceList()
+                    AlarmUtility.sharedInstance.loadProjectAlarmList()
+                    WorkorderUtility.sharedInstance.loadProjectWorkerorderList()
+                    BasicUtility.sharedInstance.loadProjectBasicInfo()
+                    return
+                }
+                //验证失败
+                if let verifiedResult = JsonUtility.getPhoneVerifyResult(data: response.data)?.0, verifiedResult.isError() {
+                    let message = String(describing: verifiedResult.self).localize(with: prefixLogin)
+                    ControllerUtility.presentAlertController(content: message, controller: controller)
+                }
+            default:
+                break
+            }
+        }
     }
 
     /// 从后台导入列表
@@ -78,7 +111,7 @@ class AccountUtility {
         return phoneList.first { $0.name == validName }
     }
 
-    
+
     /// 验证当前用户是否有操作权限
     func isOperable() -> Bool {
         guard let level = loginedPhone?.level else {
@@ -96,4 +129,5 @@ class AccountUtility {
         let project = account?.id.replacingOccurrences(of: "/", with: "_")
         return "\(project ?? NIL)_\(String.randomString(length: idCount))"
     }
+
 }

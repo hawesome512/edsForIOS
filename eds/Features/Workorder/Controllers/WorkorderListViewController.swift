@@ -13,6 +13,8 @@ class WorkorderListViewController: UITableViewController, WorkorderAdditionDeleg
 
 
     var workorderList: [Workorder] = []
+    var searchWorkorderList = [Workorder]()
+    var searchVC = UISearchController()
 
     var deviceFilter: String?
 
@@ -34,6 +36,10 @@ class WorkorderListViewController: UITableViewController, WorkorderAdditionDeleg
         } else {
             navigationItem.rightBarButtonItems = [reverseButton]
         }
+
+        searchVC.searchResultsUpdater = self
+        searchVC.obscuresBackgroundDuringPresentation = false
+        navigationItem.searchController = searchVC
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -51,12 +57,12 @@ class WorkorderListViewController: UITableViewController, WorkorderAdditionDeleg
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return workorderList.count
+        return searchVC.isActive ? searchWorkorderList.count : workorderList.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Workorder.description, for: indexPath) as! WorkorderCell
-        cell.workorder = workorderList[indexPath.row]
+        cell.workorder = searchVC.isActive ? searchWorkorderList[indexPath.row] : workorderList[indexPath.row]
         cell.selectionStyle = .none
         return cell
     }
@@ -71,7 +77,7 @@ class WorkorderListViewController: UITableViewController, WorkorderAdditionDeleg
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let workorderVC = WorkorderViewController()
-        workorderVC.workorder = workorderList[indexPath.row]
+        workorderVC.workorder = searchVC.isActive ? searchWorkorderList[indexPath.row] : workorderList[indexPath.row]
         workorderVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(workorderVC, animated: true)
 
@@ -84,8 +90,8 @@ class WorkorderListViewController: UITableViewController, WorkorderAdditionDeleg
         guard AccountUtility.sharedInstance.isOperable() else {
             return nil
         }
+        let workorder = searchVC.isActive ? searchWorkorderList[indexPath.row] : workorderList[indexPath.row]
         let deleteAction = UIContextualAction(style: .destructive, title: "delete".localize()) { _, _, completionHandler in
-            let workorder = self.workorderList[indexPath.row]
             let deleteVC = ControllerUtility.generateDeletionAlertController(with: workorder.title)
             let deleteAction = UIAlertAction(title: "delete".localize(), style: .destructive) { _ in
                 workorder.prepareDeleted()
@@ -117,6 +123,20 @@ class WorkorderListViewController: UITableViewController, WorkorderAdditionDeleg
         workorderList.insert(workorder, at: 0)
         WorkorderUtility.sharedInstance.update(with: workorder)
         tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+    }
+
+}
+
+extension WorkorderListViewController: UISearchResultsUpdating {
+
+    func updateSearchResults(for searchController: UISearchController) {
+        if let searchText = searchController.searchBar.text {
+            searchWorkorderList = workorderList.filter { workorder in
+                return workorder.title.contains(searchText) || workorder.worker.contains(searchText) ||
+                    workorder.getShortTimeRange().contains(searchText) || workorder.location.contains(searchText)
+            }
+            tableView.reloadData()
+        }
     }
 
 }

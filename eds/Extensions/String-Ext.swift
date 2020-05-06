@@ -71,6 +71,17 @@ extension String {
     }
 
 
+    /// 验证是否是固定长度的字符串
+    func verifyValidNumber(count: Int) -> Bool {
+        let range = NSRange(location: 0, length: self.count)
+        let regex = try? NSRegularExpression(pattern: "^\\d{\(count)}$", options: .allowCommentsAndWhitespace)
+        if let _ = regex?.firstMatch(in: self, options: [], range: range) {
+            return true
+        } else {
+            return false
+        }
+    }
+
     /// 分离用户名和电话号码，e.g.:hawesome-123456,hawesome 123456
     func separateNameAndPhone() -> (name: String, phone: String?) {
         let range = NSRange(location: 0, length: self.count)

@@ -37,6 +37,7 @@ class AlarmCell: UITableViewCell {
         let _ = ViewUtility.addCardEffect(in: self)
 
         deviceImage.contentMode = .scaleAspectFit
+        deviceImage.layer.masksToBounds = true
 //        deviceImage.image = UIImage(named: "device_A1")
         addSubview(deviceImage)
         deviceImage.heightToSuperview(offset: -edsSpace * 2)

@@ -46,8 +46,10 @@ class EnergyController: UITableViewController {
 
     private func initViews() {
         tableView.allowsSelection = false
-        let branchBUtton = UIBarButtonItem(image: UIImage(named: "branch"), style: .plain, target: self, action: #selector(editBranch))
-        navigationItem.rightBarButtonItem = branchBUtton
+        if AccountUtility.sharedInstance.isOperable() {
+            let branchBUtton = UIBarButtonItem(image: UIImage(named: "branch"), style: .plain, target: self, action: #selector(editBranch))
+            navigationItem.rightBarButtonItem = branchBUtton
+        }
     }
 
     @objc func editBranch() {

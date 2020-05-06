@@ -60,4 +60,11 @@ class ControllerUtility {
         alertVC.addAction(cancel)
         return alertVC
     }
+
+    static func presentAlertController(content: String, controller: UIViewController) {
+        let alertVC = UIAlertController(title: content, message: nil, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "ok".localize(), style: .cancel, handler: nil)
+        alertVC.addAction(okAction)
+        controller.present(alertVC, animated: true, completion: nil)
+    }
 }

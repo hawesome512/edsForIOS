@@ -544,3 +544,22 @@
 "action_login" = "登录EDS";
 /* action_other */
 "action_other" = "其他操作";
+
+/* login_phone */
+"login_phone" = "手机号码";
+/* login_code */
+"login_code" = "验证码";
+/* login */
+"login" = "登录";
+/* login_acquire */
+"login_acquire" = "获取验证码";
+/* login_phoneFormat */
+"login_phoneFormat" = "请输入正确格式的手机号码";
+/* login_phoneCodeFormat */
+"login_phoneCodeFormat" = "请输入正确格式的手机号码和验证码";
+/* login_invalidPhone */
+"login_invalidPhone" = "电话号码未注册";
+/* login_incorrectCode */
+"login_incorrectCode" = "验证码错误";
+/* login_overtimeCode */
+"login_overtimeCode" = "验证码超时";

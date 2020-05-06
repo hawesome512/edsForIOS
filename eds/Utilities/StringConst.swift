@@ -25,5 +25,7 @@ let prefixHome = "home"
 let prefixEnergy = "energy"
 //本地化中跟记录相关String
 let prefixAction = "action"
+//本地化中跟登录相关String
+let prefixLogin = "login"
 
 

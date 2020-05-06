@@ -16,6 +16,9 @@ class AlarmListViewController: UITableViewController {
     private let disposeBag = DisposeBag()
     private var workorderAlarm: Alarm?
 
+    private let searchVC = UISearchController(searchResultsController: nil)
+    private var searchAlarmList = [Alarm]()
+
     //从设备页调整过来，只显示此设备记录
     var deviceFilter: String?
 
@@ -33,6 +36,10 @@ class AlarmListViewController: UITableViewController {
             self.tableView.reloadData()
         }).disposed(by: disposeBag)
         navigationItem.rightBarButtonItem = reverseButton
+
+        searchVC.obscuresBackgroundDuringPresentation = false
+        searchVC.searchResultsUpdater = self
+        navigationItem.searchController = searchVC
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -48,7 +55,7 @@ class AlarmListViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return alarmList.count
+        return searchVC.isActive ? searchAlarmList.count : alarmList.count
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -57,7 +64,7 @@ class AlarmListViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = AlarmCell()
-        cell.alarm = alarmList[indexPath.row]
+        cell.alarm = searchVC.isActive ? searchAlarmList[indexPath.row] : alarmList[indexPath.row]
         return cell
     }
 
@@ -65,7 +72,7 @@ class AlarmListViewController: UITableViewController {
         guard AccountUtility.sharedInstance.isOperable() else {
             return nil
         }
-        let alarm = alarmList[indexPath.row]
+        let alarm = searchVC.isActive ? searchAlarmList[indexPath.row] : alarmList[indexPath.row]
 
         let deleteAction = UIContextualAction(style: .destructive, title: "delete".localize()) { _, _, completionHandler in
             self.delete(alarm, at: indexPath)
@@ -148,7 +155,7 @@ class AlarmListViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let alarmVC = AlarmViewController()
-        alarmVC.alarm = alarmList[indexPath.row]
+        alarmVC.alarm = searchVC.isActive ? searchAlarmList[indexPath.row] : alarmList[indexPath.row]
         if let cell = tableView.cellForRow(at: indexPath) as? AlarmCell {
             alarmVC.title = (cell.deviceLabel.text ?? "") + " " + (cell.titleLabel.text ?? "")
         }
@@ -159,8 +166,26 @@ class AlarmListViewController: UITableViewController {
 
 }
 
-// MARK: - 新增工单
-extension AlarmListViewController: WorkorderAdditionDelegate {
+// MARK: - 新增工单,搜索结果
+extension AlarmListViewController: WorkorderAdditionDelegate, UISearchResultsUpdating {
+
+
+    /// 从异常类型和设备名称中筛选
+    /// - Parameter searchController: <#searchController description#>
+    func updateSearchResults(for searchController: UISearchController) {
+        if let searchText = searchController.searchBar.text {
+            searchAlarmList = alarmList.filter { alarm in
+                if let device = DeviceUtility.sharedInstance.getDevice(of: alarm.device) {
+                    let alarmText = TagValueConverter.getAlarmText(with: alarm.alarm, device: device)
+                    return alarmText.contains(searchText) || device.title.contains(searchText)
+                } else {
+                    return false
+                }
+            }
+            tableView.reloadData()
+        }
+    }
+
     func added(workorder: Workorder) {
         workorderAlarm!.report = workorder.id
         WorkorderUtility.sharedInstance.update(with: workorder)

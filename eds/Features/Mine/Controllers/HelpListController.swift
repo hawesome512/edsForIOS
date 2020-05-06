@@ -15,6 +15,8 @@ class HelpListController: UITableViewController {
     private let disposeBag = DisposeBag()
 
     var helpList = [Help]()
+    var searchHelpList = [Help]()
+    var searchVC = UISearchController(searchResultsController: nil)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +24,9 @@ class HelpListController: UITableViewController {
     }
 
     private func initViews() {
+        searchVC.searchResultsUpdater = self
+        searchVC.obscuresBackgroundDuringPresentation = false
+        tableView.tableHeaderView = searchVC.searchBar
         tableView.tableFooterView = UIView()
         tableView.register(HelpCell.self, forCellReuseIdentifier: String(describing: HelpCell.self))
         EDSResourceUtility.sharedInstance.loadHelpList()
@@ -39,19 +44,30 @@ class HelpListController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return helpList.count
+        return searchVC.isActive ? searchHelpList.count : helpList.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: HelpCell.self), for: indexPath) as! HelpCell
-        cell.help = helpList[indexPath.row]
+        cell.help = searchVC.isActive ? searchHelpList[indexPath.row] : helpList[indexPath.row]
         return cell
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let help = helpList[indexPath.row]
+        let help = searchVC.isActive ? searchHelpList[indexPath.row] : helpList[indexPath.row]
         ShareUtility.openWeb(help.name.getEDSServletHelpURL())
     }
+
+}
+
+extension HelpListController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        if let searchText = searchController.searchBar.text {
+            searchHelpList = helpList.filter { $0.name.contains(searchText) }
+            tableView.reloadData()
+        }
+    }
+
 
 }

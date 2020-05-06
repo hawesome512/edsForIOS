@@ -49,4 +49,8 @@ enum PhoneVerificationResult: Int {
     case validCode = 5
     //验证码已发送至手机
     case sendedCode = 6
+
+    func isError() -> Bool {
+        return self.rawValue <= PhoneVerificationResult.overtimeCode.rawValue
+    }
 }

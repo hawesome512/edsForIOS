@@ -12,6 +12,9 @@ import RxCocoa
 
 class DeviceUtility {
 
+    //当设备数量不多时，默认全展开
+    private let foldLimit = 10
+
     //通过单列调取资产设备列表设备
     var deviceList: [Device] = []
     //单例，只允许存在一个实例
@@ -33,6 +36,9 @@ class DeviceUtility {
                 //后台返回数据类型[tag?]?👉[tag]
                 let tempList = JsonUtility.getEDSServiceList(with: response.data, type: [Device]())
                 self.deviceList = (tempList?.filter { $0 != nil })! as! [Device]
+                if self.deviceList.count <= self.foldLimit {
+                    self.deviceList.forEach { $0.collapsed = false }
+                }
                 self.successfulLoaded.accept(true)
                 print("TagUtility:Load project device list.")
             default:
