@@ -29,7 +29,7 @@ class AccountCell: UITableViewCell {
                 return
             }
             //只有登录用户是管理员，才能对“其他人”进行权限升降操作
-            if loginedPhone.level == .phoneAdmin, phone != loginedPhone {
+            if loginedPhone.level <= .phoneAdmin, phone.level > .phoneAdmin {
                 levelButton.alpha = 1
             } else {
                 levelButton.alpha = 0

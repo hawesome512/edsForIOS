@@ -21,7 +21,7 @@ class TagUtility: MQTTServiceDelegate {
 
     private init() { }
 
-    private var tagList: [Tag] = [] {
+    var tagList: [Tag] = [] {
         didSet {
             //获取点列表之后，进行mqtt订阅
             MQTTService.sharedInstance.delegate = self

@@ -158,6 +158,7 @@ extension MineController: UITableViewDataSource, UITableViewDelegate {
             exitButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .title3)
             exitButton.backgroundColor = .white
             exitButton.rx.tap.bind(onNext: {
+                AccountUtility.sharedInstance.prepareExitAccount()
                 self.dismiss(animated: true, completion: nil)
             }).disposed(by: disposeBag)
             return exitButton

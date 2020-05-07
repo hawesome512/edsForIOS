@@ -20,7 +20,9 @@ class MineHeaderView: UIView, UITextFieldDelegate {
     let profileImage = UIImageView()
     let levelLabel = UILabel()
     let phoneLabel = UILabel()
+    let phoneImage = UIImageView()
     let emailLabel = UILabel()
+    let emailImage = UIImageView()
     let levelImage = UIImageView()
 
     var loginedPhone: Phone? {
@@ -35,6 +37,12 @@ class MineHeaderView: UIView, UITextFieldDelegate {
             levelImage.image = phone.level.getIcon()?.withTintColor(.white, renderingMode: .alwaysTemplate)
             phoneLabel.text = phone.number
             emailLabel.text = phone.email
+            if phone.level == .systemAdmin {
+                phoneLabel.alpha = 0
+                emailLabel.alpha = 0
+                phoneImage.alpha = 0
+                emailImage.alpha = 0
+            }
         }
     }
     var parentVC: UIViewController?
@@ -58,7 +66,7 @@ class MineHeaderView: UIView, UITextFieldDelegate {
         addSubview(bgImage)
         bgImage.edgesToSuperview()
 
-        profileImage.image =  UIImage(named: "eds")
+        profileImage.image = UIImage(named: "eds")
         profileImage.layer.masksToBounds = true
         profileImage.layer.borderColor = UIColor.white.cgColor
         profileImage.layer.borderWidth = 2
@@ -100,7 +108,6 @@ class MineHeaderView: UIView, UITextFieldDelegate {
         emailLabel.trailingToSuperview(offset: edsMinSpace)
         emailLabel.bottomToSuperview(offset: -edsMinSpace)
 
-        let emailImage = UIImageView()
         emailImage.image = UIImage(systemName: "envelope")
         emailImage.contentMode = .scaleAspectFit
         emailImage.tintColor = .white
@@ -117,7 +124,6 @@ class MineHeaderView: UIView, UITextFieldDelegate {
         phoneLabel.topToSuperview(offset: edsMinSpace)
         phoneLabel.leading(to: emailLabel)
 
-        let phoneImage = UIImageView()
         phoneImage.image = UIImage(systemName: "phone")
         phoneImage.tintColor = .white
         bottomView.addSubview(phoneImage)
@@ -137,7 +143,7 @@ class MineHeaderView: UIView, UITextFieldDelegate {
         nameLabel.topToBottom(of: profileImage)
         nameLabel.trailingToLeading(of: emailImage, offset: edsMinSpace, relation: .equalOrGreater)
     }
-    
+
     override func draw(_ rect: CGRect) {
         let statusHeight = parentVC?.view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
         profileTopConstraint?.constant = statusHeight + edsMinSpace
@@ -150,6 +156,10 @@ class MineHeaderView: UIView, UITextFieldDelegate {
     }
 
     func showEditVC() {
+        //系统管理员的手机身份是虚拟生成的，无法编辑
+        guard self.loginedPhone?.level != UserLevel.systemAdmin else {
+            return
+        }
         let menuVC = UIAlertController(title: "edit".localize(), message: nil, preferredStyle: .actionSheet)
         let confirm = "confirm".localize()
         //头像

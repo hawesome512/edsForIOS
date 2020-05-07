@@ -49,7 +49,7 @@ class AccountListController: UITableViewController, AdditionDelegate {
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let loginedAccount = AccountUtility.sharedInstance.loginedPhone!
-        guard loginedAccount.level == .phoneAdmin else {
+        guard loginedAccount.level <= .phoneAdmin else {
             return nil
         }
         let headerView = AdditionTableHeaderView()
@@ -67,7 +67,7 @@ class AccountListController: UITableViewController, AdditionDelegate {
         //当前登录用户必须是管理员，且cell不是自身才能（删除+转让管理员
         let account = accountList[indexPath.row]
         let loginedAccount = AccountUtility.sharedInstance.loginedPhone!
-        guard loginedAccount.level == .phoneAdmin, loginedAccount != account else {
+        guard loginedAccount.level <= .phoneAdmin, account.level > .phoneAdmin else {
             return nil
         }
         let deleteAction = UIContextualAction(style: .destructive, title: "delete".localize()) { _, _, completionHandler in
@@ -97,6 +97,11 @@ class AccountListController: UITableViewController, AdditionDelegate {
             transferVC.addAction(confirmAction)
             self.present(transferVC, animated: true, completion: nil)
             completionHander(true)
+        }
+
+        //系统管理员只能删除其他非管理员用户，不能删除手机管理员，也不能转移管理员
+        if loginedAccount.level == .systemAdmin {
+            return UISwipeActionsConfiguration(actions: [deleteAction])
         }
         return UISwipeActionsConfiguration(actions: [deleteAction, transferAction])
     }

@@ -12,6 +12,13 @@ import RxCocoa
 
 class AccountUtility {
 
+    static let phoneKey = "login_phone"
+    static let timeKey = "login_time"
+    static let authorityKey = "login_authority"
+
+    static let usernameKey = "login_username"
+    static let passwordKey = "login_password"
+
     //随机码，62^5≈10亿种组合
     private let idCount = 5
 
@@ -24,15 +31,19 @@ class AccountUtility {
     var phoneList: [Phone] = []
     //当前登录手机用户
     var loginedPhone: Phone?
-    var successfulLoaded = BehaviorRelay<Bool>(value: false)
-    var successfulVerified = BehaviorRelay<Bool>(value: false)
+    var successfulLogined = BehaviorRelay<Bool?>(value: nil)
 
     private init() { }
 
     func loginSucceeded(_ account: Account, phoneNumber: String) {
         self.account = account
         phoneList = account.getPhones()
-        loginedPhone = phoneList.first(where: { $0.number == phoneNumber })
+        if let phone = phoneList.first(where: { $0.number == phoneNumber }) {
+            loginedPhone = phone
+        } else {
+            loginedPhone = Phone.inventAdminPhone(username: phoneNumber)
+            phoneList.insert(loginedPhone!, at: 0)
+        }
     }
 
     func verifyCode(_ phoneNumber: String, code: String? = nil, controller: UIViewController) {
@@ -46,18 +57,22 @@ class AccountUtility {
                 //验证成功
                 if let account = JsonUtility.getPhoneAccount(data: response.data) {
                     self.loginSucceeded(account, phoneNumber: phoneNumber)
-                    self.successfulVerified.accept(true)
+                    self.successfulLogined.accept(true)
                     print("verify phone number and code success.")
                     //登录成功后开始载入数据
-                    TagUtility.sharedInstance.loadProjectTagList()
-                    DeviceUtility.sharedInstance.loadProjectDeviceList()
-                    AlarmUtility.sharedInstance.loadProjectAlarmList()
-                    WorkorderUtility.sharedInstance.loadProjectWorkerorderList()
-                    BasicUtility.sharedInstance.loadProjectBasicInfo()
+                    self.loadProjData()
+                    //保存登录信息:手机号，登录时间，密钥
+                    UserDefaults.standard.set(phoneNumber, forKey: AccountUtility.phoneKey)
+                    UserDefaults.standard.set(Date().toDateTimeString(), forKey: AccountUtility.timeKey)
+                    UserDefaults.standard.set(account.authority, forKey: AccountUtility.authorityKey)
                     return
                 }
                 //验证失败
                 if let verifiedResult = JsonUtility.getPhoneVerifyResult(data: response.data)?.0, verifiedResult.isError() {
+                    //有验证码：错误or超时，取消登录动画
+                    if let _ = code {
+                        self.successfulLogined.accept(false)
+                    }
                     let message = String(describing: verifiedResult.self).localize(with: prefixLogin)
                     ControllerUtility.presentAlertController(content: message, controller: controller)
                 }
@@ -67,41 +82,64 @@ class AccountUtility {
         }
     }
 
-    /// 从后台导入列表
-    func loadProjectAccount(accountID: String, phoneNumber: String) {
+    /// 用户名密码登录：从服务器数据库中导入用户列表，筛选出其中authority="username:password".toBase64的用户
+    /// - Parameters:
+    ///   - username: <#username description#>
+    ///   - password: <#password description#>
+    ///   - phoneNumber: 一天内免验证登录时，不为nil
+    func loadProjectAccount(username: String, password: String, controller: UIViewController, phoneNumber: String? = nil) {
         //获取后台服务,请求在生命周期中只有一次
         if let _ = account {
             return
         }
-        let factor = EDSServiceQueryFactor(id: accountID)
+        //因为用户id的格式为数字/工程名，使用id="/"将获取所有账户，e.g.:2/XRD、1/XKB
+        let factor = EDSServiceQueryFactor(id: "/")
         MoyaProvider<EDSService>().request(.queryAccountList(factor: factor)) { result in
             switch result {
             case .success(let response):
                 //后台返回数据类型[Account?]?👉[Account]
                 let tempList = JsonUtility.getEDSServiceList(with: response.data, type: [Account]())
-
-                if let account = (tempList?.filter { $0 != nil } as! [Account]).first {
-                    self.loginSucceeded(account, phoneNumber: phoneNumber)
+                let inputAuthority = "\(username):\(password)".toBase64()
+                if let account = (tempList?.filter { $0 != nil } as! [Account]).first(where: { $0.authority == inputAuthority }) {
+                    self.loginSucceeded(account, phoneNumber: phoneNumber ?? username)
+                    self.successfulLogined.accept(true)
+                    print("username:password login successed!")
                     //登录成功后开始载入数据
-                    TagUtility.sharedInstance.loadProjectTagList()
-                    DeviceUtility.sharedInstance.loadProjectDeviceList()
-                    AlarmUtility.sharedInstance.loadProjectAlarmList()
-                    WorkorderUtility.sharedInstance.loadProjectWorkerorderList()
-                    BasicUtility.sharedInstance.loadProjectBasicInfo()
+                    self.loadProjData()
+                    //保存登录信息：用户名+密码
+                    guard let _ = phoneNumber else {
+                        UserDefaults.standard.set(username, forKey: AccountUtility.usernameKey)
+                        UserDefaults.standard.set(password, forKey: AccountUtility.passwordKey)
+                        return
+                    }
+                } else {
+                    self.successfulLogined.accept(false)
+                    let message = "incorrectPassword".localize(with: prefixLogin)
+                    ControllerUtility.presentAlertController(content: message, controller: controller)
                 }
-                self.successfulLoaded.accept(true)
-                print("AccountUtility:Load project account.")
+//                print("AccountUtility:Load project account.")
             default:
                 break
             }
         }
     }
 
+
+    /// 登录验证成功后加载数据：监控点、设备、异常、工单、用户信息、能耗
+    func loadProjData() {
+        TagUtility.sharedInstance.loadProjectTagList()
+        DeviceUtility.sharedInstance.loadProjectDeviceList()
+        AlarmUtility.sharedInstance.loadProjectAlarmList()
+        WorkorderUtility.sharedInstance.loadProjectWorkerorderList()
+        BasicUtility.sharedInstance.loadProjectBasicInfo()
+    }
+
     func updatePhone() {
         guard let account = self.account else {
             return
         }
-        account.setPhone(phones: phoneList)
+        //排除虚拟手机管理员
+        account.setPhone(phones: phoneList.filter { $0.level != .systemAdmin })
         MoyaProvider<EDSService>().request(.updateAccount(account: account)) { _ in }
     }
 
@@ -128,6 +166,22 @@ class AccountUtility {
     func generateImageID() -> String {
         let project = account?.id.replacingOccurrences(of: "/", with: "_")
         return "\(project ?? NIL)_\(String.randomString(length: idCount))"
+    }
+
+
+    /// 退出时删除所有数据
+    /// 因执行退出后将返回登录页面，必须保证二次登录时可以重新请求数据
+    /// xxxUtility类中默认机制xxxList.count>0 将不再请求数据
+    func prepareExitAccount() {
+        account = nil
+        phoneList.removeAll()
+        loginedPhone = nil
+        TagUtility.sharedInstance.tagList.removeAll()
+        DeviceUtility.sharedInstance.deviceList.removeAll()
+        WorkorderUtility.sharedInstance.workorderList.removeAll()
+        AlarmUtility.sharedInstance.alarmList.removeAll()
+        BasicUtility.sharedInstance.basic = nil
+        BasicUtility.sharedInstance.energyBranch = nil
     }
 
 }

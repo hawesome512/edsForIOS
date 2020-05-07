@@ -71,6 +71,17 @@ class Phone: Comparable {
         return !nessary.contains { $0 == nil || $0!.isEmpty }
     }
 
+
+    /// 使用账号密码登录，新增虚拟管理员手机号
+    /// - Parameter username: <#username description#>
+    static func inventAdminPhone(username: String) -> Phone {
+        let phone = Phone()
+        phone.level = .systemAdmin
+        phone.name = username
+        phone.number = "18700000000"
+        return phone
+    }
+
     static func < (lhs: Phone, rhs: Phone) -> Bool {
         return lhs.level.rawValue < rhs.level.rawValue
     }
