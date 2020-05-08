@@ -111,9 +111,13 @@ extension MineController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         if let sectionModel = MineSectionModel(rawValue: indexPath.section) {
             switch sectionModel {
             case .user:
+                if AccountUtility.sharedInstance.loginedPhone?.level == UserLevel.qrcodeObserver {
+                    return
+                }
                 if indexPath.row == 0 {
                     let accountListVC = AccountListController()
                     accountListVC.hidesBottomBarWhenPushed = true
@@ -141,7 +145,6 @@ extension MineController: UITableViewDataSource, UITableViewDelegate {
                 break
             }
         }
-        tableView.deselectRow(at: indexPath, animated: true)
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -152,6 +155,7 @@ extension MineController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         if MineSectionModel(rawValue: section) == MineSectionModel.exit {
+            let footView = UIView()
             let exitButton = UIButton()
             exitButton.setTitle("exitEDS".localize(), for: .normal)
             exitButton.setTitleColor(.systemRed, for: .normal)
@@ -161,7 +165,10 @@ extension MineController: UITableViewDataSource, UITableViewDelegate {
                 AccountUtility.sharedInstance.prepareExitAccount()
                 self.dismiss(animated: true, completion: nil)
             }).disposed(by: disposeBag)
-            return exitButton
+            footView.addSubview(exitButton)
+            exitButton.edgesToSuperview(excluding: .bottom)
+            exitButton.heightToSuperview(multiplier: 0.5)
+            return footView
         } else {
             return nil
         }
@@ -169,12 +176,11 @@ extension MineController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         if MineSectionModel(rawValue: section) == MineSectionModel.exit {
-            return 50
+            return 100
         } else {
             return 0
         }
     }
-
 }
 
 extension MineController: MFMailComposeViewControllerDelegate {

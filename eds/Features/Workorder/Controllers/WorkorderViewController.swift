@@ -118,8 +118,9 @@ class WorkorderViewController: UIViewController {
         guard let state = workorder?.state else {
             return
         }
+        let userLevel = AccountUtility.sharedInstance.loginedPhone?.level
         //尚未执行，所有人都可以派发
-        toolbarItems?[0].isEnabled = (state.rawValue < WorkorderState.executed.rawValue)
+        toolbarItems?[0].isEnabled = (state.rawValue < WorkorderState.executed.rawValue && userLevel != UserLevel.qrcodeObserver)
         //必须是本人且尚未审核才可以执行
         toolbarItems?[2].isEnabled = (workorder!.worker == accountName && state.rawValue < WorkorderState.audited.rawValue)
         //必须是本人，且已执行的才可以审核
@@ -128,7 +129,7 @@ class WorkorderViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        
+
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.setToolbarHidden(false, animated: animated)
         navigationController?.toolbar.barStyle = .black

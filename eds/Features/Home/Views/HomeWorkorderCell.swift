@@ -72,9 +72,10 @@ class HomeWorkorderCell: UITableViewCell {
         titleLabel.text = "none".localize(with: prefixHome)
         titleLabel.textColor = .white
         titleLabel.font = UIFont.preferredFont(forTextStyle: .largeTitle)
+        titleLabel.adjustsFontSizeToFitWidth = true
         contentView.addSubview(titleLabel)
         titleLabel.leading(to: workorderImage)
-        titleLabel.trailingToLeading(of: stateImage, offset: edsSpace, relation: .equalOrGreater)
+        titleLabel.trailingToLeading(of: stateImage, offset: -edsSpace, relation: .equalOrLess)
         titleLabel.centerYToSuperview()
 
         slider.value = 0

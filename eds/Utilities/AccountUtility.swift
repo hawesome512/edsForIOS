@@ -35,9 +35,18 @@ class AccountUtility {
 
     private init() { }
 
-    func loginSucceeded(_ account: Account, phoneNumber: String) {
+
+    /// 登录成功后更新用户组
+    /// - Parameters:
+    ///   - account: <#account description#>
+    ///   - phoneNumber: 1⃣️ nil:扫码临时登录 2⃣️phoneNumber为电话号码：手机快捷登录 3⃣️ 否则为系统管理员
+    func loginSucceeded(_ account: Account, phoneNumber: String?) {
         self.account = account
         phoneList = account.getPhones()
+        guard let phoneNumber = phoneNumber else {
+            loginedPhone = Phone.inventTempPhone()
+            return
+        }
         if let phone = phoneList.first(where: { $0.number == phoneNumber }) {
             loginedPhone = phone
         } else {
@@ -87,7 +96,7 @@ class AccountUtility {
     ///   - username: <#username description#>
     ///   - password: <#password description#>
     ///   - phoneNumber: 一天内免验证登录时，不为nil
-    func loadProjectAccount(username: String, password: String, controller: UIViewController, phoneNumber: String? = nil) {
+    func loadProjectAccount(username: String, password: String, controller: UIViewController, phoneNumber: String? = nil, isScan: Bool = false) {
         //获取后台服务,请求在生命周期中只有一次
         if let _ = account {
             return
@@ -101,7 +110,10 @@ class AccountUtility {
                 let tempList = JsonUtility.getEDSServiceList(with: response.data, type: [Account]())
                 let inputAuthority = "\(username):\(password)".toBase64()
                 if let account = (tempList?.filter { $0 != nil } as! [Account]).first(where: { $0.authority == inputAuthority }) {
-                    self.loginSucceeded(account, phoneNumber: phoneNumber ?? username)
+                    
+                    let loginText = isScan ? nil : (phoneNumber ?? username)
+                    self.loginSucceeded(account, phoneNumber: loginText)
+                    
                     self.successfulLogined.accept(true)
                     print("username:password login successed!")
                     //登录成功后开始载入数据
@@ -123,7 +135,6 @@ class AccountUtility {
             }
         }
     }
-
 
     /// 登录验证成功后加载数据：监控点、设备、异常、工单、用户信息、能耗
     func loadProjData() {

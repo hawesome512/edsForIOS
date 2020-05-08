@@ -82,6 +82,16 @@ class Phone: Comparable {
         return phone
     }
 
+
+    /// 扫码登录，新增虚拟临时手机号
+    static func inventTempPhone() -> Phone {
+        let phone = Phone()
+        phone.level = .qrcodeObserver
+        phone.name = "EDS"
+        phone.number = "18700000000"
+        return phone
+    }
+
     static func < (lhs: Phone, rhs: Phone) -> Bool {
         return lhs.level.rawValue < rhs.level.rawValue
     }

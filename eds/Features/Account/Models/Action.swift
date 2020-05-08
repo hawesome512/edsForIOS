@@ -68,8 +68,52 @@ class Action: HandyJSON, Comparable {
 
 
 enum ActionType: String {
-    //登录
-    case login
+    //手机快捷登录
+    case phoneLogin
+    //帐号密码登录
+    case passwordLogin
+    //发布公告
+    case addNotice
+    //删除公告
+    case deleteNotice
+    //编辑首页
+    case editHome
+    //编辑用电支路
+    case editBranch
+    //新增资产
+    case addDevice
+    //删除资产
+    case deleteDevice
+    //编辑资产
+    case editDevice
+    //遥调
+    case paramDevice
+    //遥控
+    case ctrlDevice
+    //排查报警
+    case checkAlarm
+    //删除报警
+    case deleteAlarm
+    //新增工单
+    case addWorkorder
+    //删除工单
+    case deleteWorkorder
+    //派发工单
+    case distributeWorkorder
+    //执行工单
+    case executeWorkorder
+    //审核工单
+    case auditeWorkorder
+    //编辑个人信息
+    case editPerson
+    //新增成员
+    case addAccount
+    //删除成员
+    case deleteAccount
+    //调整成员权限
+    case editAccount
+    //转让管理员
+    case transferAccount
     //其他
     case other
 

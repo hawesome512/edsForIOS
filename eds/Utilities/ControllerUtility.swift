@@ -20,6 +20,11 @@ class ControllerUtility {
         return alertController
     }
 
+    
+    /// 选择图片
+    /// - Parameters:
+    ///   - maxCount: <#maxCount description#>
+    ///   - showCrop: <#showCrop description#>
     static func generateImagePicker(maxCount: Int, showCrop: Bool = false) -> YPImagePicker {
 
         var config = YPImagePickerConfiguration()

@@ -12,15 +12,29 @@ import EFQRCode
 
 class QRCodeUtility {
 
+
+    /// 生成EDS专用格式的二维码
+    /// - Parameters:
+    ///   - type: <#type description#>
+    ///   - param: <#param description#>
     static func generate(with type: QRCodeType, param: String) -> UIImage? {
-        guard let account = AccountUtility.sharedInstance.account else {
+        guard let content = EDSQRCode.getString(type: type, param: param) else {
             return nil
         }
-        let content = "Node:\(account.id);Key:\(account.authority);Type:\(type.rawValue);Param:\(param)"
         if let qrImage = EFQRCode.generate(content: content, foregroundColor: edsDefaultColor.cgColor, watermark: UIImage(named: "wave")?.cgImage, watermarkMode: .scaleAspectFit) {
             return UIImage(cgImage: qrImage)
         }
         return nil
+    }
+
+
+    /// 解析EDS格式的二维码
+    /// - Parameter image: <#image description#>
+    static func recognize(with image: UIImage?) -> EDSQRCode? {
+        guard let cgImage = image?.cgImage, let code = EFQRCode.recognize(image: cgImage)?.first else {
+            return nil
+        }
+        return EDSQRCode.getCode(code)
     }
 }
 

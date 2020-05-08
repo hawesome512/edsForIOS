@@ -88,6 +88,9 @@
 		469BB71923CEA1C800A57C51 /* PasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469BB71823CEA1C800A57C51 /* PasswordView.swift */; };
 		469BB71F23CEDAC800A57C51 /* PasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469BB71E23CEDAC800A57C51 /* PasswordViewController.swift */; };
 		469BB72123CEFF6D00A57C51 /* VerifyUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469BB72023CEFF6D00A57C51 /* VerifyUtility.swift */; };
+		46B3823B2464E20D008C9B3C /* LoginType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B3823A2464E20D008C9B3C /* LoginType.swift */; };
+		46B3823D2464F012008C9B3C /* EDSQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B3823C2464F012008C9B3C /* EDSQRCode.swift */; };
+		46B3823F246539D8008C9B3C /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B3823E246539D8008C9B3C /* ScannerViewController.swift */; };
 		46B4934F240897800066863D /* FixedDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B4934E240897800066863D /* FixedDeviceViewController.swift */; };
 		46B49351240899B50066863D /* FixedInfoChildController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B49350240899B50066863D /* FixedInfoChildController.swift */; };
 		46DBA50B241F55D100CFA7E7 /* WorkorderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DBA50A241F55D100CFA7E7 /* WorkorderViewController.swift */; };
@@ -265,6 +268,9 @@
 		469BB71823CEA1C800A57C51 /* PasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordView.swift; sourceTree = "<group>"; };
 		469BB71E23CEDAC800A57C51 /* PasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordViewController.swift; sourceTree = "<group>"; };
 		469BB72023CEFF6D00A57C51 /* VerifyUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyUtility.swift; sourceTree = "<group>"; };
+		46B3823A2464E20D008C9B3C /* LoginType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginType.swift; sourceTree = "<group>"; };
+		46B3823C2464F012008C9B3C /* EDSQRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EDSQRCode.swift; sourceTree = "<group>"; };
+		46B3823E246539D8008C9B3C /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
 		46B4934E240897800066863D /* FixedDeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedDeviceViewController.swift; sourceTree = "<group>"; };
 		46B49350240899B50066863D /* FixedInfoChildController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedInfoChildController.swift; sourceTree = "<group>"; };
 		46DBA50A241F55D100CFA7E7 /* WorkorderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkorderViewController.swift; sourceTree = "<group>"; };
@@ -478,6 +484,7 @@
 				46DF40DA24304A560018F961 /* DatePickerController.swift */,
 				46E59DCF2429893A00C67E82 /* PhotoCollectionViewController.swift */,
 				4607ACE724331F1F00C13C57 /* ShareController.swift */,
+				46B3823E246539D8008C9B3C /* ScannerViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -828,6 +835,8 @@
 		460F726A236FFCD200CFC7C3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				46B3823A2464E20D008C9B3C /* LoginType.swift */,
+				46B3823C2464F012008C9B3C /* EDSQRCode.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1100,6 +1109,7 @@
 				46DBA5282422114F00CFA7E7 /* WorkorderTask.swift in Sources */,
 				462E0DEF244E8BF500A2F17E /* EnergyBranch.swift in Sources */,
 				4605D14C237297E100558500 /* LogTag.swift in Sources */,
+				46B3823B2464E20D008C9B3C /* LoginType.swift in Sources */,
 				4621272A23B332B500105664 /* TagValueConverter.swift in Sources */,
 				46FB267F24403AF50080362C /* HomeEnergyCell.swift in Sources */,
 				46FF9E5324482C5B000F5AB2 /* EnergyTimeCell.swift in Sources */,
@@ -1145,6 +1155,7 @@
 				4621273A23B60BE100105664 /* UIColor-Ext.swift in Sources */,
 				46FF9E4A2446ECCE000F5AB2 /* EnergySegmentType.swift in Sources */,
 				46DBA52E242461C600CFA7E7 /* Phone.swift in Sources */,
+				46B3823F246539D8008C9B3C /* ScannerViewController.swift in Sources */,
 				46FF950E241A0AC1002E36AD /* WorkorderListViewController.swift in Sources */,
 				46EE431D237153DC00DF22FB /* Tag.swift in Sources */,
 				462E0DEB244D237900A2F17E /* EnergyPrice.swift in Sources */,
@@ -1228,6 +1239,7 @@
 				46227A4523C82A4C00768799 /* ViewUtility.swift in Sources */,
 				46DBA53A24248D2E00CFA7E7 /* UserLevel.swift in Sources */,
 				4621272823B1A71A00105664 /* DeviceCellType.swift in Sources */,
+				46B3823D2464F012008C9B3C /* EDSQRCode.swift in Sources */,
 				469BB72123CEFF6D00A57C51 /* VerifyUtility.swift in Sources */,
 				460F727223711D8900CFC7C3 /* EDSConfig.swift in Sources */,
 				46FB26832440537E0080362C /* HomeEnergyView.swift in Sources */,

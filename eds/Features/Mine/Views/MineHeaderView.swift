@@ -37,7 +37,7 @@ class MineHeaderView: UIView, UITextFieldDelegate {
             levelImage.image = phone.level.getIcon()?.withTintColor(.white, renderingMode: .alwaysTemplate)
             phoneLabel.text = phone.number
             emailLabel.text = phone.email
-            if phone.level == .systemAdmin {
+            if phone.level == .systemAdmin || phone.level == .qrcodeObserver {
                 phoneLabel.alpha = 0
                 emailLabel.alpha = 0
                 phoneImage.alpha = 0
@@ -156,8 +156,8 @@ class MineHeaderView: UIView, UITextFieldDelegate {
     }
 
     func showEditVC() {
-        //系统管理员的手机身份是虚拟生成的，无法编辑
-        guard self.loginedPhone?.level != UserLevel.systemAdmin else {
+        //系统管理员/临时的手机身份是虚拟生成的，无法编辑
+        guard loginedPhone?.level != .systemAdmin, loginedPhone?.level != .qrcodeObserver else {
             return
         }
         let menuVC = UIAlertController(title: "edit".localize(), message: nil, preferredStyle: .actionSheet)
