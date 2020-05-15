@@ -52,7 +52,7 @@ class VerifyUtility {
         let codeInfos = authorities.first { $0.contains(DeviceModel.authorityCode) }?.components(separatedBy: DeviceModel.itemInfoSeparator)
         if let codeTag = codeTag {
             //codeInfos:[CtrlCode,%04X],16进制，4位长度,进行密码验证
-            let psdVC = PasswordViewController()
+            let psdVC = PasswordController(title: nil, message: nil, preferredStyle: .alert) //PasswordViewController()
             psdVC.delegate = delegate
             let needFormatted = codeInfos?.count == 2
             psdVC.validPassword = needFormatted ? String(format: codeInfos![1], Int(codeTag.getValue())) : codeTag.getValue().clean

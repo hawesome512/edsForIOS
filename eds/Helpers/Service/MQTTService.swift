@@ -8,17 +8,20 @@
 //  【注意】⚠️：不能初始化后，马上调用refresh or update，必须有时间间隔差
 //  外部调用错误范例:1⃣️MQTTService.sharedInstance.delegate=self 首次调用shareInstance执行单例初始化init(建立mqtt.connect)
 //                2⃣️MQTTService.sharedInstance.refreshTagValues("XRD") 刚connect马上订阅，将无效
+//  未防止长时间处于后台，MQTT客户端无反应将被服务器舍弃，每次进入后台时都关闭链接，返回前台后新建mqtt客户端，退出EDS返回登录页面时也将关闭链接
 
 import Foundation
 import CocoaMQTT
 import HandyJSON
+import RxSwift
 
 class MQTTService {
 
+    private let disposeBag = DisposeBag()
     //单例，只允许存在一个实例
-    static let sharedInstance = MQTTService(config: MQTTConfig())
+    static let sharedInstance = MQTTService()
 
-    private let mqtt: CocoaMQTT
+    private var mqtt: CocoaMQTT = CocoaMQTT(clientID: "EDS")
 
     var delegate: MQTTServiceDelegate? {
         didSet {
@@ -28,21 +31,35 @@ class MQTTService {
         }
     }
 
-    private init(config: MQTTConfig) {
+    private init() { }
+
+    /// 订阅
+    /// - Parameter projectName: ProjectID:1/XRD,ProjectName:XRD
+    /// 若APP在后台一段时间(keepAlive=60s)，唤醒后尽管connect还是无法接收订阅内容，处理方法是唤醒后SceneDelegate>BecomeActive重新初始化MQTT建立新的客户端
+    /// connect后不能马上订阅，设置3s延迟
+    func subscribeTagValues(projectName: String) {
+        let config = MQTTConfig()
         let clientID = "EDSMQTT-" + UUID().uuidString
         mqtt = CocoaMQTT(clientID: clientID, host: config.host, port: config.port)
         mqtt.username = config.username
         mqtt.password = config.password
         //订阅or发布指令必须在connec之后
         let connected = mqtt.connect()
-        print("MQTT Connected:\(connected).")
+        print("MQTT Connected:\(connected)")
+        Observable<Int>.timer(RxTimeInterval.seconds(3), scheduler: MainScheduler.instance).bind(onNext: { _ in
+            self.mqtt.subscribe("data/" + projectName)
+        }).disposed(by: disposeBag)
+
+        //订阅格式：data/XRD，数据格式参照研华网关SimpleMQTT
+//        mqtt.subscribe("data/" + projectName)
     }
 
-    //ProjectID:1/XRD,ProjectName:XRD
-    func refreshTagValues(projectName: String) {
-        //订阅格式：data/XRD，数据格式参照研华网关SimpleMQTT
-        mqtt.subscribe("data/" + projectName)
-
+    func unsubscribeTagValues(projectName: String) {
+        mqtt.unsubscribe("data/" + projectName)
+        if mqtt.connState == .connected {
+            mqtt.disconnect()
+            print("MQTT Disconnected.")
+        }
     }
 
     func updateTagValues(projectName: String, updatedTags: [MQTTTag]) {

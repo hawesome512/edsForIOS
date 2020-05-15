@@ -46,9 +46,13 @@ class EnergyController: UITableViewController {
 
     private func initViews() {
         tableView.allowsSelection = false
+
+        let shareButton = getShareButton()
         if AccountUtility.sharedInstance.isOperable() {
             let branchBUtton = UIBarButtonItem(image: UIImage(named: "branch"), style: .plain, target: self, action: #selector(editBranch))
-            navigationItem.rightBarButtonItem = branchBUtton
+            navigationItem.rightBarButtonItems = [shareButton, branchBUtton]
+        } else {
+            navigationItem.rightBarButtonItems = [shareButton]
         }
     }
 
@@ -123,7 +127,7 @@ extension EnergyController: DateSegmentDelegate, ChartViewDelegate {
 
         (cells[.chart] as! DeviceTrendChartCell).prepareRequestData()
         let condition = dateItem.getLogRequestCondition(with: branch.getLogTags())
-        MoyaProvider<WAService>().request(.getTagLog(authority: authority, condition: condition)) { result in
+        WAService.getProvider().request(.getTagLog(authority: authority, condition: condition)) { result in
             switch result {
             case .success(let response):
                 let results = JsonUtility.getTagLogValues(data: response.data) ?? []

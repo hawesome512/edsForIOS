@@ -41,6 +41,8 @@ class Device: HandyJSON, Equatable, EDSDelegate {
     //跟后台数据模型无关，为设备列表折叠服务，⚠️待验证是否会影响与服务器数据传输
     //折叠or展开，在配电房/配电箱显示or隐藏branch，默认折叠
     var collapsed = true
+    //修改设备参数，若已经密码验证过一次则不再需要验证，远程控制每次都需要验证
+    var verified = false
 
     required init() { }
 

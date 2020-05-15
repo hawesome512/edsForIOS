@@ -30,7 +30,7 @@ class DeviceUtility {
             return
         }
         let factor = EDSServiceQueryFactor(id: projID)
-        MoyaProvider<EDSService>().request(.queryDeviceList(factor: factor)) { result in
+        EDSService.getProvider().request(.queryDeviceList(factor: factor)) { result in
             switch result {
             case .success(let response):
                 //后台返回数据类型[tag?]?👉[tag]
@@ -97,8 +97,11 @@ class DeviceUtility {
 
     static func setImage(in imageView: UIImageView, with device: Device) {
         if !device.image.isEmpty {
-            imageView.kf.setImage(with: device.image.getEDSServletImageUrl())
-            imageView.contentMode = .scaleAspectFill
+            imageView.kf.setImage(with: device.image.getEDSServletImageUrl(),
+                                  placeholder: device.getDefaultImage(),
+                                  completionHandler: { _ in
+                                      imageView.contentMode = .scaleAspectFill
+                                  })
         } else {
             imageView.image = device.getDefaultImage()
         }

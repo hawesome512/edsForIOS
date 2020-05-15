@@ -19,12 +19,11 @@ class ActionUtility {
     private init () { }
 
     func loadProjectActionList() {
-        //获取后台服务设备列表请求在生命周期中只有一次
         guard actionList.count == 0, let projID = AccountUtility.sharedInstance.account?.id else {
             return
         }
         let factor = EDSServiceQueryFactor(id: projID, in: .month)
-        MoyaProvider<EDSService>().request(.queryActionList(factor: factor)) { result in
+        EDSService.getProvider().request(.queryActionList(factor: factor)) { result in
             switch(result) {
             case .success(let response):
                 if let temps = JsonUtility.getEDSServiceList(with: response.data, type: [Action]()) {
@@ -52,6 +51,6 @@ class ActionUtility {
         action.user = username
         action.addAction(type, extra: extra)
         action.time = date.toDateTimeString()
-        MoyaProvider<EDSService>().request(.updateAction(action: action)) { _ in }
+        EDSService.getProvider().request(.updateAction(action: action)) { _ in }
     }
 }

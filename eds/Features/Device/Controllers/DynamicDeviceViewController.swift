@@ -29,6 +29,7 @@ class DynamicDeviceViewController: UIViewController, DevicePageScrollDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        navigationItem.rightBarButtonItem=getShareButton()
     }
 
     override func viewWillAppear(_ animated: Bool) {

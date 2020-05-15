@@ -45,8 +45,14 @@ class NoticeMessageCell: UITableViewCell {
         clearButton.tintColor = .systemGray
         clearButton.setBackgroundImage(UIImage(systemName: "xmark"), for: .normal)
         clearButton.rx.tap.bind(onNext: {
-            BasicUtility.sharedInstance.updateNotice(NIL)
-            self.parentVC?.navigationController?.popViewController(animated: true)
+            let deleteVC = ControllerUtility.generateDeletionAlertController(with: "notice_title".localize(with: prefixHome))
+            let deleteAction = UIAlertAction(title: "delete".localize(), style: .destructive, handler: { _ in
+                BasicUtility.sharedInstance.updateNotice(NIL)
+                ActionUtility.sharedInstance.addAction(.deleteNotice)
+                self.parentVC?.navigationController?.popViewController(animated: true)
+            })
+            deleteVC.addAction(deleteAction)
+            self.parentVC?.present(deleteVC, animated: true, completion: nil)
         }).disposed(by: disposeBag)
         addSubview(clearButton)
         clearButton.width(edsSpace)

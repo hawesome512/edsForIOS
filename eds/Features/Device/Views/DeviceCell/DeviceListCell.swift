@@ -21,6 +21,7 @@ class DeviceListCell: UITableViewCell, PasswordVerifyDelegate {
     private var listTag: Tag?
     //是否累加值，在DeviceTrendViewController使用
     private var isAccumulated = false
+    private var device: Device?
 
     var parentVC: UIViewController?
 
@@ -58,6 +59,10 @@ class DeviceListCell: UITableViewCell, PasswordVerifyDelegate {
         }
         //参数修改页面or趋势评估页面
         if isItemCell() {
+            if let verified = device?.verified, verified {
+                presentMeterViewController(authority: .granted)
+                return
+            }
             let authorityResult = VerifyUtility.verify(tag: listTag!, delegate: self, parentVC: parentVC)
             presentMeterViewController(authority: authorityResult)
         } else {
@@ -78,6 +83,7 @@ class DeviceListCell: UITableViewCell, PasswordVerifyDelegate {
 
     //修改参数时，密码验证成功，打开参数表盘界面
     func passwordVerified() {
+        device?.verified = true
         presentMeterViewController(authority: .granted)
     }
 
@@ -103,6 +109,7 @@ extension DeviceListCell: DevicePageItemSource {
     func initViews(with pageItem: DevicePageItem, rx tags: [Tag], rowIndex: Int) {
         let tag = tags[rowIndex]
         self.pageItem = pageItem
+        self.device = DeviceUtility.sharedInstance.getDevice(of: tag.getDeviceName())
         listTag = tag
         if pageItem.items?.first == DeviceModel.itemsAccumulation {
             isAccumulated = true

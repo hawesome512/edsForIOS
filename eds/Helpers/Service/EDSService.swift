@@ -50,6 +50,12 @@ enum EDSService {
     //上传图片
     case upload(data: Data, fileName: String)
 
+    static func getProvider() -> MoyaProvider<EDSService> {
+        //后端服务中并不需要提供凭证，但若无凭证，xcode调试时会爆错误，故添加虚拟凭证，eds xseec无具体意义，可任意填写
+        return MoyaProvider<EDSService>(plugins: [CredentialsPlugin { _ -> URLCredential? in
+            return URLCredential(user: "eds", password: "xseec", persistence: .permanent)
+        }])
+    }
 }
 
 extension EDSService: TargetType {

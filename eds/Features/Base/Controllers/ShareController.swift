@@ -78,7 +78,7 @@ enum ShareType: String, CaseIterable {
     case phone
     case sms
     case mail
-    case wechat
+//    case wechat
 
     func toString() -> String {
         return rawValue.localize()
@@ -92,8 +92,8 @@ enum ShareType: String, CaseIterable {
             return (UIImage(systemName: "phone.arrow.up.right"), UIColor.systemRed)
         case .sms:
             return (UIImage(systemName: "ellipses.bubble"), UIColor.systemYellow)
-        case .wechat:
-            return (UIImage(named: "wechat"), UIColor.systemGreen)
+//        case .wechat:
+//            return (UIImage(named: "wechat"), UIColor.systemGreen)
         }
     }
 }

@@ -4,11 +4,11 @@
 //
 //  Created by 厦门士林电机有限公司 on 2020/4/14.
 //  Copyright © 2020 厦门士林电机有限公司. All rights reserved.
-//
+//  给弹出式无导航工具栏的VC提供工具条：标题+关闭
 
 import UIKit
 
-class HomeDeviceListHeaderView: UIView {
+class PresentHeaderView: UIView {
 
     let titleLabel = UILabel()
     let closeButton = UIButton()

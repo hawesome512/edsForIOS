@@ -5,12 +5,15 @@
 //  Created by 厦门士林电机有限公司 on 2020/2/28.
 //  Copyright © 2020 厦门士林电机有限公司. All rights reserved.
 //  此Controller用于显示Device静态Info,不会单独显示，存在于FixedDeviceViewController和DynamicDeviceViewController中
+//  设备资料列表
 
 import Foundation
 import UIKit
 import Moya
 
 class FixedInfoChildController: UITableViewController {
+
+    private let countLimit = 10
     //↕️滚动，设备头图伸缩
     var scrollDelegate: DevicePageScrollDelegate?
 
@@ -163,13 +166,19 @@ class FixedInfoChildController: UITableViewController {
     private func update() {
         if let device = device {
             device.setInfos(infos: deviceInfos)
-            MoyaProvider<EDSService>().request(.updateDevice(device: device)) { _ in }
+            EDSService.getProvider().request(.updateDevice(device: device)) { _ in }
+            ActionUtility.sharedInstance.addAction(.editDevice, extra: device.title)
         }
     }
 }
 
 extension FixedInfoChildController: AdditionDelegate {
     func add(inParent parent: Device?) {
+        if deviceInfos.count >= countLimit {
+            let content = String(format: "info_limit".localize(), countLimit)
+            ControllerUtility.presentAlertController(content: content, controller: self)
+            return
+        }
         showInfoController(deviceInfo: nil, didSelectRowAt: nil)
     }
 }

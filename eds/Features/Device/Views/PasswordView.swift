@@ -8,8 +8,11 @@
 
 import UIKit
 
-protocol PasswordViewDelegate: NSObjectProtocol {
+@objc protocol PasswordViewDelegate: NSObjectProtocol {
     func entryComplete(password: String)
+
+    @objc optional func inputting()
+    @objc optional func entryFault()
 }
 
 @IBDesignable class PasswordView: UIView {
@@ -22,7 +25,7 @@ protocol PasswordViewDelegate: NSObjectProtocol {
 
     @IBInspectable var star: String = "●"
 
-    @IBInspectable var starColor: UIColor = UIColor.cyan {
+    @IBInspectable var starColor: UIColor = UIColor.systemBlue {
         didSet {
             squareArray.forEach { (label) in
                 label.textColor = starColor
@@ -30,7 +33,7 @@ protocol PasswordViewDelegate: NSObjectProtocol {
         }
     }
 
-    @IBInspectable var borderColor: UIColor = UIColor.black {
+    @IBInspectable var borderColor: UIColor = UIColor.systemGray {
         didSet {
             squareArray.forEach { (label) in
                 label.layer.borderColor = borderColor.cgColor
@@ -66,6 +69,7 @@ protocol PasswordViewDelegate: NSObjectProtocol {
 
     var textField: UITextField = UITextField()
 
+    var validValue: String?
 
     var tempArrat = [String]()
 
@@ -88,7 +92,7 @@ protocol PasswordViewDelegate: NSObjectProtocol {
         }
 
         side = self.frame.height
-        space = side / 2// (self.frame.width - (CGFloat(lenght) * side)) / CGFloat(lenght - 1)
+        space = (self.frame.width - (CGFloat(lenght) * side)) / CGFloat(lenght - 1)
         for index in 0..<lenght {
             let label = UILabel(frame: CGRect(x: (space + side) * CGFloat(index), y: 0, width: side, height: side))
             label.layer.masksToBounds = true
@@ -163,12 +167,18 @@ extension PasswordView: UITextFieldDelegate {
         }
         /// 完成输入
         if password.count >= lenght {
-            textField.resignFirstResponder()
             textField.text = password
+            if let validValue = validValue, validValue != password {
+                self.delegate?.entryFault?()
+                return false
+            }
+            textField.resignFirstResponder()
             self.delegate?.entryComplete(password: password)
             self.endEditing(true)
             return false
         }
+        /// 正在输入
+        self.delegate?.inputting?()
 
         return true
     }

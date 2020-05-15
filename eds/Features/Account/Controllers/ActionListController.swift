@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import RxSwift
 
 class ActionListController: UITableViewController {
+
+    private let disposeBag = DisposeBag()
 
     var actionList = [Action]()
 
@@ -20,9 +23,19 @@ class ActionListController: UITableViewController {
     private func initViews() {
         tableView.register(ActionCell.self, forCellReuseIdentifier: String(describing: ActionCell.self))
         tableView.tableFooterView = UIView()
+        tableView.separatorStyle = .none
     }
 
     // MARK: - Table view data source
+
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = PresentHeaderView()
+        headerView.titleLabel.text = title
+        headerView.closeButton.rx.tap.bind(onNext: {
+            self.dismiss(animated: true, completion: nil)
+        }).disposed(by: disposeBag)
+        return headerView
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows

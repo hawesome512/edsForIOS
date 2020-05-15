@@ -86,9 +86,11 @@ class AlarmCell: UITableViewCell {
 
 //        timeLabel.text = Date().toDateTimeString()
         timeLabel.textColor = .systemGray
+        timeLabel.adjustsFontSizeToFitWidth = true
         addSubview(timeLabel)
         timeLabel.centerY(to: timeImage)
         timeLabel.leadingToTrailing(of: timeImage, offset: edsMinSpace)
+        timeLabel.trailingToSuperview(offset: edsSpace)
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

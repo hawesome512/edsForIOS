@@ -100,6 +100,8 @@ class WorkorderViewController: UIViewController {
         if workorder?.state == .created && workorder?.worker == accountName {
             workorder?.setState(with: .distributed, by: accountName)
         }
+
+        navigationItem.rightBarButtonItem = getShareButton()
     }
 
 
@@ -266,7 +268,7 @@ extension WorkorderViewController {
         guard let workorder = workorder else {
             return
         }
-        MoyaProvider<EDSService>().request(.updateWorkorder(workorder: workorder)) { result in
+        EDSService.getProvider().request(.updateWorkorder(workorder: workorder)) { result in
 
             self.progressView.progress = 0
 
@@ -311,8 +313,6 @@ extension WorkorderViewController: ShareDelegate, CXCallObserverDelegate, MFMess
         case .mail:
             let imageData = QRCodeUtility.generate(with: .workorder, param: workorder.id)?.pngData()
             ShareUtility.sendMail(to: executor.email, title: "distribution_title".localize(with: prefixWorkorder), content: sentContent, imageData: imageData, in: self)
-        default:
-            break
         }
     }
 
@@ -344,6 +344,7 @@ extension WorkorderViewController: ShareDelegate, CXCallObserverDelegate, MFMess
 
     //派发成功
     func distributed() {
+        ActionUtility.sharedInstance.addAction(.distributeWorkorder, extra: workorder?.title)
         //只有新建状态下的派发，才需要上传数据。其他即为二次派发
         guard workorder?.state == WorkorderState.created else {
             return
@@ -359,6 +360,7 @@ extension WorkorderViewController {
     @objc func executeWorkorder() {
         if executing {
             uploadImages()
+            ActionUtility.sharedInstance.addAction(.executeWorkorder, extra: workorder?.title)
         } else {
             //不能直接更改title，只能替换
             let title = "save".localize()
@@ -382,7 +384,7 @@ extension WorkorderViewController {
         var uploadedImages: [(name: String, image: UIImage)] = []
         images.forEach { image in
             let fileName = AccountUtility.sharedInstance.generateImageID()
-            MoyaProvider<EDSService>().request(.upload(data: image.pngData()!, fileName: fileName)) { result in
+            EDSService.getProvider().request(.upload(data: image.pngData()!, fileName: fileName)) { result in
                 switch result {
                 case .success(let response):
                     if JsonUtility.didUpdatedEDSServiceSuccess(data: response.data) {
@@ -422,6 +424,7 @@ extension WorkorderViewController: MessageDelegate {
     @objc func auditWorkorder() {
         workorder?.setState(with: .audited, by: accountName)
         updateWorkorder()
+        ActionUtility.sharedInstance.addAction(.auditeWorkorder, extra: workorder?.title)
     }
 
     @objc func leaveMessage() {

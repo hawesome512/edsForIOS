@@ -33,7 +33,7 @@ class HomeController: UIViewController {
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.clear]
 
         let qrButton = UIBarButtonItem(image: UIImage(systemName: "qrcode.viewfinder"), style: .plain, target: self, action: #selector(scanQRCode))
-        navigationItem.rightBarButtonItem = qrButton
+        navigationItem.rightBarButtonItems = [qrButton]
 
         //顶部图片
         headerView.parentVC = self
@@ -90,6 +90,7 @@ class HomeController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         //从其他页面返回此页面时，导航栏样式可能被更改
         updateNavigationBar()
+        headerView.basic = BasicUtility.sharedInstance.basic
     }
 
     override func viewWillDisappear(_ animated: Bool) {

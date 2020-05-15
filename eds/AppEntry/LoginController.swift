@@ -211,8 +211,9 @@ class LoginController: UIViewController, UITextFieldDelegate {
 
         //请求登录
         loginButton.rx.tap.bind(onNext: {
+
             //手机24小时免验证
-            if self.freeVerified, let authorigy = UserDefaults.standard.string(forKey: AccountUtility.authorityKey)?.fromBase64() {
+            if self.loginType == .phoneType, self.freeVerified, let authorigy = UserDefaults.standard.string(forKey: AccountUtility.authorityKey)?.fromBase64() {
                 self.startLoginAnimating()
                 let keys = authorigy.components(separatedBy: ":")
                 AccountUtility.sharedInstance.loadProjectAccount(username: keys[0], password: keys[1], controller: self, phoneNumber: self.phoneField.text)

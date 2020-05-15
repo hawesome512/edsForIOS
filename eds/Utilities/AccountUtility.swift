@@ -60,14 +60,15 @@ class AccountUtility {
         if let code = code {
             phone.code = code
         }
-        MoyaProvider<EDSService>().request(.verifyPhoneLogin(phoneVerification: phone)) { result in
+        EDSService.getProvider().request(.verifyPhoneLogin(phoneVerification: phone)) { result in
             switch result {
             case .success(let response):
-                //验证成功
+                //手机快捷登录：验证成功
                 if let account = JsonUtility.getPhoneAccount(data: response.data) {
                     self.loginSucceeded(account, phoneNumber: phoneNumber)
                     self.successfulLogined.accept(true)
                     print("verify phone number and code success.")
+                    ActionUtility.sharedInstance.addAction(.phoneLogin)
                     //登录成功后开始载入数据
                     self.loadProjData()
                     //保存登录信息:手机号，登录时间，密钥
@@ -91,7 +92,7 @@ class AccountUtility {
         }
     }
 
-    /// 用户名密码登录：从服务器数据库中导入用户列表，筛选出其中authority="username:password".toBase64的用户
+    /// 用户名密码登录，含免验证、记住密码、二维码等快捷登录入口
     /// - Parameters:
     ///   - username: <#username description#>
     ///   - password: <#password description#>
@@ -103,25 +104,25 @@ class AccountUtility {
         }
         //因为用户id的格式为数字/工程名，使用id="/"将获取所有账户，e.g.:2/XRD、1/XKB
         let factor = EDSServiceQueryFactor(id: "/")
-        MoyaProvider<EDSService>().request(.queryAccountList(factor: factor)) { result in
+        EDSService.getProvider().request(.queryAccountList(factor: factor)) { result in
             switch result {
             case .success(let response):
                 //后台返回数据类型[Account?]?👉[Account]
                 let tempList = JsonUtility.getEDSServiceList(with: response.data, type: [Account]())
                 let inputAuthority = "\(username):\(password)".toBase64()
                 if let account = (tempList?.filter { $0 != nil } as! [Account]).first(where: { $0.authority == inputAuthority }) {
-                    
+
                     let loginText = isScan ? nil : (phoneNumber ?? username)
                     self.loginSucceeded(account, phoneNumber: loginText)
-                    
                     self.successfulLogined.accept(true)
                     print("username:password login successed!")
                     //登录成功后开始载入数据
                     self.loadProjData()
                     //保存登录信息：用户名+密码
-                    guard let _ = phoneNumber else {
+                    if phoneNumber == nil, isScan == false {
                         UserDefaults.standard.set(username, forKey: AccountUtility.usernameKey)
                         UserDefaults.standard.set(password, forKey: AccountUtility.passwordKey)
+                        ActionUtility.sharedInstance.addAction(.passwordLogin)
                         return
                     }
                 } else {
@@ -129,7 +130,6 @@ class AccountUtility {
                     let message = "incorrectPassword".localize(with: prefixLogin)
                     ControllerUtility.presentAlertController(content: message, controller: controller)
                 }
-//                print("AccountUtility:Load project account.")
             default:
                 break
             }
@@ -151,7 +151,7 @@ class AccountUtility {
         }
         //排除虚拟手机管理员
         account.setPhone(phones: phoneList.filter { $0.level != .systemAdmin })
-        MoyaProvider<EDSService>().request(.updateAccount(account: account)) { _ in }
+        EDSService.getProvider().request(.updateAccount(account: account)) { _ in }
     }
 
     func getPhone(by name: String) -> Phone? {
@@ -184,6 +184,8 @@ class AccountUtility {
     /// 因执行退出后将返回登录页面，必须保证二次登录时可以重新请求数据
     /// xxxUtility类中默认机制xxxList.count>0 将不再请求数据
     func prepareExitAccount() {
+        //取消订阅要在account=nil语句前
+        TagUtility.sharedInstance.unsubscribeTagValues()
         account = nil
         phoneList.removeAll()
         loginedPhone = nil

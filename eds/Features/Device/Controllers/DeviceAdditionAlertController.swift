@@ -72,7 +72,7 @@ class DeviceAdditionAlertController: UIAlertController, UITextFieldDelegate {
     func getAddedDeviceId() -> String {
         //level=room/box/fixed时，row=0
         let selectedRow = devicePicker.selectedRow(inComponent: 0)
-        return selectedRow == 0 ? String.randomString(length: 3) : deviceList[selectedRow]
+        return selectedRow == 0 ? String.randomString(length: 5) : deviceList[selectedRow]
     }
 
     func getAddedDeviceLevel() -> DeviceLevel {

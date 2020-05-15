@@ -84,8 +84,11 @@ class ShareUtility {
         container.present(mailController, animated: true, completion: nil)
     }
 
-    //待完善
-    static func sendWeChat() {
-
+    /// 截屏分享
+    /// - Parameter controller: <#controller description#>
+    static func sharePage(in controller: UIViewController) {
+        guard let image = controller.view.snapshot else { return }
+        let activityVC = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+        controller.present(activityVC, animated: true, completion: nil)
     }
 }

@@ -57,6 +57,8 @@ class AlarmViewController: UIViewController {
         view.addSubview(trendController.view)
         trendController.view.edgesToSuperview(excluding: .top)
         trendController.view.topToBottom(of: headerView)
+
+        navigationItem.rightBarButtonItem = getShareButton()
     }
 
     override func viewWillAppear(_ animated: Bool) {

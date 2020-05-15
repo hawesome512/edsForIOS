@@ -40,6 +40,7 @@ class DeviceListViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         deviceList = DeviceUtility.sharedInstance.getProjDeviceList()
+        tableView.reloadData()
     }
 
     //MARK:可通讯设备更新状态位数据
@@ -150,16 +151,16 @@ extension DeviceListViewController: UITableViewDelegate, UITableViewDataSource {
                 //需要修改父级支路信息
                 if let parent = DeviceUtility.sharedInstance.getParent(of: deleteDevice) {
                     parent.removeBranch(with: deleteDevice.getShortID())
-                    print(parent.toJSONString()!)
                     modifiedDevices.append(parent)
                 }
                 modifiedDevices.forEach({ device in
-                    MoyaProvider<EDSService>().request(.updateDevice(device: device)) { _ in }
+                    EDSService.getProvider().request(.updateDevice(device: device)) { _ in }
                 })
 
                 self.deviceList = DeviceUtility.sharedInstance.getProjDeviceList()
                 tableView.reloadData()
                 print("modify \(modifiedDevices.count) devices.")
+                ActionUtility.sharedInstance.addAction(.deleteDevice, extra: deleteDevice.title)
             }
             alertController.addAction(okAction)
             present(alertController, animated: true, completion: nil)
@@ -181,7 +182,7 @@ extension DeviceListViewController: AdditionDelegate {
                 newDevice.account = projID
                 newDevice.title = title
                 newDevice.level = alertController.getAddedDeviceLevel()
-                MoyaProvider<EDSService>().request(.updateDevice(device: newDevice)) { response in
+                EDSService.getProvider().request(.updateDevice(device: newDevice)) { response in
                     switch response {
                     case .success(_):
                         //成功新增后，更新资产列表
@@ -195,8 +196,9 @@ extension DeviceListViewController: AdditionDelegate {
                 //更新新增Device的父级支路
                 if let parent = inParent {
                     parent.addBranch(with: newDevice.getShortID())
-                    MoyaProvider<EDSService>().request(.updateDevice(device: parent)) { _ in }
+                    EDSService.getProvider().request(.updateDevice(device: parent)) { _ in }
                 }
+                ActionUtility.sharedInstance.addAction(.addDevice, extra: title)
             }
         }
         alertController.addAction(okAction)

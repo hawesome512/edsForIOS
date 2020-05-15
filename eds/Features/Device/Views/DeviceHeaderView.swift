@@ -13,9 +13,10 @@ import YPImagePicker
 import Moya
 import Kingfisher
 
-class DeviceHeaderView: UIView {
+class DeviceHeaderView: UIView, UITextFieldDelegate {
 
     private let cornerGradientLayer = CAGradientLayer()
+    private let indicatorVIew = UIActivityIndicatorView()
     let imageView = UIImageView()
     let imageButton = UIButton()
     private let disposeBag = DisposeBag()
@@ -44,8 +45,30 @@ class DeviceHeaderView: UIView {
             guard AccountUtility.sharedInstance.isOperable() else {
                 return
             }
-            self.showPicker()
+            let menuVC = UIAlertController(title: "edit".localize(), message: nil, preferredStyle: .actionSheet)
+            let photoAction = UIAlertAction(title: "home_banner".localize(), style: .default, handler: { _ in
+                self.showPicker()
+            })
+            let titleAction = UIAlertAction(title: "home_title".localize(), style: .default, handler: { _ in
+                self.showEdit()
+            })
+            let cancelAction = UIAlertAction(title: "cancel".localize(), style: .cancel, handler: nil)
+            menuVC.addAction(titleAction)
+            menuVC.addAction(photoAction)
+            menuVC.addAction(cancelAction)
+            if let ppc = menuVC.popoverPresentationController {
+                ppc.sourceView = self.imageButton
+                ppc.sourceRect = self.imageButton.bounds
+            }
+            self.parentVC?.present(menuVC, animated: true, completion: nil)
         }).disposed(by: disposeBag)
+
+        indicatorVIew.style = .large
+        indicatorVIew.color = .systemRed
+        indicatorVIew.alpha = 0
+        indicatorVIew.startAnimating()
+        addSubview(indicatorVIew)
+        indicatorVIew.centerInSuperview()
     }
 
     required init?(coder: NSCoder) {
@@ -61,18 +84,19 @@ class DeviceHeaderView: UIView {
         let picker = ControllerUtility.generateImagePicker(maxCount: 1, showCrop: true)
         picker.didFinishPicking { [unowned picker] items, _ in
             if let photo = items.singlePhoto?.image {
-
                 self.imageView.image = photo
                 self.imageView.contentMode = .scaleAspectFill
                 let imageID = AccountUtility.sharedInstance.generateImageID()
-                let moyaProvider = MoyaProvider<EDSService>()
-                moyaProvider.request(.upload(data: photo.pngData()!, fileName: imageID)) { response in
+                self.indicatorVIew.alpha = 1
+                EDSService.getProvider().request(.upload(data: photo.pngData()!, fileName: imageID)) { response in
+                    self.indicatorVIew.alpha = 0
                     switch(response) {
                     case .success:
                         if let device = self.device {
                             device.image = imageID
-                            moyaProvider.request(.updateDevice(device: device)) { _ in }
+                            EDSService.getProvider().request(.updateDevice(device: device)) { _ in }
                             print("upload device image success")
+                            ActionUtility.sharedInstance.addAction(.editDevice, extra: device.title)
                         }
                     default:
                         break
@@ -82,6 +106,25 @@ class DeviceHeaderView: UIView {
             picker.dismiss(animated: true, completion: nil)
         }
         parentVC?.navigationController?.present(picker, animated: true, completion: nil)
+    }
+
+    private func showEdit() {
+        let titleVC = ControllerUtility.generateInputAlertController(title: "home_title".localize(), placeholder: self.device?.title, delegate: self)
+        let confirmAction = UIAlertAction(title: "confirm".localize(), style: .default, handler: { _ in
+            //device.title为空，是删除device
+            if let device = self.device, let title = titleVC.textFields?.first?.text, !title.isEmpty {
+                device.title = title
+                self.parentVC?.title = title
+                EDSService.getProvider().request(.updateDevice(device: device)) { _ in }
+                ActionUtility.sharedInstance.addAction(.editDevice, extra: device.title)
+            }
+        })
+        titleVC.addAction(confirmAction)
+        self.parentVC?.present(titleVC, animated: true, completion: nil)
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
     }
 
 }

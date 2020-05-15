@@ -80,48 +80,64 @@ enum ActionType: String {
     case editHome
     //编辑用电支路
     case editBranch
-    //新增资产
+    //新增资产 +extra e.g.:成型1#柜
     case addDevice
-    //删除资产
+    //删除资产 +extra e.g.:成型1#柜
     case deleteDevice
-    //编辑资产
+    //编辑资产 +extra e.g.:成型1#柜
     case editDevice
-    //遥调
+    //遥调 +extra e.g.:成型1#柜 保护功能:ON / 成型1#柜 Ir(xIn):0.4
     case paramDevice
-    //遥控
+    //遥控 +extra e.g.:成型1#柜
     case ctrlDevice
-    //排查报警
+    //排查报警 +extra e.g.:成型1#柜 at 2020-01-01 12:00:00
     case checkAlarm
-    //删除报警
+    //删除报警 +extra e.g.:成型1#柜 at 2020-01-01 12:00:00
     case deleteAlarm
-    //新增工单
+    //新增工单 +extra e.g.:配电房巡检
     case addWorkorder
-    //删除工单
+    //删除工单 +extra e.g.:配电房巡检
     case deleteWorkorder
-    //派发工单
+    //派发工单 +extra e.g.:配电房巡检
     case distributeWorkorder
-    //执行工单
+    //执行工单 +extra e.g.:配电房巡检
     case executeWorkorder
-    //审核工单
+    //审核工单 +extra e.g.:配电房巡检
     case auditeWorkorder
     //编辑个人信息
     case editPerson
-    //新增成员
+    //新增成员 +extra e.g.:张三
     case addAccount
-    //删除成员
+    //删除成员 +extra e.g.:张三
     case deleteAccount
-    //调整成员权限
+    //调整成员权限 +extra e.g.:张三
     case editAccount
-    //转让管理员
+    //转让管理员 +extra e.g.:张三
     case transferAccount
     //其他
     case other
 
-    //在操作记录列表中用于区分操作类型的外观
-    func getView() -> (icon: UIImage?, color: UIColor) {
+    func getIcon() -> UIImage? {
         switch self {
+        case .ctrlDevice, .addDevice, .editDevice, .paramDevice, .deleteDevice:
+            return UIImage(systemName: "bolt.circle")
+        case .checkAlarm, .deleteAlarm:
+            return UIImage(systemName: "bell.circle")
+        case .addWorkorder, .distributeWorkorder, .executeWorkorder, .auditeWorkorder, .deleteWorkorder:
+            return UIImage(systemName: "doc.circle")
         default:
-            return (UIImage(systemName: "person.circle"), .systemGray)
+            return UIImage(systemName: "person.circle")
+        }
+    }
+
+    func getColor() -> UIColor {
+        switch self {
+        case .deleteAlarm, .deleteDevice, .deleteAccount, .deleteWorkorder, .deleteNotice, .transferAccount, .ctrlDevice:
+            return .systemRed
+        case .addWorkorder, .distributeWorkorder, .auditeWorkorder, .executeWorkorder, .checkAlarm, .paramDevice, .addDevice, .addNotice, .addAccount, .editBranch, .editAccount:
+            return .systemBlue
+        default:
+            return .systemGray
         }
     }
 }

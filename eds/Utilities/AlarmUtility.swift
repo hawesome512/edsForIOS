@@ -25,7 +25,7 @@ class AlarmUtility {
         }
         //获取最近一季度的报警记录
         let factor = EDSServiceQueryFactor(id: projID, in: .halfYear)
-        MoyaProvider<EDSService>().request(.queryAlarmList(factor: factor)) { result in
+        EDSService.getProvider().request(.queryAlarmList(factor: factor)) { result in
             switch result {
             case .success(let response):
                 //后台返回数据类型[alarm?]?👉[alarm]

@@ -202,7 +202,7 @@ extension WorkorderAdditionViewController {
 
         indicator.alpha = 1
         doneButton?.isEnabled = false
-        MoyaProvider<EDSService>().request(.updateWorkorder(workorder: workorder)) { result in
+        EDSService.getProvider().request(.updateWorkorder(workorder: workorder)) { result in
             self.indicator.alpha = 0
             self.doneButton?.isEnabled = true
             switch result {
@@ -212,6 +212,7 @@ extension WorkorderAdditionViewController {
                     self.delegate?.added(workorder: self.workorder)
                     //在navigationController中退出发生如下
                     self.navigationController?.popViewController(animated: true)
+                    ActionUtility.sharedInstance.addAction(.addWorkorder, extra: self.workorder.title)
                 }
             default:
                 break

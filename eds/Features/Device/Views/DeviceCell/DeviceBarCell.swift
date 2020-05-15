@@ -60,6 +60,7 @@ class DeviceBarCell: UITableViewCell {
         let xItems = pageItem.tags
         let yItems = pageItem.items
 
+
         barChartView.xAxis.valueFormatter = BarAxisFormatter(items: xItems)
         barChartView.xAxis.labelCount = xItems.count
 
@@ -67,6 +68,7 @@ class DeviceBarCell: UITableViewCell {
         leftAxis.labelFont = UIFont.preferredFont(forTextStyle: .caption1)
         leftAxis.drawLimitLinesBehindDataEnabled = true
         leftAxis.labelCount = 4
+        //三种：直接显示（无unit和items),设定最大值（有unit,无items),百分比（有unit,有items)
         if let yItems = yItems, yItems.count > 0 {
             leftAxis.axisMaximum = Double(yItems.last!) ?? 100
             leftAxis.axisMinimum = Double(yItems.first!) ?? 0
@@ -76,6 +78,10 @@ class DeviceBarCell: UITableViewCell {
                 line.lineDashLengths = [10, 10]
                 leftAxis.addLimitLine(line)
             }
+        } else if let unit = pageItem.unit {
+            let unitTag = TagUtility.sharedInstance.getRelatedTag(with: unit, related: barTags[0])
+            leftAxis.axisMaximum = Double(unitTag?.Value ?? "1") ?? 100
+            leftAxis.axisMinimum = 0
         } else {
             //若未设置，y起始值将随着valus变动
             leftAxis.axisMinimum = 0
@@ -139,7 +145,7 @@ extension DeviceBarCell: DevicePageItemSource {
         }
         setPreferredStyle(pageItem)
         Observable.combineLatest(tags.map { $0.showValue.asObservable() }).throttle(.seconds(1), scheduler: MainScheduler.instance).subscribe(onNext: {
-            if let unit = pageItem.unit, tags.count > 0 {
+            if let unit = pageItem.unit, tags.count > 0, let items = pageItem.items, items.count > 0 {
                 //需换算，用百分比表示
                 let unitTag = TagUtility.sharedInstance.getRelatedTag(with: unit, related: tags[0])
                 let ratio = Double(unitTag?.Value ?? "1") ?? 1

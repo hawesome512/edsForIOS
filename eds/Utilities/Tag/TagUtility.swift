@@ -23,11 +23,7 @@ class TagUtility: MQTTServiceDelegate {
 
     var tagList: [Tag] = [] {
         didSet {
-            //获取点列表之后，进行mqtt订阅
-            MQTTService.sharedInstance.delegate = self
-            if let projectName = AccountUtility.sharedInstance.account?.getProjectName() {
-                MQTTService.sharedInstance.refreshTagValues(projectName: projectName)
-            }
+            subscribeTagValues()
         }
     }
 
@@ -39,7 +35,7 @@ class TagUtility: MQTTServiceDelegate {
         guard tagList.count == 0, let account = AccountUtility.sharedInstance.account else {
             return
         }
-        MoyaProvider<WAService>().request(.getTagList(authority: account.authority, projectID: account.id)) { result in
+        WAService.getProvider().request(.getTagList(authority: account.authority, projectID: account.id)) { result in
             switch result {
             case .success(let response):
                 //后台返回数据类型[tag?]?👉[tag]
@@ -60,7 +56,7 @@ class TagUtility: MQTTServiceDelegate {
         guard tags.count > 0, let authority = AccountUtility.sharedInstance.account?.authority else {
             return
         }
-        MoyaProvider<WAService>().request(.getTagValues(authority: authority, tagList: tags)) { result in
+        WAService.getProvider().request(.getTagValues(authority: authority, tagList: tags)) { result in
             switch result {
             case .success(let response):
                 self.update(with: JsonUtility.getTagValues(data: response.data))
@@ -72,10 +68,35 @@ class TagUtility: MQTTServiceDelegate {
         }
     }
 
+    /// 订阅监控点
+    func subscribeTagValues() {
+        if tagList.count == 0 {
+            return
+        }
+        if let projectName = AccountUtility.sharedInstance.account?.getProjectName() {
+            MQTTService.sharedInstance.subscribeTagValues(projectName: projectName)
+            MQTTService.sharedInstance.delegate = self
+        }
+    }
+
+    /// 取消订阅
+    func unsubscribeTagValues() {
+        if let projectName = AccountUtility.sharedInstance.account?.getProjectName() {
+            MQTTService.sharedInstance.unsubscribeTagValues(projectName: projectName)
+        }
+    }
+
+    
+    /// 接收到订阅的消息
+    /// - Parameters:
+    ///   - mqtt: <#mqtt description#>
+    ///   - message: <#message description#>
+    ///   - flag: <#flag description#>
     func didReceiveMessage(mqtt: CocoaMQTT, message: CocoaMQTTMessage, flag: UInt16) {
         update(with: JsonUtility.getMQTTTagList(message: message))
-        //print("Mqtt receive at " + Date().description)
+//        print("Mqtt receive at " + Date().toDateTimeString())
     }
+
 
 
     //MARK:便捷方法>>>>>>>>>>>>>>>>>>>>>>>>>>>

@@ -71,6 +71,7 @@ class AccountAdditionController: UITableViewController {
         AccountUtility.sharedInstance.phoneList.append(phone)
         AccountUtility.sharedInstance.updatePhone()
         navigationController?.popViewController(animated: true)
+        ActionUtility.sharedInstance.addAction(.addAccount, extra: phone.name)
     }
 
     //为了保证弹出的键盘可以被正常关闭，做如下操作：弹出确认框前取消tableView编辑状态，将关闭键盘

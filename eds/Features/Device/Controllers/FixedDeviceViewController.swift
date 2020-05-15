@@ -25,6 +25,7 @@ class FixedDeviceViewController: UIViewController, DevicePageScrollDelegate {
         super.viewDidLoad()
         fixedVC.scrollDelegate = self
         // Do any additional setup after loading the view.
+        navigationItem.rightBarButtonItem=getShareButton()
     }
 
     override func viewWillAppear(_ animated: Bool) {

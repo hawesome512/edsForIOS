@@ -72,7 +72,7 @@ class HomeDeviceListController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = HomeDeviceListHeaderView()
+        let headerView = PresentHeaderView()
         headerView.titleLabel.text = title
         headerView.closeButton.rx.tap.bind(onNext: {
             self.dismiss(animated: true, completion: nil)

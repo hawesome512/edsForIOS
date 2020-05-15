@@ -21,10 +21,10 @@ class ActionCell: UITableViewCell {
             }
             let info = action.getActionInfo()
             timeLabel.text = action.time
-            let infoView = info.type.getView()
-            typeImage.image = infoView.icon
-            typeImage.backgroundColor = infoView.color
-            actionLabel.textColor = infoView.color
+            typeImage.image = info.type.getIcon()
+            let tintColor = info.type.getColor()
+            typeImage.backgroundColor = tintColor
+            actionLabel.textColor = tintColor
             actionLabel.text = info.text
         }
     }
@@ -73,8 +73,9 @@ class ActionCell: UITableViewCell {
     override func draw(_ rect: CGRect) {
         let line = UIBezierPath()
         let start = CGPoint(x: edsSpace + edsHeight / 2, y: 0)
+        let end = start.offset(x: 0, y: rect.height)
         line.move(to: start)
-        line.addLine(to: start.offset(x: 0, y: rect.height))
+        line.addLine(to: end)
         line.lineWidth = 2
         UIColor.systemGray.setStroke()
         line.stroke()

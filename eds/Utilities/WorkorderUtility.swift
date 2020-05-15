@@ -27,7 +27,7 @@ class WorkorderUtility {
         }
         //获取最近一季度的报警记录
         let factor = EDSServiceQueryFactor(id: projID, in: .none)
-        MoyaProvider<EDSService>().request(.queryWorkorderList(factor: factor)) { result in
+        EDSService.getProvider().request(.queryWorkorderList(factor: factor)) { result in
             switch result {
             case .success(let response):
                 //后台返回数据类型[Workorder?]?👉[Workorder]

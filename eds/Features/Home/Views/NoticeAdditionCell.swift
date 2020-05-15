@@ -40,6 +40,7 @@ class NoticeAdditionCell: UITableViewCell, UITextFieldDelegate, PickerDelegate {
         titleLabel.topToSuperview(offset: edsSpace)
 
         messageField.placeholder = "notice_message".localize(with: prefixHome)
+        messageField.clearButtonMode = .whileEditing
         addTextField(messageField)
         messageField.topToBottom(of: titleLabel, offset: edsSpace)
 
@@ -73,6 +74,7 @@ class NoticeAdditionCell: UITableViewCell, UITextFieldDelegate, PickerDelegate {
             let author = AccountUtility.sharedInstance.loginedPhone?.name ?? NIL
             let notice = Notice(message: message, author: author, deadline: self.pickedDate)
             BasicUtility.sharedInstance.updateNotice(notice.toString())
+            ActionUtility.sharedInstance.addAction(.addNotice)
             self.parentVC?.navigationController?.popViewController(animated: true)
         }).disposed(by: disposeBag)
         addSubview(noticeButton)

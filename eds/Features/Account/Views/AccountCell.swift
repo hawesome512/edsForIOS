@@ -166,6 +166,7 @@ class AccountCell: UITableViewCell {
             self.phone?.switchLevel()
             self.phoneLevel = self.phone?.level ?? UserLevel.phoneObserver
             AccountUtility.sharedInstance.updatePhone()
+            ActionUtility.sharedInstance.addAction(.editAccount, extra: self.phone?.name)
         }).disposed(by: disposeBag)
         addSubview(levelButton)
         levelButton.width(edsIconSize)

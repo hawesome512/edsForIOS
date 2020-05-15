@@ -77,6 +77,7 @@ class AccountListController: UITableViewController, AdditionDelegate {
                 AccountUtility.sharedInstance.phoneList.remove(at: indexPath.row)
                 AccountUtility.sharedInstance.updatePhone()
                 tableView.deleteRows(at: [indexPath], with: .automatic)
+                ActionUtility.sharedInstance.addAction(.deleteAccount, extra: account.name)
             })
             deleteVC.addAction(deleteAction)
             self.present(deleteVC, animated: true, completion: nil)
@@ -91,6 +92,7 @@ class AccountListController: UITableViewController, AdditionDelegate {
                 account.level = .phoneAdmin
                 AccountUtility.sharedInstance.updatePhone()
                 tableView.reloadData()
+                ActionUtility.sharedInstance.addAction(.transferAccount, extra: account.name)
             })
             let cancelAction = UIAlertAction(title: "cancel".localize(), style: .cancel, handler: nil)
             transferVC.addAction(cancelAction)
@@ -117,6 +119,7 @@ class AccountListController: UITableViewController, AdditionDelegate {
         if let username = accountList[indexPath.row].name {
             let actionListVC = ActionListController()
             actionListVC.actionList = ActionUtility.sharedInstance.getAction(by: username)
+            actionListVC.title = username
             present(actionListVC, animated: true, completion: nil)
         }
         tableView.deselectRow(at: indexPath, animated: true)

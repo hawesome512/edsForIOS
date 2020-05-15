@@ -18,7 +18,6 @@ class PhotoCell: UICollectionViewCell {
     var url: URL? {
         didSet {
             contentImage.kf.setImage(with: url)
-//            contentImage.kf.setImage(with: url, placeholder: edsDefaultImage)
         }
     }
 
@@ -59,8 +58,8 @@ class PhotoCell: UICollectionViewCell {
     }
 
     public func setBorder() {
-//        contentImage.layer.borderColor = edsLightGrayColor.cgColor
-//        contentImage.layer.borderWidth = 1
+        contentImage.layer.borderColor = UIColor.systemGray3.cgColor
+        contentImage.layer.borderWidth = 1
         contentImage.contentMode = .scaleAspectFill
     }
 

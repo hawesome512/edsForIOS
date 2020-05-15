@@ -28,7 +28,7 @@ class EnergyBranchController: UITableViewController {
         energyBranches = BasicUtility.sharedInstance.energyBranch?.getAllBranches() ?? []
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
         tableView.tableFooterView = UIView()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveBranch))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(saveBranch))
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismissAction))
     }
 
@@ -49,9 +49,15 @@ class EnergyBranchController: UITableViewController {
         }
 
         //处理支路更新
-        print(EnergyBranch.getBranchMessage(energyBranches))
-
-        navigationController?.popViewController(animated: true)
+        let branch = EnergyBranch.getBranchMessage(energyBranches)
+        BasicUtility.sharedInstance.updateBranch(branch)
+        ActionUtility.sharedInstance.addAction(.editBranch)
+        let alertVC = UIAlertController(title: "save".localize(with: prefixEnergy), message: nil, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "ok".localize(), style: .cancel) { _ in
+            self.navigationController?.popViewController(animated: true)
+        }
+        alertVC.addAction(okAction)
+        present(alertVC, animated: true, completion: nil)
     }
 
     @objc func dismissAction() {

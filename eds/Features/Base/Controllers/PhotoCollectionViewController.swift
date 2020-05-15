@@ -95,6 +95,8 @@ extension PhotoCollectionViewController: UICollectionViewDataSource, UICollectio
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PhotoCell.self), for: indexPath) as! PhotoCell
+        cell.contentImage.enableZoom()
+        cell.contentImage.transform = .identity
         photoSource.setImage(in: cell.contentImage, at: indexPath.row)
         cell.indexLabel.innerText = "\(indexPath.row + 1)/\(photoSource.getTotal())"
         return cell

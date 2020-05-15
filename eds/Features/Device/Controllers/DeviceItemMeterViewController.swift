@@ -93,10 +93,15 @@ class DeviceItemMeterViewController: UIViewController {
             let newTag = Tag(name: tag.Name, value: newValue)
             self.valueLabel.text = "updating".localize()
 //            self.updateButton.isEnabled = false
-            MoyaProvider<WAService>().request(.setTagValues(authority: authority, tagList: [newTag])) { result in
+            WAService.getProvider().request(.setTagValues(authority: authority, tagList: [newTag])) { result in
                 switch result {
                 case .success(let response):
-                    print("update \(newTag.Name) value to \(newTag.Value!):\(JsonUtility.didSettedValues(data: response.data))")
+                    if JsonUtility.didSettedValues(data: response.data) {
+                        print("update \(newTag.Name) value to \(newTag.Value!):true")
+                        let device = DeviceUtility.sharedInstance.getDevice(of: tag.getDeviceName())?.title
+                        let log = "\(device!) \(pageItem.name.localize()):\(newValue)"
+                        ActionUtility.sharedInstance.addAction(.paramDevice, extra: log)
+                    }
                 default:
                     break
                 }

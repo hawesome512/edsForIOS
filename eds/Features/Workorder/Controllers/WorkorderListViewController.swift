@@ -94,11 +94,13 @@ class WorkorderListViewController: UITableViewController, WorkorderAdditionDeleg
         let deleteAction = UIContextualAction(style: .destructive, title: "delete".localize()) { _, _, completionHandler in
             let deleteVC = ControllerUtility.generateDeletionAlertController(with: workorder.title)
             let deleteAction = UIAlertAction(title: "delete".localize(), style: .destructive) { _ in
+                let title = workorder.title
                 workorder.prepareDeleted()
-                MoyaProvider<EDSService>().request(.updateWorkorder(workorder: workorder)) { _ in }
+                EDSService.getProvider().request(.updateWorkorder(workorder: workorder)) { _ in }
                 self.workorderList.remove(at: indexPath.row)
                 WorkorderUtility.sharedInstance.workorderList = self.workorderList
                 tableView.deleteRows(at: [indexPath], with: .automatic)
+                ActionUtility.sharedInstance.addAction(.deleteWorkorder, extra: title)
             }
             deleteVC.addAction(deleteAction)
             self.present(deleteVC, animated: true, completion: nil)

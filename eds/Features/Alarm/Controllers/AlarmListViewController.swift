@@ -108,7 +108,10 @@ class AlarmListViewController: UITableViewController {
             AlarmUtility.sharedInstance.remove(with: alarm.id)
             self.tableView.deleteRows(at: [indexPath], with: .fade)
             alarm.prepareForDelete()
-            MoyaProvider<EDSService>().request(.updateAlarm(alarm: alarm)) { _ in }
+            EDSService.getProvider().request(.updateAlarm(alarm: alarm)) { _ in }
+            let device = DeviceUtility.sharedInstance.getDevice(of: alarm.device)?.title ?? alarm.device
+            let log = "\(device) at \(alarm.time)"
+            ActionUtility.sharedInstance.addAction(.deleteAlarm, extra: log)
         }
         deleteController.addAction(deleteAction)
         present(deleteController, animated: true, completion: nil)
@@ -118,7 +121,10 @@ class AlarmListViewController: UITableViewController {
         alarm.confirm = .checked
         AlarmUtility.sharedInstance.check(with: alarm.id)
         tableView.reloadRows(at: [indexPath], with: .automatic)
-        MoyaProvider<EDSService>().request(.updateAlarm(alarm: alarm)) { _ in }
+        EDSService.getProvider().request(.updateAlarm(alarm: alarm)) { _ in }
+        let device = DeviceUtility.sharedInstance.getDevice(of: alarm.device)?.title ?? alarm.device
+        let log = "\(device) at \(alarm.time)"
+        ActionUtility.sharedInstance.addAction(.checkAlarm, extra: log)
     }
 
     private func workorder(_ alarm: Alarm, at indexPath: IndexPath) {
@@ -191,7 +197,7 @@ extension AlarmListViewController: WorkorderAdditionDelegate, UISearchResultsUpd
         WorkorderUtility.sharedInstance.update(with: workorder)
         AlarmUtility.sharedInstance.workorder(workorderAlarm!.id, workorderID: workorder.id)
         alarmList = AlarmUtility.sharedInstance.alarmList
-        MoyaProvider<EDSService>().request(.updateAlarm(alarm: workorderAlarm!)) { _ in }
+        EDSService.getProvider().request(.updateAlarm(alarm: workorderAlarm!)) { _ in }
     }
 
 

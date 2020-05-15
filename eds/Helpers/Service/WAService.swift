@@ -16,6 +16,12 @@ enum WAService {
     case setTagValues(authority: String, tagList: [Tag]) //修改“监控点”点值
     case getTagLog(authority: String, condition: WATagLogRequestCondition) //获取“监控点”历史记录
 
+    static func getProvider() -> MoyaProvider<WAService> {
+        //后端服务中并不需要提供凭证，但若无凭证，xcode调试时会爆错误，故添加虚拟凭证，eds xseec无具体意义，可任意填写
+        return MoyaProvider<WAService>(plugins: [CredentialsPlugin { _ -> URLCredential? in
+            return URLCredential(user: "eds", password: "xseec", persistence: .permanent)
+        }])
+    }
 }
 
 extension WAService: TargetType {

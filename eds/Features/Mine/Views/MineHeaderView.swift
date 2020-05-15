@@ -170,13 +170,13 @@ class MineHeaderView: UIView, UITextFieldDelegate {
                 if let photo = items.singlePhoto?.image {
                     self.profileImage.image = photo
                     let imageID = AccountUtility.sharedInstance.generateImageID()
-                    let moyaProvider = MoyaProvider<EDSService>()
-                    moyaProvider.request(.upload(data: photo.pngData()!, fileName: imageID)) { response in
+                    EDSService.getProvider().request(.upload(data: photo.pngData()!, fileName: imageID)) { response in
                         switch(response) {
                         case .success:
                             //上传头像成功
                             self.loginedPhone?.photo = imageID
                             AccountUtility.sharedInstance.updatePhone()
+                            ActionUtility.sharedInstance.addAction(.editPerson)
                         default:
                             break
                         }
@@ -188,12 +188,13 @@ class MineHeaderView: UIView, UITextFieldDelegate {
         //用户名
         let username = "username".localize()
         let nameAction = UIAlertAction(title: username, style: .default, handler: { _ in
-            let editVC = ControllerUtility.generateInputAlertController(title: username, delegate: self)
+            let editVC = ControllerUtility.generateInputAlertController(title: username, placeholder: self.loginedPhone?.name, delegate: self)
             let confirmAction = UIAlertAction(title: confirm, style: .default, handler: { _ in
                 if let newValue = editVC.textFields?.first?.text, !newValue.isEmpty {
                     self.loginedPhone?.name = newValue
                     self.nameLabel.text = newValue
                     AccountUtility.sharedInstance.updatePhone()
+                    ActionUtility.sharedInstance.addAction(.editPerson)
                 }
             })
             editVC.addAction(confirmAction)
@@ -202,12 +203,13 @@ class MineHeaderView: UIView, UITextFieldDelegate {
         //电话
         let phone = "phone".localize()
         let phoneAction = UIAlertAction(title: phone, style: .default, handler: { _ in
-            let editVC = ControllerUtility.generateInputAlertController(title: phone, delegate: self)
+            let editVC = ControllerUtility.generateInputAlertController(title: phone, placeholder: self.loginedPhone?.number, delegate: self)
             let confirmAction = UIAlertAction(title: confirm, style: .default, handler: { _ in
                 if let newValue = editVC.textFields?.first?.text, !newValue.isEmpty {
                     self.loginedPhone?.number = newValue
                     self.phoneLabel.text = newValue
                     AccountUtility.sharedInstance.updatePhone()
+                    ActionUtility.sharedInstance.addAction(.editPerson)
                 }
             })
             editVC.addAction(confirmAction)
@@ -216,12 +218,13 @@ class MineHeaderView: UIView, UITextFieldDelegate {
         //邮箱
         let email = "email".localize()
         let emailAction = UIAlertAction(title: email, style: .default, handler: { _ in
-            let editVC = ControllerUtility.generateInputAlertController(title: email, delegate: self)
+            let editVC = ControllerUtility.generateInputAlertController(title: email, placeholder: self.loginedPhone?.email, delegate: self)
             let confirmAction = UIAlertAction(title: confirm, style: .default, handler: { _ in
                 if let newValue = editVC.textFields?.first?.text, !newValue.isEmpty {
                     self.loginedPhone?.email = newValue
                     self.emailLabel.text = newValue
                     AccountUtility.sharedInstance.updatePhone()
+                    ActionUtility.sharedInstance.addAction(.editPerson)
                 }
             })
             editVC.addAction(confirmAction)

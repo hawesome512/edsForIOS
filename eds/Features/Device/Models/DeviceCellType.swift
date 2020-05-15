@@ -76,7 +76,9 @@ enum DeviceCellType: String {
             cell.parentVC = parentVC
             return cell
         case .onoff:
-            return DeviceOnOffCell(style: .default, reuseIdentifier: rawValue)
+            let cell = DeviceOnOffCell(style: .default, reuseIdentifier: rawValue)
+            cell.parentVC = parentVC
+            return cell
         case .range:
             return DeviceRangeCell(style: .default, reuseIdentifier: rawValue)
         case .text:

@@ -87,10 +87,14 @@ extension DeviceButtonCell: DevicePageItemSource, PasswordVerifyDelegate {
         guard let authority = AccountUtility.sharedInstance.account?.authority else {
             return
         }
-        MoyaProvider<WAService>().request(.setTagValues(authority: authority, tagList: [buttonTag])) { result in
+        WAService.getProvider().request(.setTagValues(authority: authority, tagList: [buttonTag])) { result in
             switch result {
             case .success(let response):
-                print(String(format: "Update %s value: %b", self.buttonTag.Name, JsonUtility.didSettedValues(data: response.data)))
+                if JsonUtility.didSettedValues(data: response.data) {
+                    print(String(format: "Update %s value: true", self.buttonTag.Name))
+                    let device = DeviceUtility.sharedInstance.getDevice(of: self.buttonTag.getDeviceName())?.title ?? ""
+                    ActionUtility.sharedInstance.addAction(.ctrlDevice, extra: device)
+                }
             default:
                 break
             }

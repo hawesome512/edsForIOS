@@ -68,8 +68,7 @@ class HomeHeaderView: UIView, UITextFieldDelegate {
                     if let photo = items.singlePhoto?.image {
                         self.pickedImage = photo
                         let imageID = AccountUtility.sharedInstance.generateImageID()
-                        let moyaProvider = MoyaProvider<EDSService>()
-                        moyaProvider.request(.upload(data: photo.pngData()!, fileName: imageID)) { response in
+                        EDSService.getProvider().request(.upload(data: photo.pngData()!, fileName: imageID)) { response in
                             switch(response) {
                             case .success:
                                 BasicUtility.sharedInstance.updateBanner(imageID)
@@ -84,9 +83,8 @@ class HomeHeaderView: UIView, UITextFieldDelegate {
             //标题
             let title = "title".localize(with: prefixHome)
             let titleAction = UIAlertAction(title: title, style: .default, handler: { _ in
-                let titleVC = ControllerUtility.generateInputAlertController(title: title, delegate: self)
+                let titleVC = ControllerUtility.generateInputAlertController(title: title, placeholder: self.basic?.user, delegate: self)
                 let textField = titleVC.textFields?.first
-                textField?.placeholder = self.basic?.user
                 let confirmAction = UIAlertAction(title: "confirm".localize(), style: .default, handler: { _ in
                     if let newTitle = textField?.text, !newTitle.isEmpty {
                         BasicUtility.sharedInstance.updateUser(newTitle)
@@ -99,9 +97,8 @@ class HomeHeaderView: UIView, UITextFieldDelegate {
             //地址
             let location = "location".localize(with: prefixHome)
             let locationAction = UIAlertAction(title: location, style: .default, handler: { _ in
-                let locationVC = ControllerUtility.generateInputAlertController(title: location, delegate: self)
+                let locationVC = ControllerUtility.generateInputAlertController(title: location, placeholder: self.basic?.location, delegate: self)
                 let textField = locationVC.textFields?.first
-                textField?.placeholder = self.basic?.location
                 let confirmAction = UIAlertAction(title: "confirm".localize(), style: .default, handler: { _ in
                     if let newLoc = textField?.text, !newLoc.isEmpty {
                         BasicUtility.sharedInstance.updateLocation(newLoc)

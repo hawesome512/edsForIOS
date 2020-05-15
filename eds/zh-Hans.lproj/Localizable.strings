@@ -153,6 +153,8 @@
 "energy_edit" = "编辑支路";
 /* energy_limit */
 "energy_limit" = "最多可添加%d条支路，请先删减本层其他支路！";
+/* energy_save */
+"energy_save" = "已保存，编辑的用电支路需要重新登录后才能生效！";
 
 /* trend_evaluation */
 "trend_evaluation" = "运行评估";
@@ -179,6 +181,8 @@
 "add_room" = "新增配电房";
 /* add_info */
 "add_info" = "新增设备资料";
+/* info_limit */
+"info_limit" = "最多可添加%d条资料，请先删减！";
 /* info */
 "info" = "设备资料";
 /* title */
@@ -540,10 +544,10 @@
 /* workorder_distribution_title */
 "workorder_distribution_title" = "EDS工单派发通知";
 
-/* action_phonelogin */
-"action_phonelogin" = "手机快捷登录";
-/* action_passwordlogin */
-"action_passwordlogin" = "帐号密码登录";
+/* action_phoneLogin */
+"action_phoneLogin" = "手机快捷登录";
+/* action_passwordLogin */
+"action_passwordLogin" = "帐号密码登录";
 /* action_addNotice */
 "action_addNotice" = "发布公告";
 /* action_deleteNotice */

@@ -27,7 +27,7 @@ class BasicUtility {
             return
         }
         let factor = EDSServiceQueryFactor(id: projID)
-        MoyaProvider<EDSService>().request(.queryProjectInfoList(factor: factor)) { result in
+        EDSService.getProvider().request(.queryProjectInfoList(factor: factor)) { result in
             switch result {
             case .success(let response):
                 self.basic = JsonUtility.getEDSServiceList(with: response.data, type: [Basic]())?.first ?? nil
@@ -57,7 +57,7 @@ class BasicUtility {
         let date = DateInRegion(Date(), region: .current).dateAtStartOf(.month)
         let dateItem = EnergyDateItem(date, type: .month)
         let condition = dateItem.getLogRequestCondition(with: logTags)
-        MoyaProvider<WAService>().request(.getTagLog(authority: authority, condition: condition)) { result in
+        WAService.getProvider().request(.getTagLog(authority: authority, condition: condition)) { result in
             switch result {
             case .success(let response):
                 let results = JsonUtility.getTagLogValues(data: response.data) ?? []
@@ -76,35 +76,44 @@ class BasicUtility {
     }
 
     func updateNotice(_ notice: String) {
-        guard let basic = basic else {
-            return
-        }
-        basic.notice = notice
-        MoyaProvider<EDSService>().request(.updateProject(projectInfo: basic)) { _ in }
+        basic?.notice = notice
+        updateProject(saveActionLog: false)
+    }
+
+    func updateBranch(_ branch: String) {
+        basic?.energy = branch
+        updateProject(saveActionLog: false)
     }
 
     func updateUser(_ title: String) {
-        guard let basic = basic else {
-            return
-        }
-        basic.user = title
-        MoyaProvider<EDSService>().request(.updateProject(projectInfo: basic)) { _ in }
+        basic?.user = title
+        updateProject()
     }
 
     func updateLocation(_ location: String) {
-        guard let basic = basic else {
-            return
-        }
-        basic.location = location
-        MoyaProvider<EDSService>().request(.updateProject(projectInfo: basic)) { _ in }
+        basic?.location = location
+        updateProject()
     }
 
     func updateBanner(_ banner: String) {
+        basic?.banner = banner
+        updateProject()
+    }
+
+    private func updateProject(saveActionLog: Bool = true) {
         guard let basic = basic else {
             return
         }
-        basic.banner = banner
-        MoyaProvider<EDSService>().request(.updateProject(projectInfo: basic)) { _ in }
+        EDSService.getProvider().request(.updateProject(projectInfo: basic)) { result in
+            switch result {
+            case .success(let response):
+                if JsonUtility.didUpdatedEDSServiceSuccess(data: response.data), saveActionLog {
+                    ActionUtility.sharedInstance.addAction(.editHome)
+                }
+            default:
+                break
+            }
+        }
     }
 
     // MARK: - 用电支路

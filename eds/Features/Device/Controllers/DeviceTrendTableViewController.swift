@@ -25,7 +25,7 @@ class DeviceTrendTableViewController: UITableViewController {
             return
         }
         let logCondition = condition ?? WATagLogRequestCondition.defaultCondition(with: tags, isAccumulated: isAccumulated)
-        MoyaProvider<WAService>().request(.getTagLog(authority: authority, condition: logCondition)) { result in
+        WAService.getProvider().request(.getTagLog(authority: authority, condition: logCondition)) { result in
             switch result {
             case .success(let response):
                 let logs = JsonUtility.getTagLogValues(data: response.data)

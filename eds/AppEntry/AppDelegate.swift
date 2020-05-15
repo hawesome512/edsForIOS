@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Override point for customization after application launch.
         //为避免MQTT初始化后马上订阅，将单例初始化提前，订阅将在TagUtility中等获取tagList后执行
-        print(MQTTService.sharedInstance.description())
+//        print(MQTTService.sharedInstance.description())
         return true
     }
 
