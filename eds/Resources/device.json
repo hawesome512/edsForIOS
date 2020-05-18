@@ -14,7 +14,7 @@
 			"pages":[
 				 {"title":"realtime","content":[
                         {"name":"status","tags":["Status"],"display":"text","items":["overload","short","instant","ground","","","on/off","trip"],"section":"status"},
-						{"name":"current","tags":["Ia","Ib","Ic"],"display":"bar","section":"current"},
+						{"name":"current","tags":["Ia","Ib","Ic"],"display":"bar","unit":"Ir","section":"current"},
 						{"name":"current_others","tags":["In","Igf"],"display":"list"},
 						{"name":"voltage","tags":["Ua","Ub","Uc"],"display":"bar","section":"voltage"}]},
 				 {"title":"parameter","content":[
@@ -45,7 +45,7 @@
 			"pages":[
 				 {"title":"realtime","content":[
                         {"name":"status","tags":["Status"],"display":"text","items":["overload","short","instant","ground","","","on/off","trip"],"section":"status"},
-						{"name":"current","tags":["Ia","Ib","Ic"],"display":"bar","section":"current"},
+						{"name":"current","tags":["Ia","Ib","Ic"],"display":"bar","unit":"Ir","section":"current"},
 						{"name":"current_others","tags":["In","Igf"],"display":"list"},
 						{"name":"voltage","tags":["Ua","Ub","Uc"],"display":"bar","section":"voltage"}]},
 				 {"title":"parameter","content":[
@@ -78,7 +78,7 @@
                         {"name":"status","tags":["Status"],"display":"text","items":["overload","short","instant","ground","","","on/off","trip"],"section":"status"},
                         {"name":"energy","tags":["EP"],"display":"text","section":"EP"},
                         {"name":"demand","tags":["IdA","IdB","IdC"],"display":"bar","items":["0","green","90","yellow","105","red","120"],"unit":"Ir","section":"demand"},
-						{"name":"current","tags":["Ia","Ib","Ic"],"display":"bar","section":"current"},
+						{"name":"current","tags":["Ia","Ib","Ic"],"display":"bar","unit":"Ir","section":"current"},
 						{"name":"current_others","tags":["In","Igf"],"display":"list"},
 						{"name":"voltage","tags":["Ua","Ub","Uc"],"display":"bar","section":"voltage"},
 						{"name":"power","tags":["P","Q","S"],"display":"list","section":"power"},
@@ -114,7 +114,7 @@
 			"authority":["CtrlMode/76/local/82/remote","CtrlCode/%04X"],
 			"pages":[
 				 {"title":"realtime","content":[        {"name":"status","tags":["Status"],"display":"text","items":["","","","","","","","","overload","short","instant","ground","","","off/on","trip"],"section":"status"},
-						{"name":"current","tags":["Ia","Ib","Ic"],"display":"bar","section":"current"},
+						{"name":"current","tags":["Ia","Ib","Ic"],"display":"bar","unit":"Ir","section":"current"},
 						{"name":"current_others","tags":["In","Igf"],"display":"list"}]},
 				 {"title":"parameter","content":[
 						{"name":"Ir(xIn)","tags":["Ir"],"display":"item","items":["0.4","0.44","0.48","0.52","0.56","0.6","0.64","0.68","0.72","0.76","0.8","0.85","0.9","0.95","1"],"section":"overload_protect"},

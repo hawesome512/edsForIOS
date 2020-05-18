@@ -12,7 +12,8 @@ import HandyJSON
 class Alarm: HandyJSON, EDSDelegate {
 
     static let icon = UIImage(systemName: "bell")
-    static let description = "alarm".localize()
+    //英文状态下区分Alarm和alarm
+    static let description = "Alarm".localize()
 
     //🆔，e.g.:1/XRD-20191001121212(ProjectID-时间戳）
     var id = ""

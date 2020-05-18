@@ -1,0 +1,631 @@
+/* ok */
+"ok" = "OK";
+/* cancel */
+"cancel" = "Cancel";
+/* delete */
+"delete" = "Delete";
+/* edit */
+"edit" = "Edit";
+/* workorder */
+"workorder" = "Workorder";
+/* Alarm */
+"Alarm" = "Alarm";
+/* home */
+"home" = "Home";
+/* energy */
+"energy" = "Energy";
+/* mine */
+"mine" = "Mine";
+/* phone */
+"phone" = "Phone";
+/* sms */
+"sms" = "SMS";
+/* mail */
+"mail" = "Mail";
+/* wechat */
+"wechat" = "Wechat";
+/* new */
+"new" = "New";
+/* save */
+"save" = "Save";
+/* confirm */
+"confirm" = "Confirm";
+/* cancel_alert */
+"cancel_alert" = "not saved";
+
+/* superAdmin */
+"superAdmin" = "admin";
+/* systemAdmin */
+"systemAdmin" = "sys-admin";
+/* phoneAdmin */
+"phoneAdmin" = "admin";
+/* phoneOperator */
+"phoneOperator" = "operator";
+/* phoneObserver */
+"phoneObserver" = "observer";
+/* qrcodeObserver */
+"qrcodeObserver" = "guest";
+/* accountMember */
+"accountMember" = "Memberships";
+/* accountQRCode */
+"accountQRCode" = "Guest's qrcode";
+/* abountEDS */
+"aboutEDS" = "About EDS";
+/* help */
+"helpEDS" = "Help";
+/* feedback */
+"feedbackEDS" = "Feedback";
+/* exit */
+"exitEDS" = "EXIT EDS";
+/* email */
+"email" = "Mail";
+/* username */
+"username" = "Username";
+/* userlevel */
+"userlevel" = "level";
+/* profile */
+"profile" = "Profile";
+/* addAccount */
+"addAccount" = "Add account";
+/* withoutAction */
+"withoutAction" = "No record";
+/* transferAccount */
+"transferAccount" = "Transfer";
+/* transferAccountAlert */
+"transferAccountAlert" = "After transfered admin level to other,you will become an operator and can't manege membership!";
+/* addAccountLimit */
+"addAccountLimit" = "At most %d members allowed，please delete others or apply to EDS Service for more amount!";
+/* imcomplete */
+"imcomplete" = "Please complete necessary infos";
+/* QRCodeHelp */
+"QRCodeHelp" = "Dynamic guest's qrcode is valid before %@,screenshot not allowed!";
+/* aboutCompany */
+"aboutCompany" = "No.92,94,96, Sunban South Road,Jimei,Xiamen,361021,Fujian,P.R. China\r\nTEL：0592-6100660   FAX：0592-6100661\r\nXSEEC %d © All rights reserved.";
+/* aboutDescription */
+"aboutDescription" = "EDS,an innovative cloud platform,privides a new solution for medium and low voltage distribution.Low-cost、Easy-deployed、High-compatibility、Flexible-dilatation,EDS can improve your distribution system smarter、safer and more convenient.";
+/* aboutMore */
+"aboutMore" = "Know more about EDS👉";
+
+/* home_energy */
+"home_energy" = "Energy";
+/* home_current */
+"home_current" = "Current";
+/* home_last */
+"home_last" = "Last";
+/* home_ratio */
+"home_ratio" = "Ratio";
+/* home_percent */
+"home_percent" = "Indicator";
+/* home_workorder */
+"home_workorder" = "My Workorder";
+/* home_none */
+"home_none" = "No task";
+/* home_notice_title */
+"home_notice_title" = "Notice";
+/* home_notice_null */
+"home_notice_none" = "No notice";
+/* home_notice_new */
+"home_notice_new" = "Announce";
+/* home_notice_message */
+"home_notice_message" = "Content";
+/* home_notice_time */
+"home_notice_time" = "Overdue";
+/* home_notice_confirm */
+"home_notice_confirm" = "Confirm";
+/* home_notice_imcomplete */
+"home_notice_imcomplete" = "Please complete necessary infos";
+/* home_banner */
+"home_banner" = "Banner";
+/* home_title */
+"home_title" = "Title";
+/* home_location */
+"home_location" = "Address";
+
+/* energy_addition */
+"energy_addition" = "Add branch";
+/* energy_title */
+"energy_title" = "Electric Analysis";
+/* energy_day */
+"energy_day" = "Day";
+/* energy_month */
+"energy_month" = "Month";
+/* energy_year */
+"energy_year" = "Year";
+/* energy_current */
+"energy_current" = "Current";
+/* energy_last */
+"energy_last" = "Last";
+/* energy_percent */
+"energy_percent" = "Indicator";
+/* energy_time */
+"energy_time" = "Time range";
+/* energy_valley */
+"energy_valley" = "valley";
+/* energy_plain */
+"energy_plain" = "plain";
+/* energy_peak */
+"energy_peak" = "peak";
+/* energy_branch */
+"energy_branch" = "Branch percentage(%)";
+/* energy_time_alert */
+"energy_time_alert" = "Analysis,based on time range ,only used in Mainland China：\r\n●valley at (00:00-07:00,23:00-24:00):\r\n¥0.4/kW.h\r\n●plain at (07:00-08:00,11:00-18:00):\r\n¥0.8/kW.h\r\n●peak at (08:00-11:00,18:00-23:00):\r\n¥1.2/kW.h";
+/* energy_edit */
+"energy_edit" = "Edit Branch";
+/* energy_limit */
+"energy_limit" = "At most %d branches allowed，please delete others in this level!";
+/* energy_save */
+"energy_save" = "Saved,take effect after logged in again!";
+
+/* trend_evaluation */
+"trend_evaluation" = "Evaluation";
+/* trend_max */
+"trend_max" = "Max";
+/* trend_min */
+"trend_min" = "Min";
+/* trend_avg */
+"trend_avg" = "Avg";
+/* trend_stable */
+"trend_stable" = "stable";
+/* trend_communication */
+"trend_communication" = "comm";
+/* trend_overflow */
+"trend_overflow" = "overflow";
+/* trend_excellent */
+"trend_excellent" = "GOOD";
+/* trend_general */
+"trend_general" = "NORm";
+/* trend_bad */
+"trend_bad" = "BAD";
+
+/* add_room */
+"add_room" = "Add room";
+/* add_info */
+"add_info" = "Add device info";
+/* info_limit */
+"info_limit" = "At most %d infos allowed，please delete others!";
+/* info */
+"info" = "Info";
+/* title */
+"title" = "Title";
+/* value */
+"value" = "Value";
+/* unit */
+"unit" = "Unit(optional)";
+/* room_addition */
+"room_addition" = "Room's name";
+/* box_addition */
+"box_addition" = "Box's name";
+/* property_addition */
+"property_addition" = "Device's name";
+/* delete_title */
+"delete_title" = "Delete [%@] and sub-infos";
+/* delete_info */
+"delete_info" = "This action is unrecoverable!";
+
+/* uncommunicate */
+"uncommunicate" = "un-comm";
+/* property */
+"property" = "Property";
+/* updating */
+"updating" = "modifying";
+/* update */
+"update" = "Modify";
+/* password_title */
+"password_title" = "Device's code";
+/* password_error */
+"password_error" = "wrong code";
+/* userLocked */
+"userLocked" = "You aren't allowed to do this,please apply to admin for operator level.";
+/* localLocked */
+"localLocked" = "Device is locked in local mode,any control is forbidden.";
+/* denied */
+"denied" = "Invalid action";
+
+
+/* normal */
+"normal" = "normal";
+/* on */
+"on" = "ON";
+/* off */
+"off" = "OFF";
+/* offline */
+"offline" = "offline";
+/* online */
+"online" = "online";
+/* alarm */
+"alarm" = "alarm";
+/* other */
+"other" = "other";
+/* status */
+"status" = "Status";
+/* positive */
+"positive" = "ABC";
+/* negative */
+"negative" = "ACB";
+/* open_phase */
+"open_phase" = "open phase";
+/* overload */
+"overload" = "overload";
+/* short */
+"short" = "short";
+/* instant */
+"instant" = "instant";
+/* ground */
+"ground" = "ground";
+/* trip */
+"trip" = "trip";
+
+/* Ia */
+"Ia" = "Ia";
+/* Ib */
+"Ib" = "Ib";
+/* Ic */
+"Ic" = "Ic";
+/* Ua */
+"Ua" = "Ua";
+/* Ub */
+"Ub" = "Ub";
+/* Uc */
+"Uc" = "Uc";
+/* energy */
+"energy" = "EP";
+/* demand */
+"demand" = "Demand(%Ir)";
+/* current */
+"current" = "Current(A)";
+/* voltage */
+"voltage" = "Voltage(V)";
+/* In */
+"In" = "In";
+/* Igf */
+"Igf" = "Ig";
+/* power */
+"power" = "Power";
+/* P */
+"P" = "P(kW)";
+/* Q */
+"Q" = "Q(kVar)";
+/* S */
+"S" = "S(kVA)";
+/* power_factor */
+"power_factor" = "Factor·COS(%)";
+/* EP */
+"EP" = "EP(kW·h)";
+/* EQ */
+"EQ" = "EQ(kVar·h)";
+/* ES */
+"ES" = "ES(kVA·h)";
+/* EPin */
+"EPin" = "EPin(kVar·h)";
+/* EPout */
+"EPout" = "EPout(kVar·h)";
+/* EQin */
+"EQin" = "EQin(kVar·h)";
+/* EQout */
+"EQout" = "EQout(kVar·h)";
+/* other */
+"other" = "other";
+/* T */
+"T" = "T(°C)";
+/* F */
+"F" = "F(Hz)";
+/* Phase */
+"Phase" = "Phase";
+/* thd */
+"thd" = "THD(%)";
+/* THD1_Ia */
+"THD1_Ia" = "Ia";
+/* THD1_Ib */
+"THD1_Ib" = "Ib";
+/* THD1_Ic */
+"THD1_Ic" = "Ic";
+/* THD1_In */
+"THD1_In" = "In";
+/* THD1_Ua */
+"THD1_Ua" = "Ua";
+/* THD1_Ub */
+"THD1_Ub" = "Ub";
+/* THD1_Uc */
+"THD1_Uc" = "Uc";
+/* IdA */
+"IdA" = "Ia";
+/* IdB */
+"IdB" = "Ib";
+/* IdC */
+"IdC" = "Ic";
+
+/* overload_protect */
+"overload_protect" = "Long time";
+/* short_protect */
+"short_protect" = "Short time";
+/* instant_protect */
+"instant_protect" = "Instant";
+/* Isd_switch */
+"Isd_switch" = "Function";
+/* Ii_switch */
+"Ii_switch" = "Function";
+/* ground_protect */
+"ground_protect" = "Ground";
+/* Ig_switch */
+"Ig_switch" = "Function";
+/* I2t */
+"I2t" = "I2t";
+/* I2t_on */
+"I2t_on" = "I2t on";
+/* I2t_off */
+"I2t_off" = "I2t off";
+/* Ir */
+"Ir" = "Ir";
+/* Tr */
+"Tr" = "Tr";
+/* Isd */
+"Isd" = "Isd";
+/* Tsd */
+"Tsd" = "Tsd";
+/* Ii */
+"Ii" = "Ii";
+/* Ig */
+"Ig" = "Ig";
+/* Tg */
+"Tg" = "Tg";
+
+
+/* current_ratio */
+"current_ratio" = "Current(%Ir)";
+
+/* work */
+"work" = "Status";
+/* oil */
+"oil" = "oil";
+/* sources */
+"sources" = "sources";
+/* refuse */
+"refuse" = "refuse";
+/* ferroelectric */
+"ferroelectric" = "ferroelectric";
+/* feedback */
+"feedback" = "feedback";
+/* disturb */
+"disturb" = "disturb";
+/* rotary */
+"rotary" = "rotary";
+
+/* source1 */
+"source1" = "I(V)";
+/* source2 */
+"source2" = "II(V)";
+/* Ua_1 */
+"Ua_1" = "Ua";
+/* Ub_1 */
+"Ub_1" = "Ub";
+/* Uc_1 */
+"Uc_1" = "Uc";
+/* Ua_2 */
+"Ua_2" = "Ua";
+/* Ub_2 */
+"Ub_2" = "Ub";
+/* Uc_2 */
+"Uc_2" = "Uc";
+/* source1_quality */
+"source1_quality" = "Upmax(%)";
+/* source2_quality */
+"source2_quality" = "Upmax(%)";
+/* F_1 */
+"F_1" = "F(Hz)";
+/* F_2 */
+"F_2" = "F(Hz)";
+/* Phase_1 */
+"Phase_1" = "Phase";
+/* Phase_2 */
+"Phase_2" = "Phase";
+
+/* setting */
+"setting" = "Set";
+/* switch_mode */
+"switch_mode" = "Switch";
+/* switch_mode_off */
+"switch_mode_off" = "off";
+/* switch_mode_on */
+"switch_mode_on" = "on";
+/* operator_mode */
+"operator_mode" = "Operator";
+/* operator_mode_off */
+"operator_mode_off" = "auto";
+/* operator_mode_on */
+"operator_mode_on" = "manual";
+/* ct_ratio */
+"CT" = "CT(5A)";
+
+/* voltage_protect */
+"voltage_protect" = "Voltage(%Un)";
+/* Ul */
+"Ul" = "Ul";
+/* UlR */
+"UlR" = "UlR";
+/* Uo */
+"Uo" = "Uo";
+/* UoR */
+"UoR" = "UoR";
+
+/* freq_protect */
+"freq_protect" = "F(%Fn)";
+/* freq_switch */
+"freq_switch" = "Function";
+/* Fl */
+"Fl" = "Fl";
+/* FlR */
+"FlR" = "FlR";
+/* Fo */
+"Fo" = "Fo";
+/* FoR */
+"FoR" = "FoR";
+
+/* Up_protect */
+"Up_protect" = "Up(%Un)";
+/* Up_switch */
+"Up_switch" = "Function";
+/* UpSet */
+"UpSet" = "UpSet";
+/* UpRSet */
+"UpRSet" = "UpRSet";
+
+/* delay */
+"delay" = "Delay(s)";
+/* T1 */
+"T1" = "T1";
+/* T2 */
+"T2" = "T2";
+/* T3 */
+"T3" = "T3";
+/* T4 */
+"T4" = "T4";
+/* T5 */
+"T5" = "T5";
+
+/* alarm_check */
+"alarm_check" = "Check";
+/* alarm_checked */
+"alarm_checked" = "checked";
+/* alarm_unchecked */
+"alarm_unchecked" = "unchecked";
+/* alarm_add_alarm */
+"alarm_add_alarm" = "Add alarm";
+
+/* workorder_add_workorder */
+"workorder_add_workorder" = "Add workorder";
+/* workorder_plan */
+"workorder_plan" = "plan";
+/* workorder_alarm */
+"workorder_alarm" = "alarm";
+/* workorder_additional */
+"workorder_additional" = "temporary";
+/* workorder_system */
+"workorder_system" = "system";
+/* workorder_created */
+"workorder_created" = "Create";
+/* workorder_distributed */
+"workorder_distributed" = "Distribute";
+/* workorder_executed */
+"workorder_executed" = "Execute";
+/* workorder_audited */
+"workorder_audited" = "Audit";
+/* workorder_state */
+"workorder_state" = "State";
+/* workorder_task */
+"workorder_task" = "Task";
+/* workorder_basic */
+"workorder_basic" = "Distribution";
+/* workorder_photo */
+"workorder_photo" = "Photo";
+/* workorder_message */
+"workorder_message" = "Message";
+/* workorder_type */
+"workorder_type" = "Type";
+/* workorder_title */
+"workorder_title" = "Title";
+/* workorder_properties */
+"workorder_properties" = "Properties(multiple)";
+/* workorder_serial_number */
+"workorder_serial_number" = "ID";
+/* workorder_proper_time */
+"workorder_proper_time" = "Proper time";
+/* workorder_start_time */
+"workorder_start_time" = "Start time";
+/* workorder_end_time */
+"workorder_end_time" = "End time";
+/* workorder_instruction */
+"workorder_instruction" = "Instruction";
+/* workorder_add_task */
+"workorder_add_task" = "Add task";
+/* workorder_time_range */
+"workorder_time_range" = "%@→%@";
+/* workorder_distribution */
+"workorder_distribution" = "%@：\r\n   Hello!\r\n   You have been distributed to execute a workorder!\r\n   Title：%@\r\n   Time：%@\r\n   Properties：%@\r\n   ID：%@\r\n\r\nPlease use EDS APP to do this task,Thanks!";
+/* workorder_distribution_title */
+"workorder_distribution_title" = "EDS Workorder Notice";
+
+/* action_phoneLogin */
+"action_phoneLogin" = "Phone log in";
+/* action_passwordLogin */
+"action_passwordLogin" = "Username log in";
+/* action_addNotice */
+"action_addNotice" = "Announce notice";
+/* action_deleteNotice */
+"action_deleteNotice" = "Delete notice";
+/* action_editHome */
+"action_editHome" = "Edit home";
+/* action_editBranch */
+"action_editBranch" = "Edit elec branch";
+/* action_addDevice */
+"action_addDevice" = "Add device";
+/* action_deleteDevice */
+"action_deleteDevice" = "Delete device";
+/* action_editDevice */
+"action_editDevice" = "Edit device";
+/* action_paramDevice */
+"action_paramDevice" = "Modify device";
+/* action_ctrlDevice */
+"action_ctrlDevice" = "Control device";
+/* action_checkAlarm */
+"action_checkAlarm" = "Check alarm";
+/* action_deleteAlarm */
+"action_deleteAlarm" = "Delete alarm";
+/* action_addWorkorder */
+"action_addWorkorder" = "Create workorder";
+/* action_deleteWorkorder */
+"action_deleteWorkorder" = "Delete workorder";
+/* action_distributeWorkorder */
+"action_distributeWorkorder" = "Distribute workorder";
+/* action_executeWorkorder */
+"action_executeWorkorder" = "Execute workorder";
+/* action_auditeWorkorder */
+"action_auditeWorkorder" = "Audit workorder";
+/* action_editPerson */
+"action_editPerson" = "Edit personal info";
+/* action_addAccount */
+"action_addAccount" = "Add member";
+/* action_deleteAccount */
+"action_deleteAccount" = "Delete member";
+/* action_editAccount */
+"action_editAccount" = "Modify member's level";
+/* action_transferAccount */
+"action_transferAccount" = "Transfer admin level";
+/* action_other */
+"action_other" = "Other action";
+
+/* login_title */
+"login_title" = "EDS\r\nElectrical Distribution System";
+/* login_phoneType */
+"login_phoneType" = "Phone";
+/* login_passwordType */
+"login_passwordType" = "Account";
+/* login_scanType */
+"login_scanType" = "Qrcode";
+/* login_phone */
+"login_phone" = "Number";
+/* login_code */
+"login_code" = "Code";
+/* login_username */
+"login_username" = "Username";
+/* login_password */
+"login_password" = "Password";
+/* login */
+"login" = "Log In";
+/* login_acquire */
+"login_acquire" = "Acquire";
+/* login_phoneFormat */
+"login_phoneFormat" = "Please input valid phone number";
+/* login_phoneCodeFormat */
+"login_phoneCodeFormat" = "Please input %@ and %@";
+/* login_invalidPhone */
+"login_invalidPhone" = "Phone number unregistered";
+/* login_incorrectCode */
+"login_incorrectCode" = "Wrong code";
+/* login_overtimeCode */
+"login_overtimeCode" = "Overdue code";
+/* login_incorrectPassword */
+"login_incorrectPassword" = "Wrong username or password";
+/* login_freeVerify */
+"login_freeVerify" = "Freely login in 24h";
+/* login_invalidQRCode */
+"login_invalidQRCode" = "Invalid guest's qrcode";

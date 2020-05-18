@@ -141,6 +141,7 @@
 		46EDC7982461599700F2F9EE /* HelpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EDC7972461599700F2F9EE /* HelpCell.swift */; };
 		46EDC79A24615C3D00F2F9EE /* HelpListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EDC79924615C3D00F2F9EE /* HelpListController.swift */; };
 		46EE431D237153DC00DF22FB /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EE431C237153DC00DF22FB /* Tag.swift */; };
+		46F0902024721909008F444B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 46F0902224721909008F444B /* InfoPlist.strings */; };
 		46F1618F24695384000BEA30 /* PasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F1618E24695383000BEA30 /* PasswordController.swift */; };
 		46F16195246A6D6A000BEA30 /* UIImageView-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F16194246A6D6A000BEA30 /* UIImageView-Ext.swift */; };
 		46F16197246E3E51000BEA30 /* UIView-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F16196246E3E51000BEA30 /* UIView-Ext.swift */; };
@@ -217,7 +218,6 @@
 		460F727123711D8900CFC7C3 /* EDSConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EDSConfig.swift; sourceTree = "<group>"; };
 		46100A7223C2C97000C43D1A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		46100A7323C2C97100C43D1A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
-		46100A7723C2CCDB00C43D1A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		46100A9B23C5665300C43D1A /* DeviceItemMeterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceItemMeterViewController.swift; sourceTree = "<group>"; };
 		46100A9F23C5AA2500C43D1A /* Device.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Device.storyboard; sourceTree = "<group>"; };
 		46100AA123C6D61A00C43D1A /* UIButton-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton-Ext.swift"; sourceTree = "<group>"; };
@@ -323,6 +323,14 @@
 		46EDC7972461599700F2F9EE /* HelpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpCell.swift; sourceTree = "<group>"; };
 		46EDC79924615C3D00F2F9EE /* HelpListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpListController.swift; sourceTree = "<group>"; };
 		46EE431C237153DC00DF22FB /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		46F0902424721945008F444B /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
+		46F0902524721945008F444B /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		46F0902624721948008F444B /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		46F090282472196B008F444B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		46F0902924723CAF008F444B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		46F0902A24723CB1008F444B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		46F0902B24724F6D008F444B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		46F0902C24724F70008F444B /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		46F1618E24695383000BEA30 /* PasswordController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordController.swift; sourceTree = "<group>"; };
 		46F16194246A6D6A000BEA30 /* UIImageView-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView-Ext.swift"; sourceTree = "<group>"; };
 		46F16196246E3E51000BEA30 /* UIView-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView-Ext.swift"; sourceTree = "<group>"; };
@@ -422,6 +430,7 @@
 			isa = PBXGroup;
 			children = (
 				460F7241236FC14600CFC7C3 /* Info.plist */,
+				46F0902224721909008F444B /* InfoPlist.strings */,
 				46100A7623C2CCDB00C43D1A /* Localizable.strings */,
 				460F7268236FF93800CFC7C3 /* AppEntry */,
 				460F7247236FF3D600CFC7C3 /* Features */,
@@ -1027,6 +1036,7 @@
 				en,
 				Base,
 				"zh-Hans",
+				"zh-Hant",
 			);
 			mainGroup = 460F7227236FC14500CFC7C3;
 			productRefGroup = 460F7231236FC14500CFC7C3 /* Products */;
@@ -1044,6 +1054,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				46DF40CB242C46B60018F961 /* Workorder.json in Resources */,
+				46F0902024721909008F444B /* InfoPlist.strings in Resources */,
 				46100AA023C5AA2500C43D1A /* Device.storyboard in Resources */,
 				46100A7823C2CCDB00C43D1A /* Localizable.strings in Resources */,
 				460F7240236FC14600CFC7C3 /* LaunchScreen.storyboard in Resources */,
@@ -1279,6 +1290,7 @@
 			children = (
 				460F723A236FC14500CFC7C3 /* Base */,
 				46100A7223C2C97000C43D1A /* zh-Hans */,
+				46F0902424721945008F444B /* zh-Hant */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -1288,6 +1300,7 @@
 			children = (
 				460F723F236FC14600CFC7C3 /* Base */,
 				46100A7323C2C97100C43D1A /* zh-Hans */,
+				46F0902524721945008F444B /* zh-Hant */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -1295,9 +1308,21 @@
 		46100A7623C2CCDB00C43D1A /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				46100A7723C2CCDB00C43D1A /* zh-Hans */,
+				46F090282472196B008F444B /* en */,
+				46F0902B24724F6D008F444B /* zh-Hans */,
+				46F0902C24724F70008F444B /* zh-Hant */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		46F0902224721909008F444B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				46F0902624721948008F444B /* zh-Hant */,
+				46F0902924723CAF008F444B /* en */,
+				46F0902A24723CB1008F444B /* zh-Hans */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1426,12 +1451,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "eds/EDS云管理.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = DB24XNH42B;
 				INFOPLIST_FILE = eds/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xseec.eds;
 				PRODUCT_NAME = "EDS云管理";
 				SWIFT_VERSION = 5.0;
@@ -1446,12 +1473,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "eds/EDS云管理.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = DB24XNH42B;
 				INFOPLIST_FILE = eds/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xseec.eds;
 				PRODUCT_NAME = "EDS云管理";
 				SWIFT_VERSION = 5.0;

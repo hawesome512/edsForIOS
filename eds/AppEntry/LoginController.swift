@@ -110,6 +110,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
         typeLabel.bottomToTop(of: phoneField, offset: -edsSpace)
 
         loginButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .title3)
+        loginButton.titleLabel?.adjustsFontSizeToFitWidth = true
         loginButton.setTitle("login".localize(), for: .normal)
         loginButton.backgroundColor = edsDefaultColor
         loginButton.tintColor = .white
