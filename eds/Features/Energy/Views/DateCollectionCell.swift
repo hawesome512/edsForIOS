@@ -28,14 +28,14 @@ class DateCollectionCell: UICollectionViewCell {
                 })
             } else {
                 valueLabel.transform = .identity
-                valueLabel.textColor = UIColor.darkText
+                valueLabel.textColor = UIColor.label //UIColor.darkText
             }
         }
     }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        valueLabel.textColor = .darkText
+        valueLabel.textColor = .label
         addSubview(valueLabel)
         valueLabel.centerInSuperview()
     }

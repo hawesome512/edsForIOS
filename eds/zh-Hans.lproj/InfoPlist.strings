@@ -9,3 +9,4 @@ NSCameraUsageDescription="是否允许EDS使用你的相机拍摄资产信息，
 NSMicrophoneUsageDescription="是否允许EDS使用你的麦克风录制音频，如禁止将无法上传本地音频信息？";
 NSPhotoLibraryUsageDescription="是否允许EDS访问你的相册上传资产信息，如禁止将无法上传手机中的相关资料？";
 NSPhotoLibraryAddUsageDescription="是否允许EDS保存图片到相册，以便后续查看或分享给其他用户？";
+CFBundleDisplayName="EDS云管理";

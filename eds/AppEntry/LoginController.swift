@@ -72,23 +72,25 @@ class LoginController: UIViewController, UITextFieldDelegate {
     }
 
     private func initViews() {
-
+        
         loginType = .phoneType
-
+        
         topImage.image = UIImage(named: "login_top")
-        topImage.contentMode = .scaleAspectFill
+        topImage.contentMode = .scaleToFill
         topImage.alpha = traitCollection.verticalSizeClass == .compact ? 0 : 1
         view.addSubview(topImage)
         topImage.edgesToSuperview(excluding: .bottom)
         topImage.heightToSuperview(multiplier: 0.2)
 
         titleLabel.textColor = .white
-        titleLabel.numberOfLines = 0
+        titleLabel.numberOfLines = 2
+        titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.font = UIFont.preferredFont(forTextStyle: .largeTitle)
         titleLabel.text = "title".localize(with: prefixLogin)
         topImage.addSubview(titleLabel)
         titleLabel.centerYToSuperview()
         titleLabel.leadingToSuperview(offset: edsSpace)
+        titleLabel.trailingToSuperview(offset:edsSpace)
 
         bottomImage.image = UIImage(named: "login_bottom")
         bottomImage.contentMode = .scaleAspectFill

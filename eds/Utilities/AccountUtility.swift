@@ -189,12 +189,11 @@ class AccountUtility {
         account = nil
         phoneList.removeAll()
         loginedPhone = nil
-        TagUtility.sharedInstance.tagList.removeAll()
-        DeviceUtility.sharedInstance.deviceList.removeAll()
-        WorkorderUtility.sharedInstance.workorderList.removeAll()
-        AlarmUtility.sharedInstance.alarmList.removeAll()
-        BasicUtility.sharedInstance.basic = nil
-        BasicUtility.sharedInstance.energyBranch = nil
+        TagUtility.sharedInstance.clearTagList()
+        DeviceUtility.sharedInstance.clearDeviceList()
+        WorkorderUtility.sharedInstance.clearWorkorderList()
+        AlarmUtility.sharedInstance.clearAlarmList()
+        BasicUtility.sharedInstance.clearInfo()
     }
 
 }

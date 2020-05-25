@@ -19,6 +19,16 @@ protocol PickerDelegate {
     func pickerCanceled()
 }
 
+
+/// 时间限制
+enum DateLimit {
+    //选择过去的时间
+    case before
+    //选择将来的时间
+    case after
+    case none
+}
+
 class DatePickerController: BottomViewController {
 
     var delegate: PickerDelegate?
@@ -27,9 +37,11 @@ class DatePickerController: BottomViewController {
     var timeSequence = true
     private var dates: [Date] = []
 
-    private let picker = UIDatePicker()
+    let picker = UIDatePicker()
+    var dateLimit:DateLimit = .after
     private let preButton = UIButton()
     private let nextButton = UIButton()
+    private let preLabel=UILabel()
     private let disposeBag = DisposeBag()
 
     //当前日期选择器
@@ -40,16 +52,24 @@ class DatePickerController: BottomViewController {
     }
     // index数值变化时，发布数据给其他控件订阅
     private var showIndex = BehaviorRelay<Int>(value: 0)
-
+    
+    override init(){
+        super.init()
+        //在查询历史记录时，需要更改datePickerMode,picker如果放在initViews()更改日期模式将无效
+        dates = items.map { _ in Date() }
+        picker.datePickerMode = .date
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
     }
 
     private func initViews() {
-        //初始化日期容器
-        dates = items.map { _ in Date() }
-        picker.datePickerMode = .date
         contentView.addSubview(picker)
         picker.centerInSuperview()
         //重选上一个日期
@@ -66,10 +86,14 @@ class DatePickerController: BottomViewController {
 
         //下一个，当为最后一个时就返回数据
         nextButton.rx.tap.bind(onNext: {
-            self.dates[self.index] = self.picker.date
+            if self.index<self.dates.count {
+                self.dates[self.index] = self.picker.date
+            }else{
+                self.dates.append(self.picker.date)
+            }
             if self.index == self.items.count - 1 {
-                self.delegate?.picked(results: self.dates)
                 self.dismiss(animated: true, completion: nil)
+                self.delegate?.picked(results: self.dates)
             }
             self.index = (self.index == self.items.count - 1) ? self.index : self.index + 1
             self.pickerChanged()
@@ -79,6 +103,22 @@ class DatePickerController: BottomViewController {
         nextButton.height(edsIconSize)
         nextButton.centerYToSuperview()
         nextButton.trailingToSuperview(offset: edsSpace)
+        
+        preLabel.font=UIFont.preferredFont(forTextStyle: .footnote)
+        preLabel.textAlignment = .center
+        preLabel.alpha=0
+        contentView.addSubview(preLabel)
+        preLabel.bottomToSuperview(usingSafeArea:true)
+        preLabel.horizontalToSuperview()
+        
+        switch dateLimit {
+        case .before:
+            picker.maximumDate=Date()
+        case .after:
+            picker.minimumDate=Date()
+        default:
+            break
+        }
 
         showIndex.asObservable().subscribe(onNext: { value in
             self.preButton.alpha = (value == 0) ? 0 : 1
@@ -86,7 +126,15 @@ class DatePickerController: BottomViewController {
             self.nextButton.setBackgroundImage(UIImage(systemName: next), for: .normal)
             self.titleLabel.text = self.items[value]
             //最小时间：当前起，后一个时间不能早于前一个时间
-            self.picker.minimumDate = (value == 0) ? Date() : self.dates[value-1]
+            if value>0 {
+                let preDate = self.dates[value-1]
+                self.picker.minimumDate = preDate
+                self.preLabel.alpha=1
+                let preText = (self.picker.datePickerMode == .dateAndTime) ? preDate.toDateTimeString() : preDate.toDateString()
+                self.preLabel.text="\(self.items[value-1]):\(preText)"
+            } else {
+                self.preLabel.alpha=0
+            }
         }).disposed(by: disposeBag)
 
         //需要设置默认值，才能出发首次发布订阅，实现初始化界面

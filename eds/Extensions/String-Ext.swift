@@ -39,6 +39,15 @@ extension String {
     }
 
 
+    /// 移除特定的字符
+    /// - Parameter chars: 字符顺序无要求
+    /// - Returns: <#description#>
+    mutating func removeCharacters(chars: String) {
+        guard let regex = try? NSRegularExpression(pattern: "[\(chars)]", options: .caseInsensitive) else { return }
+        self = regex.stringByReplacingMatches(in: self, options: [], range: NSMakeRange(0, self.count), withTemplate: "")
+    }
+
+
     /// 本地化
     /// - Parameter prefix: 前缀，e.g.：device_status
     func localize(with prefix: String = "") -> String {

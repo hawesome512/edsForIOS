@@ -11,7 +11,7 @@ import UIKit
 class AlarmViewController: UIViewController {
 
     let headerView = DeviceHeaderView()
-    let trendController = DeviceTrendTableViewController()
+    let trendController = DeviceTrendController()
 
     var alarm: Alarm? {
         didSet {

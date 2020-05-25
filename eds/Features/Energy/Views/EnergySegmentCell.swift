@@ -27,7 +27,7 @@ class EnergySegmentCell: UITableViewCell {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .systemBackground
         return collectionView
     }()
 

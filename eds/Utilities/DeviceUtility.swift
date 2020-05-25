@@ -11,18 +11,18 @@ import Moya
 import RxCocoa
 
 class DeviceUtility {
-
+    
     //当设备数量不多时，默认全展开
     private let foldLimit = 10
-
+    
     //通过单列调取资产设备列表设备
-    var deviceList: [Device] = []
+    private var deviceList: [Device] = []
     //单例，只允许存在一个实例
     static let sharedInstance = DeviceUtility()
     var successfulLoaded = BehaviorRelay<Bool>(value: false)
-
+    
     private init() { }
-
+    
     /// 从后台导入资产设备列表
     func loadProjectDeviceList() {
         //获取后台服务设备列表请求在生命周期中只有一次
@@ -46,33 +46,51 @@ class DeviceUtility {
             }
         }
     }
-
+    
+    // MARK: - DeviceList对外接口
+    func getDeviceList()->[Device]{
+        return deviceList
+    }
+    
+    func clearDeviceList(){
+        deviceList.removeAll()
+    }
+    
+    func appendDeviceList(_ device:Device){
+        deviceList.append(device)
+    }
+    
     func remove(devices: [Device]) {
         deviceList = deviceList.filter { device in !devices.contains(device) }
     }
-
+    
     func getDevice(of shortID: String) -> Device? {
         return deviceList.first { $0.getShortID() == shortID }
     }
-
+    
     func getRalatedDevices(deviceNames: [String]) -> [Device] {
         return deviceList.filter { deviceNames.contains($0.getShortID()) }
     }
-
-
+    
+    
     /// 获取工程资产树
     /// - Parameter visiableOnly: 默认折叠
     /// - Parameter sources: 除了获取工程的资产树（sources=nil）以外，首页有显示非通讯型设备（other)的需求，此时sources为所有非通讯型资产设备
     func getProjDeviceList(visiableOnly: Bool = true, sources: [Device]? = nil) -> [Device] {
         var result: [Device] = []
         let devices = (sources == nil || sources!.count == 0) ? deviceList : sources!
-        devices.filter { $0.level == .room }.forEach {
-            result.append($0)
-            result.append(contentsOf: getBranceList(device: $0, visiableOnly: visiableOnly, sources: devices))
+        if devices.count==0,!successfulLoaded.value {
+            //登录请求时加载数据失败，重新加载数据(排除工程中本来没有设备的情况）
+            loadProjectDeviceList()
+        }else{
+            devices.filter { $0.level == .room }.forEach {
+                result.append($0)
+                result.append(contentsOf: getBranceList(device: $0, visiableOnly: visiableOnly, sources: devices))
+            }
         }
         return result
     }
-
+    
     func getBranceList(device: Device, visiableOnly visiable: Bool, sources: [Device]? = nil) -> [Device] {
         var result: [Device] = []
         let devices = (sources == nil || sources!.count == 0) ? deviceList : sources!
@@ -90,24 +108,24 @@ class DeviceUtility {
         }
         return result
     }
-
+    
     func getParent(of child: Device) -> Device? {
         return deviceList.first { $0.branch.contains(child.getShortID()) }
     }
-
+    
     static func setImage(in imageView: UIImageView, with device: Device) {
         if !device.image.isEmpty {
             imageView.kf.setImage(with: device.image.getEDSServletImageUrl(),
                                   placeholder: device.getDefaultImage(),
                                   completionHandler: { _ in
-                                      imageView.contentMode = .scaleAspectFill
-                                  })
+                                    imageView.contentMode = .scaleAspectFill
+            })
         } else {
             imageView.image = device.getDefaultImage()
         }
     }
-
-
+    
+    
     /// 在创建工单页面，下拉框弹出设备树，为简化为文本格式设备树层级，采用文本缩进形式
     ///Level 1xxxxxxx
     ///    Level 2xxxxxxx
@@ -125,12 +143,12 @@ class DeviceUtility {
             }
         }
     }
-
+    
     /// 将设备按状态归类：在线，离线，报警，其他（非通讯型）
     func classifyDevice(dynamicStates: [DynamicDeviceModel]?) -> Dictionary<DeviceClass, [Device]> {
         let states: [DynamicDeviceModel] = (dynamicStates == nil) ? getDynamicTags() : dynamicStates!
         var result: Dictionary<DeviceClass, [Device]> = [:]
-
+        
         DeviceClass.allCases.forEach { type in
             switch type {
             case .online:
@@ -149,7 +167,7 @@ class DeviceUtility {
         }
         return result
     }
-
+    
     /// 找到所有通讯设备状态点，及所属设备，设备类型
     func getDynamicTags() -> [DynamicDeviceModel] {
         var results: [DynamicDeviceModel] = []

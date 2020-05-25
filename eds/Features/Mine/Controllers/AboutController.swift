@@ -20,7 +20,7 @@ class AboutController: UIViewController {
 
     private func initViews() {
         title = "aboutEDS".localize()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
 
         let imageView = UIImageView()
         imageView.image = UIImage(named: "eds")

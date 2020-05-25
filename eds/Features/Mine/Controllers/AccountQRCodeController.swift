@@ -20,7 +20,7 @@ class AccountQRCodeController: UIViewController {
     }
 
     private func initViews() {
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         title = "accountQRCode".localize()
         imageView.image = UIImage(systemName: "qrcode")
         imageView.tintColor = .systemGray

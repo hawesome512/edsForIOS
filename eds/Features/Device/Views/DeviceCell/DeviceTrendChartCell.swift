@@ -26,6 +26,9 @@ class DeviceTrendChartCell: UITableViewCell {
         lineChartView.xAxis.gridLineDashLengths = [10, 10]
         lineChartView.xAxis.gridLineDashPhase = 0
         lineChartView.xAxis.labelPosition = .bottom
+        lineChartView.xAxis.labelTextColor = .label
+        lineChartView.leftAxis.labelTextColor = .label
+        lineChartView.legend.textColor = .label
 
         let leftAxis = lineChartView.leftAxis
         leftAxis.gridLineDashLengths = [5, 5]

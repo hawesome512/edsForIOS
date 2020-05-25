@@ -17,7 +17,8 @@ struct WorkorderTask {
 
     init(title: String) {
         //在服务器数据库中任务信息存储格式:任务1_0;任务2_2;……，在任务title中不应包含这两个分隔符号
-        let validTitle = title.replacingOccurrences(of: "_", with: "").replacingOccurrences(of: ";", with: "")
+        var validTitle = title
+        validTitle.removeCharacters(chars: "_;")
         self.title = validTitle
     }
 

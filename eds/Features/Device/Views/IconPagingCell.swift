@@ -65,6 +65,7 @@ class IconPagingCell: PagingCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        contentView.backgroundColor = .systemBackground
         contentView.addSubview(imageView)
         //图标上下适当缩进
         imageView.edgesToSuperview(insets: .vertical(10))

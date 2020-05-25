@@ -36,6 +36,7 @@ class HomeRatioView: UIView {
         valueLabel.text = "0%"
         valueLabel.font = UIFont.preferredFont(forTextStyle: .largeTitle)
         valueLabel.textColor = .white
+        valueLabel.adjustsFontSizeToFitWidth = true
         addSubview(valueLabel)
         valueLabel.centerYToSuperview()
         valueLabel.leadingToSuperview()

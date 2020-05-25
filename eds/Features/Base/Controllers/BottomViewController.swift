@@ -44,7 +44,7 @@ class BottomViewController: UIViewController {
         view.backgroundColor = .clear
         view.addSubview(backdropView)
         view.addSubview(contentView)
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = .systemBackground
         contentView.edgesToSuperview(excluding: .top)
         contentView.height(viewHeight)
 

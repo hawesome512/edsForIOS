@@ -1,0 +1,12 @@
+/*
+  InfoPlist.strings
+  eds
+
+  Created by 厦门士林电机有限公司 on 2020/5/16.
+  Copyright © 2020 厦门士林电机有限公司. All rights reserved.
+*/
+NSCameraUsageDescription="Do you allow EDS to use the camera for updating device's photo?";
+NSMicrophoneUsageDescription="Do you allow EDS to use the microphone for uploading audio information?";
+NSPhotoLibraryUsageDescription="Do you allow EDS to use your photo library,so that you can upate the device with local photos?";
+NSPhotoLibraryAddUsageDescription="Do you allow EDS to save photo in your photo library,so that you can share the device's information with others?";
+CFBundleDisplayName="EDS";

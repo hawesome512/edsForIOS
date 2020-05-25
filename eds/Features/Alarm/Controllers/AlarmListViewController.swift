@@ -24,7 +24,6 @@ class AlarmListViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        alarmList = AlarmUtility.sharedInstance.alarmList
 
         title = Alarm.description
         tableView.separatorStyle = .none
@@ -43,7 +42,7 @@ class AlarmListViewController: UITableViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        alarmList = AlarmUtility.sharedInstance.alarmList.filter { alarm in
+        alarmList = AlarmUtility.sharedInstance.getAlarmList().filter { alarm in
             guard let filter = deviceFilter else {
                 return true
             }
@@ -67,7 +66,7 @@ class AlarmListViewController: UITableViewController {
         cell.alarm = searchVC.isActive ? searchAlarmList[indexPath.row] : alarmList[indexPath.row]
         return cell
     }
-
+    
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         guard AccountUtility.sharedInstance.isOperable() else {
             return nil
@@ -195,8 +194,8 @@ extension AlarmListViewController: WorkorderAdditionDelegate, UISearchResultsUpd
     func added(workorder: Workorder) {
         workorderAlarm!.report = workorder.id
         WorkorderUtility.sharedInstance.update(with: workorder)
-        AlarmUtility.sharedInstance.workorder(workorderAlarm!.id, workorderID: workorder.id)
-        alarmList = AlarmUtility.sharedInstance.alarmList
+        AlarmUtility.sharedInstance.setWorkorder(workorderAlarm!.id, workorderID: workorder.id)
+        alarmList = AlarmUtility.sharedInstance.getAlarmList()
         EDSService.getProvider().request(.updateAlarm(alarm: workorderAlarm!)) { _ in }
     }
 

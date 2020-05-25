@@ -20,8 +20,9 @@ struct WorkorderMessage {
 
     func toString() -> String {
         //因英文状态下分号为分隔符，content自身的分隔符要移除
-        let validContent = content?.replacingOccurrences(of: ";", with: " ")
-        return "\(name!)_\(date!)_\(validContent!)"
+        var validContent = content ?? NIL
+        validContent.removeCharacters(chars: "_;")
+        return "\(name!)_\(date!)_\(validContent)"
     }
 
     /// 从服务器中返回的数据解析到APP中

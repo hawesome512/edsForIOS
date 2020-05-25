@@ -8,10 +8,11 @@
 
 import UIKit
 import Moya
+import RxSwift
 
 class WorkorderListViewController: UITableViewController, WorkorderAdditionDelegate {
 
-
+    private let disposeBag = DisposeBag()
     var workorderList: [Workorder] = []
     var searchWorkorderList = [Workorder]()
     var searchVC = UISearchController()
@@ -36,19 +37,28 @@ class WorkorderListViewController: UITableViewController, WorkorderAdditionDeleg
         } else {
             navigationItem.rightBarButtonItems = [reverseButton]
         }
-
+        
         searchVC.searchResultsUpdater = self
         searchVC.obscuresBackgroundDuringPresentation = false
         navigationItem.searchController = searchVC
+        
+        WorkorderUtility.sharedInstance.successfulLoaded.bind(onNext: {result in
+            self.workorderList = WorkorderUtility.sharedInstance.getWorkorderList()
+            self.tableView.reloadData()
+        }).disposed(by: disposeBag)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         //从工单页面（已修改更新）返回时，刷新列表数据
-        workorderList = WorkorderUtility.sharedInstance.workorderList.filter { workorder in
+        let tempList = WorkorderUtility.sharedInstance.getWorkorderList().filter { workorder in
             guard let filter = deviceFilter else {
                 return true
             }
             return workorder.location.contains(filter)
+        }
+        if tempList.count != workorderList.count{
+            workorderList=tempList
+            tableView.reloadData()
         }
     }
 
@@ -98,7 +108,8 @@ class WorkorderListViewController: UITableViewController, WorkorderAdditionDeleg
                 workorder.prepareDeleted()
                 EDSService.getProvider().request(.updateWorkorder(workorder: workorder)) { _ in }
                 self.workorderList.remove(at: indexPath.row)
-                WorkorderUtility.sharedInstance.workorderList = self.workorderList
+                WorkorderUtility.sharedInstance.removeWorkorder(workorder.id)
+//                WorkorderUtility.sharedInstance.workorderList = self.workorderList
                 tableView.deleteRows(at: [indexPath], with: .automatic)
                 ActionUtility.sharedInstance.addAction(.deleteWorkorder, extra: title)
             }

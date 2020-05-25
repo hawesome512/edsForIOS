@@ -8,11 +8,14 @@
 
 import UIKit
 import Charts
+import RxSwift
 
 class EnergyBranchCell: UITableViewCell {
-
+    private let disposeBag=DisposeBag()
 
     var barChartView: BarChartView = BarChartView()
+    
+    var parentVC:UIViewController?
 
     func setEnergyData(_ branch: EnergyBranch) {
         var xItems = [String]()
@@ -70,7 +73,7 @@ class EnergyBranchCell: UITableViewCell {
 
     private func initViews() {
         let branchIcon = UIImageView()
-        branchIcon.tintColor = .black
+        branchIcon.tintColor = .label
         branchIcon.image = UIImage(named: "branch")?.withRenderingMode(.alwaysTemplate)
         addSubview(branchIcon)
         branchIcon.width(edsIconSize)
@@ -85,6 +88,22 @@ class EnergyBranchCell: UITableViewCell {
         addSubview(branchLabel)
         branchLabel.leadingToTrailing(of: branchIcon, offset: edsMinSpace)
         branchLabel.centerY(to: branchIcon)
+        
+        let tipButton = UIButton()
+        tipButton.tintColor = .systemGray3
+        tipButton.setBackgroundImage(UIImage(systemName: "info.circle.fill"), for: .normal)
+        tipButton.rx.tap.bind(onNext: {
+            let message = "branch_alert".localize(with: prefixEnergy)
+            let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "ok".localize(), style: .cancel, handler: nil)
+            alertVC.addAction(okAction)
+            self.parentVC?.present(alertVC, animated: true, completion: nil)
+        }).disposed(by: disposeBag)
+        addSubview(tipButton)
+        tipButton.width(edsSpace)
+        tipButton.height(edsSpace)
+        tipButton.leadingToTrailing(of: branchLabel, offset: 2)
+        tipButton.centerY(to: branchIcon, offset: -6)
 
         barChartView.rightAxis.enabled = false
         barChartView.legend.enabled = false
@@ -93,6 +112,8 @@ class EnergyBranchCell: UITableViewCell {
         barChartView.isUserInteractionEnabled = true
         barChartView.leftAxis.axisMinimum = 0
         barChartView.leftAxis.axisMaximum = 100
+        barChartView.leftAxis.labelTextColor = .label
+        barChartView.xAxis.labelTextColor = .label
         //横坐标间隔尺寸granularity=1
         let xAxis = barChartView.xAxis
         xAxis.labelPosition = .bottom

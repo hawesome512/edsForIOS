@@ -18,10 +18,12 @@ struct Notice {
     //截止日期
     var deadline: Date?
 
-    func toString() -> String {
-        let validMsg = message.replacingOccurrences(of: Notice.separator, with: " ")
+    mutating func toString() -> String {
+//        let validMsg = message.replacingOccurrences(of: Notice.separator, with: " ")
+        //防止人为输入中存在分隔符
+        message.removeCharacters(chars: "_")
         let date = deadline ?? Date()
-        return validMsg + Notice.separator + date.toDateTimeString() + Notice.separator + author
+        return message + Notice.separator + date.toDateTimeString() + Notice.separator + author
     }
 
     static func getNotice(with info: String) -> Notice? {

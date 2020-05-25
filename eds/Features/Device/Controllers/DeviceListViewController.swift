@@ -171,6 +171,15 @@ extension DeviceListViewController: UITableViewDelegate, UITableViewDataSource {
 extension DeviceListViewController: AdditionDelegate {
 
     func add(inParent: Device?) {
+        
+        let deviceLimit = AccountUtility.sharedInstance.account?.device ?? 0
+        //不使用self.deviceList,因折叠的设备不代表所有的数量
+        if DeviceUtility.sharedInstance.getDeviceList().count >= deviceLimit {
+            let content = String(format: "device_limit".localize(), deviceLimit) 
+            ControllerUtility.presentAlertController(content: content, controller: self)
+            return
+        }
+        
         //自定义【新增】弹出框
         let alertController = DeviceAdditionAlertController.initController(device: inParent)
         //因需要处理ok之后到逻辑，故不在DeviceAdditionAlertController里面添加OKAction
@@ -186,7 +195,7 @@ extension DeviceListViewController: AdditionDelegate {
                     switch response {
                     case .success(_):
                         //成功新增后，更新资产列表
-                        DeviceUtility.sharedInstance.deviceList.append(newDevice)
+                        DeviceUtility.sharedInstance.appendDeviceList(newDevice)
                         self.deviceList = DeviceUtility.sharedInstance.getProjDeviceList()
                         self.tableView.reloadData()
                     default:

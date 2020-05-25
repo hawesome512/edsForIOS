@@ -11,24 +11,26 @@ import Foundation
 import Moya
 import CocoaMQTT
 import RxCocoa
+import RxSwift
 
 class TagUtility: MQTTServiceDelegate {
-
+    
     //单例，只允许存在一个实例
     static let sharedInstance = TagUtility()
     var successfulLoadedTagList = BehaviorRelay<Bool>(value: false)
     var successfulUpdatedTagList = BehaviorRelay<Bool>(value: false)
-
+    private let disposeBag=DisposeBag()
+    
     private init() { }
-
-    var tagList: [Tag] = [] {
+    
+    private var tagList: [Tag] = [] {
         didSet {
             subscribeTagValues()
         }
     }
-
+    
     //MARK:通信>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
+    
     /// 从后台导入工程点列表
     func loadProjectTagList() {
         //获取后台服务点列表请求在生命周期中只有一次
@@ -44,12 +46,17 @@ class TagUtility: MQTTServiceDelegate {
                 self.updateTagList(with: self.tagList)
                 self.successfulLoadedTagList.accept(true)
                 print("TagUtility:Load project tag list.")
-            default:
+            case .failure:
+                //通讯失败重试，由于点监控很重要，重试将一直进行
+                let waitTime=Int.random(in: 5...10)
+                Observable.of(1).delay(RxTimeInterval.seconds(waitTime), scheduler: MainScheduler.instance).bind(onNext: {_ in
+                    self.loadProjectTagList()
+                }).disposed(by: self.disposeBag)
                 break
             }
         }
     }
-
+    
     /// 更新点值
     /// - Parameter tags: 需要更新的点列表
     func updateTagList(with tags: [Tag]) {
@@ -62,12 +69,17 @@ class TagUtility: MQTTServiceDelegate {
                 self.update(with: JsonUtility.getTagValues(data: response.data))
                 self.successfulUpdatedTagList.accept(true)
                 print("TagUtility:Update \(tags.count) tag values.")
-            default:
+            case .failure:
+                //通讯失败重试，由于点监控很重要，重试将一直进行
+                let waitTime=Int.random(in: 5...10)
+                Observable.of(1).delay(RxTimeInterval.seconds(waitTime), scheduler: MainScheduler.instance).bind(onNext: {_ in
+                    self.updateTagList(with: tags)
+                }).disposed(by: self.disposeBag)
                 break
             }
         }
     }
-
+    
     /// 订阅监控点
     func subscribeTagValues() {
         if tagList.count == 0 {
@@ -78,14 +90,14 @@ class TagUtility: MQTTServiceDelegate {
             MQTTService.sharedInstance.delegate = self
         }
     }
-
+    
     /// 取消订阅
     func unsubscribeTagValues() {
         if let projectName = AccountUtility.sharedInstance.account?.getProjectName() {
             MQTTService.sharedInstance.unsubscribeTagValues(projectName: projectName)
         }
     }
-
+    
     
     /// 接收到订阅的消息
     /// - Parameters:
@@ -94,18 +106,18 @@ class TagUtility: MQTTServiceDelegate {
     ///   - flag: <#flag description#>
     func didReceiveMessage(mqtt: CocoaMQTT, message: CocoaMQTTMessage, flag: UInt16) {
         update(with: JsonUtility.getMQTTTagList(message: message))
-//        print("Mqtt receive at " + Date().toDateTimeString())
+        //        print("Mqtt receive at " + Date().toDateTimeString())
     }
-
-
-
+    
+    
+    
     //MARK:便捷方法>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
+    
     //查找所有含能耗的设备监控点（“EP”）
     func getEnergyDeviceList() -> [String] {
         return tagList.filter { $0.getTagShortName() == EnergyBranch.tagName }.map { $0.getDeviceName() }
     }
-
+    
     /// 获取设备列表（淡化设备概念，用[String]
     func getDeviceList() -> [String] {
         var deviceNames: [String] = []
@@ -116,13 +128,13 @@ class TagUtility: MQTTServiceDelegate {
         }
         return deviceNames
     }
-
+    
     /// 获取设备点列表
     /// - Parameter deviceName: 设备名，“KB_A3_1”
     func getDeviceTagList(by deviceName: String) -> [Tag] {
         return tagList.filter { $0.Name.contains(deviceName) }
     }
-
+    
     /// 获取设备中的点列表（可空）
     /// - Parameters:
     ///   - tagNames: 点（短）名称：[Ia,Ib……]
@@ -133,8 +145,8 @@ class TagUtility: MQTTServiceDelegate {
             tagList.first { $0.Name == device + Tag.nameSeparator + name }
         }.filter { $0 != nil } as! [Tag]
     }
-
-
+    
+    
     /// 根据点名称，获取关联点（related)所属设备中的点
     /// - Parameters:
     ///   - tagName: 点名称
@@ -144,9 +156,13 @@ class TagUtility: MQTTServiceDelegate {
         let device = tag.Name.components(separatedBy: Tag.nameSeparator)[0]
         return tagList.first { $0.Name == device + Tag.nameSeparator + tagName }
     }
-
+    
+    func clearTagList(){
+        tagList.removeAll()
+    }
+    
     //MARK:私有方法>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
+    
     private func update(with target: [Tag?]?) {
         //Filter>forEach>first
         target?.forEach { tag in
@@ -155,21 +171,21 @@ class TagUtility: MQTTServiceDelegate {
             }
         }
     }
-
+    
     private func update(with target: [MQTTTag?]?) {
         let targetTags = target?.map { $0?.toTag() }
         update(with: targetTags)
     }
-
+    
     //MARK:静态方法>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
+    
     /// 获取设备类型String
     /// - Parameter name: 设备or点名称
     static func getDeviceType(with name: String) -> String? {
         let infos = name.components(separatedBy: Tag.deviceSeparator)
         return infos.count == 3 ? infos[1] : nil
     }
-
+    
     /// 获取设备名String
     /// - Parameter name: 设备or点名称
     static func getDeviceName(with name: String) -> String? {

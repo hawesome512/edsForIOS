@@ -34,7 +34,7 @@ class NoticeController: UITableViewController {
         switch indexPath.row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: NoticeMessageCell.self), for: indexPath) as! NoticeMessageCell
-            cell.noticeText = BasicUtility.sharedInstance.basic?.notice
+            cell.noticeText = BasicUtility.sharedInstance.getBasic()?.notice
             cell.parentVC = self
             return cell
         default:

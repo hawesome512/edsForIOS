@@ -23,11 +23,11 @@
 	<key>MKDirectionsApplicationSupportedModes</key>
 	<array/>
 	<key>NSCameraUsageDescription</key>
-	<string>Do you allow EDS to use the camera for updating device&apos;s photo?</string>
+	<string>Do you allow EDS to use the camera for updating device's photo?</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Do you allow EDS to use the microphone for uploading audio information?</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Do you allow EDS to save photo in your photo library,so that you can share the device&apos;s information with others?</string>
+	<string>Do you allow EDS to save photo in your photo library,so that you can share the device's information with others?</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Do you allow EDS to use your photo library,so that you can upate the device with local photos?</string>
 	<key>UIApplicationSceneManifest</key>

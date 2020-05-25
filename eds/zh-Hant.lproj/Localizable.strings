@@ -120,6 +120,8 @@
 "home_title" = "標題";
 /* home_location */
 "home_location" = "地址";
+/* home_invalidQRCode */
+"home_invalidQRCode" = "不是有效的EDS二維碼";
 
 /* energy_addition */
 "energy_addition" = "新增支路";
@@ -149,6 +151,8 @@
 "energy_branch" = "支路用電佔比(%)";
 /* energy_time_alert */
 "energy_time_alert" = "僅供參考，限於中國大陸地區，EDS使用單一電價預估費用：\r\n●低谷(00:00-07:00,23:00-24:00):\r\n¥0.4/kW.h\r\n●平段(07:00-08:00,11:00-18:00):\r\n¥0.8/kW.h\r\n●高峰(08:00-11:00,18:00-23:00):\r\n¥1.2/kW.h\r\n注1：各地峰谷電價、時段政策不同，且未考慮大工業供電二部制電價、功率因素調整等，具體請諮詢當地電業局。\r\n注2:年模式無法分析用電時段佔比。";
+/* energy_branch_alert */
+"energy_branch_alert" = "點擊下方柱狀圖了解支路詳細用電信息。";
 /* energy_edit */
 "energy_edit" = "編輯支路";
 /* energy_limit */
@@ -156,6 +160,8 @@
 /* energy_save */
 "energy_save" = "已保存，編輯的用電支路需要重新登錄後才能生效！";
 
+/* trend_title */
+"trend_title" = "運行趨勢";
 /* trend_evaluation */
 "trend_evaluation" = "運行評估";
 /* trend_max */
@@ -176,6 +182,8 @@
 "trend_general" = "良";
 /* trend_bad */
 "trend_bad" = "差";
+/* trend_time_alert */
+"trend_time_alert" = "無效的時間範圍\r\n%@\r\n%@";
 
 /* add_room */
 "add_room" = "新增配電房";
@@ -201,6 +209,8 @@
 "delete_title" = "刪除[%@]及所屬數據";
 /* delete_info */
 "delete_info" = "該操作不可恢復！";
+/* device_limit */
+"device_limit" = "最多可添加%d個資產，請先刪減！";
 
 /* uncommunicate */
 "uncommunicate" = "非通信型";

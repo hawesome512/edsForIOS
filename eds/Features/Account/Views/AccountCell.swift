@@ -35,7 +35,7 @@ class AccountCell: UITableViewCell {
                 levelButton.alpha = 0
             }
             let profileURL = phone.photo.getEDSServletImageUrl()
-            profileImage.kf.setImage(with: profileURL, placeholder: UIImage(named: "AppIcon"))
+            ViewUtility.setWebImage(in: profileImage, with: profileURL, disposeBag: disposeBag,placeholder: UIImage(named: "AppIcon"))
             nameLabel.text = phone.name
             phoneLabel.text = phone.number
             emailLabel.text = phone.email

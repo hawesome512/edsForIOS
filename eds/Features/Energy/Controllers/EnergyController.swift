@@ -94,6 +94,7 @@ class EnergyController: UITableViewController {
         case .branch:
             let cell = cells[cellType]! as! EnergyBranchCell
             cell.barChartView.delegate = self
+            cell.parentVC=self
             return cell
         }
     }

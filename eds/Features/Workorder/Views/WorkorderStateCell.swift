@@ -43,7 +43,7 @@ class WorkorderStateCell: UITableViewCell {
         imageView.width(edsHeight)
         imageView.height(edsHeight)
         //设置背景色可以遮挡底部进度线，因图片有透明，
-        imageView.backgroundColor = .white
+        imageView.backgroundColor = .systemBackground
         stepImages.append(imageView)
         addSubview(imageView)
         imageView.centerYToSuperview()

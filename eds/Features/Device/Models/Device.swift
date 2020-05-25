@@ -98,7 +98,9 @@ class Device: HandyJSON, Equatable, EDSDelegate {
     }
 
     func getTintColor() -> UIColor {
-        return level == .room ? UIColor.black : UIColor.darkGray
+        return UIColor.darkGray
+//        不设置黑色，在深色模式下显示不理想
+//        return level == .room ? UIColor.black : UIColor.darkGray
     }
 
     func getIcon() -> UIImage? {
@@ -184,7 +186,12 @@ struct DeviceInfo {
     }
 
     func toString() -> String {
-        return title + DeviceInfo.infoSeparator + value
+        //防止人为输入分隔符
+        var validTitle = title
+        var validValue = value
+        validTitle.removeCharacters(chars: ":;")
+        validValue.removeCharacters(chars: ":;")
+        return validTitle + DeviceInfo.infoSeparator + validValue
     }
 }
 

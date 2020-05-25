@@ -8,16 +8,19 @@
 
 import UIKit
 import Foundation
+import Kingfisher
+import RxSwift
 
 struct PhotoSource {
+    private let disposeBag=DisposeBag()
     //图片来源：本机选择资源在前，网络资源在后
     var images: [UIImage] = []
     var urls: [URL] = []
-
+    
     func getTotal() -> Int {
         return images.count + urls.count
     }
-
+    
     func setImage(in view: UIImageView, at row: Int) {
         guard images.count > 0 || urls.count > 0 else {
             view.image = edsDefaultImage
@@ -26,10 +29,11 @@ struct PhotoSource {
         if row < images.count {
             view.image = images[row]
         } else {
-            view.kf.setImage(with: urls[row - images.count])
+            let url = urls[row-images.count]
+            ViewUtility.setWebImage(in: view, with: url,disposeBag:disposeBag)
         }
     }
-
+    
     mutating func removeImage(at row: Int) {
         if row < images.count {
             images.remove(at: row)
@@ -40,16 +44,16 @@ struct PhotoSource {
 }
 
 class PhotoCollectionViewController: UIViewController {
-
+    
     var photoSource = PhotoSource()
-
+    
     //起始偏移
     var offsetIndex = 0
-
+    
     private let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
-
+    
     private func initViews() {
-
+        
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.scrollDirection = .horizontal
         collectionView.backgroundColor = .white
@@ -58,21 +62,21 @@ class PhotoCollectionViewController: UIViewController {
         collectionView.delegate = self
         view = collectionView
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         initViews()
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.subviews.first?.alpha = 0
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.navigationBar.subviews.first?.alpha = 1
     }
-
+    
     func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) {
         //全屏显示，layout.scrollDirection=.hor,上下会缩进安全距离，不能达到全屏效果，且报错cell.height>collectionView.height
         let inset = collectionView.adjustedContentInset
@@ -88,11 +92,11 @@ class PhotoCollectionViewController: UIViewController {
 }
 
 extension PhotoCollectionViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photoSource.getTotal()
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PhotoCell.self), for: indexPath) as! PhotoCell
         cell.contentImage.enableZoom()
@@ -101,6 +105,6 @@ extension PhotoCollectionViewController: UICollectionViewDataSource, UICollectio
         cell.indexLabel.innerText = "\(indexPath.row + 1)/\(photoSource.getTotal())"
         return cell
     }
-
+    
 }
 

@@ -34,7 +34,7 @@ class MapController: UIViewController {
         view.addSubview(mapView)
         mapView.edgesToSuperview()
         let geoCoder = CLGeocoder()
-        let basic = BasicUtility.sharedInstance.basic
+        let basic = BasicUtility.sharedInstance.getBasic()
         guard let address = basic?.location else {
             return
         }

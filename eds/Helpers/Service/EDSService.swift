@@ -49,21 +49,21 @@ enum EDSService {
     case verifyPhoneLogin(phoneVerification: HandyJSON)
     //上传图片
     case upload(data: Data, fileName: String)
-
+    
     static func getProvider() -> MoyaProvider<EDSService> {
         //后端服务中并不需要提供凭证，但若无凭证，xcode调试时会爆错误，故添加虚拟凭证，eds xseec无具体意义，可任意填写
         return MoyaProvider<EDSService>(plugins: [CredentialsPlugin { _ -> URLCredential? in
             return URLCredential(user: "eds", password: "xseec", persistence: .permanent)
-        }])
+            }])
     }
 }
 
 extension EDSService: TargetType {
-
+    
     var baseURL: URL {
         return URL(string: "\(EDSConfig.servicePath):8443/EDSServlet")!
     }
-
+    
     var path: String {
         switch self {
         case .queryProjectInfoList:
@@ -96,7 +96,7 @@ extension EDSService: TargetType {
             return "/UploadServlet"
         }
     }
-
+    
     var method: Moya.Method {
         switch self {
         case .queryProjectInfoList, .queryWorkorderList, .queryAlarmList, .queryActionList, .queryAccountList, .queryDeviceList:
@@ -105,11 +105,11 @@ extension EDSService: TargetType {
             return .post
         }
     }
-
+    
     var sampleData: Data {
         return Data()
     }
-
+    
     var task: Task {
         switch self {
         case .queryProjectInfoList(let factor), .queryWorkorderList(let factor), .queryAlarmList(let factor), .queryActionList(let factor), .queryAccountList(let factor), .queryDeviceList(let factor):
@@ -119,12 +119,12 @@ extension EDSService: TargetType {
             //post请求，参数在Request Body中
             return .requestParameters(parameters: edsModel.toJSON()!, encoding: JSONEncoding.default)
         case .upload(let data, let fileName):
-//            let imageData = MultipartFormData(provider: .file(fileURL), name: fileName, fileName: fileName, mimeType: "image/*")
+            //            let imageData = MultipartFormData(provider: .file(fileURL), name: fileName, fileName: fileName, mimeType: "image/*")
             let imageData = MultipartFormData(provider: .data(data), name: fileName, fileName: fileName + ".png", mimeType: "image/*")
             return .uploadMultipart([imageData])
         }
     }
-
+    
     var headers: [String: String]? {
         switch self {
         case .upload:
@@ -133,26 +133,31 @@ extension EDSService: TargetType {
             return ["Content-type": "application/json;charset=utf-8"]
         }
     }
-
+    
 }
 
 //EDS Service查询的筛选条件
 struct EDSServiceQueryFactor: HandyJSON {
-
+    
     //id必填，start和end作为时间范围条件选填
     var id: String = ""
     var start: String?
     var end: String?
-
+    
     init() { }
-
+    
+    
+    /// 初始化查询条件
+    /// - Parameters:
+    ///   - id: <#id description#>
+    ///   - range: 时间段（避免单次数据量过大）
     init(id: String, in range: FactorRange = .none) {
         self.id = id
         if range != .none {
             start = Date().add(by: .month, value: -range.rawValue).toDateTimeString().toURLEncoding()
         }
     }
-
+    
     init(id: String, startTime: Date?, endTime: Date?) {
         self.id = id
         self.start = startTime?.toDateTimeString().toURLEncoding()

@@ -42,7 +42,7 @@ class EnergyRatioCell: UITableViewCell {
     private func initViews() {
         let valueFont = UIFont.boldSystemFont(ofSize: 20)
         let timeIcon = UIImageView()
-        timeIcon.tintColor = .black
+        timeIcon.tintColor = .label
         timeIcon.image = UIImage(systemName: "gauge")
         addSubview(timeIcon)
         timeIcon.width(edsIconSize)
@@ -71,7 +71,7 @@ class EnergyRatioCell: UITableViewCell {
         slider.horizontalToSuperview(insets: .horizontal(edsSpace))
         slider.topToBottom(of: timeIcon, offset: edsSpace)
 
-        currentView.tintColor = .darkText
+        currentView.tintColor = .label
         currentView.valueFont = valueFont
         currentView.value = "0"
         currentView.nameLabel.textColor = .darkGray
@@ -80,7 +80,7 @@ class EnergyRatioCell: UITableViewCell {
         currentView.leadingToSuperview(offset: edsSpace)
         currentView.topToBottom(of: slider, offset: edsMinSpace)
 
-        lastView.tintColor = .darkText
+        lastView.tintColor = .label
         lastView.valueFont = valueFont
         lastView.value = "0"
         lastView.nameLabel.textColor = .darkGray
@@ -91,7 +91,7 @@ class EnergyRatioCell: UITableViewCell {
         lastView.bottomToSuperview(offset: -edsMinSpace)
 
         linkRatioView.value = 0
-        linkRatioView.valueLabel.textColor = .darkText
+        linkRatioView.valueLabel.textColor = .label
         linkRatioView.valueLabel.font = valueFont
         addSubview(linkRatioView)
         linkRatioView.trailingToSuperview(offset: edsMinSpace)

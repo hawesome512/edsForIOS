@@ -38,6 +38,8 @@ class AlarmCell: UITableViewCell {
 
         deviceImage.contentMode = .scaleAspectFit
         deviceImage.layer.masksToBounds = true
+        deviceImage.layer.cornerRadius = 5
+        deviceImage.clipsToBounds = true
 //        deviceImage.image = UIImage(named: "device_A1")
         addSubview(deviceImage)
         deviceImage.heightToSuperview(offset: -edsSpace * 2)
@@ -54,11 +56,13 @@ class AlarmCell: UITableViewCell {
         statusView.textColor = .white
 //        statusView.innerText = "未排查"
 //        statusView.backgroundColor = .systemRed
+        statusView.adjustsFontSizeToFitWidth = true
         statusView.layer.borderColor = edsDefaultColor.withAlphaComponent(0).cgColor
         addSubview(statusView)
         statusView.height(24)
         statusView.centerY(to: titleLabel)
         statusView.leadingToTrailing(of: titleLabel, offset: edsMinSpace)
+        statusView.trailingToSuperview(offset: edsSpace)
 
         let deviceIcon = UIImageView()
         deviceIcon.tintColor = .systemGray

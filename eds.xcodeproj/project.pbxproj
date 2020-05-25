@@ -62,7 +62,7 @@
 		46227A3B23C80D4F00768799 /* DeviceTrendChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46227A3A23C80D4F00768799 /* DeviceTrendChartCell.swift */; };
 		46227A3D23C80E1F00768799 /* DeviceTrendAnalysisCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46227A3C23C80E1F00768799 /* DeviceTrendAnalysisCell.swift */; };
 		46227A3F23C80FA500768799 /* DeviceTrendEvaluationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46227A3E23C80FA500768799 /* DeviceTrendEvaluationCell.swift */; };
-		46227A4123C80FF400768799 /* DeviceTrendTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46227A4023C80FF400768799 /* DeviceTrendTableViewController.swift */; };
+		46227A4123C80FF400768799 /* DeviceTrendController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46227A4023C80FF400768799 /* DeviceTrendController.swift */; };
 		46227A4323C8231300768799 /* BallonMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46227A4223C8231300768799 /* BallonMarker.swift */; };
 		46227A4523C82A4C00768799 /* ViewUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46227A4423C82A4C00768799 /* ViewUtility.swift */; };
 		462D23AE23C076C500C28F15 /* IconPagingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462D23AD23C076C500C28F15 /* IconPagingCell.swift */; };
@@ -216,8 +216,6 @@
 		460F726D2371111100CFC7C3 /* WAService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WAService.swift; sourceTree = "<group>"; };
 		460F726F237113B500CFC7C3 /* StringConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringConst.swift; sourceTree = "<group>"; };
 		460F727123711D8900CFC7C3 /* EDSConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EDSConfig.swift; sourceTree = "<group>"; };
-		46100A7223C2C97000C43D1A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
-		46100A7323C2C97100C43D1A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		46100A9B23C5665300C43D1A /* DeviceItemMeterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceItemMeterViewController.swift; sourceTree = "<group>"; };
 		46100A9F23C5AA2500C43D1A /* Device.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Device.storyboard; sourceTree = "<group>"; };
 		46100AA123C6D61A00C43D1A /* UIButton-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton-Ext.swift"; sourceTree = "<group>"; };
@@ -244,7 +242,7 @@
 		46227A3A23C80D4F00768799 /* DeviceTrendChartCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTrendChartCell.swift; sourceTree = "<group>"; };
 		46227A3C23C80E1F00768799 /* DeviceTrendAnalysisCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTrendAnalysisCell.swift; sourceTree = "<group>"; };
 		46227A3E23C80FA500768799 /* DeviceTrendEvaluationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTrendEvaluationCell.swift; sourceTree = "<group>"; };
-		46227A4023C80FF400768799 /* DeviceTrendTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTrendTableViewController.swift; sourceTree = "<group>"; };
+		46227A4023C80FF400768799 /* DeviceTrendController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTrendController.swift; sourceTree = "<group>"; };
 		46227A4223C8231300768799 /* BallonMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BallonMarker.swift; sourceTree = "<group>"; };
 		46227A4423C82A4C00768799 /* ViewUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewUtility.swift; sourceTree = "<group>"; };
 		462D23AD23C076C500C28F15 /* IconPagingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconPagingCell.swift; sourceTree = "<group>"; };
@@ -323,8 +321,6 @@
 		46EDC7972461599700F2F9EE /* HelpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpCell.swift; sourceTree = "<group>"; };
 		46EDC79924615C3D00F2F9EE /* HelpListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpListController.swift; sourceTree = "<group>"; };
 		46EE431C237153DC00DF22FB /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
-		46F0902424721945008F444B /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
-		46F0902524721945008F444B /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		46F0902624721948008F444B /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		46F090282472196B008F444B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		46F0902924723CAF008F444B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -548,7 +544,7 @@
 				4621271323B197A900105664 /* DeviceListViewController.swift */,
 				4621272F23B5D95A00105664 /* DevicePageTableViewController.swift */,
 				46100A9B23C5665300C43D1A /* DeviceItemMeterViewController.swift */,
-				46227A4023C80FF400768799 /* DeviceTrendTableViewController.swift */,
+				46227A4023C80FF400768799 /* DeviceTrendController.swift */,
 				4607DC7923FE093300E35015 /* DeviceAdditionAlertController.swift */,
 				46DF04AA240CAD6800E3DE65 /* InfoAlertController.swift */,
 				46B49350240899B50066863D /* FixedInfoChildController.swift */,
@@ -1163,7 +1159,7 @@
 				460F7234236FC14500CFC7C3 /* AppDelegate.swift in Sources */,
 				46DBA53C242490B300CFA7E7 /* AccountUtility.swift in Sources */,
 				46EDC79A24615C3D00F2F9EE /* HelpListController.swift in Sources */,
-				46227A4123C80FF400768799 /* DeviceTrendTableViewController.swift in Sources */,
+				46227A4123C80FF400768799 /* DeviceTrendController.swift in Sources */,
 				46DF40CF242C7D080018F961 /* WorkorderAdditionViewController.swift in Sources */,
 				460BA6D7237BCC23008E7CDF /* Workorder.swift in Sources */,
 				46E9062E245FDEAA00DE7AE3 /* ActionListController.swift in Sources */,
@@ -1289,8 +1285,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				460F723A236FC14500CFC7C3 /* Base */,
-				46100A7223C2C97000C43D1A /* zh-Hans */,
-				46F0902424721945008F444B /* zh-Hant */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -1299,8 +1293,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				460F723F236FC14600CFC7C3 /* Base */,
-				46100A7323C2C97100C43D1A /* zh-Hans */,
-				46F0902524721945008F444B /* zh-Hant */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -1451,14 +1443,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "eds/EDS云管理.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = DB24XNH42B;
 				INFOPLIST_FILE = eds/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xseec.eds;
 				PRODUCT_NAME = "EDS云管理";
 				SWIFT_VERSION = 5.0;
@@ -1473,14 +1465,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "eds/EDS云管理.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = DB24XNH42B;
 				INFOPLIST_FILE = eds/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xseec.eds;
 				PRODUCT_NAME = "EDS云管理";
 				SWIFT_VERSION = 5.0;

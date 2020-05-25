@@ -1,0 +1,12 @@
+/*
+  InfoPlist.strings
+  eds
+
+  Created by 厦门士林电机有限公司 on 2020/5/16.
+  Copyright © 2020 厦门士林电机有限公司. All rights reserved.
+*/
+NSCameraUsageDescription="是否允許EDS使用你的相機拍攝資產信息，如禁止將無法上傳更新本地資產信息？";
+NSMicrophoneUsageDescription="是否允許EDS使用你的麥克風錄製音頻，如禁止將無法上傳本地音頻信息？";
+NSPhotoLibraryUsageDescription="是否允許EDS訪問你的相冊上傳資產信息，如禁止將無法上傳手機中相關的資料？";
+NSPhotoLibraryAddUsageDescription="是否允許EDS保存圖片到相冊，以便後續查看或分享給其他用戶？";
+CFBundleDisplayName="EDS雲管理";

@@ -58,7 +58,7 @@ class EnergyTimeCell: UITableViewCell {
     private func initViews() {
 
         let timeIcon = UIImageView()
-        timeIcon.tintColor = .black
+        timeIcon.tintColor = .label
         timeIcon.image = UIImage(systemName: "clock")
         addSubview(timeIcon)
         timeIcon.width(edsIconSize)

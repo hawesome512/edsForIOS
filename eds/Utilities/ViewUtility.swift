@@ -8,6 +8,8 @@
 
 import Foundation
 import UIKit
+import Kingfisher
+import RxSwift
 
 class ViewUtility {
 
@@ -39,7 +41,7 @@ class ViewUtility {
         backView.layer.shadowOpacity = 0.5
         backView.layer.cornerRadius = 5
         backView.clipsToBounds = true
-        backView.backgroundColor = .white
+        backView.backgroundColor = .systemBackground
         container.addSubview(backView)
         backView.edgesToSuperview(insets: .uniform(edsMinSpace))
         return backView
@@ -60,6 +62,9 @@ class ViewUtility {
         backgroundImage.edgesToSuperview()
     }
 
+    
+    /// 应用高像素的APP图标（经测试，无效）
+    /// - Returns: <#description#>
     static func getHighResolutionAppIcon() -> UIImage? {
         guard let infoPlist = Bundle.main.infoDictionary else { return nil }
         guard let bundleIcons = infoPlist["CFBundleIcons"] as? NSDictionary else { return nil }
@@ -67,5 +72,26 @@ class ViewUtility {
         guard let bundleIconFiles = bundlePrimaryIcon["CFBundleIconFiles"] as? NSArray else { return nil }
         guard let appIcon = bundleIconFiles.lastObject as? String else { return nil }
         return UIImage(named: appIcon)
+    }
+    
+    
+    /// 设置网络图片（允许失败后x秒后重试y次)
+    /// - Parameters:
+    ///   - imageView: <#imageView description#>
+    ///   - url: <#url description#>
+    static func setWebImage(in imageView:UIImageView,with url:URL?,disposeBag:DisposeBag,placeholder:Placeholder?=nil){
+        guard let url=url else { return }
+        imageView.kf.setImage(with: url,placeholder: placeholder){result in
+            switch result{
+            case .failure:
+                //只重试一次:3s后
+                Observable.of(1).delay(RxTimeInterval.seconds(3), scheduler: MainScheduler.instance).bind(onNext: {_ in
+                    imageView.kf.setImage(with: url,placeholder: placeholder)
+                }).disposed(by: disposeBag)
+                break
+            default:
+                break
+            }
+        }
     }
 }

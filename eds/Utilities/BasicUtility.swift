@@ -12,16 +12,16 @@ import SwiftDate
 import RxCocoa
 
 class BasicUtility {
-
+    
     static let sharedInstance = BasicUtility()
-
-    var energyBranch: EnergyBranch?
-    var basic: Basic?
-    var successfulLoadedBasicInfo = BehaviorRelay<Bool>(value: false)
-    var successfulLoadedEnergyData = BehaviorRelay<Bool>(value: false)
-
+    
+    private var energyBranch: EnergyBranch?
+    private var basic: Basic?
+    var successfulLoadedBasicInfo = BehaviorRelay<Bool?>(value: nil)
+    var successfulLoadedEnergyData = BehaviorRelay<Bool?>(value: nil)
+    
     private init() { }
-
+    
     func loadProjectBasicInfo() {
         guard let projID = AccountUtility.sharedInstance.account?.id else {
             return
@@ -35,11 +35,11 @@ class BasicUtility {
                 self.loadProjectEnergyData()
                 print("load project basic info")
             default:
-                break
+                self.successfulLoadedBasicInfo.accept(false)
             }
         }
     }
-
+    
     private func loadProjectEnergyData() {
         guard let authority = AccountUtility.sharedInstance.account?.authority else {
             return
@@ -48,11 +48,11 @@ class BasicUtility {
             return
         }
         initBranch(branchInfo: basic.energy)
-
+        
         guard let energyBranch = energyBranch else {
             return
         }
-
+        
         let logTags = energyBranch.getLogTags()
         let date = DateInRegion(Date(), region: .current).dateAtStartOf(.month)
         let dateItem = EnergyDateItem(date, type: .month)
@@ -70,36 +70,58 @@ class BasicUtility {
                 print("loaded project energy data")
                 break
             default:
-                break
+                self.successfulLoadedEnergyData.accept(false)
             }
         }
     }
-
+    
+    // MARK: - 数据开放接口
+    
+    func getBasic()->Basic?{
+        //loaded=nil正在请求数据，此时不再额外请求
+        if basic==nil,let loaded=successfulLoadedBasicInfo.value,!loaded {
+            loadProjectBasicInfo()
+        }
+        return basic
+    }
+    
+    func getEnergyBranch()->EnergyBranch?{
+        if energyBranch==nil,let loaded=successfulLoadedEnergyData.value,!loaded {
+            loadProjectEnergyData()
+        }
+        return energyBranch
+    }
+    
+    func clearInfo(){
+        basic=nil
+        energyBranch=nil
+    }
+    
     func updateNotice(_ notice: String) {
         basic?.notice = notice
         updateProject(saveActionLog: false)
     }
-
+    
     func updateBranch(_ branch: String) {
         basic?.energy = branch
         updateProject(saveActionLog: false)
     }
-
+    
     func updateUser(_ title: String) {
         basic?.user = title
         updateProject()
     }
-
+    
     func updateLocation(_ location: String) {
         basic?.location = location
         updateProject()
     }
-
+    
     func updateBanner(_ banner: String) {
         basic?.banner = banner
         updateProject()
     }
-
+    
     private func updateProject(saveActionLog: Bool = true) {
         guard let basic = basic else {
             return
@@ -115,9 +137,9 @@ class BasicUtility {
             }
         }
     }
-
+    
     // MARK: - 用电支路
-
+    
     private func initBranch(branchInfo: String) {
         let branches = EnergyBranch.getLevelBranches(branchInfo)
         switch branches.count {
@@ -132,7 +154,7 @@ class BasicUtility {
             energyBranch?.branches = branches
         }
     }
-
+    
     static func updateBranchData(in branch: EnergyBranch, with logData: [LogTag?], dateItem: EnergyDateItem) -> EnergyBranch {
         //支路在results中的起始序列
         var childOffset = 0
@@ -157,7 +179,7 @@ class BasicUtility {
         }
         return branch
     }
-
+    
     /// 将从服务后台返回的数据转换为能耗分析模型
     /// - Parameter values: <#values description#>
     static func getEnergyData(values: [String], dateItem: EnergyDateItem) -> EnergyData {
@@ -167,7 +189,7 @@ class BasicUtility {
         let data = EnergyData(dateItem, chartValues: chartValues)
         return data
     }
-
+    
     /// 分离上一期和当前期的数据
     /// - Parameters:
     ///   - values: <#values description#>
@@ -181,8 +203,8 @@ class BasicUtility {
         results.append(("current".localize(with: prefixEnergy), currentValues))
         return results
     }
-
-
+    
+    
     /// 聚合数据用于图标显示
     /// - Parameters:
     ///   - values:
@@ -201,7 +223,7 @@ class BasicUtility {
             }
             return results
         }
-
+        
         //年模式，按月份天数合成
         var results: [Double] = []
         var date = dateItem.date - 1.years
@@ -215,7 +237,7 @@ class BasicUtility {
         }
         return results
     }
-
+    
     /// 处理累加值
     /// - Parameter values: 需考虑到起始或中间因通讯中断造成的空值情况
     static func filterAccumulatedValues(values: [String]) -> [Double] {
@@ -248,8 +270,8 @@ class BasicUtility {
         }
         return results
     }
-
-
+    
+    
     /// 主路自身没有值时，由支路累加而成
     /// - Parameter values: <#values description#>
     static func uniteBranchValues(values: [[Double]]) -> [Double] {
@@ -264,5 +286,5 @@ class BasicUtility {
         }
         return results
     }
-
+    
 }

@@ -62,7 +62,7 @@
 /* username */
 "username" = "Username";
 /* userlevel */
-"userlevel" = "level";
+"userlevel" = "Level";
 /* profile */
 "profile" = "Profile";
 /* addAccount */
@@ -111,7 +111,7 @@
 /* home_notice_time */
 "home_notice_time" = "Overdue";
 /* home_notice_confirm */
-"home_notice_confirm" = "Confirm";
+"home_notice_confirm" = "PUBLISH";
 /* home_notice_imcomplete */
 "home_notice_imcomplete" = "Please complete necessary infos";
 /* home_banner */
@@ -120,6 +120,8 @@
 "home_title" = "Title";
 /* home_location */
 "home_location" = "Address";
+/* home_invalidQRCode */
+"home_invalidQRCode" = "Invalid EDS's qrcode";
 
 /* energy_addition */
 "energy_addition" = "Add branch";
@@ -149,6 +151,8 @@
 "energy_branch" = "Branch percentage(%)";
 /* energy_time_alert */
 "energy_time_alert" = "Analysis,based on time range ,only used in Mainland China：\r\n●valley at (00:00-07:00,23:00-24:00):\r\n¥0.4/kW.h\r\n●plain at (07:00-08:00,11:00-18:00):\r\n¥0.8/kW.h\r\n●peak at (08:00-11:00,18:00-23:00):\r\n¥1.2/kW.h";
+/* energy_branch_alert */
+"energy_branch_alert" = "Click bar chart below to get more infomation about branch's electric analysis.";
 /* energy_edit */
 "energy_edit" = "Edit Branch";
 /* energy_limit */
@@ -156,6 +160,8 @@
 /* energy_save */
 "energy_save" = "Saved,take effect after logged in again!";
 
+/* trend_title */
+"trend_title" = "Trend";
 /* trend_evaluation */
 "trend_evaluation" = "Evaluation";
 /* trend_max */
@@ -173,9 +179,11 @@
 /* trend_excellent */
 "trend_excellent" = "GOOD";
 /* trend_general */
-"trend_general" = "NORm";
+"trend_general" = "NORM";
 /* trend_bad */
 "trend_bad" = "BAD";
+/* trend_time_alert */
+"trend_time_alert" = "Invalid time range\r\n%@\r\n%@";
 
 /* add_room */
 "add_room" = "Add room";
@@ -201,9 +209,11 @@
 "delete_title" = "Delete [%@] and sub-infos";
 /* delete_info */
 "delete_info" = "This action is unrecoverable!";
+/* device_limit */
+"device_limit" = "At most %d properties allowed，please delete others!";
 
 /* uncommunicate */
-"uncommunicate" = "un-comm";
+"uncommunicate" = "uncomm";
 /* property */
 "property" = "Property";
 /* updating */
@@ -217,7 +227,7 @@
 /* userLocked */
 "userLocked" = "You aren't allowed to do this,please apply to admin for operator level.";
 /* localLocked */
-"localLocked" = "Device is locked in local mode,any control is forbidden.";
+"localLocked" = "Device is locked in LOCAL mode,any operation is forbidden.";
 /* denied */
 "denied" = "Invalid action";
 

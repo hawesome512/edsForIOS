@@ -43,6 +43,8 @@ class DeviceBarCell: UITableViewCell {
         //value绘制在柱状图里面，默认在上方
         barChartView.drawValueAboveBarEnabled = false
         barChartView.isUserInteractionEnabled = false
+        barChartView.leftAxis.labelTextColor = .label
+        barChartView.xAxis.labelTextColor = .label
 
         //横坐标间隔尺寸granularity=1
         let xAxis = barChartView.xAxis
@@ -125,7 +127,7 @@ class DeviceBarCell: UITableViewCell {
         guard selected else {
             return
         }
-        let trendViewController = DeviceTrendTableViewController()
+        let trendViewController = DeviceTrendController()
         trendViewController.trend(with: barTags, condition: nil, isAccumulated: isAccumulated)
         parentVC?.navigationController?.pushViewController(trendViewController, animated: true)
 

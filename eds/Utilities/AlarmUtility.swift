@@ -10,24 +10,27 @@ import Foundation
 import Moya
 
 class AlarmUtility {
+    
+    private var loadSucceed=false
     //通过单列调取报警列表
-    var alarmList: [Alarm] = []
+    private var alarmList: [Alarm] = []
     //单例，只允许存在一个实例
     static let sharedInstance = AlarmUtility()
-
+    
     private init() { }
-
+    
     /// 从后台导入报警列表
     func loadProjectAlarmList() {
         //获取后台服务设备列表请求在生命周期中只有一次
         guard alarmList.count == 0, let projID = AccountUtility.sharedInstance.account?.id else {
             return
         }
-        //获取最近一季度的报警记录
-        let factor = EDSServiceQueryFactor(id: projID, in: .halfYear)
+        //获取最近一年的报警记录(太久远的报警记录无意义）
+        let factor=EDSServiceQueryFactor(id: projID, in: .year)
         EDSService.getProvider().request(.queryAlarmList(factor: factor)) { result in
             switch result {
             case .success(let response):
+                self.loadSucceed=true
                 //后台返回数据类型[alarm?]?👉[alarm]
                 let tempList = JsonUtility.getEDSServiceList(with: response.data, type: [Alarm]())
                 self.alarmList = (tempList?.filter { $0 != nil })! as! [Alarm]
@@ -42,20 +45,37 @@ class AlarmUtility {
             }
         }
     }
-
+    
+    func getAlarmList()->[Alarm]{
+        //登录时更新数据失败的情况（排除工程中本来没有异常数据）
+        if alarmList.count==0,!loadSucceed {
+            loadProjectAlarmList()
+        }
+        return alarmList
+    }
+    
+    func clearAlarmList(){
+        alarmList.removeAll()
+    }
+    
     func get(by id: String) -> Alarm? {
         return alarmList.first { $0.id == id }
     }
-
+    
     func check(with id: String) {
         alarmList.first { $0.id == id }?.confirm = .checked
     }
-
+    
     func remove(with id: String) {
         alarmList.removeAll { $0.id == id }
     }
-
-    func workorder(_ id: String, workorderID: String) {
+    
+    
+    /// 创建异常工单时更新异常信息
+    /// - Parameters:
+    ///   - id: <#id description#>
+    ///   - workorderID: <#workorderID description#>
+    func setWorkorder(_ id: String, workorderID: String) {
         alarmList.first { $0.id == id }?.report = workorderID
     }
 }

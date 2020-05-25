@@ -72,7 +72,7 @@ class NoticeAdditionCell: UITableViewCell, UITextFieldDelegate, PickerDelegate {
                 return
             }
             let author = AccountUtility.sharedInstance.loginedPhone?.name ?? NIL
-            let notice = Notice(message: message, author: author, deadline: self.pickedDate)
+            var notice = Notice(message: message, author: author, deadline: self.pickedDate)
             BasicUtility.sharedInstance.updateNotice(notice.toString())
             ActionUtility.sharedInstance.addAction(.addNotice)
             self.parentVC?.navigationController?.popViewController(animated: true)

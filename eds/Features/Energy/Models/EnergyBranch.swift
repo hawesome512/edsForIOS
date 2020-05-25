@@ -98,7 +98,9 @@ class EnergyBranch: Equatable {
     /// - Parameter branches: <#branches description#>
     static func getBranchMessage(_ branches: [EnergyBranch]) -> String {
         return branches.map {
-            $0.id + EnergyBranch.branchSeparator + $0.tagName + EnergyBranch.branchSeparator + $0.title
+            //防止人为输入的名称存在分隔符
+            $0.title.removeCharacters(chars: "/;")
+            return $0.id + EnergyBranch.branchSeparator + $0.tagName + EnergyBranch.branchSeparator + $0.title
         }.joined(separator: EnergyBranch.itemSeparator)
     }
 

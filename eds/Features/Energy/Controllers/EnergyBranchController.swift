@@ -25,7 +25,7 @@ class EnergyBranchController: UITableViewController {
 
     private func initViews() {
         title = "edit".localize(with: prefixEnergy)
-        energyBranches = BasicUtility.sharedInstance.energyBranch?.getAllBranches() ?? []
+        energyBranches = BasicUtility.sharedInstance.getEnergyBranch()?.getAllBranches() ?? []
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
         tableView.tableFooterView = UIView()
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(saveBranch))

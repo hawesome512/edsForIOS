@@ -155,7 +155,7 @@ extension DeviceRangeCell: DevicePageItemSource {
 
 class RangeMakerView: UIView {
 
-    private let color = UIColor.darkText
+    private let color = UIColor.label
     private let verSpace: CGFloat = 10
 
     var valueLabel = UILabel()

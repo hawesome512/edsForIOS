@@ -8,8 +8,11 @@
 
 import UIKit
 import Kingfisher
+import RxSwift
 
 class PhotoCell: UICollectionViewCell {
+    
+    private let disposeBag=DisposeBag()
 
     let deleteButton = UIButton()
     let contentImage = UIImageView()
@@ -17,7 +20,7 @@ class PhotoCell: UICollectionViewCell {
 
     var url: URL? {
         didSet {
-            contentImage.kf.setImage(with: url)
+            ViewUtility.setWebImage(in: contentImage, with: url, disposeBag: disposeBag)
         }
     }
 

@@ -66,7 +66,7 @@ class DeviceListCell: UITableViewCell, PasswordVerifyDelegate {
             let authorityResult = VerifyUtility.verify(tag: listTag!, delegate: self, parentVC: parentVC)
             presentMeterViewController(authority: authorityResult)
         } else {
-            let trendViewController = DeviceTrendTableViewController()
+            let trendViewController = DeviceTrendController()
             trendViewController.title = nameLabel.text
             trendViewController.trend(with: [listTag!], condition: nil, isAccumulated: isAccumulated)
             parentVC?.navigationController?.pushViewController(trendViewController, animated: true)

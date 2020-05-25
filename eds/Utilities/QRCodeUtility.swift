@@ -21,7 +21,7 @@ class QRCodeUtility {
         guard let content = EDSQRCode.getString(type: type, param: param) else {
             return nil
         }
-        if let qrImage = EFQRCode.generate(content: content, foregroundColor: edsDefaultColor.cgColor, watermark: UIImage(named: "wave")?.cgImage, watermarkMode: .scaleAspectFit) {
+        if let qrImage = EFQRCode.generate(content: content, backgroundColor: UIColor.systemBackground.cgColor,foregroundColor: edsDefaultColor.cgColor, watermark: UIImage(named: "wave")?.cgImage, watermarkMode: .scaleAspectFit) {
             return UIImage(cgImage: qrImage)
         }
         return nil

@@ -43,9 +43,12 @@ class Phone: Comparable {
     }
 
     func toString() -> String? {
-        guard let number = self.number, let name = self.name else {
+        guard var number = self.number, var name = self.name else {
             return nil
         }
+        number.removeCharacters(chars: "/;")
+        name.removeCharacters(chars: "/;")
+        email.removeCharacters(chars: "/;")
         return number + infoSeparator + "\(level.rawValue)" + infoSeparator + name + infoSeparator + photo + infoSeparator + email
     }
 

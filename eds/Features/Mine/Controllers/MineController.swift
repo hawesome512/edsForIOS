@@ -65,7 +65,7 @@ class MineController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.navigationBar.subviews.first?.alpha = 1
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+//        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
     }
 
     func updateNavigationBar() {
@@ -76,7 +76,7 @@ class MineController: UIViewController {
         headerView.layoutIfNeeded()
         let alpha: CGFloat = offset / maxOffset
         navigationController?.navigationBar.subviews.first?.alpha = alpha
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(alpha)]
+//        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(alpha)]
         headerView.alpha = 1 - alpha
     }
 
@@ -160,7 +160,7 @@ extension MineController: UITableViewDataSource, UITableViewDelegate {
             exitButton.setTitle("exitEDS".localize(), for: .normal)
             exitButton.setTitleColor(.systemRed, for: .normal)
             exitButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .title3)
-            exitButton.backgroundColor = .white
+            exitButton.backgroundColor = .systemBackground
             exitButton.rx.tap.bind(onNext: {
                 AccountUtility.sharedInstance.prepareExitAccount()
                 self.dismiss(animated: true, completion: nil)

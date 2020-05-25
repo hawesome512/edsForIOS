@@ -31,7 +31,7 @@ class MineHeaderView: UIView, UITextFieldDelegate {
                 return
             }
             let profileURL = phone.photo.getEDSServletImageUrl()
-            profileImage.kf.setImage(with: profileURL, placeholder: UIImage(named: "eds"))
+            ViewUtility.setWebImage(in: profileImage, with: profileURL, disposeBag: disposeBag,placeholder: UIImage(named: "eds"))
             nameLabel.text = phone.name
             levelLabel.text = phone.level.getText()
             levelImage.image = phone.level.getIcon()?.withTintColor(.white, renderingMode: .alwaysTemplate)
@@ -133,7 +133,7 @@ class MineHeaderView: UIView, UITextFieldDelegate {
         phoneImage.centerY(to: phoneLabel)
 
         nameLabel.text = "XSEEC"
-        nameLabel.textColor = .darkText
+        nameLabel.textColor = .label
         nameLabel.textAlignment = .center
         nameLabel.font = UIFont.preferredFont(forTextStyle: .largeTitle)
         nameLabel.adjustsFontSizeToFitWidth = true

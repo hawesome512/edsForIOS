@@ -30,7 +30,8 @@ class WorkorderMessageCell: UITableViewCell {
             if let name = message?.name {
                 nameLabel.text = name
                 if let photo = AccountUtility.sharedInstance.getPhone(by: name)?.photo {
-                    userImage.kf.setImage(with: photo.getEDSServletImageUrl(), placeholder: edsDefaultImage)
+                    let url=photo.getEDSServletImageUrl()
+                    ViewUtility.setWebImage(in: userImage, with: url, disposeBag: disposeBag,placeholder: edsDefaultImage)
                 }
             }
             timeLabel.text = message?.date

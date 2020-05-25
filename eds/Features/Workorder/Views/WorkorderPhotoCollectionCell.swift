@@ -35,7 +35,7 @@ class WorkorderPhotoCollectionCell: UITableViewCell {
         layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: edsMinSpace, left: edsMinSpace, bottom: edsMinSpace, right: edsMinSpace)
         let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .systemBackground
         return collectionView
     }()
 

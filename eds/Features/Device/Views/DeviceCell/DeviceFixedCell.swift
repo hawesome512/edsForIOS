@@ -11,6 +11,8 @@ import TinyConstraints
 import RxSwift
 
 class DeviceFixedCell: UITableViewCell {
+    
+    private let fontSize:CGFloat=20
 
     var foldButton = UIButton()
     var deviceImageView = UIImageView()
@@ -37,7 +39,10 @@ class DeviceFixedCell: UITableViewCell {
                     leading?.constant -= 1.5 * edsSpace
                 }
                 nameLabel.text = device.title
-                nameLabel.textColor = device.getTintColor()
+                if device.level == .room {
+                    nameLabel.font=UIFont.boldSystemFont(ofSize: fontSize)
+                }
+//                nameLabel.textColor = device.getTintColor()
                 levelLabel.alpha = (device.level == DeviceLevel.fixed) ? 1 : 0
                 deviceImageView.image = device.getIcon()
 
