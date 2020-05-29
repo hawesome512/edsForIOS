@@ -80,8 +80,8 @@ class HomeDeviceCell: UITableViewCell {
 
         //点列表和设备列表加载完成后再出发
         let loadedTaglist = TagUtility.sharedInstance.successfulLoadedTagList
-        let loadedDeviceList = DeviceUtility.sharedInstance.successfulLoaded
-        Observable.zip(loadedTaglist, loadedDeviceList).bind(onNext: { (loadedTags, loadedDevices) in
+        let loadedDeviceList = DeviceUtility.sharedInstance.successfulUpdated
+        Observable.combineLatest(loadedTaglist, loadedDeviceList).bind(onNext: { (loadedTags, loadedDevices) in
             guard loadedTags == true, loadedDevices == true else {
                 return
             }

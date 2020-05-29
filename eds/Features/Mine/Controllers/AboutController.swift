@@ -43,6 +43,7 @@ class AboutController: UIViewController {
 
         let descriptionLabel = UILabel()
         descriptionLabel.text = "aboutDescription".localize()
+        descriptionLabel.adjustsFontSizeToFitWidth = true
         descriptionLabel.numberOfLines = 0
         descriptionLabel.font = UIFont.preferredFont(forTextStyle: .title3)
         view.addSubview(descriptionLabel)
@@ -72,6 +73,7 @@ class AboutController: UIViewController {
         view.addSubview(companyLabel)
         companyLabel.horizontalToSuperview(insets: .horizontal(edsSpace))
         companyLabel.bottomToSuperview(offset: -edsSpace, usingSafeArea: true)
+        companyLabel.topToBottom(of: moreButton,offset: edsMinSpace)
     }
 
 }

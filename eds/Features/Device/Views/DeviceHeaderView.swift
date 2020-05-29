@@ -40,7 +40,7 @@ class DeviceHeaderView: UIView, UITextFieldDelegate {
         imageView.contentMode = .scaleAspectFit
 
         addSubview(imageButton)
-        imageButton.edges(to: imageView)
+        imageButton.edgesToSuperview()
         imageButton.rx.tap.bind(onNext: {
             guard AccountUtility.sharedInstance.isOperable() else {
                 return
@@ -93,10 +93,9 @@ class DeviceHeaderView: UIView, UITextFieldDelegate {
                     switch(response) {
                     case .success:
                         if let device = self.device {
-                            device.image = imageID
-                            EDSService.getProvider().request(.updateDevice(device: device)) { _ in }
                             print("upload device image success")
-                            ActionUtility.sharedInstance.addAction(.editDevice, extra: device.title)
+                            device.image = imageID
+                            DeviceUtility.sharedInstance.update(device)
                         }
                     default:
                         break
@@ -115,8 +114,7 @@ class DeviceHeaderView: UIView, UITextFieldDelegate {
             if let device = self.device, let title = titleVC.textFields?.first?.text, !title.isEmpty {
                 device.title = title
                 self.parentVC?.title = title
-                EDSService.getProvider().request(.updateDevice(device: device)) { _ in }
-                ActionUtility.sharedInstance.addAction(.editDevice, extra: device.title)
+                DeviceUtility.sharedInstance.update(device)
             }
         })
         titleVC.addAction(confirmAction)

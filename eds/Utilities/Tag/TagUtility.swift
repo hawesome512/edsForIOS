@@ -15,11 +15,12 @@ import RxSwift
 
 class TagUtility: MQTTServiceDelegate {
     
+    private let disposeBag=DisposeBag()
+    
     //单例，只允许存在一个实例
     static let sharedInstance = TagUtility()
     var successfulLoadedTagList = BehaviorRelay<Bool>(value: false)
     var successfulUpdatedTagList = BehaviorRelay<Bool>(value: false)
-    private let disposeBag=DisposeBag()
     
     private init() { }
     
@@ -159,6 +160,8 @@ class TagUtility: MQTTServiceDelegate {
     
     func clearTagList(){
         tagList.removeAll()
+        successfulUpdatedTagList.accept(false)
+        successfulLoadedTagList.accept(false)
     }
     
     //MARK:私有方法>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -192,4 +195,5 @@ class TagUtility: MQTTServiceDelegate {
         let infos = name.components(separatedBy: Tag.nameSeparator)
         return infos.count == 2 ? infos[0] : nil
     }
+    
 }

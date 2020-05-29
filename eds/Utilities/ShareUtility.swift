@@ -86,8 +86,18 @@ class ShareUtility {
 
     /// 截屏分享
     /// - Parameter controller: <#controller description#>
-    static func sharePage(in controller: UIViewController) {
-        guard let image = controller.view.snapshot else { return }
+    static func sharePage(in controller: UIViewController,scrollView:UIScrollView?) {
+        if let scrollView = scrollView {
+            scrollView.swContentScrollCapture{ image in
+                shareImage(image: image, controller: controller)
+            }
+        } else {
+            shareImage(image: controller.view.snapshot, controller: controller)
+        }
+    }
+    
+    static func shareImage(image:UIImage?,controller:UIViewController){
+        guard let image = image else { return }
         let activityVC = UIActivityViewController(activityItems: [image], applicationActivities: nil)
         controller.present(activityVC, animated: true, completion: nil)
     }

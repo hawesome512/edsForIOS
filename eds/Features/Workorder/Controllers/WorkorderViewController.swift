@@ -16,24 +16,24 @@ import CallKit
 import MessageUI
 
 class WorkorderViewController: UIViewController {
-
+    
     private var flows: [WorkorderFlow] = []
     private var tasks: [WorkorderTask] = []
     private var messages: [WorkorderMessage] = []
     private var infos: [WorkorderInfo] = []
     private var photoSource = PhotoSource()
-
+    
     private let tableView = UITableView()
     private let progressView = UIProgressView()
     private var progressCount = 0
-
+    
     //任务/留言太多时折叠处理
     private var foldViews: [WorkorderSectionType: FoldView] = [.task: FoldView(), .message: FoldView()]
     private let disposeBag = DisposeBag()
-
+    
     //电话派发工单，监听电话接通状态
     private let callObserver = CXCallObserver()
-
+    
     //执行
     private let executeBarIndex = 2
     private var executing = false {
@@ -45,7 +45,7 @@ class WorkorderViewController: UIViewController {
     private let indicator = UIActivityIndicatorView(style: .medium)
     private var executedState = BehaviorRelay<Bool>(value: false)
     private let accountName = AccountUtility.sharedInstance.loginedPhone?.name ?? NIL
-
+    
     var workorder: Workorder? {
         didSet {
             if let workorder = workorder {
@@ -55,13 +55,13 @@ class WorkorderViewController: UIViewController {
                 messages = workorder.getMessages()
                 infos = workorder.getInfos()
                 photoSource.urls = workorder.getImageURLs()
-
+                
                 initFoldView(type: .task, total: tasks.count)
                 initFoldView(type: .message, total: messages.count)
             }
         }
     }
-
+    
     private func initFoldView(type: WorkorderSectionType, total: Int) {
         if let view = foldViews[type] {
             //任务清单的count保持不变，但留言可以增减，需更新totalCount
@@ -72,39 +72,43 @@ class WorkorderViewController: UIViewController {
             }).disposed(by: disposeBag)
         }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
         initBarItems()
     }
-
+    
     private func initViews() {
-
+        
         callObserver.setDelegate(self, queue: DispatchQueue.main)
-
+        
         tableView.rowHeight = UITableView.automaticDimension
         tableView.dataSource = self
         tableView.delegate = self
         view.addSubview(tableView)
         tableView.edgesToSuperview()
-
+        
         progressView.progressTintColor = .systemRed
         navigationController?.toolbar.addSubview(progressView)
         progressView.edgesToSuperview(excluding: .bottom)
         progressView.height(4)
-
+        
         indicator.startAnimating()
-
+        
         //工单处于创建状态，执行人进入工单，自动新增已派发状态，可直接执行
         if workorder?.state == .created && workorder?.worker == accountName {
             workorder?.setState(with: .distributed, by: accountName)
         }
-
-        navigationItem.rightBarButtonItem = getShareButton()
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "paperplane"), style: .plain, target: self, action: #selector(sharePage))
     }
-
-
+    
+    @objc func sharePage(){
+        let image = QRCodeUtility.generate(with: .workorder, param: workorder!.id)
+        ShareUtility.shareImage(image: image, controller: self)
+    }
+    
     private func initBarItems() {
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let distribute = UIBarButtonItem(title: WorkorderState.distributed.getText(), style: .plain, target: self, action: #selector(selectDistribution))
@@ -112,10 +116,10 @@ class WorkorderViewController: UIViewController {
         let audit = UIBarButtonItem(title: WorkorderState.audited.getText(), style: .plain, target: self, action: #selector(auditWorkorder))
         let record = UIBarButtonItem(title: "message".localize(with: prefixWorkorder), style: .plain, target: self, action: #selector(leaveMessage))
         toolbarItems = [distribute, space, execute, space, audit, space, record]
-
+        
         updateBarItems()
     }
-
+    
     private func updateBarItems() {
         guard let state = workorder?.state else {
             return
@@ -129,29 +133,29 @@ class WorkorderViewController: UIViewController {
         toolbarItems?[4].isEnabled = (workorder!.auditor == accountName && state.rawValue == WorkorderState.executed.rawValue)
         //所有人都可以留言
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
-
+        
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.setToolbarHidden(false, animated: animated)
         navigationController?.toolbar.barStyle = .black
         navigationController?.toolbar.tintColor = .white
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         //结束后必须隐藏toolBar，否则前一个调用的vc底部将存在空白toolbar
         navigationController?.setToolbarHidden(true, animated: animated)
         navigationController?.toolbar.barStyle = .default
         navigationController?.toolbar.tintColor = edsDefaultColor
     }
-
+    
 }
 
 extension WorkorderViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return WorkorderSectionType.allCases.count
     }
-
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let type = WorkorderSectionType(rawValue: section)!
         let view = SectionHeaderView()
@@ -168,7 +172,7 @@ extension WorkorderViewController: UITableViewDataSource, UITableViewDelegate {
         }
         return view
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let type = WorkorderSectionType(rawValue: section)!
         switch type {
@@ -180,7 +184,7 @@ extension WorkorderViewController: UITableViewDataSource, UITableViewDelegate {
             return 1
         }
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let type = WorkorderSectionType(rawValue: indexPath.section)!
         switch type {
@@ -233,13 +237,13 @@ extension WorkorderViewController: UITableViewDataSource, UITableViewDelegate {
             return cell
         }
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+        
         tableView.deselectRow(at: indexPath, animated: true)
     }
-
-
+    
+    
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let type = WorkorderSectionType(rawValue: section)!
         switch type {
@@ -249,7 +253,7 @@ extension WorkorderViewController: UITableViewDataSource, UITableViewDelegate {
             return UIView()
         }
     }
-
+    
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         let type = WorkorderSectionType(rawValue: section)!
         switch type {
@@ -263,15 +267,15 @@ extension WorkorderViewController: UITableViewDataSource, UITableViewDelegate {
 
 // MARK: - 更新工单
 extension WorkorderViewController {
-
+    
     func updateWorkorder() {
         guard let workorder = workorder else {
             return
         }
         EDSService.getProvider().request(.updateWorkorder(workorder: workorder)) { result in
-
+            
             self.progressView.progress = 0
-
+            
             switch result {
             case .success(let response):
                 if JsonUtility.didUpdatedEDSServiceSuccess(data: response.data) {
@@ -290,7 +294,7 @@ extension WorkorderViewController {
 
 // MARK: - 派发工单
 extension WorkorderViewController: ShareDelegate, CXCallObserverDelegate, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate {
-
+    
     //派发方式选择界面：电话/短信/邮件/微信等等
     @objc func selectDistribution() {
         let shareVC = ShareController()
@@ -298,7 +302,7 @@ extension WorkorderViewController: ShareDelegate, CXCallObserverDelegate, MFMess
         shareVC.delegate = self
         present(shareVC, animated: true, completion: nil)
     }
-
+    
     //获取已选择的派发方式
     func share(with shareType: ShareType) {
         guard let workorder = workorder, let executor = AccountUtility.sharedInstance.getPhone(by: workorder.worker) else {
@@ -315,7 +319,7 @@ extension WorkorderViewController: ShareDelegate, CXCallObserverDelegate, MFMess
             ShareUtility.sendMail(to: executor.email, title: "distribution_title".localize(with: prefixWorkorder), content: sentContent, imageData: imageData, in: self)
         }
     }
-
+    
     //监听电话派发的状态
     func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
         //已经接通电话，已经结束通话，电话派发工单成功
@@ -323,7 +327,7 @@ extension WorkorderViewController: ShareDelegate, CXCallObserverDelegate, MFMess
             distributed()
         }
     }
-
+    
     //短信派发状态
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
         //发送短信成功
@@ -332,7 +336,7 @@ extension WorkorderViewController: ShareDelegate, CXCallObserverDelegate, MFMess
         }
         controller.dismiss(animated: true, completion: nil)
     }
-
+    
     //邮件派发状态
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         //发送邮件成功
@@ -341,7 +345,7 @@ extension WorkorderViewController: ShareDelegate, CXCallObserverDelegate, MFMess
         }
         controller.dismiss(animated: true, completion: nil)
     }
-
+    
     //派发成功
     func distributed() {
         ActionUtility.sharedInstance.addAction(.distributeWorkorder, extra: workorder?.title)
@@ -356,24 +360,27 @@ extension WorkorderViewController: ShareDelegate, CXCallObserverDelegate, MFMess
 
 //MARK: - 执行工单
 extension WorkorderViewController {
-
+    
     @objc func executeWorkorder() {
         if executing {
             uploadImages()
             ActionUtility.sharedInstance.addAction(.executeWorkorder, extra: workorder?.title)
         } else {
+            //提醒保存执行
+            let content = "save_alert".localize(with: prefixWorkorder)
+            ControllerUtility.presentAlertController(content: content, controller: self)
             //不能直接更改title，只能替换
             let title = "save".localize()
             toolbarItems?[executeBarIndex] = UIBarButtonItem(title: title, style: .plain, target: self, action: #selector(executeWorkorder))
         }
         executing = !executing
     }
-
+    
     func uploadImages() {
         //上传指示器
         toolbarItems?[executeBarIndex] = UIBarButtonItem(customView: indicator)
         progressCount = 0
-
+        
         let indexPath = IndexPath(row: 0, section: WorkorderSectionType.photo.rawValue)
         let photoCell = tableView.cellForRow(at: indexPath)! as! WorkorderPhotoCollectionCell
         let images = photoCell.photoSource.images
@@ -401,7 +408,7 @@ extension WorkorderViewController {
             }
         }
     }
-
+    
     func prepareUpdateWorkorder(uploadedImages: [(name: String, image: UIImage)]) {
         //更新工单任务和图片信息
         photoSource.images = uploadedImages.map { $0.image }
@@ -411,7 +418,7 @@ extension WorkorderViewController {
         workorder?.setTasks(tasks)
         workorder?.setState(with: .executed, by: accountName)
         updateWorkorder()
-
+        
         let title = WorkorderState.executed.getText()
         toolbarItems?[executeBarIndex] = UIBarButtonItem(title: title, style: .plain, target: self, action: #selector(executeWorkorder))
     }
@@ -419,14 +426,23 @@ extension WorkorderViewController {
 
 // MARK: - 审核&留言
 extension WorkorderViewController: MessageDelegate {
-
-
+    
+    
     @objc func auditWorkorder() {
-        workorder?.setState(with: .audited, by: accountName)
-        updateWorkorder()
-        ActionUtility.sharedInstance.addAction(.auditeWorkorder, extra: workorder?.title)
+        let title = "audit_title".localize(with: prefixWorkorder)
+        let content = "audit_alert".localize(with: prefixWorkorder)
+        let auditVC=UIAlertController(title: title, message: content, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "cancel".localize(), style: .cancel, handler: nil)
+        let auditAction = UIAlertAction(title: "audited".localize(with: prefixWorkorder), style: .default, handler: {_ in
+            self.workorder?.setState(with: .audited, by: self.accountName)
+            self.updateWorkorder()
+            ActionUtility.sharedInstance.addAction(.auditeWorkorder, extra: self.workorder?.title)
+        })
+        auditVC.addAction(cancelAction)
+        auditVC.addAction(auditAction)
+        present(auditVC, animated: true, completion: nil)
     }
-
+    
     @objc func leaveMessage() {
         let msgVC = UIAlertController(title: "message".localize(with: prefixWorkorder), message: nil, preferredStyle: .alert)
         msgVC.addTextField { _ in }
@@ -443,8 +459,8 @@ extension WorkorderViewController: MessageDelegate {
         msgVC.addAction(save)
         present(msgVC, animated: true, completion: nil)
     }
-
-
+    
+    
     func delete(message: WorkorderMessage) {
         guard let index = messages.firstIndex(where: { $0.toString() == message.toString() }) else {
             return

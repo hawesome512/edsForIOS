@@ -17,6 +17,7 @@ class AccountListController: UITableViewController, AdditionDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
+        initData()
     }
 
     private func initViews() {
@@ -31,12 +32,20 @@ class AccountListController: UITableViewController, AdditionDelegate {
                 self.tableView.reloadData()
             }
         }).disposed(by: disposeBag)
+        navigationItem.rightBarButtonItem=UIBarButtonItem(image: UIImage(systemName: "info.circle.fill"), style: .plain, target: self, action: #selector(showAuthority))
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        //从新增用户页面返回刷新列表
-        accountList = AccountUtility.sharedInstance.phoneList
-        tableView.reloadData()
+    
+    private func initData(){
+        AccountUtility.sharedInstance.successfulLogined.bind(onNext: {result in
+            guard result == true else { return }
+            self.accountList = AccountUtility.sharedInstance.phoneList
+            self.tableView.reloadData()
+        }).disposed(by: disposeBag)
+    }
+    
+    @objc func showAuthority(){
+        let authVC=AuthorityInfoController()
+        present(authVC, animated: true, completion: nil)
     }
 
 
@@ -64,10 +73,10 @@ class AccountListController: UITableViewController, AdditionDelegate {
     }
 
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        //当前登录用户必须是管理员，且cell不是自身才能（删除+转让管理员
+        //当前登录用户必须是手机管理员，系统管理员也不可操作，且cell不是自身才能（删除+转让管理员
         let account = accountList[indexPath.row]
         let loginedAccount = AccountUtility.sharedInstance.loginedPhone!
-        guard loginedAccount.level <= .phoneAdmin, account.level > .phoneAdmin else {
+        guard loginedAccount.level == .phoneAdmin, account.level > .phoneAdmin else {
             return nil
         }
         let deleteAction = UIContextualAction(style: .destructive, title: "delete".localize()) { _, _, completionHandler in
@@ -91,6 +100,8 @@ class AccountListController: UITableViewController, AdditionDelegate {
                 loginedAccount.level = .phoneOperator
                 account.level = .phoneAdmin
                 AccountUtility.sharedInstance.updatePhone()
+                //变更工程中的负责人（短信报警用）
+                BasicUtility.sharedInstance.updatePricipal(account)
                 tableView.reloadData()
                 ActionUtility.sharedInstance.addAction(.transferAccount, extra: account.name)
             })
@@ -102,9 +113,9 @@ class AccountListController: UITableViewController, AdditionDelegate {
         }
 
         //系统管理员只能删除其他非管理员用户，不能删除手机管理员，也不能转移管理员
-        if loginedAccount.level == .systemAdmin {
-            return UISwipeActionsConfiguration(actions: [deleteAction])
-        }
+//        if loginedAccount.level == .systemAdmin {
+//            return UISwipeActionsConfiguration(actions: [deleteAction])
+//        }
         return UISwipeActionsConfiguration(actions: [deleteAction, transferAction])
     }
 

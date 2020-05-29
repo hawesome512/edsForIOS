@@ -58,7 +58,7 @@ class AlarmViewController: UIViewController {
         trendController.view.edgesToSuperview(excluding: .top)
         trendController.view.topToBottom(of: headerView)
 
-        navigationItem.rightBarButtonItem = getShareButton()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "paperplane"), style: .plain, target: self, action: #selector(sharePage))
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -74,6 +74,11 @@ class AlarmViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         //当前VC的父级vc是navigationController,必须设置如UINavigationController-Ext.swift
         return .lightContent
+    }
+    
+    @objc func sharePage(){
+        let image = QRCodeUtility.generate(with: .alarm, param: alarm!.id)
+        ShareUtility.shareImage(image: image, controller: self)
     }
 
 }

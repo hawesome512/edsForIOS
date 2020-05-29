@@ -100,7 +100,9 @@ extension EnergySegmentCell: UICollectionViewDataSource, UICollectionViewDelegat
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! DateCollectionCell
-        cell.title = dates[indexPath.row].getText()
+        if indexPath.row < dates.count {
+            cell.title = dates[indexPath.row].getText()
+        }
         return cell
     }
 

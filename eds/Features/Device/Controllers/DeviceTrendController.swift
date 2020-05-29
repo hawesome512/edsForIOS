@@ -75,26 +75,13 @@ class DeviceTrendController: UIViewController,UITableViewDataSource,UITableViewD
             guard let source = $0, let values = source.Values else {
                 return
             }
-            //处理通讯无效点
-            let doubleValues = values.map { Double($0) ?? Tag.nilValue }
             
             if isAccumulation {
-                //处理累加的情况，重点处理通讯无效点
-                var tranValues: [Double] = []
-                var tempValid = doubleValues[0]
-                //处理累加，从第1个开始[1]-[0]
-                for index in 1..<doubleValues.count {
-                    let now = doubleValues[index]
-                    if tempValid == Tag.nilValue || now == Tag.nilValue {
-                        tranValues.append(Tag.nilValue)
-                    } else {
-                        tranValues.append(now - tempValid)
-                        tempValid = now
-                    }
-                }
                 //返回累加值被处理后的值
+                let tranValues = BasicUtility.filterAccumulatedValues(values: values)
                 return result.append((source.getTagShortName(), tranValues))
             } else {
+                let doubleValues = values.map { Double($0) ?? Tag.nilValue }
                 return result.append((source.getTagShortName(), doubleValues))
             }
         }

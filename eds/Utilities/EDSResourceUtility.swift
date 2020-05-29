@@ -31,5 +31,10 @@ class EDSResourceUtility {
             }
         }
     }
+    
+    func clearResource(){
+        helpList.removeAll()
+        successfulLoadedHelpList.accept(false)
+    }
 
 }

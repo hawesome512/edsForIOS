@@ -20,12 +20,4 @@ extension UIViewController {
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
-
-    func getShareButton() -> UIBarButtonItem {
-        return UIBarButtonItem(image: UIImage(systemName: "paperplane"), style: .plain, target: self, action: #selector(sharePage))
-    }
-
-    @objc func sharePage() {
-        ShareUtility.sharePage(in: self)
-    }
 }

@@ -15,11 +15,12 @@ class DeviceUtility {
     //当设备数量不多时，默认全展开
     private let foldLimit = 10
     
-    //通过单列调取资产设备列表设备
-    private var deviceList: [Device] = []
     //单例，只允许存在一个实例
     static let sharedInstance = DeviceUtility()
-    var successfulLoaded = BehaviorRelay<Bool>(value: false)
+    
+    //通过单列调取资产设备列表设备
+    private var deviceList: [Device] = []
+    var successfulUpdated = BehaviorRelay<Bool>(value: false)
     
     private init() { }
     
@@ -39,7 +40,7 @@ class DeviceUtility {
                 if self.deviceList.count <= self.foldLimit {
                     self.deviceList.forEach { $0.collapsed = false }
                 }
-                self.successfulLoaded.accept(true)
+                self.successfulUpdated.accept(true)
                 print("TagUtility:Load project device list.")
             default:
                 break
@@ -48,20 +49,62 @@ class DeviceUtility {
     }
     
     // MARK: - DeviceList对外接口
-    func getDeviceList()->[Device]{
-        return deviceList
+    
+    func add(_ device:Device, parent: Device?){
+        parent?.addBranch(with: device.getShortID())
+        EDSService.getProvider().request(.updateDevice(device: device)) { response in
+            switch response {
+            case .success(_):
+                //成功新增后，更新新增Device的父级支路
+                guard let parent = parent else { return }
+                EDSService.getProvider().request(.updateDevice(device: parent)) { _ in }
+            default:
+                break
+            }
+        }
+        ActionUtility.sharedInstance.addAction(.addDevice, extra: device.title)
+        deviceList.append(device)
+        successfulUpdated.accept(true)
+    }
+    
+    func remove(_ device: Device) {
+        //设备及其支路设备
+        var modifiedDevices = [device]
+        modifiedDevices.append(contentsOf: getBranceList(device: device, visiableOnly: false))
+        modifiedDevices = modifiedDevices.map { device in
+            device.prepareForDelete()
+            return device
+        }
+        deviceList = deviceList.filter { device in !modifiedDevices.contains(device) }
+        
+        //需要修改父级支路信息
+        if let parent = getParent(of: device) {
+            parent.removeBranch(with: device.getShortID())
+            modifiedDevices.append(parent)
+        }
+        modifiedDevices.forEach({ device in
+            EDSService.getProvider().request(.updateDevice(device: device)) { _ in }
+        })
+        
+        print("modify \(modifiedDevices.count) devices.")
+        ActionUtility.sharedInstance.addAction(.deleteDevice, extra: device.title)
+        
+        successfulUpdated.accept(true)
+    }
+    
+    func update(_ device: Device) {
+        EDSService.getProvider().request(.updateDevice(device: device)) { _ in }
+        ActionUtility.sharedInstance.addAction(.editDevice, extra: device.title)
+        //编辑设备不触发successfulUpdated.
     }
     
     func clearDeviceList(){
         deviceList.removeAll()
+        successfulUpdated.accept(false)
     }
     
-    func appendDeviceList(_ device:Device){
-        deviceList.append(device)
-    }
-    
-    func remove(devices: [Device]) {
-        deviceList = deviceList.filter { device in !devices.contains(device) }
+    func getDeviceList()->[Device]{
+        return deviceList
     }
     
     func getDevice(of shortID: String) -> Device? {
@@ -79,7 +122,7 @@ class DeviceUtility {
     func getProjDeviceList(visiableOnly: Bool = true, sources: [Device]? = nil) -> [Device] {
         var result: [Device] = []
         let devices = (sources == nil || sources!.count == 0) ? deviceList : sources!
-        if devices.count==0,!successfulLoaded.value {
+        if devices.count==0,!successfulUpdated.value {
             //登录请求时加载数据失败，重新加载数据(排除工程中本来没有设备的情况）
             loadProjectDeviceList()
         }else{
@@ -115,10 +158,8 @@ class DeviceUtility {
     
     static func setImage(in imageView: UIImageView, with device: Device) {
         if !device.image.isEmpty {
-            imageView.kf.setImage(with: device.image.getEDSServletImageUrl(),
-                                  placeholder: device.getDefaultImage(),
-                                  completionHandler: { _ in
-                                    imageView.contentMode = .scaleAspectFill
+            imageView.kf.setImage(with: device.image.getEDSServletImageUrl(),placeholder: device.getDefaultImage(),completionHandler: { _ in
+                imageView.contentMode = .scaleAspectFill
             })
         } else {
             imageView.image = device.getDefaultImage()

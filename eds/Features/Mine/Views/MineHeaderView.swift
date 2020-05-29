@@ -167,19 +167,18 @@ class MineHeaderView: UIView, UITextFieldDelegate {
         let profileAction = UIAlertAction(title: profile, style: .default, handler: { _ in
             let pickerVC = ControllerUtility.generateImagePicker(maxCount: 1)
             pickerVC.didFinishPicking(completion: { [unowned pickerVC] items, _ in
-                if let photo = items.singlePhoto?.image {
-                    self.profileImage.image = photo
-                    let imageID = AccountUtility.sharedInstance.generateImageID()
-                    EDSService.getProvider().request(.upload(data: photo.pngData()!, fileName: imageID)) { response in
-                        switch(response) {
-                        case .success:
-                            //上传头像成功
-                            self.loginedPhone?.photo = imageID
-                            AccountUtility.sharedInstance.updatePhone()
-                            ActionUtility.sharedInstance.addAction(.editPerson)
-                        default:
-                            break
-                        }
+                guard let photo = items.singlePhoto?.image else { return }
+                self.profileImage.image = photo
+                let imageID = AccountUtility.sharedInstance.generateImageID()
+                EDSService.getProvider().request(.upload(data: photo.pngData()!, fileName: imageID)) { response in
+                    switch(response) {
+                    case .success:
+                        //上传头像成功
+                        self.loginedPhone?.photo = imageID
+                        AccountUtility.sharedInstance.updatePhone()
+                        ActionUtility.sharedInstance.addAction(.editPerson)
+                    default:
+                        break
                     }
                 }
                 pickerVC.dismiss(animated: true, completion: nil) })
@@ -190,12 +189,11 @@ class MineHeaderView: UIView, UITextFieldDelegate {
         let nameAction = UIAlertAction(title: username, style: .default, handler: { _ in
             let editVC = ControllerUtility.generateInputAlertController(title: username, placeholder: self.loginedPhone?.name, delegate: self)
             let confirmAction = UIAlertAction(title: confirm, style: .default, handler: { _ in
-                if let newValue = editVC.textFields?.first?.text, !newValue.isEmpty {
-                    self.loginedPhone?.name = newValue
-                    self.nameLabel.text = newValue
-                    AccountUtility.sharedInstance.updatePhone()
-                    ActionUtility.sharedInstance.addAction(.editPerson)
-                }
+                guard let newValue = editVC.textFields?.first?.text, !newValue.isEmpty else { return }
+                self.loginedPhone?.name = newValue
+                self.nameLabel.text = newValue
+                AccountUtility.sharedInstance.updatePhone()
+                ActionUtility.sharedInstance.addAction(.editPerson)
             })
             editVC.addAction(confirmAction)
             self.parentVC?.present(editVC, animated: true, completion: nil)
@@ -205,12 +203,11 @@ class MineHeaderView: UIView, UITextFieldDelegate {
         let phoneAction = UIAlertAction(title: phone, style: .default, handler: { _ in
             let editVC = ControllerUtility.generateInputAlertController(title: phone, placeholder: self.loginedPhone?.number, delegate: self)
             let confirmAction = UIAlertAction(title: confirm, style: .default, handler: { _ in
-                if let newValue = editVC.textFields?.first?.text, !newValue.isEmpty {
-                    self.loginedPhone?.number = newValue
-                    self.phoneLabel.text = newValue
-                    AccountUtility.sharedInstance.updatePhone()
-                    ActionUtility.sharedInstance.addAction(.editPerson)
-                }
+                guard let newValue = editVC.textFields?.first?.text, !newValue.isEmpty else { return }
+                self.loginedPhone?.number = newValue
+                self.phoneLabel.text = newValue
+                AccountUtility.sharedInstance.updatePhone()
+                ActionUtility.sharedInstance.addAction(.editPerson)
             })
             editVC.addAction(confirmAction)
             self.parentVC?.present(editVC, animated: true, completion: nil)
@@ -220,12 +217,11 @@ class MineHeaderView: UIView, UITextFieldDelegate {
         let emailAction = UIAlertAction(title: email, style: .default, handler: { _ in
             let editVC = ControllerUtility.generateInputAlertController(title: email, placeholder: self.loginedPhone?.email, delegate: self)
             let confirmAction = UIAlertAction(title: confirm, style: .default, handler: { _ in
-                if let newValue = editVC.textFields?.first?.text, !newValue.isEmpty {
-                    self.loginedPhone?.email = newValue
-                    self.emailLabel.text = newValue
-                    AccountUtility.sharedInstance.updatePhone()
-                    ActionUtility.sharedInstance.addAction(.editPerson)
-                }
+                guard let newValue = editVC.textFields?.first?.text, !newValue.isEmpty else { return }
+                self.loginedPhone?.email = newValue
+                self.emailLabel.text = newValue
+                AccountUtility.sharedInstance.updatePhone()
+                ActionUtility.sharedInstance.addAction(.editPerson)
             })
             editVC.addAction(confirmAction)
             self.parentVC?.present(editVC, animated: true, completion: nil)

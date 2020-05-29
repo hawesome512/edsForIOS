@@ -33,7 +33,7 @@ class WorkorderCell: UITableViewCell {
                 typeLabel.backgroundColor = workorder.type.getColor()
                 deviceLabel.text = workorder.location
                 timeLabel.text = workorder.getShortTimeRange()
-                let state = workorder.getTimeState()
+                let state = workorder.getFlowTimeLine().getState()
                 stateImageView.image = state.icon
                 stateImageView.tintColor = state.color
                 workerLabel.text = workorder.worker.separateNameAndPhone().name

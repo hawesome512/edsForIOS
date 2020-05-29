@@ -34,7 +34,7 @@ class HomeRatioView: UIView {
     private func initViews() {
 
         valueLabel.text = "0%"
-        valueLabel.font = UIFont.preferredFont(forTextStyle: .largeTitle)
+        valueLabel.font = UIFont.preferredFont(forTextStyle: .title1)
         valueLabel.textColor = .white
         valueLabel.adjustsFontSizeToFitWidth = true
         addSubview(valueLabel)

@@ -78,6 +78,11 @@
 		462E0DFF2452B25F00A2F17E /* NoticeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462E0DFE2452B25F00A2F17E /* NoticeController.swift */; };
 		462E0E012452B3A300A2F17E /* NoticeMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462E0E002452B3A300A2F17E /* NoticeMessageCell.swift */; };
 		462E0E032452B73500A2F17E /* NoticeAdditionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462E0E022452B73500A2F17E /* NoticeAdditionCell.swift */; };
+		4663A687247E033D00985BD4 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4663A686247E033D00985BD4 /* DataController.swift */; };
+		4663A689247E3C7400985BD4 /* AuthorityInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4663A688247E3C7400985BD4 /* AuthorityInfoController.swift */; };
+		4663A68B247E4D5C00985BD4 /* UIScrollView-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4663A68A247E4D5C00985BD4 /* UIScrollView-Ext.swift */; };
+		4663A68F247F540300985BD4 /* CardItemButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4663A68E247F540300985BD4 /* CardItemButton.swift */; };
+		4663A691247F66E400985BD4 /* HomeAlarmCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4663A690247F66E400985BD4 /* HomeAlarmCell.swift */; };
 		4670902C23D3FD1E008777ED /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4670902B23D3FD1E008777ED /* Device.swift */; };
 		4670902E23D430B8008777ED /* DeviceUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4670902D23D430B8008777ED /* DeviceUtility.swift */; };
 		468BC3C423823738008BD62C /* MQTTService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468BC3C323823738008BD62C /* MQTTService.swift */; };
@@ -258,6 +263,11 @@
 		462E0DFE2452B25F00A2F17E /* NoticeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeController.swift; sourceTree = "<group>"; };
 		462E0E002452B3A300A2F17E /* NoticeMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeMessageCell.swift; sourceTree = "<group>"; };
 		462E0E022452B73500A2F17E /* NoticeAdditionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeAdditionCell.swift; sourceTree = "<group>"; };
+		4663A686247E033D00985BD4 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		4663A688247E3C7400985BD4 /* AuthorityInfoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorityInfoController.swift; sourceTree = "<group>"; };
+		4663A68A247E4D5C00985BD4 /* UIScrollView-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView-Ext.swift"; sourceTree = "<group>"; };
+		4663A68E247F540300985BD4 /* CardItemButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardItemButton.swift; sourceTree = "<group>"; };
+		4663A690247F66E400985BD4 /* HomeAlarmCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAlarmCell.swift; sourceTree = "<group>"; };
 		4670902B23D3FD1E008777ED /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		4670902D23D430B8008777ED /* DeviceUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceUtility.swift; sourceTree = "<group>"; };
 		468BC3C323823738008BD62C /* MQTTService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MQTTService.swift; sourceTree = "<group>"; };
@@ -400,6 +410,7 @@
 				46DF40D8242DD3D70018F961 /* UIViewController-Ext.swift */,
 				46F16194246A6D6A000BEA30 /* UIImageView-Ext.swift */,
 				46F16196246E3E51000BEA30 /* UIView-Ext.swift */,
+				4663A68A247E4D5C00985BD4 /* UIScrollView-Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -720,6 +731,7 @@
 				46FB2676243EF69C0080362C /* MineController.swift */,
 				46E9062F245FEF3800DE7AE3 /* AccountQRCodeController.swift */,
 				46EDC79124610EDB00F2F9EE /* AboutController.swift */,
+				4663A686247E033D00985BD4 /* DataController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -798,6 +810,8 @@
 				46FF9E3724441342000F5AB2 /* HomeWorkorderCell.swift */,
 				462E0E002452B3A300A2F17E /* NoticeMessageCell.swift */,
 				462E0E022452B73500A2F17E /* NoticeAdditionCell.swift */,
+				4663A68E247F540300985BD4 /* CardItemButton.swift */,
+				4663A690247F66E400985BD4 /* HomeAlarmCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -937,6 +951,7 @@
 				46036A68245A527600E59E41 /* AccountListController.swift */,
 				46036A6C245AB37700E59E41 /* AccountAdditionController.swift */,
 				46E9062D245FDEAA00DE7AE3 /* ActionListController.swift */,
+				4663A688247E3C7400985BD4 /* AuthorityInfoController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1195,9 +1210,11 @@
 				46DBA534242475A300CFA7E7 /* Account.swift in Sources */,
 				4607DC7823FCD0AD00E35015 /* AdditionTableHeaderView.swift in Sources */,
 				462E0DF3245135A200A2F17E /* BranchPickerController.swift in Sources */,
+				4663A68F247F540300985BD4 /* CardItemButton.swift in Sources */,
 				46DBA5242422081D00CFA7E7 /* WorkorderSectionType.swift in Sources */,
 				4607ACE824331F1F00C13C57 /* ShareController.swift in Sources */,
 				46FF9E462446E8C1000F5AB2 /* EnergyCellType.swift in Sources */,
+				4663A68B247E4D5C00985BD4 /* UIScrollView-Ext.swift in Sources */,
 				46E59DD22429DB7F00C67E82 /* UICollectionViewFlowLayout-Ext.swift in Sources */,
 				46E90630245FEF3800DE7AE3 /* AccountQRCodeController.swift in Sources */,
 				46FF9E3A24443E15000F5AB2 /* HomeDeviceListController.swift in Sources */,
@@ -1206,6 +1223,7 @@
 				46FF9E3E2444607F000F5AB2 /* DynamicDeviceModel.swift in Sources */,
 				46DBA52C242361E200CFA7E7 /* WorkorderInfoCell.swift in Sources */,
 				46FF9E4C2446F83C000F5AB2 /* DateCollectionCell.swift in Sources */,
+				4663A691247F66E400985BD4 /* HomeAlarmCell.swift in Sources */,
 				46FB267D244012160080362C /* HomeDeviceView.swift in Sources */,
 				460F7236236FC14500CFC7C3 /* SceneDelegate.swift in Sources */,
 				46DBA5222421E9A200CFA7E7 /* WorkorderFlow.swift in Sources */,
@@ -1222,12 +1240,14 @@
 				46B4934F240897800066863D /* FixedDeviceViewController.swift in Sources */,
 				46FF950024161B87002E36AD /* AlarmUtility.swift in Sources */,
 				46DBA51624207FB500CFA7E7 /* WorkorderTaskCell.swift in Sources */,
+				4663A689247E3C7400985BD4 /* AuthorityInfoController.swift in Sources */,
 				4621272123B19FF400105664 /* DeviceAtsStatusCell.swift in Sources */,
 				46100AA223C6D61A00C43D1A /* UIButton-Ext.swift in Sources */,
 				46EDC79424614D8400F2F9EE /* EDSResourceUtility.swift in Sources */,
 				4605D14E2372BF6A00558500 /* Date-Ext.swift in Sources */,
 				46036A6B245A549500E59E41 /* AccountCell.swift in Sources */,
 				4621271F23B19FF400105664 /* DeviceTextCell.swift in Sources */,
+				4663A687247E033D00985BD4 /* DataController.swift in Sources */,
 				46EDC7982461599700F2F9EE /* HelpCell.swift in Sources */,
 				46E59DD02429893A00C67E82 /* PhotoCollectionViewController.swift in Sources */,
 				468BC3C623824B50008BD62C /* MQTTConfig.swift in Sources */,
@@ -1443,14 +1463,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "eds/EDS云管理.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = DB24XNH42B;
 				INFOPLIST_FILE = eds/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xseec.eds;
 				PRODUCT_NAME = "EDS云管理";
 				SWIFT_VERSION = 5.0;
@@ -1465,14 +1485,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "eds/EDS云管理.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = DB24XNH42B;
 				INFOPLIST_FILE = eds/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xseec.eds;
 				PRODUCT_NAME = "EDS云管理";
 				SWIFT_VERSION = 5.0;

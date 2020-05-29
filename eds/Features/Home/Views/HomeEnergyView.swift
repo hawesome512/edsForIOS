@@ -14,7 +14,7 @@ class HomeEnergyView: UIView {
     private let valueLabel = UILabel()
     
 
-    var valueFont = UIFont.preferredFont(forTextStyle: .largeTitle)
+    var valueFont = UIFont.preferredFont(forTextStyle: .title1)
     var value: String = "0" {
         didSet {
             let attrText = NSMutableAttributedString(string: value, attributes: [
@@ -47,8 +47,11 @@ class HomeEnergyView: UIView {
         nameLabel.leadingToSuperview()
         nameLabel.centerYToSuperview()
 
+        valueLabel.adjustsFontSizeToFitWidth = true
+        valueLabel.textAlignment = .left
         addSubview(valueLabel)
         valueLabel.leadingToTrailing(of: nameLabel, offset: edsMinSpace)
+        valueLabel.trailingToSuperview()
         valueLabel.verticalToSuperview()
     }
 

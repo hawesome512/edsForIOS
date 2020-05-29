@@ -100,6 +100,8 @@
 "home_workorder" = "我的工单";
 /* home_none */
 "home_none" = "无任务";
+/* home_none_alarm */
+"home_none_alarm" = "无报警";
 /* home_notice_title */
 "home_notice_title" = "公告栏";
 /* home_notice_null */
@@ -494,6 +496,8 @@
 
 /* alarm_check */
 "alarm_check" = "排查";
+/* alarm_cancel */
+"alarm_cancel" = "取消";
 /* alarm_checked */
 "alarm_checked" = "已排查";
 /* alarm_unchecked */
@@ -553,6 +557,18 @@
 "workorder_distribution" = "%@：\r\n   你好！\r\n   你有一条待执行的工单！\r\n   工单主旨：%@\r\n   建议时间：%@\r\n   资产范围：%@\r\n   工单编号：%@\r\n\r\n请使用EDS云管理APP执行此工单，谢谢！";
 /* workorder_distribution_title */
 "workorder_distribution_title" = "EDS工单派发通知";
+/* workorder_audit_title */
+"workorder_audit_title" = "现在审核？";
+/* workorder_audit_alert */
+"workorder_audit_alert" = "审核后将关闭工单流程，不再允许执行！";
+/* workorder_save_alert */
+"workorder_save_alert" = "执行后记得保存！";
+/* workorder_planing */
+"workorder_planing" = "计划中";
+/* workorder_done */
+"workorder_done" = "已完成";
+/* workorder_overdue */
+"workorder_overdue" = "逾期";
 
 /* action_phoneLogin */
 "action_phoneLogin" = "手机快捷登录";
@@ -639,3 +655,5 @@
 "login_freeVerify" = "24小时内免验证";
 /* login_invalidQRCode */
 "login_invalidQRCode" = "不是有效的EDS临时访客码";
+/* login_requestLogin */
+"login_requestLogin" = "请先登录";

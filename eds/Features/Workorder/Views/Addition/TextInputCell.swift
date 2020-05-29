@@ -19,13 +19,13 @@ protocol TextInputCellDelegate {
 }
 
 class TextInputCell: UITableViewCell, UITextFieldDelegate {
-
+    
     var title: String? {
         didSet {
             textField.placeholder = title
         }
     }
-
+    
     //选择文本
     private let separator = ";"
     var items: [String] = [] {
@@ -48,18 +48,18 @@ class TextInputCell: UITableViewCell, UITextFieldDelegate {
     }
     var delegate: TextInputCellDelegate?
     var parentVC: UIViewController?
-
+    
     //选择日期
     var dates: [String] = []
     var datePickerDelegate: PickerDelegate?
-
+    
     let textField = HoshiTextField()
     private let disposeBag = DisposeBag()
     let dropDown = DropDown()
     private let textFont = UIFont.boldSystemFont(ofSize: 20)
-
+    
     private func initViews() {
-
+        
         textField.placeholderColor = .systemGray
         textField.placeholderFontScale = 1
         textField.borderActiveColor = edsDefaultColor
@@ -72,7 +72,7 @@ class TextInputCell: UITableViewCell, UITextFieldDelegate {
         textField.verticalToSuperview(insets: .vertical(edsMinSpace))
         textField.clearButtonMode = .unlessEditing
         textField.returnKeyType = .done
-
+        
         let appearance = DropDown.appearance()
         appearance.selectionBackgroundColor = edsDefaultColor.withAlphaComponent(0.3)
         appearance.cornerRadius = 10
@@ -87,9 +87,9 @@ class TextInputCell: UITableViewCell, UITextFieldDelegate {
             self.textField.resignFirstResponder()
             self.delegate?.itemSelected(item: item)
         }
-
+        
         textField.rx.controlEvent(.editingDidBegin).asObservable().bind(onNext: {
-
+            
             if self.dropDown.dataSource.count > 0 {
                 //文本下拉框
                 self.dropDown.show()
@@ -104,26 +104,26 @@ class TextInputCell: UITableViewCell, UITextFieldDelegate {
             }
         }).disposed(by: disposeBag)
     }
-
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         initViews()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
-
+    
     func getValue() -> String? {
         return textField.text
     }
-
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         return textField.resignFirstResponder()
     }

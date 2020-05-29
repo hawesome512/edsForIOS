@@ -17,7 +17,6 @@ class HomeController: UIViewController {
     private var headerViewTopConstraint: NSLayoutConstraint?
     
     private let tableView = UITableView()
-    private var myWorkorder: Workorder?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,9 +27,11 @@ class HomeController: UIViewController {
     private func initViews() {
         
         //此处不设置title,因title将影响tab bar item的title,在本页中它应一直保持为“首页”
-        navigationItem.title = BasicUtility.sharedInstance.getBasic()?.user
+        BasicUtility.sharedInstance.successfulLoadedBasicInfo.bind(onNext: {result in
+            self.navigationItem.title = BasicUtility.sharedInstance.getBasic()?.user
+        }).disposed(by: disposeBag)
         navigationController?.navigationBar.subviews.first?.alpha = 0
-        //        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.clear]
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.clear]
         
         let qrButton = UIBarButtonItem(image: UIImage(systemName: "qrcode.viewfinder"), style: .plain, target: self, action: #selector(scanQRCode))
         navigationItem.rightBarButtonItems = [qrButton]
@@ -49,28 +50,11 @@ class HomeController: UIViewController {
         tableView.separatorStyle = .none
         tableView.register(HomeDeviceCell.self, forCellReuseIdentifier: String(describing: HomeDeviceCell.self))
         tableView.register(HomeEnergyCell.self, forCellReuseIdentifier: String(describing: HomeEnergyCell.self))
+        tableView.register(HomeAlarmCell.self, forCellReuseIdentifier: String(describing: HomeAlarmCell.self))
         tableView.register(HomeWorkorderCell.self, forCellReuseIdentifier: String(describing: HomeWorkorderCell.self))
         view.addSubview(tableView)
         tableView.edgesToSuperview(excluding: .top)
         tableView.topToBottom(of: headerView)
-        
-        //绑定数据
-        BasicUtility.sharedInstance.successfulLoadedBasicInfo.bind(onNext: { loaded in
-            if loaded==true {
-                self.headerView.basic = BasicUtility.sharedInstance.getBasic()
-            }
-        }).disposed(by: disposeBag)
-        BasicUtility.sharedInstance.successfulLoadedEnergyData.bind(onNext: { loaded in
-            if loaded==true {
-                self.tableView.reloadRows(at: [IndexPath(row: 1, section: 0)], with: .automatic)
-            }
-        }).disposed(by: disposeBag)
-        WorkorderUtility.sharedInstance.successfulLoaded.bind(onNext: { loaded in
-            if loaded {
-                self.myWorkorder = WorkorderUtility.sharedInstance.getMyWorkorder()
-                self.tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
-            }
-        }).disposed(by: disposeBag)
     }
     
     @objc func scanQRCode() {
@@ -96,12 +80,11 @@ class HomeController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         //从其他页面返回此页面时，导航栏样式可能被更改
         updateNavigationBar()
-        headerView.basic = BasicUtility.sharedInstance.getBasic()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.navigationBar.subviews.first?.alpha = 1
-        //        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(1)]
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(1)]
     }
     
     func updateNavigationBar() {
@@ -110,9 +93,9 @@ class HomeController: UIViewController {
         }
         let maxOffset = headerView.frame.height - ViewUtility.calStatusAndNavBarHeight(in: self)
         headerView.layoutIfNeeded()
-        let alpha: CGFloat = offset / maxOffset
+        let alpha: CGFloat = -offset / maxOffset
         navigationController?.navigationBar.subviews.first?.alpha = alpha
-        //        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(alpha)]
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(alpha)]
         headerView.alpha = 1 - alpha
     }
     
@@ -120,13 +103,18 @@ class HomeController: UIViewController {
 
 extension HomeController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        //底部额外增加一行空cell
+        return 5
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 4 {
+            return 100
+        }
         let bottomHeight = tabBarController?.tabBar.bounds.height ?? 0
         let height = UIScreen.main.bounds.height * 0.7 - bottomHeight
-        return max(edsCardHeight, height / 3)
+        //最小200的高度
+        return max(200, height / 4)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -137,31 +125,24 @@ extension HomeController: UITableViewDataSource, UITableViewDelegate {
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: HomeEnergyCell.self), for: indexPath) as! HomeEnergyCell
-            cell.energyData = BasicUtility.sharedInstance.getEnergyBranch()?.energyData
+            cell.parentVC = self
+            return cell
+        case 2:
+            let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: HomeAlarmCell.self), for: indexPath) as! HomeAlarmCell
+            cell.parentVC = self
+            return cell
+        case 3:
+            let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: HomeWorkorderCell.self), for: indexPath) as! HomeWorkorderCell
+            cell.parentVC = self
             return cell
         default:
-            let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: HomeWorkorderCell.self), for: indexPath) as! HomeWorkorderCell
-            cell.workorder = myWorkorder
+            let cell = UITableViewCell()
+            cell.backgroundColor = edsDivideColor
             return cell
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.row {
-        case 1:
-            let energyVC = EnergyController()
-            //copy传递副本，在用电分析中branch.energyData会更改，不能影响EnergyUtility.energyBranch
-            energyVC.energyBranch = BasicUtility.sharedInstance.getEnergyBranch()?.copy()
-            energyVC.hidesBottomBarWhenPushed = true
-            navigationController?.pushViewController(energyVC, animated: true)
-        case 2:
-            let workorderVC = WorkorderViewController()
-            workorderVC.workorder = myWorkorder
-            workorderVC.hidesBottomBarWhenPushed = true
-            navigationController?.pushViewController(workorderVC, animated: true)
-        default:
-            break
-        }
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
@@ -187,6 +168,12 @@ extension HomeController:ScannerDelegate{
                 workorderVC.workorder=workorder
                 workorderVC.hidesBottomBarWhenPushed = true
                 navigationController?.pushViewController(workorderVC, animated: true)
+                return
+            } else if edsCode.type == .alarm, let alarm=AlarmUtility.sharedInstance.get(by: edsCode.param) {
+                let alarmVC=AlarmViewController()
+                alarmVC.alarm=alarm
+                alarmVC.hidesBottomBarWhenPushed=true
+                navigationController?.pushViewController(alarmVC, animated: true)
                 return
             }
         }

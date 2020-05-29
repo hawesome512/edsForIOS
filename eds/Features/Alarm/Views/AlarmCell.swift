@@ -18,13 +18,12 @@ class AlarmCell: UITableViewCell {
 
     var alarm: Alarm? {
         didSet {
-
             if let alarm = alarm, let device = DeviceUtility.sharedInstance.getDevice(of: alarm.device) {
                 self.device = device
                 DeviceUtility.setImage(in: deviceImage, with: device)
                 titleLabel.text = TagValueConverter.getAlarmText(with: alarm.alarm, device: device)
-                statusView.innerText = "\(alarm.confirm)".localize(with: prefixAlarm)
-                statusView.backgroundColor = alarm.confirm.getConfirmColor()
+                statusView.innerText = alarm.confirm.getText()
+                statusView.backgroundColor = alarm.confirm.getState().color
                 deviceLabel.text = device.title
                 timeLabel.text = alarm.time
             }
@@ -40,7 +39,7 @@ class AlarmCell: UITableViewCell {
         deviceImage.layer.masksToBounds = true
         deviceImage.layer.cornerRadius = 5
         deviceImage.clipsToBounds = true
-//        deviceImage.image = UIImage(named: "device_A1")
+        deviceImage.image = Device.icon
         addSubview(deviceImage)
         deviceImage.heightToSuperview(offset: -edsSpace * 2)
         deviceImage.widthToHeight(of: deviceImage)

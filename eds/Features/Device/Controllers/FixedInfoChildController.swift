@@ -164,11 +164,9 @@ class FixedInfoChildController: UITableViewController {
     }
 
     private func update() {
-        if let device = device {
-            device.setInfos(infos: deviceInfos)
-            EDSService.getProvider().request(.updateDevice(device: device)) { _ in }
-            ActionUtility.sharedInstance.addAction(.editDevice, extra: device.title)
-        }
+        guard let device = device else { return }
+        device.setInfos(infos: deviceInfos)
+        DeviceUtility.sharedInstance.update(device)
     }
 }
 

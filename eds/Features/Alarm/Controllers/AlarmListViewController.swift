@@ -19,12 +19,18 @@ class AlarmListViewController: UITableViewController {
     private let searchVC = UISearchController(searchResultsController: nil)
     private var searchAlarmList = [Alarm]()
 
-    //从设备页调整过来，只显示此设备记录
+    //从设备页跳转过来，只显示此设备记录
     var deviceFilter: String?
-
+    //从首页跳转过来，只显示已排查/未排查的记录
+    var confirmFilter: AlarmConfirm?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        initViews()
+        initData()
+    }
+    
+    private func initViews(){
         title = Alarm.description
         tableView.separatorStyle = .none
         //记录排序切换：默认（未排查，已排查）
@@ -40,18 +46,33 @@ class AlarmListViewController: UITableViewController {
         searchVC.searchResultsUpdater = self
         navigationItem.searchController = searchVC
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        alarmList = AlarmUtility.sharedInstance.getAlarmList().filter { alarm in
-            guard let filter = deviceFilter else {
-                return true
+    
+    private func initData(){
+        let deviceUpdated = DeviceUtility.sharedInstance.successfulUpdated
+        let alarmUpdated = AlarmUtility.sharedInstance.successfulUpdated
+        //报警针对的是设备，先确认设备已载入
+        Observable.combineLatest(deviceUpdated,alarmUpdated).throttle(.seconds(1), scheduler: MainScheduler.instance).bind(onNext: {(deviceResult,alarmResult) in
+            guard deviceResult,alarmResult else { return }
+            
+            self.alarmList = AlarmUtility.sharedInstance.getAlarmList().filter { alarm in
+                //设备已经被从资产列表中删除，报警记录不再显示
+                guard let _ = DeviceUtility.sharedInstance.getDevice(of: alarm.device) else {
+                    return false
+                }
+                if let filter = self.confirmFilter {
+                    return alarm.confirm == filter
+                } else if let filter = self.deviceFilter {
+                    return alarm.device == filter
+                } else {
+                    return true
+                }
             }
-            return alarm.device == filter
-        }
+            self.tableView.reloadData()
+        }).disposed(by: disposeBag)
     }
 
     // MARK: - Table view data source
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return searchVC.isActive ? searchAlarmList.count : alarmList.count
@@ -77,7 +98,7 @@ class AlarmListViewController: UITableViewController {
             self.delete(alarm, at: indexPath)
             completionHandler(true)
         }
-        let checkAction = UIContextualAction(style: .normal, title: "check".localize(with: prefixAlarm)) { _, _, completionHandler in
+        let checkAction = UIContextualAction(style: .normal, title: alarm.confirm.getToggleText()) { _, _, completionHandler in
             self.check(alarm, at: indexPath)
             completionHandler(true)
         }
@@ -91,39 +112,21 @@ class AlarmListViewController: UITableViewController {
         workorderAction.backgroundColor = .systemBlue
         workorderAction.image = Workorder.icon
 
-        //已排查Alarm不再需要二次排查
-        var actions = [deleteAction, workorderAction]
-        if alarm.confirm == .unchecked {
-            actions.insert(checkAction, at: 1)
-        }
+        let actions = [deleteAction, checkAction, workorderAction]
         return UISwipeActionsConfiguration(actions: actions)
     }
 
     private func delete(_ alarm: Alarm, at indexPath: IndexPath) {
         let deleteController = ControllerUtility.generateDeletionAlertController(with: Alarm.description)
         let deleteAction = UIAlertAction(title: "delete".localize(), style: .destructive) { _ in
-            //更新3处：本页，单例，后台
-            self.alarmList.removeAll(where: { $0.id == alarm.id })
-            AlarmUtility.sharedInstance.remove(with: alarm.id)
-            self.tableView.deleteRows(at: [indexPath], with: .fade)
-            alarm.prepareForDelete()
-            EDSService.getProvider().request(.updateAlarm(alarm: alarm)) { _ in }
-            let device = DeviceUtility.sharedInstance.getDevice(of: alarm.device)?.title ?? alarm.device
-            let log = "\(device) at \(alarm.time)"
-            ActionUtility.sharedInstance.addAction(.deleteAlarm, extra: log)
+            AlarmUtility.sharedInstance.remove(alarm)
         }
         deleteController.addAction(deleteAction)
         present(deleteController, animated: true, completion: nil)
     }
 
     private func check(_ alarm: Alarm, at indexPath: IndexPath) {
-        alarm.confirm = .checked
-        AlarmUtility.sharedInstance.check(with: alarm.id)
-        tableView.reloadRows(at: [indexPath], with: .automatic)
-        EDSService.getProvider().request(.updateAlarm(alarm: alarm)) { _ in }
-        let device = DeviceUtility.sharedInstance.getDevice(of: alarm.device)?.title ?? alarm.device
-        let log = "\(device) at \(alarm.time)"
-        ActionUtility.sharedInstance.addAction(.checkAlarm, extra: log)
+        AlarmUtility.sharedInstance.check(alarm)
     }
 
     private func workorder(_ alarm: Alarm, at indexPath: IndexPath) {
@@ -162,7 +165,8 @@ class AlarmListViewController: UITableViewController {
         let alarmVC = AlarmViewController()
         alarmVC.alarm = searchVC.isActive ? searchAlarmList[indexPath.row] : alarmList[indexPath.row]
         if let cell = tableView.cellForRow(at: indexPath) as? AlarmCell {
-            alarmVC.title = (cell.deviceLabel.text ?? "") + " " + (cell.titleLabel.text ?? "")
+            //直接传递，较少重复转化计算
+            alarmVC.title = (cell.deviceLabel.text!) + "(\(cell.titleLabel.text!))"
         }
         alarmVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(alarmVC, animated: true)
@@ -173,7 +177,6 @@ class AlarmListViewController: UITableViewController {
 
 // MARK: - 新增工单,搜索结果
 extension AlarmListViewController: WorkorderAdditionDelegate, UISearchResultsUpdating {
-
 
     /// 从异常类型和设备名称中筛选
     /// - Parameter searchController: <#searchController description#>
@@ -194,9 +197,7 @@ extension AlarmListViewController: WorkorderAdditionDelegate, UISearchResultsUpd
     func added(workorder: Workorder) {
         workorderAlarm!.report = workorder.id
         WorkorderUtility.sharedInstance.update(with: workorder)
-        AlarmUtility.sharedInstance.setWorkorder(workorderAlarm!.id, workorderID: workorder.id)
-        alarmList = AlarmUtility.sharedInstance.getAlarmList()
-        EDSService.getProvider().request(.updateAlarm(alarm: workorderAlarm!)) { _ in }
+        AlarmUtility.sharedInstance.update(workorderAlarm!)
     }
 
 

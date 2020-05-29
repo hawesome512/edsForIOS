@@ -11,12 +11,11 @@ import Moya
 import RxCocoa
 
 class WorkorderUtility {
-    //通过单列调取工单列表
-    private var workorderList: [Workorder] = []
-    //为降低一次发送的数据量，每次请求数据限定时间（1月、季度、半年或年）
     //单例，只允许存在一个实例
     static let sharedInstance = WorkorderUtility()
-    var successfulLoaded = BehaviorRelay<Bool>(value: false)
+    var successfulUpdated = BehaviorRelay<Bool>(value: false)
+    //通过单列调取工单列表
+    private var workorderList: [Workorder] = []
     
     private init() { }
     
@@ -37,19 +36,10 @@ class WorkorderUtility {
                 //按执行时间的先后排序，逆序
 //                self.workorderList = ((tempList?.filter { $0 != nil })! as! [Workorder]).sorted().reversed()
                 self.addWorkorderList(tempList)
-                self.successfulLoaded.accept(true)
-                print("WorkorderUtility:Load project workorder list in recent quarter.")
+                print("WorkorderUtility:Load project workorder list.")
             default:
                 break
             }
-        }
-    }
-    
-    func update(with workorder: Workorder) {
-        if let index = workorderList.firstIndex(where: { $0.id == workorder.id }) {
-            workorderList[index] = workorder
-        } else {
-            workorderList.insert(workorder, at: 0)
         }
     }
     
@@ -65,7 +55,25 @@ class WorkorderUtility {
         }).first
     }
     
-    func addWorkorderList(_ workorders:[Workorder?]?){
+    func getWorkorderList()->[Workorder]{
+        if workorderList.count==0,!successfulUpdated.value{
+            loadProjectWorkerorderList()
+        }
+        return workorderList
+    }
+    
+    
+    /// 分类：逾期，计划，完成
+    /// - Returns: <#description#>
+    func getClassifiedWorkorders()->Dictionary<FlowTimeLine,[Workorder]>{
+        var results:Dictionary<FlowTimeLine,[Workorder]> = [:]
+        FlowTimeLine.allCases.forEach({flow in
+            results[flow] = workorderList.filter{$0.getFlowTimeLine()==flow}
+        })
+        return results
+    }
+    
+    private func addWorkorderList(_ workorders:[Workorder?]?){
         let tempList=(workorders?.filter { $0 != nil })! as! [Workorder]
         tempList.forEach{
             if !workorderList.contains($0){
@@ -75,20 +83,28 @@ class WorkorderUtility {
         //按执行时间的先后排序，逆序
         workorderList.sort()
         workorderList.reverse()
+        successfulUpdated.accept(true)
     }
     
-    func getWorkorderList()->[Workorder]{
-        if workorderList.count==0,!successfulLoaded.value{
-            loadProjectWorkerorderList()
+    func update(with workorder: Workorder) {
+        if let index = workorderList.firstIndex(where: { $0.id == workorder.id }) {
+            workorderList[index] = workorder
+        } else {
+            workorderList.insert(workorder, at: 0)
         }
-        return workorderList
+        successfulUpdated.accept(true)
+    }
+    
+    func removeWorkorder(_ workorder:Workorder){
+        workorder.prepareDeleted()
+        EDSService.getProvider().request(.updateWorkorder(workorder: workorder)) { _ in }
+        ActionUtility.sharedInstance.addAction(.deleteWorkorder, extra: workorder.title)
+        workorderList.removeAll(where: {$0.id == workorder.id})
+        successfulUpdated.accept(true)
     }
     
     func clearWorkorderList(){
         workorderList.removeAll()
-    }
-    
-    func removeWorkorder(_ id:String){
-        workorderList.removeAll(where: {$0.id == id})
+        successfulUpdated.accept(false)
     }
 }

@@ -25,7 +25,12 @@ class FixedDeviceViewController: UIViewController, DevicePageScrollDelegate {
         super.viewDidLoad()
         fixedVC.scrollDelegate = self
         // Do any additional setup after loading the view.
-        navigationItem.rightBarButtonItem=getShareButton()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "paperplane"), style: .plain, target: self, action: #selector(sharePage))
+    }
+    
+    @objc func sharePage(){
+        let image = QRCodeUtility.generate(with: .device, param: device!.getShortID())
+        ShareUtility.shareImage(image: image, controller: self)
     }
 
     override func viewWillAppear(_ animated: Bool) {

@@ -53,6 +53,9 @@ class Workorder: HandyJSON, Comparable {
     var flow: String = ""
     //审核人
     var auditor: String = ""
+    
+    //工单的时间状态，初始化是未判定
+    private var flowTimeLine: FlowTimeLine = .none
 
     required init() {
         id = AccountUtility.sharedInstance.generateID()
@@ -70,15 +73,26 @@ class Workorder: HandyJSON, Comparable {
         return String(format: "time_range".localize(with: prefixWorkorder), startDate, endDate)
     }
 
-    func getTimeState() -> (icon: UIImage?, color: UIColor) {
+    func getFlowTimeLine() -> FlowTimeLine {
+        //从后台数据库获取时并无时间状态
+        if flowTimeLine == .none {
+            updateFlowTimeLine()
+        }
+        return flowTimeLine
+    }
+    
+    private func updateFlowTimeLine(){
+        //工单状态改变时需及时更新时间状态
         if state.rawValue >= WorkorderState.executed.rawValue {
-            return (UIImage(systemName: "checkmark.circle.fill"), .systemGreen)
+            flowTimeLine = .done//(UIImage(systemName: "checkmark.circle.fill"), .systemGreen)
+            return
         }
         let nowTime = DateInRegion(Date(), region: .current)
         if let endTime = end.toDate(nil, region: .current), nowTime > endTime {
-            return (UIImage(systemName: "bell.circle.fill"), .systemRed)
+            flowTimeLine = .overdue//(UIImage(systemName: "bell.circle.fill"), .systemRed)
+            return
         }
-        return (UIImage(systemName: "clock.fill"), .systemGray)
+        flowTimeLine = .planing//(UIImage(systemName: "clock.fill"), .systemGray)
     }
 
     func getFlows() -> [WorkorderFlow] {
@@ -134,6 +148,8 @@ class Workorder: HandyJSON, Comparable {
             flow = temps.joined(separator: separator)
         }
         state = newState
+        //更新时间状态
+        updateFlowTimeLine()
     }
 
     func prepareSaved() -> Bool {

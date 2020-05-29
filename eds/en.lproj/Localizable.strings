@@ -100,6 +100,8 @@
 "home_workorder" = "My Workorder";
 /* home_none */
 "home_none" = "No task";
+/* home_none_alarm */
+"home_none_alarm" = "No alarm";
 /* home_notice_title */
 "home_notice_title" = "Notice";
 /* home_notice_null */
@@ -494,6 +496,8 @@
 
 /* alarm_check */
 "alarm_check" = "Check";
+/* alarm_cancel */
+"alarm_cancel" = "Cancel";
 /* alarm_checked */
 "alarm_checked" = "checked";
 /* alarm_unchecked */
@@ -553,6 +557,18 @@
 "workorder_distribution" = "%@：\r\n   Hello!\r\n   You have been distributed to execute a workorder!\r\n   Title：%@\r\n   Time：%@\r\n   Properties：%@\r\n   ID：%@\r\n\r\nPlease use EDS APP to do this task,Thanks!";
 /* workorder_distribution_title */
 "workorder_distribution_title" = "EDS Workorder Notice";
+/* workorder_audit_title */
+"workorder_audit_title" = "Audit Now?";
+/* workorder_audit_alert */
+"workorder_audit_alert" = "Workorder's flow will be closed after audited,and can't be executed any more.";
+/* workorder_save_alert */
+"workorder_save_alert" = "Remember to save after executed.";
+/* workorder_planing */
+"workorder_planing" = "plan";
+/* workorder_done */
+"workorder_done" = "done";
+/* workorder_overdue */
+"workorder_overdue" = "overdue";
 
 /* action_phoneLogin */
 "action_phoneLogin" = "Phone log in";
@@ -639,3 +655,5 @@
 "login_freeVerify" = "Freely login in 24h";
 /* login_invalidQRCode */
 "login_invalidQRCode" = "Invalid guest's qrcode";
+/* login_requestLogin */
+"login_requestLogin" = "Please log in first.";

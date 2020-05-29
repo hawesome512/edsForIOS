@@ -14,7 +14,7 @@ import SwiftDate
 import TextFieldEffects
 
 class LoginController: UIViewController, UITextFieldDelegate {
-
+    
     private let disposeBag = DisposeBag()
     private let rowHeight: CGFloat = 60
     private let textFont = UIFont.preferredFont(forTextStyle: .title3)
@@ -23,7 +23,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
     //24小时（1 day）内免验证登录
     private let freeVerifyDay = 1
     private let loginIndicator = UIActivityIndicatorView()
-
+    
     let topImage = UIImageView()
     let bottomImage = UIImageView()
     let codeField = HoshiTextField()
@@ -34,12 +34,12 @@ class LoginController: UIViewController, UITextFieldDelegate {
     let typeLabel = UILabel()
     let typeButton = UIButton()
     let scanButton = UIButton()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
     }
-
+    
     //默认使用手机快捷登录
     private var freeVerified = false
     private var loginType = LoginType.phoneType {
@@ -70,7 +70,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
             }
         }
     }
-
+    
     private func initViews() {
         
         loginType = .phoneType
@@ -81,7 +81,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
         view.addSubview(topImage)
         topImage.edgesToSuperview(excluding: .bottom)
         topImage.heightToSuperview(multiplier: 0.2)
-
+        
         titleLabel.textColor = .white
         titleLabel.numberOfLines = 2
         titleLabel.adjustsFontSizeToFitWidth = true
@@ -91,26 +91,26 @@ class LoginController: UIViewController, UITextFieldDelegate {
         titleLabel.centerYToSuperview()
         titleLabel.leadingToSuperview(offset: edsSpace)
         titleLabel.trailingToSuperview(offset:edsSpace)
-
+        
         bottomImage.image = UIImage(named: "login_bottom")
         bottomImage.contentMode = .scaleAspectFill
         bottomImage.alpha = traitCollection.verticalSizeClass == .compact ? 0 : 1
         view.addSubview(bottomImage)
         bottomImage.edgesToSuperview(excluding: .top)
         bottomImage.heightToSuperview(multiplier: 0.3)
-
+        
         setDefaultField(textField: codeField)
         codeField.centerYToSuperview(offset: -edsSpace)
-
+        
         setDefaultField(textField: phoneField)
         phoneField.clearButtonMode = .always
         phoneField.bottomToTop(of: codeField, offset: -edsSpace)
-
+        
         typeLabel.font = UIFont.boldSystemFont(ofSize: 20)
         view.addSubview(typeLabel)
         typeLabel.leadingToSuperview(offset: edsSpace)
         typeLabel.bottomToTop(of: phoneField, offset: -edsSpace)
-
+        
         loginButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .title3)
         loginButton.titleLabel?.adjustsFontSizeToFitWidth = true
         loginButton.setTitle("login".localize(), for: .normal)
@@ -120,43 +120,43 @@ class LoginController: UIViewController, UITextFieldDelegate {
         loginButton.horizontalToSuperview(insets: .horizontal(edsSpace))
         loginButton.topToBottom(of: codeField, offset: edsSpace * 2)
         loginButton.height(rowHeight)
-
+        
         loginIndicator.style = .large
         loginIndicator.color = .systemRed
         loginIndicator.startAnimating()
         loginIndicator.alpha = 0
         view.addSubview(loginIndicator)
         loginIndicator.center(in: loginButton)
-
+        
         typeButton.setTitleColor(edsDefaultColor, for: .normal)
         view.addSubview(typeButton)
         typeButton.leading(to: loginButton)
         typeButton.topToBottom(of: loginButton, offset: edsSpace)
-
+        
         scanButton.setTitleColor(edsDefaultColor, for: .normal)
         scanButton.setTitle(LoginType.scanType.toString(), for: .normal)
         view.addSubview(scanButton)
         scanButton.topToBottom(of: loginButton, offset: edsSpace)
         scanButton.trailing(to: loginButton)
-
+        
         codeButton.backgroundColor = edsDefaultColor
         codeButton.setTitle("acquire".localize(with: prefixLogin), for: .normal)
         view.addSubview(codeButton)
         codeButton.trailing(to: codeField)
         codeButton.centerY(to: codeField, offset: edsMinSpace / 2)
         codeButton.width(to: codeField, multiplier: 1 / 3)
-
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapView))
         view.addGestureRecognizer(tapGesture)
-
+        
         prepareForLogin()
     }
-
+    
     @objc func tapView() {
         phoneField.resignFirstResponder()
         codeField.resignFirstResponder()
     }
-
+    
     private func setDefaultField(textField: HoshiTextField) {
         textField.placeholderColor = .systemGray
         textField.autocorrectionType = .no
@@ -167,30 +167,30 @@ class LoginController: UIViewController, UITextFieldDelegate {
         textField.borderStyle = .bezel
         textField.delegate = self
         textField.font = textFont
-//        textField.clearButtonMode = .whileEditing
+        //        textField.clearButtonMode = .whileEditing
         textField.returnKeyType = .done
         view.addSubview(textField)
         textField.horizontalToSuperview(insets: .horizontal(edsSpace))
         textField.height(rowHeight)
     }
-
+    
     /// 登录界面逻辑处理
     private func prepareForLogin() {
-
+        
         //输入手机号时验证是否可以免验证
         phoneField.rx.text.orEmpty.bind(onNext: { phone in
             if self.loginType == .phoneType {
                 self.checkFreeVerified()
             }
         }).disposed(by: disposeBag)
-
+        
         //切换登录类型
         typeButton.rx.tap.bind(onNext: {
             self.loginType = self.loginType.toggle()
             self.phoneField.resignFirstResponder()
             self.codeField.resignFirstResponder()
         }).disposed(by: disposeBag)
-
+        
         //请求验证码
         codeButton.rx.tap.bind(onNext: {
             //验证输入手机号码格式
@@ -211,10 +211,10 @@ class LoginController: UIViewController, UITextFieldDelegate {
             }).disposed(by: self.disposeBag)
             AccountUtility.sharedInstance.verifyCode(phoneNumber, controller: self)
         }).disposed(by: disposeBag)
-
+        
         //请求登录
         loginButton.rx.tap.bind(onNext: {
-
+            
             //手机24小时免验证
             if self.loginType == .phoneType, self.freeVerified, let authorigy = UserDefaults.standard.string(forKey: AccountUtility.authorityKey)?.fromBase64() {
                 self.startLoginAnimating()
@@ -235,7 +235,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
                 AccountUtility.sharedInstance.loadProjectAccount(username: phoneNumber, password: code, controller: self)
             }
         }).disposed(by: disposeBag)
-
+        
         //扫码登录
         scanButton.rx.tap.bind(onNext: {
             let scanVC = ScannerViewController()
@@ -243,7 +243,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
             scanVC.modalPresentationStyle = .fullScreen
             self.present(scanVC, animated: true, completion: nil)
         }).disposed(by: disposeBag)
-
+        
         //登录验证成功
         AccountUtility.sharedInstance.successfulLogined.bind(onNext: { verified in
             if verified == true {
@@ -256,7 +256,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
             }
         }).disposed(by: disposeBag)
     }
-
+    
     /// 验证是否可以使用手机免验证登录
     private func checkFreeVerified() {
         if let lastPhone = UserDefaults.standard.string(forKey: AccountUtility.phoneKey),
@@ -272,7 +272,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
             codeField.placeholder = "code".localize(with: prefixLogin)
         }
     }
-
+    
     private func startLoginAnimating() {
         UIView.animate(withDuration: 0.5, animations: {
             self.loginIndicator.alpha = 1
@@ -281,7 +281,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
             self.scanButton.alpha = 0
         })
     }
-
+    
     /// 验证成功后恢复输入界面
     private func clearInputViews() {
         phoneField.resignFirstResponder()
@@ -291,17 +291,17 @@ class LoginController: UIViewController, UITextFieldDelegate {
         typeButton.alpha = 1
         scanButton.alpha = 1
     }
-
+    
     @objc func scanQRCode() { }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.navigationBar.subviews.first?.alpha = 1
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.subviews.first?.alpha = 0
     }
-
+    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         if traitCollection.verticalSizeClass == .compact {
             topImage.alpha = 0
@@ -311,12 +311,12 @@ class LoginController: UIViewController, UITextFieldDelegate {
             bottomImage.alpha = 1
         }
     }
-
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
     }
-
-
+    
+    
     /// 第一个输入框清楚，第二个自动清空
     /// - Parameter textField: <#textField description#>
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
@@ -326,15 +326,22 @@ class LoginController: UIViewController, UITextFieldDelegate {
 }
 
 extension LoginController: ScannerDelegate {
-
+    
     func found(code: String) {
-        guard let edsCode = EDSQRCode.getCode(code), edsCode.type == .login, edsCode.checkLoginValid() else {
-            let message = "invalidQRCode".localize(with: prefixLogin)
-            ControllerUtility.presentAlertController(content: message, controller: self)
-            return
+        var message = "invalidQRCode".localize(with: prefixLogin)
+        if let edsCode = EDSQRCode.getCode(code) {
+            switch edsCode.type {
+            case .login:
+                if edsCode.checkLoginValid() {
+                    startLoginAnimating()
+                    let keys = edsCode.getKeys()
+                    AccountUtility.sharedInstance.loadProjectAccount(username: keys[0], password: keys[1], controller: self, phoneNumber: nil, isScan: true)
+                    return
+                }
+            default:
+                message = "requestLogin".localize(with: prefixLogin)
+            }
         }
-        startLoginAnimating()
-        let keys = edsCode.getKeys()
-        AccountUtility.sharedInstance.loadProjectAccount(username: keys[0], password: keys[1], controller: self, phoneNumber: nil, isScan: true)
+        ControllerUtility.presentAlertController(content: message, controller: self)
     }
 }

@@ -8,14 +8,16 @@
 
 import Foundation
 import Moya
+import RxCocoa
 
 class AlarmUtility {
     
-    private var loadSucceed=false
-    //通过单列调取报警列表
-    private var alarmList: [Alarm] = []
     //单例，只允许存在一个实例
     static let sharedInstance = AlarmUtility()
+    
+    var successfulUpdated = BehaviorRelay<Bool>(value: false)
+    //通过单列调取报警列表
+    private var alarmList: [Alarm] = []
     
     private init() { }
     
@@ -30,7 +32,6 @@ class AlarmUtility {
         EDSService.getProvider().request(.queryAlarmList(factor: factor)) { result in
             switch result {
             case .success(let response):
-                self.loadSucceed=true
                 //后台返回数据类型[alarm?]?👉[alarm]
                 let tempList = JsonUtility.getEDSServiceList(with: response.data, type: [Alarm]())
                 self.alarmList = (tempList?.filter { $0 != nil })! as! [Alarm]
@@ -39,7 +40,8 @@ class AlarmUtility {
                     return item1.confirm == .checked
                 }
                 self.alarmList.reverse()
-                print("AlarmUtility:Load project alarm list in recent quarter.")
+                self.successfulUpdated.accept(true)
+                print("AlarmUtility:Load project alarm list in the last year.")
             default:
                 break
             }
@@ -48,34 +50,55 @@ class AlarmUtility {
     
     func getAlarmList()->[Alarm]{
         //登录时更新数据失败的情况（排除工程中本来没有异常数据）
-        if alarmList.count==0,!loadSucceed {
+        if alarmList.count==0,!successfulUpdated.value {
             loadProjectAlarmList()
         }
         return alarmList
     }
     
+    func getClassifiedAlarm()->Dictionary<AlarmConfirm,[Alarm]>{
+        var result:Dictionary<AlarmConfirm,[Alarm]> = [:]
+        AlarmConfirm.allCases.forEach{confirm in
+            result[confirm] = alarmList.filter{$0.confirm == confirm}
+        }
+        return result
+    }
+    
     func clearAlarmList(){
         alarmList.removeAll()
+        successfulUpdated.accept(false)
     }
     
     func get(by id: String) -> Alarm? {
         return alarmList.first { $0.id == id }
     }
     
-    func check(with id: String) {
-        alarmList.first { $0.id == id }?.confirm = .checked
+    func check(_ alarm:Alarm) {
+        alarm.confirm.toggle()
+        EDSService.getProvider().request(.updateAlarm(alarm: alarm)) { _ in }
+        let device = DeviceUtility.sharedInstance.getDevice(of: alarm.device)?.title ?? alarm.device
+        let log = "\(device) at \(alarm.time)"
+        ActionUtility.sharedInstance.addAction(.checkAlarm, extra: log)
+        
+        successfulUpdated.accept(true)
     }
     
-    func remove(with id: String) {
-        alarmList.removeAll { $0.id == id }
+    func remove(_ alarm:Alarm) {
+        alarmList.removeAll(where: { $0.id == alarm.id })
+        alarm.prepareForDelete()
+        EDSService.getProvider().request(.updateAlarm(alarm: alarm)) { _ in }
+        let device = DeviceUtility.sharedInstance.getDevice(of: alarm.device)?.title ?? alarm.device
+        let log = "\(device) at \(alarm.time)"
+        ActionUtility.sharedInstance.addAction(.deleteAlarm, extra: log)
+        
+        successfulUpdated.accept(true)
     }
     
     
     /// 创建异常工单时更新异常信息
-    /// - Parameters:
-    ///   - id: <#id description#>
-    ///   - workorderID: <#workorderID description#>
-    func setWorkorder(_ id: String, workorderID: String) {
-        alarmList.first { $0.id == id }?.report = workorderID
+    func update(_ workorderAlarm:Alarm) {
+        EDSService.getProvider().request(.updateAlarm(alarm: workorderAlarm)) { _ in }
+        
+        successfulUpdated.accept(true)
     }
 }

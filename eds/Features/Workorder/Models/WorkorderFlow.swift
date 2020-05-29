@@ -34,13 +34,13 @@ struct WorkorderFlow {
             //下一个流程,对比当前时间和截止时间
             let nowTime = DateInRegion(Date(), region: .current)
             if let endTime = workorder.end.toDate(nil, region: .current), nowTime > endTime {
-                timeLine = .delay
+                timeLine = .overdue
             } else {
-                timeLine = .plan
+                timeLine = .planing
             }
         default:
             //计划
-            timeLine = .plan
+            timeLine = .planing
         }
     }
 
@@ -62,19 +62,26 @@ struct WorkorderFlow {
 
 
 //工单流程时效：已完成，逾期，计划
-enum FlowTimeLine {
-    case done
-    case delay
-    case plan
+enum FlowTimeLine:Int, CaseIterable {
+    case overdue=0
+    case planing=1
+    case done=2
+    case none=3
 
     func getState() -> (icon: UIImage?, color: UIColor) {
         switch self {
         case .done:
             return (UIImage(systemName: "checkmark.circle.fill"), .systemGreen)
-        case .delay:
+        case .overdue:
             return (UIImage(systemName: "bell.circle.fill"), .systemRed)
-        case .plan:
-            return (UIImage(systemName: "clock.fill"), .systemGray3)
+        case .planing:
+            return (UIImage(systemName: "clock.fill"), .systemGray)
+        default:
+            return (nil,.white)
         }
+    }
+    
+    func getText() -> String {
+        return String(describing: self).localize(with: prefixWorkorder)
     }
 }

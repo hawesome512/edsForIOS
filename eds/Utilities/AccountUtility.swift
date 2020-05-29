@@ -178,22 +178,31 @@ class AccountUtility {
         let project = account?.id.replacingOccurrences(of: "/", with: "_")
         return "\(project ?? NIL)_\(String.randomString(length: idCount))"
     }
+    
+    
+    /// 退出前清空资源
+    func clearAccount(){
+        account = nil
+        phoneList.removeAll()
+        loginedPhone = nil
+        successfulLogined.accept(nil)
+    }
 
 
     /// 退出时删除所有数据
     /// 因执行退出后将返回登录页面，必须保证二次登录时可以重新请求数据
     /// xxxUtility类中默认机制xxxList.count>0 将不再请求数据
     func prepareExitAccount() {
-        //取消订阅要在account=nil语句前
+        //取消订阅要在clearAccount()语句前
         TagUtility.sharedInstance.unsubscribeTagValues()
-        account = nil
-        phoneList.removeAll()
-        loginedPhone = nil
+        self.clearAccount()
         TagUtility.sharedInstance.clearTagList()
         DeviceUtility.sharedInstance.clearDeviceList()
         WorkorderUtility.sharedInstance.clearWorkorderList()
         AlarmUtility.sharedInstance.clearAlarmList()
         BasicUtility.sharedInstance.clearInfo()
+        ActionUtility.sharedInstance.clearAction()
+        EDSResourceUtility.sharedInstance.clearResource()
     }
 
 }

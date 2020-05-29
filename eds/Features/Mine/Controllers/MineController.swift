@@ -97,16 +97,6 @@ extension MineController: UITableViewDataSource, UITableViewDelegate {
         cell.accessoryType = .disclosureIndicator
         cell.textLabel?.text = MineSectionModel.getCellTitle(indexPath)
         cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .title3)
-        if let sectionModel = MineSectionModel(rawValue: indexPath.section) {
-            switch sectionModel {
-            case .user:
-                break
-            case .eds:
-                break
-            default:
-                break
-            }
-        }
         return cell
     }
 
@@ -122,7 +112,7 @@ extension MineController: UITableViewDataSource, UITableViewDelegate {
                     let accountListVC = AccountListController()
                     accountListVC.hidesBottomBarWhenPushed = true
                     navigationController?.pushViewController(accountListVC, animated: true)
-                } else {
+                } else if indexPath.row == 1 {
                     let qrcodeVC = AccountQRCodeController()
                     qrcodeVC.hidesBottomBarWhenPushed = true
                     navigationController?.pushViewController(qrcodeVC, animated: true)

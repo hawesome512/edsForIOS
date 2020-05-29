@@ -54,4 +54,12 @@ class ActionUtility {
         action.time = date.toDateTimeString()
         EDSService.getProvider().request(.updateAction(action: action)) { _ in }
     }
+    
+    
+    /// 退出前清空资源
+    func clearAction(){
+        actionList.removeAll()
+        successfulLoaded.accept(false)
+    }
+    
 }

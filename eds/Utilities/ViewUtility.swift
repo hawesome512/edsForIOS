@@ -13,7 +13,6 @@ import RxSwift
 
 class ViewUtility {
 
-
     /// 设置大标题
     /// - Parameters:
     ///   - vc: <#vc description#>
@@ -59,6 +58,7 @@ class ViewUtility {
         backgroundImage.addSubview(blurEffectView)
         blurEffectView.edgesToSuperview()
         container.addSubview(backgroundImage)
+        container.sendSubviewToBack(backgroundImage)
         backgroundImage.edgesToSuperview()
     }
 

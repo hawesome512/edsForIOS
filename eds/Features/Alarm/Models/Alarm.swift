@@ -41,11 +41,33 @@ class Alarm: HandyJSON, EDSDelegate {
 }
 
 //异常状态：未处理/已处理（将产生异常工单）
-enum AlarmConfirm: Int, HandyJSONEnum {
+enum AlarmConfirm: Int, HandyJSONEnum, CaseIterable {
     case unchecked = 0
     case checked = 1
 
-    func getConfirmColor() -> UIColor {
-        return self == AlarmConfirm.checked ? UIColor.systemGreen : UIColor.systemRed
+    func getState() -> (icon:UIImage?,color:UIColor) {
+        switch self {
+        case .unchecked:
+            return (UIImage(systemName: "circle"), UIColor.systemRed)
+        default:
+            return (UIImage(systemName: "checkmark.circle.fill"), UIColor.systemGreen)
+        }
+    }
+    
+    func getText() -> String{
+        return String(describing: self).localize(with: prefixAlarm)
+    }
+    
+    mutating func toggle() {
+        self = self == .unchecked ? .checked : .unchecked
+    }
+    
+    func getToggleText() -> String{
+        switch self {
+        case .unchecked:
+            return "check".localize(with: prefixAlarm)
+        default:
+            return "cancel".localize(with: prefixAlarm)
+        }
     }
 }

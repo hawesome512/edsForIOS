@@ -23,11 +23,16 @@ class Basic: HandyJSON {
     var energy: String = ""
     //公告
     var notice: String = ""
-
-    //以下属性已舍弃
+    //工程负责人，通常即为管理员，后台短信报警中心调用此信息以发送短信
     var pricipal: String = ""
+    //以下属性已舍弃
     var image: String = ""
     var alias: String = ""
 
     required init() { }
+    
+    func setPricipal(with phone:Phone){
+        let info = "\(phone.name!) \(phone.number!)"
+        pricipal = info
+    }
 }

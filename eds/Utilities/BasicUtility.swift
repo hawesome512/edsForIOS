@@ -92,9 +92,13 @@ class BasicUtility {
         return energyBranch
     }
     
+    
+    /// 退出前清空资源
     func clearInfo(){
         basic=nil
         energyBranch=nil
+        successfulLoadedBasicInfo.accept(nil)
+        successfulLoadedEnergyData.accept(nil)
     }
     
     func updateNotice(_ notice: String) {
@@ -122,6 +126,16 @@ class BasicUtility {
         updateProject()
     }
     
+    /// 变更工程负责人，通常即为手机管理员。（报警短信接收者），在转让管理员时附带执行此更新
+    /// - Parameter pricipal: <#pricipal description#>
+    func updatePricipal(_ pricipal: Phone) {
+        basic?.setPricipal(with: pricipal)
+        updateProject(saveActionLog: false)
+    }
+    
+    
+    /// 更新工程信息
+    /// - Parameter saveActionLog: false➡️调用前已保存相应操作记录
     private func updateProject(saveActionLog: Bool = true) {
         guard let basic = basic else {
             return
@@ -244,9 +258,13 @@ class BasicUtility {
         var results: [Double] = []
         //空值文本（#）转换为Float将为空值
         let floatValues: [Double?] = values.map { element in
-            let value = Double(element)
-            //某些通讯异常将保持值为0，将其作为空值处理
-            return value == 0 ? nil : value
+            if let value=Double(element){
+                //离线时value可能为-1 or
+                //-65537(A*65536+B,其中A=B=-1),后一种情况为通行网关电能变量计算点处理，2020-05-26已经被优化，但是历史数据库还有遗留
+                return value<=0 ? nil : value
+            } else {
+                return nil
+            }
         }
         for index in 1..<floatValues.count {
             let subFloatValue = floatValues.prefix(index)

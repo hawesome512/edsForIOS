@@ -24,33 +24,36 @@ class HomeHeaderView: UIView, UITextFieldDelegate {
     let noticeButton = UIButton()
     let noticeLabel = UILabel()
     var parentVC: UIViewController?
-    var basic: Basic? {
-        didSet {
-            guard let basic = self.basic else {
-                return
-            }
-            titleLabel.text = basic.user
-            if let notice = Notice.getNotice(with: basic.notice) {
-                noticeLabel.text = notice.message
-            } else {
-                noticeLabel.text = ""
-            }
-            if pickedImage == nil {
-                let imageURL = basic.banner.getEDSServletImageUrl()
-                bannerImage.kf.setImage(with: imageURL, for: .normal, placeholder: UIImage(named: "banner_default"))
-            } else {
-                bannerImage.setImage(pickedImage, for: .normal)
-            }
-        }
-    }
+    
+    private var basic:Basic?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         initViews()
+        initData()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func initData(){
+        BasicUtility.sharedInstance.successfulLoadedBasicInfo.bind(onNext: { result in
+            guard result == true, let basic = BasicUtility.sharedInstance.getBasic() else { return }
+            self.basic = basic
+            self.titleLabel.text = basic.user
+            if let notice = Notice.getNotice(with: basic.notice) {
+                self.noticeLabel.text = notice.message
+            } else {
+                self.noticeLabel.text = ""
+            }
+            if self.pickedImage == nil {
+                let imageURL = basic.banner.getEDSServletImageUrl()
+                self.bannerImage.kf.setImage(with: imageURL, for: .normal, placeholder: UIImage(named: "banner_default"))
+            } else {
+                self.bannerImage.setImage(self.pickedImage, for: .normal)
+            }
+        }).disposed(by: disposeBag)
     }
 
     private func initViews() {

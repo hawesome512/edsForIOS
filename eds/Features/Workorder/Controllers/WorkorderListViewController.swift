@@ -17,7 +17,10 @@ class WorkorderListViewController: UITableViewController, WorkorderAdditionDeleg
     var searchWorkorderList = [Workorder]()
     var searchVC = UISearchController()
 
+    //从设备页导航过来查看相应设备的工单
     var deviceFilter: String?
+    //从首页导航过来查看相应状态（逾期、计划、完成）的工单
+    var flowFilter: FlowTimeLine?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,26 +45,24 @@ class WorkorderListViewController: UITableViewController, WorkorderAdditionDeleg
         searchVC.obscuresBackgroundDuringPresentation = false
         navigationItem.searchController = searchVC
         
-        WorkorderUtility.sharedInstance.successfulLoaded.bind(onNext: {result in
-            self.workorderList = WorkorderUtility.sharedInstance.getWorkorderList()
-            self.tableView.reloadData()
+        WorkorderUtility.sharedInstance.successfulUpdated.throttle(.seconds(1), scheduler: MainScheduler.instance).bind(onNext: {result in
+            self.updateWorkorderList()
         }).disposed(by: disposeBag)
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        //从工单页面（已修改更新）返回时，刷新列表数据
+    
+    func updateWorkorderList(){
         let tempList = WorkorderUtility.sharedInstance.getWorkorderList().filter { workorder in
-            guard let filter = deviceFilter else {
+            if let filter = deviceFilter {
+                return workorder.location.contains(filter)
+            } else if let filter = flowFilter {
+                return workorder.getFlowTimeLine() == filter
+            } else {
                 return true
             }
-            return workorder.location.contains(filter)
         }
-        if tempList.count != workorderList.count{
-            workorderList=tempList
-            tableView.reloadData()
-        }
+        workorderList=tempList
+        tableView.reloadData()
     }
-
 
     // MARK: - Table view data source
 
@@ -94,8 +95,6 @@ class WorkorderListViewController: UITableViewController, WorkorderAdditionDeleg
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
-
-
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         guard AccountUtility.sharedInstance.isOperable() else {
             return nil
@@ -104,14 +103,7 @@ class WorkorderListViewController: UITableViewController, WorkorderAdditionDeleg
         let deleteAction = UIContextualAction(style: .destructive, title: "delete".localize()) { _, _, completionHandler in
             let deleteVC = ControllerUtility.generateDeletionAlertController(with: workorder.title)
             let deleteAction = UIAlertAction(title: "delete".localize(), style: .destructive) { _ in
-                let title = workorder.title
-                workorder.prepareDeleted()
-                EDSService.getProvider().request(.updateWorkorder(workorder: workorder)) { _ in }
-                self.workorderList.remove(at: indexPath.row)
-                WorkorderUtility.sharedInstance.removeWorkorder(workorder.id)
-//                WorkorderUtility.sharedInstance.workorderList = self.workorderList
-                tableView.deleteRows(at: [indexPath], with: .automatic)
-                ActionUtility.sharedInstance.addAction(.deleteWorkorder, extra: title)
+                WorkorderUtility.sharedInstance.removeWorkorder(workorder)
             }
             deleteVC.addAction(deleteAction)
             self.present(deleteVC, animated: true, completion: nil)
@@ -135,7 +127,7 @@ class WorkorderListViewController: UITableViewController, WorkorderAdditionDeleg
     func added(workorder: Workorder) {
         workorderList.insert(workorder, at: 0)
         WorkorderUtility.sharedInstance.update(with: workorder)
-        tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+//        tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
     }
 
 }
