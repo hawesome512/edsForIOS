@@ -69,6 +69,8 @@
 "addAccount" = "Add account";
 /* withoutAction */
 "withoutAction" = "No record";
+/* transfer */
+"transfer" = "Transfer";
 /* transferAccount */
 "transferAccount" = "Transfer";
 /* transferAccountAlert */

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FixedDeviceViewController: UIViewController, DevicePageScrollDelegate {
+class FixedDeviceController: UIViewController, DevicePageScrollDelegate {
 
     private let headerView = DeviceHeaderView()
     private let fixedVC = FixedInfoChildController(style: .plain)

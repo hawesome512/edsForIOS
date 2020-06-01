@@ -38,6 +38,17 @@ class NoticeAdditionCell: UITableViewCell, UITextFieldDelegate, PickerDelegate {
         addSubview(titleLabel)
         titleLabel.leadingToSuperview(offset: edsSpace)
         titleLabel.topToSuperview(offset: edsSpace)
+        
+        //用户从正在编辑的messageFiedld离开(未使用键盘上的.doneAction/完成)，点击了dateField，键盘将不会被正常关闭，使用以下方法处理
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(endEditing))
+        addGestureRecognizer(tapRecognizer)
+        messageField.rx.controlEvent(.editingDidBegin).bind(onNext: {
+            self.dateField.isUserInteractionEnabled = false
+        }).disposed(by: disposeBag)
+        messageField.rx.controlEvent(.editingDidEnd).bind(onNext: {
+            self.dateField.isUserInteractionEnabled = true
+            self.dateField.becomeFirstResponder()
+        }).disposed(by: disposeBag)
 
         messageField.placeholder = "notice_message".localize(with: prefixHome)
         messageField.clearButtonMode = .whileEditing

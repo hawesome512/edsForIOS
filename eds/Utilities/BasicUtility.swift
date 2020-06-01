@@ -17,8 +17,8 @@ class BasicUtility {
     
     private var energyBranch: EnergyBranch?
     private var basic: Basic?
-    var successfulLoadedBasicInfo = BehaviorRelay<Bool?>(value: nil)
-    var successfulLoadedEnergyData = BehaviorRelay<Bool?>(value: nil)
+    private(set) var successfulBasicInfoUpdated = BehaviorRelay<Bool?>(value: nil)
+    private(set) var successfulLoadedEnergyData = BehaviorRelay<Bool?>(value: nil)
     
     private init() { }
     
@@ -31,11 +31,11 @@ class BasicUtility {
             switch result {
             case .success(let response):
                 self.basic = JsonUtility.getEDSServiceList(with: response.data, type: [Basic]())?.first ?? nil
-                self.successfulLoadedBasicInfo.accept(true)
+                self.successfulBasicInfoUpdated.accept(true)
                 self.loadProjectEnergyData()
                 print("load project basic info")
             default:
-                self.successfulLoadedBasicInfo.accept(false)
+                self.successfulBasicInfoUpdated.accept(false)
             }
         }
     }
@@ -79,7 +79,7 @@ class BasicUtility {
     
     func getBasic()->Basic?{
         //loaded=nil正在请求数据，此时不再额外请求
-        if basic==nil,let loaded=successfulLoadedBasicInfo.value,!loaded {
+        if basic==nil,let loaded=successfulBasicInfoUpdated.value,!loaded {
             loadProjectBasicInfo()
         }
         return basic
@@ -97,7 +97,7 @@ class BasicUtility {
     func clearInfo(){
         basic=nil
         energyBranch=nil
-        successfulLoadedBasicInfo.accept(nil)
+        successfulBasicInfoUpdated.accept(nil)
         successfulLoadedEnergyData.accept(nil)
     }
     
@@ -143,13 +143,17 @@ class BasicUtility {
         EDSService.getProvider().request(.updateProject(projectInfo: basic)) { result in
             switch result {
             case .success(let response):
-                if JsonUtility.didUpdatedEDSServiceSuccess(data: response.data), saveActionLog {
+                guard JsonUtility.didUpdatedEDSServiceSuccess(data: response.data) else { return }
+                if saveActionLog {
                     ActionUtility.sharedInstance.addAction(.editHome)
+//                    self.successfulBasicInfoUpdated.accept(true)
                 }
             default:
                 break
             }
         }
+        //为保证在界面上及时看到编辑更新，不等待上传数据成功再发布通知
+        self.successfulBasicInfoUpdated.accept(true)
     }
     
     // MARK: - 用电支路
@@ -272,8 +276,11 @@ class BasicUtility {
             if let current = floatValues[index], let lastIndex = subFloatValue.lastIndex(where: { $0 != nil }) {
                 //已排除last未空的项
                 var deltaValue = current - subFloatValue[lastIndex]!
+                
                 //上面已经排除了通讯失败为0的值，若存在deltaValue为0，则出现电能被人为置零
-                deltaValue = deltaValue < 0 ? current : deltaValue
+//                deltaValue = deltaValue < 0 ? current : deltaValue
+                //无功电能可能存在负数值，所以单纯<0无法区别离线点
+                deltaValue = (deltaValue == -1 || deltaValue == -65537) ? current : deltaValue
                 let avgValue = deltaValue / Double(index - lastIndex)
                 //通讯中断的点，取这个区间的均值
                 for i in (lastIndex + 1)..<index {

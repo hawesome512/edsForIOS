@@ -15,7 +15,7 @@ import Moya
 import CallKit
 import MessageUI
 
-class WorkorderViewController: UIViewController {
+class WorkorderController: UIViewController {
     
     private var flows: [WorkorderFlow] = []
     private var tasks: [WorkorderTask] = []
@@ -151,7 +151,7 @@ class WorkorderViewController: UIViewController {
     
 }
 
-extension WorkorderViewController: UITableViewDataSource, UITableViewDelegate {
+extension WorkorderController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return WorkorderSectionType.allCases.count
     }
@@ -266,7 +266,7 @@ extension WorkorderViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 // MARK: - 更新工单
-extension WorkorderViewController {
+extension WorkorderController {
     
     func updateWorkorder() {
         guard let workorder = workorder else {
@@ -293,7 +293,7 @@ extension WorkorderViewController {
 
 
 // MARK: - 派发工单
-extension WorkorderViewController: ShareDelegate, CXCallObserverDelegate, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate {
+extension WorkorderController: ShareDelegate, CXCallObserverDelegate, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate {
     
     //派发方式选择界面：电话/短信/邮件/微信等等
     @objc func selectDistribution() {
@@ -359,7 +359,7 @@ extension WorkorderViewController: ShareDelegate, CXCallObserverDelegate, MFMess
 }
 
 //MARK: - 执行工单
-extension WorkorderViewController {
+extension WorkorderController {
     
     @objc func executeWorkorder() {
         if executing {
@@ -425,7 +425,7 @@ extension WorkorderViewController {
 }
 
 // MARK: - 审核&留言
-extension WorkorderViewController: MessageDelegate {
+extension WorkorderController: MessageDelegate {
     
     
     @objc func auditWorkorder() {

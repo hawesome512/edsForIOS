@@ -69,6 +69,8 @@
 "addAccount" = "新增成員";
 /* withoutAction */
 "withoutAction" = "尚無用戶記錄";
+/* transfer */
+"transfer" = "轉讓";
 /* transferAccount */
 "transferAccount" = "轉讓管理員";
 /* transferAccountAlert */

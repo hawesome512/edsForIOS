@@ -16,44 +16,38 @@ protocol TaskAdditionCellDelegate {
 
 class TaskAdditionCell: UITableViewCell, UITextFieldDelegate {
 
-    let textField = KaedeTextField()
+//    let textField = KaedeTextField()
     private let addButton = UIButton()
     private let disposeBag = DisposeBag()
 
     var delegate: TaskAdditionCellDelegate?
-
-    var title: String? {
-        didSet {
-            textField.placeholder = title
-        }
-    }
+    var parentVC: UIViewController?
 
     private func initViews() {
+        let title = "add_task".localize(with: prefixWorkorder)
         addButton.rx.tap.bind(onNext: {
-            self.addItem()
+            let inputVC = ControllerUtility.generateInputAlertController(title: title, placeholder: nil, delegate: self)
+            let confirmAction = UIAlertAction(title: "confirm".localize(), style: .default, handler: {_ in
+                guard let input = inputVC.textFields?.first?.text else { return }
+                self.delegate?.addItem(text: input)
+            })
+            inputVC.addAction(confirmAction)
+            self.parentVC?.present(inputVC, animated: true, completion: nil)
         }).disposed(by: disposeBag)
-        addButton.tintColor = edsDefaultColor
-        addButton.setBackgroundImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
+        addButton.contentHorizontalAlignment = .left
+        addButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: edsSpace*2, bottom: 0, right: 0)
+        addButton.setTitle(title, for: .normal)
+        addButton.setTitleColor(edsDefaultColor, for: .normal)
         addSubview(addButton)
-        addButton.width(28)
-        addButton.height(28)
-        addButton.centerYToSuperview()
-        addButton.leadingToSuperview(offset: 20)
-
-        textField.placeholderFontScale = 1
-        textField.tintColor = .white
-        textField.textColor = .white
-        textField.placeholderColor = .systemGray
-        textField.backgroundColor = edsDefaultColor
-        textField.foregroundColor = edsDivideColor
-        textField.font = UIFont.preferredFont(forTextStyle: .title3)
-        addSubview(textField)
-        textField.trailingToSuperview(offset: edsSpace)
-        textField.leadingToTrailing(of: addButton, offset: edsMinSpace)
-        textField.verticalToSuperview(insets: .vertical(0))
-        textField.clearButtonMode = .whileEditing
-        textField.returnKeyType = .done
-        textField.delegate = self
+        addButton.verticalToSuperview()
+        addButton.horizontalToSuperview(insets: .horizontal(edsSpace))
+        
+        let imageView = UIImageView(image: UIImage(systemName: "plus.circle.fill"))
+        addButton.addSubview(imageView)
+        imageView.leadingToSuperview()
+        imageView.heightToSuperview(multiplier: 2/3)
+        imageView.centerYToSuperview()
+        imageView.widthToHeight(of: imageView)
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -72,16 +66,7 @@ class TaskAdditionCell: UITableViewCell, UITextFieldDelegate {
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        addItem()
-        return true
-    }
-
-    func addItem() {
         textField.resignFirstResponder()
-        if let text = textField.text, !text.isEmpty {
-            delegate?.addItem(text: text)
-            textField.text = nil
-        }
     }
 
 }

@@ -19,9 +19,9 @@ class MainController: UITabBarController {
     fileprivate func initViews() {
         view.backgroundColor = .white
         addChildVC(child: HomeController(), title: Home.description, image: Home.icon, tag: 0)
-        addChildVC(child: DeviceListViewController(), title: Device.description, image: Device.icon, tag: 1)
-        addChildVC(child: AlarmListViewController(), title: Alarm.description, image: Alarm.icon, tag: 2)
-        addChildVC(child: WorkorderListViewController(), title: Workorder.description, image: Workorder.icon, tag: 3)
+        addChildVC(child: DeviceListController(), title: Device.description, image: Device.icon, tag: 1)
+        addChildVC(child: AlarmListController(), title: Alarm.description, image: Alarm.icon, tag: 2)
+        addChildVC(child: WorkorderListController(), title: Workorder.description, image: Workorder.icon, tag: 3)
         addChildVC(child: MineController(), title: Mine.description, image: Mine.icon, tag: 4)
 
     }

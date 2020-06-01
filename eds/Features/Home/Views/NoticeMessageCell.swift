@@ -16,29 +16,33 @@ class NoticeMessageCell: UITableViewCell {
     var parentVC: UIViewController?
     private let disposeBag = DisposeBag()
     private var notice: Notice?
-    var noticeText: String? {
-        didSet {
-            notice = Notice.getNotice(with: self.noticeText ?? "")
-            if notice == nil {
-                messageLabel.text = "notice_none".localize(with: prefixHome)
-                clearButton.alpha = 0
-                return
-            }
-            messageLabel.text = notice!.message
-            messageLabel.font = UIFont.preferredFont(forTextStyle: .headline)
-            clearButton.alpha = AccountUtility.sharedInstance.isOperable() ? 1 : 0
-        }
-    }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         initViews()
+        BasicUtility.sharedInstance.successfulBasicInfoUpdated
+            .throttle(.seconds(1), scheduler: MainScheduler.instance).bind(onNext: {result in
+            self.initData()
+        }).disposed(by: disposeBag)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    private func initData() {
+        let noticeText = BasicUtility.sharedInstance.getBasic()?.notice
+        notice = Notice.getNotice(with: noticeText ?? "")
+        if notice == nil {
+            messageLabel.text = "notice_none".localize(with: prefixHome)
+            clearButton.alpha = 0
+            return
+        }
+        messageLabel.text = notice!.message
+        messageLabel.font = UIFont.preferredFont(forTextStyle: .headline)
+        clearButton.alpha = AccountUtility.sharedInstance.isOperable() ? 1 : 0
+    }
+    
     private func initViews() {
 
         clearButton.tintColor = .systemGray
@@ -48,7 +52,7 @@ class NoticeMessageCell: UITableViewCell {
             let deleteAction = UIAlertAction(title: "delete".localize(), style: .destructive, handler: { _ in
                 BasicUtility.sharedInstance.updateNotice(NIL)
                 ActionUtility.sharedInstance.addAction(.deleteNotice)
-                self.parentVC?.navigationController?.popViewController(animated: true)
+//                self.parentVC?.navigationController?.popViewController(animated: true)
             })
             deleteVC.addAction(deleteAction)
             self.parentVC?.present(deleteVC, animated: true, completion: nil)

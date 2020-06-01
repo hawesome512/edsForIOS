@@ -10,7 +10,7 @@ import UIKit
 import Parchment
 import TinyConstraints
 
-class DynamicDeviceViewController: UIViewController, DevicePageScrollDelegate {
+class DynamicDeviceController: UIViewController, DevicePageScrollDelegate {
     
     private let headerView = DeviceHeaderView()
     private let pagingViewController = PagingViewController<IconItem>()
@@ -116,7 +116,7 @@ class DynamicDeviceViewController: UIViewController, DevicePageScrollDelegate {
 }
 
 // MARK: -Paging View Controller DataSource
-extension DynamicDeviceViewController: PagingViewControllerDataSource, PagingViewControllerDelegate {
+extension DynamicDeviceController: PagingViewControllerDataSource, PagingViewControllerDelegate {
     
     //在最后面+1静态信息页
     
@@ -128,7 +128,7 @@ extension DynamicDeviceViewController: PagingViewControllerDataSource, PagingVie
             tableVC.parentVC = self
             return tableVC
         } else {
-            let pageVC = DevicePageTableViewController()
+            let pageVC = DevicePageController()
             pageVC.set(with: pages[index], in: device!.getShortID())
             pageVC.scrollDelegate = self
             pageVC.parentVC = self

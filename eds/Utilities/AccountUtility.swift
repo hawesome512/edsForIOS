@@ -26,12 +26,12 @@ class AccountUtility {
     static let sharedInstance = AccountUtility()
 
     //当前登录工程
-    var account: Account?
+    private(set) var account: Account?
     //当前工程账户拥有的子账户列表
-    var phoneList: [Phone] = []
+    private(set) var phoneList: [Phone] = []
     //当前登录手机用户
-    var loginedPhone: Phone?
-    var successfulLogined = BehaviorRelay<Bool?>(value: nil)
+    private(set) var loginedPhone: Phone?
+    private(set) var successfulUpdated = BehaviorRelay<Bool?>(value: nil)
 
     private init() { }
 
@@ -66,7 +66,7 @@ class AccountUtility {
                 //手机快捷登录：验证成功
                 if let account = JsonUtility.getPhoneAccount(data: response.data) {
                     self.loginSucceeded(account, phoneNumber: phoneNumber)
-                    self.successfulLogined.accept(true)
+                    self.successfulUpdated.accept(true)
                     print("verify phone number and code success.")
                     ActionUtility.sharedInstance.addAction(.phoneLogin)
                     //登录成功后开始载入数据
@@ -81,7 +81,7 @@ class AccountUtility {
                 if let verifiedResult = JsonUtility.getPhoneVerifyResult(data: response.data)?.0, verifiedResult.isError() {
                     //有验证码：错误or超时，取消登录动画
                     if let _ = code {
-                        self.successfulLogined.accept(false)
+                        self.successfulUpdated.accept(false)
                     }
                     let message = String(describing: verifiedResult.self).localize(with: prefixLogin)
                     ControllerUtility.presentAlertController(content: message, controller: controller)
@@ -114,7 +114,7 @@ class AccountUtility {
 
                     let loginText = isScan ? nil : (phoneNumber ?? username)
                     self.loginSucceeded(account, phoneNumber: loginText)
-                    self.successfulLogined.accept(true)
+                    self.successfulUpdated.accept(true)
                     print("username:password login successed!")
                     //登录成功后开始载入数据
                     self.loadProjData()
@@ -126,7 +126,7 @@ class AccountUtility {
                         return
                     }
                 } else {
-                    self.successfulLogined.accept(false)
+                    self.successfulUpdated.accept(false)
                     let message = "incorrectPassword".localize(with: prefixLogin)
                     ControllerUtility.presentAlertController(content: message, controller: controller)
                 }
@@ -143,15 +143,6 @@ class AccountUtility {
         AlarmUtility.sharedInstance.loadProjectAlarmList()
         WorkorderUtility.sharedInstance.loadProjectWorkerorderList()
         BasicUtility.sharedInstance.loadProjectBasicInfo()
-    }
-
-    func updatePhone() {
-        guard let account = self.account else {
-            return
-        }
-        //排除虚拟手机管理员
-        account.setPhone(phones: phoneList.filter { $0.level != .systemAdmin })
-        EDSService.getProvider().request(.updateAccount(account: account)) { _ in }
     }
 
     func getPhone(by name: String) -> Phone? {
@@ -179,13 +170,32 @@ class AccountUtility {
         return "\(project ?? NIL)_\(String.randomString(length: idCount))"
     }
     
+    func addPhone(_ phone: Phone){
+        phoneList.append(phone)
+        updatePhone()
+    }
+    
+    func removePhone(_ phone: Phone){
+        phoneList.removeAll(where: {phone.number == $0.number})
+        updatePhone()
+    }
+
+    func updatePhone() {
+        guard let account = self.account else {
+            return
+        }
+        //排除虚拟手机管理员
+        account.setPhone(phones: phoneList.filter { $0.level != .systemAdmin })
+        EDSService.getProvider().request(.updateAccount(account: account)) { _ in }
+        successfulUpdated.accept(true)
+    }
     
     /// 退出前清空资源
     func clearAccount(){
         account = nil
         phoneList.removeAll()
         loginedPhone = nil
-        successfulLogined.accept(nil)
+        successfulUpdated.accept(nil)
     }
 
 

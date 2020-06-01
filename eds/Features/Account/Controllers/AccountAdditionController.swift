@@ -33,6 +33,8 @@ class AccountAdditionController: UITableViewController {
             return cell
         }
         textInputCells[levelIndex].items = levelItems
+        textInputCells[2].textField.keyboardType = .numberPad
+        textInputCells[3].textField.keyboardType = .emailAddress
 
         title = "addAccount".localize()
 
@@ -68,10 +70,9 @@ class AccountAdditionController: UITableViewController {
             return
         }
 
-        AccountUtility.sharedInstance.phoneList.append(phone)
-        AccountUtility.sharedInstance.updatePhone()
-        navigationController?.popViewController(animated: true)
+        AccountUtility.sharedInstance.addPhone(phone)
         ActionUtility.sharedInstance.addAction(.addAccount, extra: phone.name)
+        navigationController?.popViewController(animated: true)
     }
 
     //为了保证弹出的键盘可以被正常关闭，做如下操作：弹出确认框前取消tableView编辑状态，将关闭键盘

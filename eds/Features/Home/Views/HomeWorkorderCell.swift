@@ -86,7 +86,7 @@ class HomeWorkorderCell: UITableViewCell {
             itemButton.iconImage.image = state.icon
             itemButton.valueLabel.text = "0"
             itemButton.rx.tap.bind(onNext: {
-                let wolistVC = WorkorderListViewController()
+                let wolistVC = WorkorderListController()
                 wolistVC.flowFilter = flow
                 wolistVC.hidesBottomBarWhenPushed = true
                 self.parentVC?.navigationController?.pushViewController(wolistVC, animated: true)
@@ -131,7 +131,7 @@ class HomeWorkorderCell: UITableViewCell {
         
         // Configure the view for the selected state
         guard selected == true, let workorder = workorder else { return }
-        let workorderVC = WorkorderViewController()
+        let workorderVC = WorkorderController()
         workorderVC.workorder = workorder
         workorderVC.hidesBottomBarWhenPushed = true
         parentVC?.navigationController?.pushViewController(workorderVC, animated: true)

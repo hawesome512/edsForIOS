@@ -13,8 +13,8 @@ class EDSResourceUtility {
 
     static let sharedInstance = EDSResourceUtility()
 
-    var helpList = [Help]()
-    var successfulLoadedHelpList = BehaviorRelay<Bool>(value: false)
+    private(set) var helpList = [Help]()
+    private(set) var successfulLoadedHelpList = BehaviorRelay<Bool>(value: false)
 
     private init() { }
 

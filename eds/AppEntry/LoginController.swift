@@ -215,6 +215,12 @@ class LoginController: UIViewController, UITextFieldDelegate {
         //请求登录
         loginButton.rx.tap.bind(onNext: {
             
+            //调试用，跳过数据请求
+//            let homeVC = WorkorderAdditionController() // MainController()
+//            homeVC.modalPresentationStyle = .fullScreen
+//            self.present(homeVC, animated: true, completion: nil)
+//            return
+            
             //手机24小时免验证
             if self.loginType == .phoneType, self.freeVerified, let authorigy = UserDefaults.standard.string(forKey: AccountUtility.authorityKey)?.fromBase64() {
                 self.startLoginAnimating()
@@ -245,7 +251,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
         }).disposed(by: disposeBag)
         
         //登录验证成功
-        AccountUtility.sharedInstance.successfulLogined.bind(onNext: { verified in
+        AccountUtility.sharedInstance.successfulUpdated.throttle(.seconds(1), scheduler: MainScheduler.instance).bind(onNext: { verified in
             if verified == true {
                 let mainVC = MainController()
                 mainVC.modalPresentationStyle = .fullScreen

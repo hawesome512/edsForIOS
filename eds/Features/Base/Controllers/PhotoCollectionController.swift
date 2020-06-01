@@ -43,7 +43,7 @@ struct PhotoSource {
     }
 }
 
-class PhotoCollectionViewController: UIViewController {
+class PhotoCollectionController: UIViewController {
     
     var photoSource = PhotoSource()
     
@@ -91,7 +91,7 @@ class PhotoCollectionViewController: UIViewController {
     }
 }
 
-extension PhotoCollectionViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension PhotoCollectionController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photoSource.getTotal()

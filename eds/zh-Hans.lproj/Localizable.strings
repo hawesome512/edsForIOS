@@ -69,6 +69,8 @@
 "addAccount" = "新增成员";
 /* withoutAction */
 "withoutAction" = "尚无用户记录";
+/* transfer */
+"transfer" = "转让";
 /* transferAccount */
 "transferAccount" = "转让管理员";
 /* transferAccountAlert */
@@ -200,7 +202,7 @@
 /* value */
 "value" = "设定值";
 /* unit */
-"unit" = "单位(選填)";
+"unit" = "单位(选填)";
 /* room_addition */
 "room_addition" = "请输入新增配电房名称";
 /* box_addition */

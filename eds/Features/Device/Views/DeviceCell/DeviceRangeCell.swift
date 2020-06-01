@@ -10,6 +10,8 @@ import UIKit
 import RxSwift
 
 class DeviceRangeCell: UITableViewCell {
+    
+    var parentVC: UIViewController?
 
     // MARK: 尺寸信息
     private let lineWidth: CGFloat = 4
@@ -35,6 +37,8 @@ class DeviceRangeCell: UITableViewCell {
             updateMarker()
         }
     }
+    
+    private var rangeTag: Tag?
 
     //items里坐标值：0，10，20，30……
     private var rangeLabels: [UILabel] = []
@@ -71,6 +75,17 @@ class DeviceRangeCell: UITableViewCell {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        guard selected else {
+            return
+        }
+        let trendViewController = DeviceTrendController()
+        trendViewController.title = nameLabel.text
+        trendViewController.trend(with: [rangeTag!], condition: nil, isAccumulated: false)
+        parentVC?.navigationController?.pushViewController(trendViewController, animated: true)
     }
 
     override func draw(_ rect: CGRect) {
@@ -140,6 +155,7 @@ extension DeviceRangeCell: DevicePageItemSource {
         nameLabel.attributedText = pageItem.name.localize().formatNameAndUnit()
         if let items = pageItem.items {
             self.items = items
+            rangeTag = tags[0]
             tags[0].showValue.asObservable().throttle(.seconds(1), scheduler: MainScheduler.instance).subscribe(onNext: {
                 self.value = Float($0)
             }).disposed(by: disposeBag)

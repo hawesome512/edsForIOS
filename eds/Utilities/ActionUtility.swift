@@ -13,8 +13,8 @@ import RxCocoa
 class ActionUtility {
     
     static let sharedInstance = ActionUtility()
-    var actionList: [Action] = []
-    var successfulLoaded = BehaviorRelay<Bool>(value: false)
+    private(set) var actionList: [Action] = []
+    private(set) var successfulUpdated = BehaviorRelay<Bool>(value: false)
     
     private init () { }
     
@@ -29,7 +29,7 @@ class ActionUtility {
             case .success(let response):
                 if let temps = JsonUtility.getEDSServiceList(with: response.data, type: [Action]()) {
                     self.actionList = (temps.filter { $0 != nil } as! [Action]).reversed()
-                    self.successfulLoaded.accept(true)
+                    self.successfulUpdated.accept(true)
                     print("load proj action list.")
                 }
             default:
@@ -53,13 +53,15 @@ class ActionUtility {
         action.addAction(type, extra: extra)
         action.time = date.toDateTimeString()
         EDSService.getProvider().request(.updateAction(action: action)) { _ in }
+        actionList.insert(action, at: 0)
+        successfulUpdated.accept(true)
     }
     
     
     /// 退出前清空资源
     func clearAction(){
         actionList.removeAll()
-        successfulLoaded.accept(false)
+        successfulUpdated.accept(false)
     }
     
 }

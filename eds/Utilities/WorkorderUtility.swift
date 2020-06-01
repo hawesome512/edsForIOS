@@ -13,9 +13,9 @@ import RxCocoa
 class WorkorderUtility {
     //单例，只允许存在一个实例
     static let sharedInstance = WorkorderUtility()
-    var successfulUpdated = BehaviorRelay<Bool>(value: false)
     //通过单列调取工单列表
     private var workorderList: [Workorder] = []
+    private(set) var successfulUpdated = BehaviorRelay<Bool>(value: false)
     
     private init() { }
     

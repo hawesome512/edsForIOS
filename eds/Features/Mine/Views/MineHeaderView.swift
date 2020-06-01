@@ -25,35 +25,37 @@ class MineHeaderView: UIView, UITextFieldDelegate {
     let emailImage = UIImageView()
     let levelImage = UIImageView()
 
-    var loginedPhone: Phone? {
-        didSet {
-            guard let phone = self.loginedPhone else {
-                return
-            }
-            let profileURL = phone.photo.getEDSServletImageUrl()
-            ViewUtility.setWebImage(in: profileImage, with: profileURL, disposeBag: disposeBag,placeholder: UIImage(named: "eds"))
-            nameLabel.text = phone.name
-            levelLabel.text = phone.level.getText()
-            levelImage.image = phone.level.getIcon()?.withTintColor(.white, renderingMode: .alwaysTemplate)
-            phoneLabel.text = phone.number
-            emailLabel.text = phone.email
-            if phone.level == .systemAdmin || phone.level == .qrcodeObserver {
-                phoneLabel.alpha = 0
-                emailLabel.alpha = 0
-                phoneImage.alpha = 0
-                emailImage.alpha = 0
-            }
-        }
-    }
     var parentVC: UIViewController?
+    private var loginedPhone: Phone?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         initViews()
+        AccountUtility.sharedInstance.successfulUpdated.throttle(.seconds(1), scheduler: MainScheduler.instance).bind(onNext: {result in
+            guard result == true,let phone = AccountUtility.sharedInstance.loginedPhone else { return }
+            self.initData(phone: phone)
+        }).disposed(by: disposeBag)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func initData(phone: Phone){
+        loginedPhone = phone
+        let profileURL = phone.photo.getEDSServletImageUrl()
+        ViewUtility.setWebImage(in: profileImage, with: profileURL, disposeBag: disposeBag,placeholder: UIImage(named: "eds"))
+        nameLabel.text = phone.name
+        levelLabel.text = phone.level.getText()
+        levelImage.image = phone.level.getIcon()?.withTintColor(.white, renderingMode: .alwaysTemplate)
+        phoneLabel.text = phone.number
+        emailLabel.text = phone.email
+        if phone.level == .systemAdmin || phone.level == .qrcodeObserver {
+            phoneLabel.alpha = 0
+            emailLabel.alpha = 0
+            phoneImage.alpha = 0
+            emailImage.alpha = 0
+        }
     }
 
     private func initViews() {

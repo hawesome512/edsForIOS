@@ -10,7 +10,7 @@ import UIKit
 import Moya
 import RxSwift
 
-class DeviceListViewController: UIViewController {
+class DeviceListController: UIViewController {
     
     private let disposeBag = DisposeBag()
     private let tableView = UITableView()
@@ -40,7 +40,7 @@ class DeviceListViewController: UIViewController {
     }
     
     fileprivate func initData(){
-        DeviceUtility.sharedInstance.successfulUpdated.bind(onNext: {result in
+        DeviceUtility.sharedInstance.successfulUpdated.throttle(.seconds(1), scheduler: MainScheduler.instance).bind(onNext: {result in
             guard result else { return }
             self.deviceList = DeviceUtility.sharedInstance.getProjDeviceList()
             self.tableView.reloadData()
@@ -64,7 +64,7 @@ class DeviceListViewController: UIViewController {
     
 }
 
-extension DeviceListViewController: UITableViewDelegate, UITableViewDataSource {
+extension DeviceListController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return deviceList.count
     }
@@ -101,12 +101,12 @@ extension DeviceListViewController: UITableViewDelegate, UITableViewDataSource {
         
         let device = deviceList[indexPath.row]
         if device.level == .dynamic {
-            let dynamicVC = DynamicDeviceViewController()
+            let dynamicVC = DynamicDeviceController()
             dynamicVC.device = device
             dynamicVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(dynamicVC, animated: true)
         } else {
-            let fixedVC = FixedDeviceViewController()
+            let fixedVC = FixedDeviceController()
             fixedVC.device = device
             fixedVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(fixedVC, animated: true)
@@ -151,7 +151,7 @@ extension DeviceListViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension DeviceListViewController: AdditionDelegate {
+extension DeviceListController: AdditionDelegate {
     
     func add(inParent: Device?) {
         

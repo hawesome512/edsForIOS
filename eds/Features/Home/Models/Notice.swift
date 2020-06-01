@@ -34,7 +34,8 @@ struct Notice {
         var notice = Notice()
         notice.message = infos[0]
         notice.author = infos[2]
-        let now = DateInRegion(Date(), region: .current)
+        //公告失效时间不包含当天，所以取now为当天起始时间
+        let now = DateInRegion(Date(), region: .current).dateAtStartOf(.day)
         if let endDate = DateInRegion(infos[1], format: nil, region: .current), endDate.isAfterDate(now, granularity: .second) {
             notice.deadline = endDate.date
             return notice

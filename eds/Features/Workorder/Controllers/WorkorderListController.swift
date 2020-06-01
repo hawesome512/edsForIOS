@@ -10,7 +10,7 @@ import UIKit
 import Moya
 import RxSwift
 
-class WorkorderListViewController: UITableViewController, WorkorderAdditionDelegate {
+class WorkorderListController: UITableViewController, WorkorderAdditionDelegate {
 
     private let disposeBag = DisposeBag()
     var workorderList: [Workorder] = []
@@ -32,6 +32,7 @@ class WorkorderListViewController: UITableViewController, WorkorderAdditionDeleg
         title = Workorder.description
         navigationController?.navigationBar.prefersLargeTitles = false
         tableView.separatorStyle = .none
+        tableView.backgroundColor = edsDivideColor
         tableView.register(WorkorderCell.self, forCellReuseIdentifier: Workorder.description)
         let reverseButton = UIBarButtonItem(image: UIImage(systemName: "arrow.up.arrow.down"), style: .plain, target: self, action: #selector(reverseWorkorder))
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addWorkorder))
@@ -87,7 +88,7 @@ class WorkorderListViewController: UITableViewController, WorkorderAdditionDeleg
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let workorderVC = WorkorderViewController()
+        let workorderVC = WorkorderController()
         workorderVC.workorder = searchVC.isActive ? searchWorkorderList[indexPath.row] : workorderList[indexPath.row]
         workorderVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(workorderVC, animated: true)
@@ -113,7 +114,7 @@ class WorkorderListViewController: UITableViewController, WorkorderAdditionDeleg
     }
 
     @objc func addWorkorder() {
-        let addVC = WorkorderAdditionViewController()
+        let addVC = WorkorderAdditionController()
         addVC.delegate = self
         addVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(addVC, animated: true)
@@ -132,7 +133,7 @@ class WorkorderListViewController: UITableViewController, WorkorderAdditionDeleg
 
 }
 
-extension WorkorderListViewController: UISearchResultsUpdating {
+extension WorkorderListController: UISearchResultsUpdating {
 
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text {

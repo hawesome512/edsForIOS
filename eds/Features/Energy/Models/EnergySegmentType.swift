@@ -25,21 +25,21 @@ enum EnergySegmentType: Int, CaseIterable {
         case .day:
             //过去一个月的天数
             var start = (now - 1.months).dateAtStartOf(.day)
-            while start.isBeforeDate(now, granularity: .hour) {
+            while start.isBeforeDate(now, granularity: .second) {
                 dates.append(EnergyDateItem(start, type: self))
                 start = start + 1.days
             }
         case .month:
             //过去一年的月份
             var start = (now - 1.years).dateAtStartOf(.month)
-            while start.isBeforeDate(now, granularity: .day) {
+            while start.isBeforeDate(now, granularity: .second) {
                 dates.append(EnergyDateItem(start, type: self))
                 start = start + 1.months
             }
         case .year:
             //过去三年的年份
             var start = (now - 3.years).dateAtStartOf(.year)
-            while start.isBeforeDate(now, granularity: .month) {
+            while start.isBeforeDate(now, granularity: .second) {
                 dates.append(EnergyDateItem(start, type: self))
                 start = start + 1.years
             }

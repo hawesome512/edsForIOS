@@ -59,10 +59,12 @@ class EnergySegmentCell: UITableViewCell {
 
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.backgroundColor = edsDivideColor
         collectionView.register(DateCollectionCell.self, forCellWithReuseIdentifier: cellID)
         addSubview(collectionView)
         collectionView.edgesToSuperview(excluding: .top)
-        collectionView.height(edsHeight)
+        //适当增加高度，防止误触
+        collectionView.height(60)
         collectionView.topToBottom(of: dateSegment)
 
     }

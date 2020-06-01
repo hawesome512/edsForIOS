@@ -93,7 +93,7 @@ class DeviceListCell: UITableViewCell, PasswordVerifyDelegate {
         if authority == .verifying {
             return
         }
-        let itemMeterViewController = UIStoryboard(name: "Device", bundle: nil).instantiateViewController(withIdentifier: String(describing: DeviceItemMeterViewController.self)) as! DeviceItemMeterViewController
+        let itemMeterViewController = UIStoryboard(name: "Device", bundle: nil).instantiateViewController(withIdentifier: String(describing: ParamMeterController.self)) as! ParamMeterController
         itemMeterViewController.initViews(with: pageItem!, tag: listTag!, authority: authority)
         //导航的方式打开新vc
         parentVC?.navigationController?.pushViewController(itemMeterViewController, animated: true)

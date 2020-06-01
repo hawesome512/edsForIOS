@@ -27,7 +27,7 @@ class HomeController: UIViewController {
     private func initViews() {
         
         //此处不设置title,因title将影响tab bar item的title,在本页中它应一直保持为“首页”
-        BasicUtility.sharedInstance.successfulLoadedBasicInfo.bind(onNext: {result in
+        BasicUtility.sharedInstance.successfulBasicInfoUpdated.throttle(.seconds(1), scheduler: MainScheduler.instance).bind(onNext: {result in
             self.navigationItem.title = BasicUtility.sharedInstance.getBasic()?.user
         }).disposed(by: disposeBag)
         navigationController?.navigationBar.subviews.first?.alpha = 0
@@ -52,6 +52,7 @@ class HomeController: UIViewController {
         tableView.register(HomeEnergyCell.self, forCellReuseIdentifier: String(describing: HomeEnergyCell.self))
         tableView.register(HomeAlarmCell.self, forCellReuseIdentifier: String(describing: HomeAlarmCell.self))
         tableView.register(HomeWorkorderCell.self, forCellReuseIdentifier: String(describing: HomeWorkorderCell.self))
+        tableView.register(HomeFooterCell.self, forCellReuseIdentifier: String(describing: HomeFooterCell.self))
         view.addSubview(tableView)
         tableView.edgesToSuperview(excluding: .top)
         tableView.topToBottom(of: headerView)
@@ -108,13 +109,10 @@ extension HomeController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 4 {
-            return 100
-        }
         let bottomHeight = tabBarController?.tabBar.bounds.height ?? 0
         let height = UIScreen.main.bounds.height * 0.7 - bottomHeight
         //最小200的高度
-        return max(200, height / 4)
+        return max(180, height / 4)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -136,8 +134,7 @@ extension HomeController: UITableViewDataSource, UITableViewDelegate {
             cell.parentVC = self
             return cell
         default:
-            let cell = UITableViewCell()
-            cell.backgroundColor = edsDivideColor
+            let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: HomeFooterCell.self), for: indexPath)
             return cell
         }
     }
@@ -152,19 +149,19 @@ extension HomeController:ScannerDelegate{
         if let edsCode=EDSQRCode.getCode(code) {
             if edsCode.type == .device,let device = DeviceUtility.sharedInstance.getDevice(of: edsCode.param) {
                 if device.level == .dynamic {
-                    let dynamicVC = DynamicDeviceViewController()
+                    let dynamicVC = DynamicDeviceController()
                     dynamicVC.device = device
                     dynamicVC.hidesBottomBarWhenPushed = true
                     navigationController?.pushViewController(dynamicVC, animated: true)
                 } else {
-                    let fixedVC = FixedDeviceViewController()
+                    let fixedVC = FixedDeviceController()
                     fixedVC.device = device
                     fixedVC.hidesBottomBarWhenPushed = true
                     navigationController?.pushViewController(fixedVC, animated: true)
                 }
                 return
             } else if edsCode.type == .workorder, let workorder=WorkorderUtility.sharedInstance.get(by: edsCode.param) {
-                let workorderVC=WorkorderViewController()
+                let workorderVC=WorkorderController()
                 workorderVC.workorder=workorder
                 workorderVC.hidesBottomBarWhenPushed = true
                 navigationController?.pushViewController(workorderVC, animated: true)

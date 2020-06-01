@@ -10,7 +10,7 @@ import UIKit
 import Moya
 import RxSwift
 
-class AlarmListViewController: UITableViewController {
+class AlarmListController: UITableViewController {
 
     private var alarmList = [Alarm]()
     private let disposeBag = DisposeBag()
@@ -32,6 +32,7 @@ class AlarmListViewController: UITableViewController {
     
     private func initViews(){
         title = Alarm.description
+        tableView.backgroundColor = edsDivideColor
         tableView.separatorStyle = .none
         //记录排序切换：默认（未排查，已排查）
         let reverseButton = UIBarButtonItem()
@@ -133,7 +134,7 @@ class AlarmListViewController: UITableViewController {
         let id = alarm.report
         //已存在工单，直接打开
         if !id.isEmpty, let workorder = WorkorderUtility.sharedInstance.get(by: id) {
-            let workorderVC = WorkorderViewController()
+            let workorderVC = WorkorderController()
             workorderVC.workorder = workorder
             workorderVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(workorderVC, animated: true)
@@ -148,7 +149,7 @@ class AlarmListViewController: UITableViewController {
             }
             let message = WorkorderMessage.encode(with: alarm.id)
             workorder.setMessage([message])
-            let additionVC = WorkorderAdditionViewController()
+            let additionVC = WorkorderAdditionController()
             additionVC.workorder = workorder
             additionVC.delegate = self
             additionVC.hidesBottomBarWhenPushed = true
@@ -176,7 +177,7 @@ class AlarmListViewController: UITableViewController {
 }
 
 // MARK: - 新增工单,搜索结果
-extension AlarmListViewController: WorkorderAdditionDelegate, UISearchResultsUpdating {
+extension AlarmListController: WorkorderAdditionDelegate, UISearchResultsUpdating {
 
     /// 从异常类型和设备名称中筛选
     /// - Parameter searchController: <#searchController description#>

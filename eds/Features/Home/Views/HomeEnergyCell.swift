@@ -93,7 +93,7 @@ class HomeEnergyCell: UITableViewCell {
     }
     
     private func initData(){
-        BasicUtility.sharedInstance.successfulLoadedEnergyData.bind(onNext: { loaded in
+        BasicUtility.sharedInstance.successfulLoadedEnergyData.throttle(.seconds(1), scheduler: MainScheduler.instance).bind(onNext: { loaded in
             guard loaded==true else { return }
             guard let data = BasicUtility.sharedInstance.getEnergyBranch()?.energyData else { return }
             let currentTotal = data.getCurrentTotalValue()

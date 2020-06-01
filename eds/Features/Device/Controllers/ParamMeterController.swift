@@ -11,7 +11,7 @@ import HGCircularSlider
 import RxSwift
 import Moya
 
-class DeviceItemMeterViewController: UIViewController {
+class ParamMeterController: UIViewController {
 
     @IBOutlet weak var circularSlider: CircularSlider!
     @IBOutlet weak var titleLabel: UILabel!

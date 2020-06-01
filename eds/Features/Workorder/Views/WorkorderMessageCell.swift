@@ -70,6 +70,7 @@ class WorkorderMessageCell: UITableViewCell {
 
         levelImage.tintColor = .systemRed
         levelImage.image = UIImage(named: "manager")?.withRenderingMode(.alwaysTemplate)
+        levelImage.contentMode = .scaleAspectFit
         addSubview(levelImage)
         levelImage.width(edsSpace)
         levelImage.height(edsSpace)

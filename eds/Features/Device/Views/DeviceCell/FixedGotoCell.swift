@@ -32,7 +32,7 @@ class FixedGotoCell: UITableViewCell {
         workorderButton.setImage(Workorder.icon, for: .normal)
         workorderButton.setTitle(Workorder.description, for: .normal)
         workorderButton.rx.tap.bind(onNext: {
-            let workorderListController = WorkorderListViewController()
+            let workorderListController = WorkorderListController()
             workorderListController.deviceFilter = self.device?.title
             self.parentVC?.navigationController?.pushViewController(workorderListController, animated: true)
         }).disposed(by: disposeBag)
@@ -44,7 +44,7 @@ class FixedGotoCell: UITableViewCell {
         alarmButton.setImage(Alarm.icon, for: .normal)
         alarmButton.setTitle(Alarm.description, for: .normal)
         alarmButton.rx.tap.bind(onNext: {
-            let alarmListController = AlarmListViewController()
+            let alarmListController = AlarmListController()
             alarmListController.deviceFilter = self.device?.getShortID()
             self.parentVC?.navigationController?.pushViewController(alarmListController, animated: true)
         }).disposed(by: disposeBag)

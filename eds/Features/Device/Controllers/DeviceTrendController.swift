@@ -182,7 +182,7 @@ extension DeviceTrendController:PickerDelegate{
             intervalType = LogIntervalType.D
             interval=1
             //限制查询的资料笔数
-            records=max(delta/60/60/24,60)
+            records=min(delta/60/60/24,60)
         }
         let dataType: LogDataType = isAccumulated ? .Last : .Avg
         let logTags = tags.map { LogTag(name: $0.Name, logDataType: dataType) }

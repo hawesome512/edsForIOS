@@ -75,7 +75,7 @@ class HomeAlarmCell: UITableViewCell {
             itemButton.iconImage.image = state.icon
             itemButton.valueLabel.text = "0"
             itemButton.rx.tap.bind(onNext: {
-                let alarmsVC = AlarmListViewController()
+                let alarmsVC = AlarmListController()
                 alarmsVC.confirmFilter = confirm
                 alarmsVC.hidesBottomBarWhenPushed = true
                 self.parentVC?.navigationController?.pushViewController(alarmsVC, animated: true)

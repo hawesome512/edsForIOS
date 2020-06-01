@@ -15,9 +15,9 @@ class AlarmUtility {
     //单例，只允许存在一个实例
     static let sharedInstance = AlarmUtility()
     
-    var successfulUpdated = BehaviorRelay<Bool>(value: false)
     //通过单列调取报警列表
     private var alarmList: [Alarm] = []
+    private(set) var successfulUpdated = BehaviorRelay<Bool>(value: false)
     
     private init() { }
     

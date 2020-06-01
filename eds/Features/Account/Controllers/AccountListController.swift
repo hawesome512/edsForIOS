@@ -27,19 +27,21 @@ class AccountListController: UITableViewController, AdditionDelegate {
         tableView.register(AccountCell.self, forCellReuseIdentifier: String(describing: AccountCell.self))
 
         ActionUtility.sharedInstance.loadProjectActionList()
-        ActionUtility.sharedInstance.successfulLoaded.bind(onNext: { loaded in
-            if loaded {
-                self.tableView.reloadData()
-            }
-        }).disposed(by: disposeBag)
         navigationItem.rightBarButtonItem=UIBarButtonItem(image: UIImage(systemName: "info.circle.fill"), style: .plain, target: self, action: #selector(showAuthority))
     }
     
     private func initData(){
-        AccountUtility.sharedInstance.successfulLogined.bind(onNext: {result in
+        
+        AccountUtility.sharedInstance.successfulUpdated.throttle(.seconds(1), scheduler: MainScheduler.instance).bind(onNext: {result in
             guard result == true else { return }
             self.accountList = AccountUtility.sharedInstance.phoneList
             self.tableView.reloadData()
+        }).disposed(by: disposeBag)
+        
+        ActionUtility.sharedInstance.successfulUpdated.throttle(.seconds(1), scheduler: MainScheduler.instance).bind(onNext: { loaded in
+            if loaded {
+                self.tableView.reloadData()
+            }
         }).disposed(by: disposeBag)
     }
     
@@ -82,10 +84,7 @@ class AccountListController: UITableViewController, AdditionDelegate {
         let deleteAction = UIContextualAction(style: .destructive, title: "delete".localize()) { _, _, completionHandler in
             let deleteVC = ControllerUtility.generateDeletionAlertController(with: account.name ?? "")
             let deleteAction = UIAlertAction(title: "delete".localize(), style: .destructive, handler: { _ in
-                self.accountList.remove(at: indexPath.row)
-                AccountUtility.sharedInstance.phoneList.remove(at: indexPath.row)
-                AccountUtility.sharedInstance.updatePhone()
-                tableView.deleteRows(at: [indexPath], with: .automatic)
+                AccountUtility.sharedInstance.removePhone(account)
                 ActionUtility.sharedInstance.addAction(.deleteAccount, extra: account.name)
             })
             deleteVC.addAction(deleteAction)
@@ -96,13 +95,12 @@ class AccountListController: UITableViewController, AdditionDelegate {
         let transferAction = UIContextualAction(style: .normal, title: title) { _, _, completionHander in
             let message = "transferAccountAlert".localize()
             let transferVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            let confirmAction = UIAlertAction(title: "confirm".localize(), style: .default, handler: { _ in
+            let confirmAction = UIAlertAction(title: "transfer".localize(), style: .destructive, handler: { _ in
                 loginedAccount.level = .phoneOperator
                 account.level = .phoneAdmin
                 AccountUtility.sharedInstance.updatePhone()
                 //变更工程中的负责人（短信报警用）
                 BasicUtility.sharedInstance.updatePricipal(account)
-                tableView.reloadData()
                 ActionUtility.sharedInstance.addAction(.transferAccount, extra: account.name)
             })
             let cancelAction = UIAlertAction(title: "cancel".localize(), style: .cancel, handler: nil)

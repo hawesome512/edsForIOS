@@ -8,13 +8,15 @@
 
 import UIKit
 import Moya
+import RxSwift
 
 protocol WorkorderAdditionDelegate {
     func added(workorder: Workorder)
 }
 
-class WorkorderAdditionViewController: UITableViewController, UINavigationBarDelegate {
-
+class WorkorderAdditionController: UITableViewController, UINavigationBarDelegate {
+    
+    private let disposeBag = DisposeBag()
     //数据上传过程的指示器
     private let indicator = UIActivityIndicatorView(style: .large)
     private var doneButton: UIBarButtonItem?
@@ -101,6 +103,7 @@ class WorkorderAdditionViewController: UITableViewController, UINavigationBarDel
             return cell
         }
         setInitValues()
+        tapControl()
     }
 
     private func setInitValues() {
@@ -112,6 +115,29 @@ class WorkorderAdditionViewController: UITableViewController, UINavigationBarDel
         textInputCells[1].textField.text = workorder.type.getText()
         textInputCells[1].dropDown.selectRow(workorder.type.rawValue)
         textInputCells[2].textField.text = workorder.location
+    }
+    
+    //保证能正常的关闭键盘
+    private func tapControl(){
+        let fieldCount = textInputCells.count
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(endInputCell))
+        view.addGestureRecognizer(tapRecognizer)
+        textInputCells[0].textField.rx.controlEvent(.editingDidBegin).bind(onNext: {
+            tapRecognizer.isEnabled = true
+            (1..<fieldCount).forEach{ index in
+                self.textInputCells[index].textField.isUserInteractionEnabled = false
+            }
+        }).disposed(by: disposeBag)
+        textInputCells[0].textField.rx.controlEvent(.editingDidEnd).bind(onNext: {
+            tapRecognizer.isEnabled = false
+            (1..<fieldCount).forEach{ index in
+                self.textInputCells[index].textField.isUserInteractionEnabled = true
+            }
+        }).disposed(by: disposeBag)
+    }
+    
+    @objc func endInputCell(){
+        textInputCells[0].endEditing(true)
     }
 
     @objc func doneAction() {
@@ -145,7 +171,7 @@ class WorkorderAdditionViewController: UITableViewController, UINavigationBarDel
 }
 
 // MARK: - Workorder保存
-extension WorkorderAdditionViewController {
+extension WorkorderAdditionController {
 
     private func initWorkorder() {
 
@@ -222,7 +248,7 @@ extension WorkorderAdditionViewController {
 }
 
 // MARK: -表单实现
-extension WorkorderAdditionViewController { //:UITableViewDataSource, UITableViewDelegate {
+extension WorkorderAdditionController { //:UITableViewDataSource, UITableViewDelegate {
     override func numberOfSections(in tableView: UITableView) -> Int {
         //0:工单子项，1:任务清单列表
         return 2
@@ -234,23 +260,23 @@ extension WorkorderAdditionViewController { //:UITableViewDataSource, UITableVie
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-        guard indexPath.section != taskSection else {
-            guard indexPath.row != 0 else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: TaskAdditionCell.self), for: indexPath) as! TaskAdditionCell
-                cell.title = "add_task".localize(with: prefixWorkorder)
-                cell.delegate = self
-                return cell
-            }
-
-            let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: UITableViewCell.self), for: indexPath)
-            cell.textLabel?.text = tasks[indexPath.row - 1]
-            //左边还包含任务清单子项删除键，缩进层级
-            cell.indentationLevel = 3
-            return cell
+        
+        if indexPath.section != taskSection {
+            return textInputCells[indexPath.row]
         }
 
-        return textInputCells[indexPath.row]
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: TaskAdditionCell.self), for: indexPath) as! TaskAdditionCell
+            cell.parentVC = self
+            cell.delegate = self
+            return cell
+        }
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: UITableViewCell.self), for: indexPath)
+        cell.textLabel?.text = tasks[indexPath.row - 1]
+        //左边还包含任务清单子项删除键，缩进层级
+        cell.indentationLevel = 3
+        return cell
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -280,7 +306,7 @@ extension WorkorderAdditionViewController { //:UITableViewDataSource, UITableVie
 }
 
 // MARK: - 协议
-extension WorkorderAdditionViewController: TextInputCellDelegate, TaskAdditionCellDelegate, PickerDelegate {
+extension WorkorderAdditionController: TextInputCellDelegate, TaskAdditionCellDelegate, PickerDelegate {
 
     //取消日期选择
     func pickerCanceled() {

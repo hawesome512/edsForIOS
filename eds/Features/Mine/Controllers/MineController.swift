@@ -18,7 +18,6 @@ class MineController: UIViewController {
     //头图↕️偏移当约束
     private var headerViewTopConstraint: NSLayoutConstraint?
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -27,7 +26,6 @@ class MineController: UIViewController {
     }
 
     private func initViews() {
-        headerView.loginedPhone = AccountUtility.sharedInstance.loginedPhone
         headerView.parentVC = self
         view.addSubview(headerView)
         headerView.horizontalToSuperview()
@@ -128,7 +126,7 @@ extension MineController: UITableViewDataSource, UITableViewDelegate {
                     present(helpVC, animated: true, completion: nil)
                 } else {
                     let emailAddress = "haisheng.xu@xseec.cn"
-                    let title = "feedbackEDS".localize()
+                    let title = "EDS(iOS) "+"feedbackEDS".localize()
                     ShareUtility.sendMail(to: emailAddress, title: title, content: "", imageData: nil, in: self)
                 }
             default:

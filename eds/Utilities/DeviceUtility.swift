@@ -20,7 +20,7 @@ class DeviceUtility {
     
     //通过单列调取资产设备列表设备
     private var deviceList: [Device] = []
-    var successfulUpdated = BehaviorRelay<Bool>(value: false)
+    private(set) var successfulUpdated = BehaviorRelay<Bool>(value: false)
     
     private init() { }
     
@@ -52,6 +52,8 @@ class DeviceUtility {
     
     func add(_ device:Device, parent: Device?){
         parent?.addBranch(with: device.getShortID())
+        //将上级设备设置展开属性，新增设备能直接显示在资产树中
+        parent?.collapsed = false
         EDSService.getProvider().request(.updateDevice(device: device)) { response in
             switch response {
             case .success(_):

@@ -56,12 +56,12 @@ class HomeDeviceListController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let device = deviceList[indexPath.row]
         if device.level == .dynamic {
-            let dynamicVC = DynamicDeviceViewController()
+            let dynamicVC = DynamicDeviceController()
             dynamicVC.device = device
             dynamicVC.hidesBottomBarWhenPushed = true
             parentVC?.navigationController?.pushViewController(dynamicVC, animated: true)
         } else {
-            let fixedVC = FixedDeviceViewController()
+            let fixedVC = FixedDeviceController()
             fixedVC.device = device
             fixedVC.hidesBottomBarWhenPushed = true
             parentVC?.navigationController?.pushViewController(fixedVC, animated: true)

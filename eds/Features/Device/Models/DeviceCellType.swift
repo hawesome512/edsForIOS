@@ -80,7 +80,9 @@ enum DeviceCellType: String {
             cell.parentVC = parentVC
             return cell
         case .range:
-            return DeviceRangeCell(style: .default, reuseIdentifier: rawValue)
+            let cell = DeviceRangeCell(style: .default, reuseIdentifier: rawValue)
+            cell.parentVC = parentVC
+            return cell
         case .text:
             return DeviceTextCell(style: .default, reuseIdentifier: rawValue)
         case .list, .item:

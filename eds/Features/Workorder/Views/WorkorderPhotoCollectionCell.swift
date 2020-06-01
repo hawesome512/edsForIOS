@@ -144,7 +144,7 @@ extension WorkorderPhotoCollectionCell: UICollectionViewDataSource, UICollection
             //图集为空，点击无效
             return
         }
-        let photosVC = PhotoCollectionViewController()
+        let photosVC = PhotoCollectionController()
         photosVC.photoSource = photoSource
         photosVC.offsetIndex = executing ? indexPath.row - 1: indexPath.row
         parentVC?.navigationController?.pushViewController(photosVC, animated: true)

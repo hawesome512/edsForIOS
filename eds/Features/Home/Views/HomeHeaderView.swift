@@ -38,7 +38,7 @@ class HomeHeaderView: UIView, UITextFieldDelegate {
     }
     
     private func initData(){
-        BasicUtility.sharedInstance.successfulLoadedBasicInfo.bind(onNext: { result in
+        BasicUtility.sharedInstance.successfulBasicInfoUpdated.throttle(.seconds(1), scheduler: MainScheduler.instance).bind(onNext: { result in
             guard result == true, let basic = BasicUtility.sharedInstance.getBasic() else { return }
             self.basic = basic
             self.titleLabel.text = basic.user

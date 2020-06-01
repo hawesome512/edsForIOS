@@ -36,10 +36,11 @@
 		460F7270237113B500CFC7C3 /* StringConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460F726F237113B500CFC7C3 /* StringConst.swift */; };
 		460F727223711D8900CFC7C3 /* EDSConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460F727123711D8900CFC7C3 /* EDSConfig.swift */; };
 		46100A7823C2CCDB00C43D1A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 46100A7623C2CCDB00C43D1A /* Localizable.strings */; };
-		46100A9C23C5665300C43D1A /* DeviceItemMeterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46100A9B23C5665300C43D1A /* DeviceItemMeterViewController.swift */; };
+		46100A9C23C5665300C43D1A /* ParamMeterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46100A9B23C5665300C43D1A /* ParamMeterController.swift */; };
 		46100AA023C5AA2500C43D1A /* Device.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46100A9F23C5AA2500C43D1A /* Device.storyboard */; };
 		46100AA223C6D61A00C43D1A /* UIButton-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46100AA123C6D61A00C43D1A /* UIButton-Ext.swift */; };
-		4621271423B197A900105664 /* DeviceListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621271323B197A900105664 /* DeviceListViewController.swift */; };
+		4611720B2481F58F00094444 /* HomeFooterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4611720A2481F58F00094444 /* HomeFooterCell.swift */; };
+		4621271423B197A900105664 /* DeviceListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621271323B197A900105664 /* DeviceListController.swift */; };
 		4621271E23B19FF400105664 /* DeviceDynamicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621271523B19FF100105664 /* DeviceDynamicCell.swift */; };
 		4621271F23B19FF400105664 /* DeviceTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621271623B19FF100105664 /* DeviceTextCell.swift */; };
 		4621272023B19FF400105664 /* DeviceFixedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621271723B19FF100105664 /* DeviceFixedCell.swift */; };
@@ -51,8 +52,8 @@
 		4621272623B19FF400105664 /* DeviceBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621271D23B19FF400105664 /* DeviceBarCell.swift */; };
 		4621272823B1A71A00105664 /* DeviceCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621272723B1A71A00105664 /* DeviceCellType.swift */; };
 		4621272A23B332B500105664 /* TagValueConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621272923B332B500105664 /* TagValueConverter.swift */; };
-		4621272C23B5CDBA00105664 /* DynamicDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621272B23B5CDBA00105664 /* DynamicDeviceViewController.swift */; };
-		4621273023B5D95A00105664 /* DevicePageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621272F23B5D95A00105664 /* DevicePageTableViewController.swift */; };
+		4621272C23B5CDBA00105664 /* DynamicDeviceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621272B23B5CDBA00105664 /* DynamicDeviceController.swift */; };
+		4621273023B5D95A00105664 /* DevicePageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621272F23B5D95A00105664 /* DevicePageController.swift */; };
 		4621273223B5E8F600105664 /* CAGradientLayer-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621273123B5E8F600105664 /* CAGradientLayer-Ext.swift */; };
 		4621273423B5EA0A00105664 /* UIConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621273323B5EA0A00105664 /* UIConst.swift */; };
 		4621273623B5EF6A00105664 /* DeviceHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621273523B5EF6A00105664 /* DeviceHeaderView.swift */; };
@@ -95,9 +96,9 @@
 		46B3823B2464E20D008C9B3C /* LoginType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B3823A2464E20D008C9B3C /* LoginType.swift */; };
 		46B3823D2464F012008C9B3C /* EDSQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B3823C2464F012008C9B3C /* EDSQRCode.swift */; };
 		46B3823F246539D8008C9B3C /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B3823E246539D8008C9B3C /* ScannerViewController.swift */; };
-		46B4934F240897800066863D /* FixedDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B4934E240897800066863D /* FixedDeviceViewController.swift */; };
+		46B4934F240897800066863D /* FixedDeviceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B4934E240897800066863D /* FixedDeviceController.swift */; };
 		46B49351240899B50066863D /* FixedInfoChildController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B49350240899B50066863D /* FixedInfoChildController.swift */; };
-		46DBA50B241F55D100CFA7E7 /* WorkorderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DBA50A241F55D100CFA7E7 /* WorkorderViewController.swift */; };
+		46DBA50B241F55D100CFA7E7 /* WorkorderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DBA50A241F55D100CFA7E7 /* WorkorderController.swift */; };
 		46DBA510241F5E2300CFA7E7 /* WorkorderStateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DBA50F241F5E2300CFA7E7 /* WorkorderStateCell.swift */; };
 		46DBA5122420524200CFA7E7 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DBA5112420524200CFA7E7 /* SectionHeaderView.swift */; };
 		46DBA51424205C9300CFA7E7 /* WorkorderBasicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DBA51324205C9300CFA7E7 /* WorkorderBasicCell.swift */; };
@@ -128,13 +129,13 @@
 		46DF04AB240CAD6800E3DE65 /* InfoAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DF04AA240CAD6800E3DE65 /* InfoAlertController.swift */; };
 		46DF40CB242C46B60018F961 /* Workorder.json in Resources */ = {isa = PBXBuildFile; fileRef = 46DF40CA242C46B60018F961 /* Workorder.json */; };
 		46DF40CD242C75090018F961 /* BottomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DF40CC242C75090018F961 /* BottomViewController.swift */; };
-		46DF40CF242C7D080018F961 /* WorkorderAdditionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DF40CE242C7D080018F961 /* WorkorderAdditionViewController.swift */; };
+		46DF40CF242C7D080018F961 /* WorkorderAdditionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DF40CE242C7D080018F961 /* WorkorderAdditionController.swift */; };
 		46DF40D1242C866D0018F961 /* TextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DF40D0242C866D0018F961 /* TextInputCell.swift */; };
 		46DF40D5242DAB930018F961 /* TaskAdditionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DF40D4242DAB930018F961 /* TaskAdditionCell.swift */; };
 		46DF40D9242DD3D70018F961 /* UIViewController-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DF40D8242DD3D70018F961 /* UIViewController-Ext.swift */; };
 		46DF40DB24304A560018F961 /* DatePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DF40DA24304A560018F961 /* DatePickerController.swift */; };
 		46E0E3D02374074F00116DA2 /* String-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E0E3CF2374074F00116DA2 /* String-Ext.swift */; };
-		46E59DD02429893A00C67E82 /* PhotoCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E59DCF2429893A00C67E82 /* PhotoCollectionViewController.swift */; };
+		46E59DD02429893A00C67E82 /* PhotoCollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E59DCF2429893A00C67E82 /* PhotoCollectionController.swift */; };
 		46E59DD22429DB7F00C67E82 /* UICollectionViewFlowLayout-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E59DD12429DB7F00C67E82 /* UICollectionViewFlowLayout-Ext.swift */; };
 		46E9062A245FA67400DE7AE3 /* ActionUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E90629245FA67400DE7AE3 /* ActionUtility.swift */; };
 		46E9062C245FCA8E00DE7AE3 /* ActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E9062B245FCA8E00DE7AE3 /* ActionCell.swift */; };
@@ -165,11 +166,11 @@
 		46FB866A23BB17EA00754E88 /* Double-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FB866923BB17EA00754E88 /* Double-Ext.swift */; };
 		46FD463A2384C35500A796BC /* TagUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FD46392384C35500A796BC /* TagUtility.swift */; };
 		46FF950024161B87002E36AD /* AlarmUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FF94FF24161B87002E36AD /* AlarmUtility.swift */; };
-		46FF950224162EDF002E36AD /* AlarmListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FF950124162EDF002E36AD /* AlarmListViewController.swift */; };
+		46FF950224162EDF002E36AD /* AlarmListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FF950124162EDF002E36AD /* AlarmListController.swift */; };
 		46FF950424162F8A002E36AD /* AlarmCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FF950324162F8A002E36AD /* AlarmCell.swift */; };
 		46FF950A24171E06002E36AD /* ControllerUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FF950924171E06002E36AD /* ControllerUtility.swift */; };
 		46FF950C241772F8002E36AD /* AlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FF950B241772F8002E36AD /* AlarmViewController.swift */; };
-		46FF950E241A0AC1002E36AD /* WorkorderListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FF950D241A0AC1002E36AD /* WorkorderListViewController.swift */; };
+		46FF950E241A0AC1002E36AD /* WorkorderListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FF950D241A0AC1002E36AD /* WorkorderListController.swift */; };
 		46FF9510241A0AE9002E36AD /* WorkorderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FF950F241A0AE9002E36AD /* WorkorderCell.swift */; };
 		46FF9512241A0B1C002E36AD /* WorkorderUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FF9511241A0B1B002E36AD /* WorkorderUtility.swift */; };
 		46FF9E3824441342000F5AB2 /* HomeWorkorderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FF9E3724441342000F5AB2 /* HomeWorkorderCell.swift */; };
@@ -221,10 +222,11 @@
 		460F726D2371111100CFC7C3 /* WAService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WAService.swift; sourceTree = "<group>"; };
 		460F726F237113B500CFC7C3 /* StringConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringConst.swift; sourceTree = "<group>"; };
 		460F727123711D8900CFC7C3 /* EDSConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EDSConfig.swift; sourceTree = "<group>"; };
-		46100A9B23C5665300C43D1A /* DeviceItemMeterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceItemMeterViewController.swift; sourceTree = "<group>"; };
+		46100A9B23C5665300C43D1A /* ParamMeterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParamMeterController.swift; sourceTree = "<group>"; };
 		46100A9F23C5AA2500C43D1A /* Device.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Device.storyboard; sourceTree = "<group>"; };
 		46100AA123C6D61A00C43D1A /* UIButton-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton-Ext.swift"; sourceTree = "<group>"; };
-		4621271323B197A900105664 /* DeviceListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceListViewController.swift; sourceTree = "<group>"; };
+		4611720A2481F58F00094444 /* HomeFooterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFooterCell.swift; sourceTree = "<group>"; };
+		4621271323B197A900105664 /* DeviceListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceListController.swift; sourceTree = "<group>"; };
 		4621271523B19FF100105664 /* DeviceDynamicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceDynamicCell.swift; sourceTree = "<group>"; };
 		4621271623B19FF100105664 /* DeviceTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceTextCell.swift; sourceTree = "<group>"; };
 		4621271723B19FF100105664 /* DeviceFixedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceFixedCell.swift; sourceTree = "<group>"; };
@@ -236,8 +238,8 @@
 		4621271D23B19FF400105664 /* DeviceBarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceBarCell.swift; sourceTree = "<group>"; };
 		4621272723B1A71A00105664 /* DeviceCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCellType.swift; sourceTree = "<group>"; };
 		4621272923B332B500105664 /* TagValueConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagValueConverter.swift; sourceTree = "<group>"; };
-		4621272B23B5CDBA00105664 /* DynamicDeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicDeviceViewController.swift; sourceTree = "<group>"; };
-		4621272F23B5D95A00105664 /* DevicePageTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicePageTableViewController.swift; sourceTree = "<group>"; };
+		4621272B23B5CDBA00105664 /* DynamicDeviceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicDeviceController.swift; sourceTree = "<group>"; };
+		4621272F23B5D95A00105664 /* DevicePageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicePageController.swift; sourceTree = "<group>"; };
 		4621273123B5E8F600105664 /* CAGradientLayer-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CAGradientLayer-Ext.swift"; sourceTree = "<group>"; };
 		4621273323B5EA0A00105664 /* UIConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIConst.swift; sourceTree = "<group>"; };
 		4621273523B5EF6A00105664 /* DeviceHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceHeaderView.swift; sourceTree = "<group>"; };
@@ -280,9 +282,9 @@
 		46B3823A2464E20D008C9B3C /* LoginType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginType.swift; sourceTree = "<group>"; };
 		46B3823C2464F012008C9B3C /* EDSQRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EDSQRCode.swift; sourceTree = "<group>"; };
 		46B3823E246539D8008C9B3C /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
-		46B4934E240897800066863D /* FixedDeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedDeviceViewController.swift; sourceTree = "<group>"; };
+		46B4934E240897800066863D /* FixedDeviceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedDeviceController.swift; sourceTree = "<group>"; };
 		46B49350240899B50066863D /* FixedInfoChildController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedInfoChildController.swift; sourceTree = "<group>"; };
-		46DBA50A241F55D100CFA7E7 /* WorkorderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkorderViewController.swift; sourceTree = "<group>"; };
+		46DBA50A241F55D100CFA7E7 /* WorkorderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkorderController.swift; sourceTree = "<group>"; };
 		46DBA50F241F5E2300CFA7E7 /* WorkorderStateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkorderStateCell.swift; sourceTree = "<group>"; };
 		46DBA5112420524200CFA7E7 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		46DBA51324205C9300CFA7E7 /* WorkorderBasicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkorderBasicCell.swift; sourceTree = "<group>"; };
@@ -313,13 +315,13 @@
 		46DF04AA240CAD6800E3DE65 /* InfoAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoAlertController.swift; sourceTree = "<group>"; };
 		46DF40CA242C46B60018F961 /* Workorder.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Workorder.json; sourceTree = "<group>"; };
 		46DF40CC242C75090018F961 /* BottomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomViewController.swift; sourceTree = "<group>"; };
-		46DF40CE242C7D080018F961 /* WorkorderAdditionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkorderAdditionViewController.swift; sourceTree = "<group>"; };
+		46DF40CE242C7D080018F961 /* WorkorderAdditionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkorderAdditionController.swift; sourceTree = "<group>"; };
 		46DF40D0242C866D0018F961 /* TextInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputCell.swift; sourceTree = "<group>"; };
 		46DF40D4242DAB930018F961 /* TaskAdditionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskAdditionCell.swift; sourceTree = "<group>"; };
 		46DF40D8242DD3D70018F961 /* UIViewController-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController-Ext.swift"; sourceTree = "<group>"; };
 		46DF40DA24304A560018F961 /* DatePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerController.swift; sourceTree = "<group>"; };
 		46E0E3CF2374074F00116DA2 /* String-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String-Ext.swift"; sourceTree = "<group>"; };
-		46E59DCF2429893A00C67E82 /* PhotoCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewController.swift; sourceTree = "<group>"; };
+		46E59DCF2429893A00C67E82 /* PhotoCollectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionController.swift; sourceTree = "<group>"; };
 		46E59DD12429DB7F00C67E82 /* UICollectionViewFlowLayout-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewFlowLayout-Ext.swift"; sourceTree = "<group>"; };
 		46E90629245FA67400DE7AE3 /* ActionUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionUtility.swift; sourceTree = "<group>"; };
 		46E9062B245FCA8E00DE7AE3 /* ActionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCell.swift; sourceTree = "<group>"; };
@@ -355,11 +357,11 @@
 		46FB866923BB17EA00754E88 /* Double-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double-Ext.swift"; sourceTree = "<group>"; };
 		46FD46392384C35500A796BC /* TagUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagUtility.swift; sourceTree = "<group>"; };
 		46FF94FF24161B87002E36AD /* AlarmUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmUtility.swift; sourceTree = "<group>"; };
-		46FF950124162EDF002E36AD /* AlarmListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListViewController.swift; sourceTree = "<group>"; };
+		46FF950124162EDF002E36AD /* AlarmListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListController.swift; sourceTree = "<group>"; };
 		46FF950324162F8A002E36AD /* AlarmCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmCell.swift; sourceTree = "<group>"; };
 		46FF950924171E06002E36AD /* ControllerUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerUtility.swift; sourceTree = "<group>"; };
 		46FF950B241772F8002E36AD /* AlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewController.swift; sourceTree = "<group>"; };
-		46FF950D241A0AC1002E36AD /* WorkorderListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkorderListViewController.swift; sourceTree = "<group>"; };
+		46FF950D241A0AC1002E36AD /* WorkorderListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkorderListController.swift; sourceTree = "<group>"; };
 		46FF950F241A0AE9002E36AD /* WorkorderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkorderCell.swift; sourceTree = "<group>"; };
 		46FF9511241A0B1B002E36AD /* WorkorderUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkorderUtility.swift; sourceTree = "<group>"; };
 		46FF9E3724441342000F5AB2 /* HomeWorkorderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeWorkorderCell.swift; sourceTree = "<group>"; };
@@ -505,7 +507,7 @@
 			children = (
 				46DF40CC242C75090018F961 /* BottomViewController.swift */,
 				46DF40DA24304A560018F961 /* DatePickerController.swift */,
-				46E59DCF2429893A00C67E82 /* PhotoCollectionViewController.swift */,
+				46E59DCF2429893A00C67E82 /* PhotoCollectionController.swift */,
 				4607ACE724331F1F00C13C57 /* ShareController.swift */,
 				46B3823E246539D8008C9B3C /* ScannerViewController.swift */,
 			);
@@ -552,15 +554,15 @@
 		460F724F236FF4D500CFC7C3 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				4621271323B197A900105664 /* DeviceListViewController.swift */,
-				4621272F23B5D95A00105664 /* DevicePageTableViewController.swift */,
-				46100A9B23C5665300C43D1A /* DeviceItemMeterViewController.swift */,
+				4621271323B197A900105664 /* DeviceListController.swift */,
+				4621272F23B5D95A00105664 /* DevicePageController.swift */,
+				46100A9B23C5665300C43D1A /* ParamMeterController.swift */,
 				46227A4023C80FF400768799 /* DeviceTrendController.swift */,
 				4607DC7923FE093300E35015 /* DeviceAdditionAlertController.swift */,
 				46DF04AA240CAD6800E3DE65 /* InfoAlertController.swift */,
 				46B49350240899B50066863D /* FixedInfoChildController.swift */,
-				4621272B23B5CDBA00105664 /* DynamicDeviceViewController.swift */,
-				46B4934E240897800066863D /* FixedDeviceViewController.swift */,
+				4621272B23B5CDBA00105664 /* DynamicDeviceController.swift */,
+				46B4934E240897800066863D /* FixedDeviceController.swift */,
 				46F1618E24695383000BEA30 /* PasswordController.swift */,
 			);
 			path = Controllers;
@@ -608,9 +610,9 @@
 		460F7253236FF50F00CFC7C3 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				46FF950D241A0AC1002E36AD /* WorkorderListViewController.swift */,
-				46DBA50A241F55D100CFA7E7 /* WorkorderViewController.swift */,
-				46DF40CE242C7D080018F961 /* WorkorderAdditionViewController.swift */,
+				46FF950D241A0AC1002E36AD /* WorkorderListController.swift */,
+				46DBA50A241F55D100CFA7E7 /* WorkorderController.swift */,
+				46DF40CE242C7D080018F961 /* WorkorderAdditionController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -644,7 +646,7 @@
 		460F7257236FF54900CFC7C3 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				46FF950124162EDF002E36AD /* AlarmListViewController.swift */,
+				46FF950124162EDF002E36AD /* AlarmListController.swift */,
 				46FF950B241772F8002E36AD /* AlarmViewController.swift */,
 			);
 			path = Controllers;
@@ -812,6 +814,7 @@
 				462E0E022452B73500A2F17E /* NoticeAdditionCell.swift */,
 				4663A68E247F540300985BD4 /* CardItemButton.swift */,
 				4663A690247F66E400985BD4 /* HomeAlarmCell.swift */,
+				4611720A2481F58F00094444 /* HomeFooterCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1127,11 +1130,11 @@
 				4670902C23D3FD1E008777ED /* Device.swift in Sources */,
 				46FF950A24171E06002E36AD /* ControllerUtility.swift in Sources */,
 				46FF9E3824441342000F5AB2 /* HomeWorkorderCell.swift in Sources */,
-				46FF950224162EDF002E36AD /* AlarmListViewController.swift in Sources */,
+				46FF950224162EDF002E36AD /* AlarmListController.swift in Sources */,
 				46FF9E3C244442DD000F5AB2 /* DeviceClass.swift in Sources */,
 				460F726E2371111100CFC7C3 /* WAService.swift in Sources */,
 				462E0DED244D882900A2F17E /* EnergyBranchCell.swift in Sources */,
-				4621272C23B5CDBA00105664 /* DynamicDeviceViewController.swift in Sources */,
+				4621272C23B5CDBA00105664 /* DynamicDeviceController.swift in Sources */,
 				46FB866823BAE87800754E88 /* DevicePageItemSource.swift in Sources */,
 				4621272023B19FF400105664 /* DeviceFixedCell.swift in Sources */,
 				46DBA5282422114F00CFA7E7 /* WorkorderTask.swift in Sources */,
@@ -1175,10 +1178,11 @@
 				46DBA53C242490B300CFA7E7 /* AccountUtility.swift in Sources */,
 				46EDC79A24615C3D00F2F9EE /* HelpListController.swift in Sources */,
 				46227A4123C80FF400768799 /* DeviceTrendController.swift in Sources */,
-				46DF40CF242C7D080018F961 /* WorkorderAdditionViewController.swift in Sources */,
+				46DF40CF242C7D080018F961 /* WorkorderAdditionController.swift in Sources */,
 				460BA6D7237BCC23008E7CDF /* Workorder.swift in Sources */,
 				46E9062E245FDEAA00DE7AE3 /* ActionListController.swift in Sources */,
 				46F1618F24695384000BEA30 /* PasswordController.swift in Sources */,
+				4611720B2481F58F00094444 /* HomeFooterCell.swift in Sources */,
 				46DF40CD242C75090018F961 /* BottomViewController.swift in Sources */,
 				468BC3C423823738008BD62C /* MQTTService.swift in Sources */,
 				4670902E23D430B8008777ED /* DeviceUtility.swift in Sources */,
@@ -1186,7 +1190,7 @@
 				46FF9E4A2446ECCE000F5AB2 /* EnergySegmentType.swift in Sources */,
 				46DBA52E242461C600CFA7E7 /* Phone.swift in Sources */,
 				46B3823F246539D8008C9B3C /* ScannerViewController.swift in Sources */,
-				46FF950E241A0AC1002E36AD /* WorkorderListViewController.swift in Sources */,
+				46FF950E241A0AC1002E36AD /* WorkorderListController.swift in Sources */,
 				46EE431D237153DC00DF22FB /* Tag.swift in Sources */,
 				462E0DEB244D237900A2F17E /* EnergyPrice.swift in Sources */,
 				46FF9E51244809EA000F5AB2 /* EnergyRatioCell.swift in Sources */,
@@ -1237,7 +1241,7 @@
 				46DF40D9242DD3D70018F961 /* UIViewController-Ext.swift in Sources */,
 				4621273623B5EF6A00105664 /* DeviceHeaderView.swift in Sources */,
 				46FB866A23BB17EA00754E88 /* Double-Ext.swift in Sources */,
-				46B4934F240897800066863D /* FixedDeviceViewController.swift in Sources */,
+				46B4934F240897800066863D /* FixedDeviceController.swift in Sources */,
 				46FF950024161B87002E36AD /* AlarmUtility.swift in Sources */,
 				46DBA51624207FB500CFA7E7 /* WorkorderTaskCell.swift in Sources */,
 				4663A689247E3C7400985BD4 /* AuthorityInfoController.swift in Sources */,
@@ -1249,11 +1253,11 @@
 				4621271F23B19FF400105664 /* DeviceTextCell.swift in Sources */,
 				4663A687247E033D00985BD4 /* DataController.swift in Sources */,
 				46EDC7982461599700F2F9EE /* HelpCell.swift in Sources */,
-				46E59DD02429893A00C67E82 /* PhotoCollectionViewController.swift in Sources */,
+				46E59DD02429893A00C67E82 /* PhotoCollectionController.swift in Sources */,
 				468BC3C623824B50008BD62C /* MQTTConfig.swift in Sources */,
 				46DC53552411D77400217ECD /* QRCodeUtility.swift in Sources */,
 				46227A3B23C80D4F00768799 /* DeviceTrendChartCell.swift in Sources */,
-				46100A9C23C5665300C43D1A /* DeviceItemMeterViewController.swift in Sources */,
+				46100A9C23C5665300C43D1A /* ParamMeterController.swift in Sources */,
 				46227A4323C8231300768799 /* BallonMarker.swift in Sources */,
 				46FB2675243EF61B0080362C /* Mine.swift in Sources */,
 				460F7270237113B500CFC7C3 /* StringConst.swift in Sources */,
@@ -1277,11 +1281,11 @@
 				469BB72123CEFF6D00A57C51 /* VerifyUtility.swift in Sources */,
 				460F727223711D8900CFC7C3 /* EDSConfig.swift in Sources */,
 				46FB26832440537E0080362C /* HomeEnergyView.swift in Sources */,
-				4621271423B197A900105664 /* DeviceListViewController.swift in Sources */,
+				4621271423B197A900105664 /* DeviceListController.swift in Sources */,
 				46036A67245953CF00E59E41 /* MineSectionModel.swift in Sources */,
 				462D23AE23C076C500C28F15 /* IconPagingCell.swift in Sources */,
 				46DBA5182420995200CFA7E7 /* CheckBox.swift in Sources */,
-				4621273023B5D95A00105664 /* DevicePageTableViewController.swift in Sources */,
+				4621273023B5D95A00105664 /* DevicePageController.swift in Sources */,
 				46F16195246A6D6A000BEA30 /* UIImageView-Ext.swift in Sources */,
 				46036A632459065A00E59E41 /* MineHeaderView.swift in Sources */,
 				46DBA5202421B5AB00CFA7E7 /* PhotoCell.swift in Sources */,
@@ -1291,7 +1295,7 @@
 				4607DC7C23FE0D0500E35015 /* LooseTextField.swift in Sources */,
 				46FD463A2384C35500A796BC /* TagUtility.swift in Sources */,
 				46DF40D1242C866D0018F961 /* TextInputCell.swift in Sources */,
-				46DBA50B241F55D100CFA7E7 /* WorkorderViewController.swift in Sources */,
+				46DBA50B241F55D100CFA7E7 /* WorkorderController.swift in Sources */,
 				46DBA52624220CF100CFA7E7 /* WorkorderMessage.swift in Sources */,
 				46DF04A9240B983A00E3DE65 /* FixedInfoCell.swift in Sources */,
 				462E0DFF2452B25F00A2F17E /* NoticeController.swift in Sources */,
