@@ -14,7 +14,7 @@ protocol DevicePageScrollDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView)
 }
 
-class DevicePageController: UITableViewController {
+class PageItemController: UITableViewController {
 
     var scrollDelegate: DevicePageScrollDelegate?
     var parentVC: UIViewController?

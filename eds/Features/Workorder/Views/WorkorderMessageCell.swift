@@ -117,23 +117,20 @@ class WorkorderMessageCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
-        if selected {
-            guard let content = message?.content else {
-                return
-            }
-            switch messageType {
-            case .instruction:
-                ShareUtility.openWeb(content.getEDSServletWorkorderDocUrl())
-            case .alarm:
-                if let alarm = AlarmUtility.sharedInstance.get(by: content) {
-                    let alarmVC = AlarmViewController()
-                    alarmVC.alarm = alarm
-                    parentVC?.navigationController?.pushViewController(alarmVC, animated: true)
-                }
-                break
-            default:
-                break
-            }
+        guard selected,let content = message?.content  else {
+            return
+        }
+        switch messageType {
+        case .instruction:
+            ShareUtility.openWeb(content.getEDSServletWorkorderDocUrl())
+        case .alarm:
+            guard let alarm = AlarmUtility.sharedInstance.get(by: content) else { return }
+            let alarmVC = AlarmViewController()
+            alarmVC.alarm = alarm
+            parentVC?.navigationController?.pushViewController(alarmVC, animated: true)
+            break
+        default:
+            break
         }
     }
 

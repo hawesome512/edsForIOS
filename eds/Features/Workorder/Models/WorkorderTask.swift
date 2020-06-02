@@ -58,7 +58,10 @@ struct WorkorderTaskModel: HandyJSON {
     static let sharedInstance: WorkorderTaskModel? = {
         if let path = Bundle.main.path(forResource: "Workorder", ofType: "json") {
             if let json = try? JSON(data: Data(contentsOf: URL(fileURLWithPath: path))) {
-                return WorkorderTaskModel.deserialize(from: json.description)
+                var model = WorkorderTaskModel.deserialize(from: json.description)
+                model?.instructions?[0] = "instruction_none".localize(with: prefixWorkorder)
+                model?.tasks?[0].task = "task_custom".localize(with: prefixWorkorder)
+                return model
             }
         }
         return nil

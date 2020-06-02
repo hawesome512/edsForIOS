@@ -128,7 +128,7 @@ extension DynamicDeviceController: PagingViewControllerDataSource, PagingViewCon
             tableVC.parentVC = self
             return tableVC
         } else {
-            let pageVC = DevicePageController()
+            let pageVC = PageItemController()
             pageVC.set(with: pages[index], in: device!.getShortID())
             pageVC.scrollDelegate = self
             pageVC.parentVC = self

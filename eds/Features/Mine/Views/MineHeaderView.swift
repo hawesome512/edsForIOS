@@ -169,18 +169,19 @@ class MineHeaderView: UIView, UITextFieldDelegate {
         let profileAction = UIAlertAction(title: profile, style: .default, handler: { _ in
             let pickerVC = ControllerUtility.generateImagePicker(maxCount: 1)
             pickerVC.didFinishPicking(completion: { [unowned pickerVC] items, _ in
-                guard let photo = items.singlePhoto?.image else { return }
-                self.profileImage.image = photo
-                let imageID = AccountUtility.sharedInstance.generateImageID()
-                EDSService.getProvider().request(.upload(data: photo.pngData()!, fileName: imageID)) { response in
-                    switch(response) {
-                    case .success:
-                        //上传头像成功
-                        self.loginedPhone?.photo = imageID
-                        AccountUtility.sharedInstance.updatePhone()
-                        ActionUtility.sharedInstance.addAction(.editPerson)
-                    default:
-                        break
+                if let photo = items.singlePhoto?.image {
+                    self.profileImage.image = photo
+                    let imageID = AccountUtility.sharedInstance.generateImageID()
+                    EDSService.getProvider().request(.upload(data: photo.pngData()!, fileName: imageID)) { response in
+                        switch(response) {
+                        case .success:
+                            //上传头像成功
+                            self.loginedPhone?.photo = imageID
+                            AccountUtility.sharedInstance.updatePhone()
+                            ActionUtility.sharedInstance.addAction(.editPerson)
+                        default:
+                            break
+                        }
                     }
                 }
                 pickerVC.dismiss(animated: true, completion: nil) })

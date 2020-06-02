@@ -114,7 +114,7 @@ class WorkorderListController: UITableViewController, WorkorderAdditionDelegate 
     }
 
     @objc func addWorkorder() {
-        let addVC = WorkorderAdditionController()
+        let addVC = NewWorkorderController()
         addVC.delegate = self
         addVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(addVC, animated: true)

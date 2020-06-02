@@ -48,17 +48,16 @@ class WorkorderController: UIViewController {
     
     var workorder: Workorder? {
         didSet {
-            if let workorder = workorder {
-                title = workorder.title
-                flows = workorder.getFlows()
-                tasks = workorder.getTasks()
-                messages = workorder.getMessages()
-                infos = workorder.getInfos()
-                photoSource.urls = workorder.getImageURLs()
-                
-                initFoldView(type: .task, total: tasks.count)
-                initFoldView(type: .message, total: messages.count)
-            }
+            guard let workorder = workorder else { return }
+            title = workorder.title
+            flows = workorder.getFlows()
+            tasks = workorder.getTasks()
+            messages = workorder.getMessages()
+            infos = workorder.getInfos()
+            photoSource.urls = workorder.getImageURLs()
+            
+            initFoldView(type: .task, total: tasks.count)
+            initFoldView(type: .message, total: messages.count)
         }
     }
     
@@ -425,7 +424,7 @@ extension WorkorderController {
 }
 
 // MARK: - 审核&留言
-extension WorkorderController: MessageDelegate {
+extension WorkorderController: MessageDelegate, UITextFieldDelegate {
     
     
     @objc func auditWorkorder() {
@@ -444,18 +443,15 @@ extension WorkorderController: MessageDelegate {
     }
     
     @objc func leaveMessage() {
-        let msgVC = UIAlertController(title: "message".localize(with: prefixWorkorder), message: nil, preferredStyle: .alert)
-        msgVC.addTextField { _ in }
-        let cancel = UIAlertAction(title: "cancel".localize(), style: .cancel, handler: nil)
+        let title = "message".localize(with: prefixWorkorder)
+        let msgVC = ControllerUtility.generateInputAlertController(title: title, placeholder: nil, delegate: self)
         let save = UIAlertAction(title: "save".localize(), style: .default) { _ in
-            if let message = msgVC.textFields?.first?.text, !message.isEmpty {
-                self.messages.append(WorkorderMessage.encode(with: message))
-                self.foldViews[.message]?.totalCount = self.messages.count
-                self.workorder?.setMessage(self.messages)
-                self.updateWorkorder()
-            }
+            guard let message = msgVC.textFields?.first?.text, !message.isEmpty else { return }
+            self.messages.append(WorkorderMessage.encode(with: message))
+            self.foldViews[.message]?.totalCount = self.messages.count
+            self.workorder?.setMessage(self.messages)
+            self.updateWorkorder()
         }
-        msgVC.addAction(cancel)
         msgVC.addAction(save)
         present(msgVC, animated: true, completion: nil)
     }
@@ -474,5 +470,9 @@ extension WorkorderController: MessageDelegate {
         }
         deleteVC.addAction(deleteAction)
         present(deleteVC, animated: true, completion: nil)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
     }
 }

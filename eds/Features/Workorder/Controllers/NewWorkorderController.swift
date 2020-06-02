@@ -14,7 +14,7 @@ protocol WorkorderAdditionDelegate {
     func added(workorder: Workorder)
 }
 
-class WorkorderAdditionController: UITableViewController, UINavigationBarDelegate {
+class NewWorkorderController: UITableViewController, UINavigationBarDelegate {
     
     private let disposeBag = DisposeBag()
     //数据上传过程的指示器
@@ -171,7 +171,7 @@ class WorkorderAdditionController: UITableViewController, UINavigationBarDelegat
 }
 
 // MARK: - Workorder保存
-extension WorkorderAdditionController {
+extension NewWorkorderController {
 
     private func initWorkorder() {
 
@@ -248,7 +248,7 @@ extension WorkorderAdditionController {
 }
 
 // MARK: -表单实现
-extension WorkorderAdditionController { //:UITableViewDataSource, UITableViewDelegate {
+extension NewWorkorderController { //:UITableViewDataSource, UITableViewDelegate {
     override func numberOfSections(in tableView: UITableView) -> Int {
         //0:工单子项，1:任务清单列表
         return 2
@@ -306,7 +306,7 @@ extension WorkorderAdditionController { //:UITableViewDataSource, UITableViewDel
 }
 
 // MARK: - 协议
-extension WorkorderAdditionController: TextInputCellDelegate, TaskAdditionCellDelegate, PickerDelegate {
+extension NewWorkorderController: TextInputCellDelegate, TaskAdditionCellDelegate, PickerDelegate {
 
     //取消日期选择
     func pickerCanceled() {

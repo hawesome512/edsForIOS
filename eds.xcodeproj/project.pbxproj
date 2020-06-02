@@ -18,7 +18,7 @@
 		4607ACE52432D6D000C13C57 /* CornerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4607ACE42432D6D000C13C57 /* CornerView.swift */; };
 		4607ACE824331F1F00C13C57 /* ShareController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4607ACE724331F1F00C13C57 /* ShareController.swift */; };
 		4607DC7823FCD0AD00E35015 /* AdditionTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4607DC7723FCD0AC00E35015 /* AdditionTableHeaderView.swift */; };
-		4607DC7A23FE093300E35015 /* DeviceAdditionAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4607DC7923FE093300E35015 /* DeviceAdditionAlertController.swift */; };
+		4607DC7A23FE093300E35015 /* NewDeviceAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4607DC7923FE093300E35015 /* NewDeviceAlertController.swift */; };
 		4607DC7C23FE0D0500E35015 /* LooseTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4607DC7B23FE0D0500E35015 /* LooseTextField.swift */; };
 		460BA6D1237A4775008E7CDF /* JsonUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460BA6D0237A4775008E7CDF /* JsonUtility.swift */; };
 		460BA6D3237A7ABB008E7CDF /* EDSService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460BA6D2237A7ABB008E7CDF /* EDSService.swift */; };
@@ -53,7 +53,7 @@
 		4621272823B1A71A00105664 /* DeviceCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621272723B1A71A00105664 /* DeviceCellType.swift */; };
 		4621272A23B332B500105664 /* TagValueConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621272923B332B500105664 /* TagValueConverter.swift */; };
 		4621272C23B5CDBA00105664 /* DynamicDeviceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621272B23B5CDBA00105664 /* DynamicDeviceController.swift */; };
-		4621273023B5D95A00105664 /* DevicePageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621272F23B5D95A00105664 /* DevicePageController.swift */; };
+		4621273023B5D95A00105664 /* PageItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621272F23B5D95A00105664 /* PageItemController.swift */; };
 		4621273223B5E8F600105664 /* CAGradientLayer-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621273123B5E8F600105664 /* CAGradientLayer-Ext.swift */; };
 		4621273423B5EA0A00105664 /* UIConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621273323B5EA0A00105664 /* UIConst.swift */; };
 		4621273623B5EF6A00105664 /* DeviceHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4621273523B5EF6A00105664 /* DeviceHeaderView.swift */; };
@@ -128,8 +128,8 @@
 		46DF04A9240B983A00E3DE65 /* FixedInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DF04A8240B983A00E3DE65 /* FixedInfoCell.swift */; };
 		46DF04AB240CAD6800E3DE65 /* InfoAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DF04AA240CAD6800E3DE65 /* InfoAlertController.swift */; };
 		46DF40CB242C46B60018F961 /* Workorder.json in Resources */ = {isa = PBXBuildFile; fileRef = 46DF40CA242C46B60018F961 /* Workorder.json */; };
-		46DF40CD242C75090018F961 /* BottomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DF40CC242C75090018F961 /* BottomViewController.swift */; };
-		46DF40CF242C7D080018F961 /* WorkorderAdditionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DF40CE242C7D080018F961 /* WorkorderAdditionController.swift */; };
+		46DF40CD242C75090018F961 /* BottomController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DF40CC242C75090018F961 /* BottomController.swift */; };
+		46DF40CF242C7D080018F961 /* NewWorkorderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DF40CE242C7D080018F961 /* NewWorkorderController.swift */; };
 		46DF40D1242C866D0018F961 /* TextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DF40D0242C866D0018F961 /* TextInputCell.swift */; };
 		46DF40D5242DAB930018F961 /* TaskAdditionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DF40D4242DAB930018F961 /* TaskAdditionCell.swift */; };
 		46DF40D9242DD3D70018F961 /* UIViewController-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DF40D8242DD3D70018F961 /* UIViewController-Ext.swift */; };
@@ -203,7 +203,7 @@
 		4607ACE42432D6D000C13C57 /* CornerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerView.swift; sourceTree = "<group>"; };
 		4607ACE724331F1F00C13C57 /* ShareController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareController.swift; sourceTree = "<group>"; };
 		4607DC7723FCD0AC00E35015 /* AdditionTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionTableHeaderView.swift; sourceTree = "<group>"; };
-		4607DC7923FE093300E35015 /* DeviceAdditionAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceAdditionAlertController.swift; sourceTree = "<group>"; };
+		4607DC7923FE093300E35015 /* NewDeviceAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDeviceAlertController.swift; sourceTree = "<group>"; };
 		4607DC7B23FE0D0500E35015 /* LooseTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LooseTextField.swift; sourceTree = "<group>"; };
 		460BA6D0237A4775008E7CDF /* JsonUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonUtility.swift; sourceTree = "<group>"; };
 		460BA6D2237A7ABB008E7CDF /* EDSService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EDSService.swift; sourceTree = "<group>"; };
@@ -239,7 +239,7 @@
 		4621272723B1A71A00105664 /* DeviceCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCellType.swift; sourceTree = "<group>"; };
 		4621272923B332B500105664 /* TagValueConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagValueConverter.swift; sourceTree = "<group>"; };
 		4621272B23B5CDBA00105664 /* DynamicDeviceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicDeviceController.swift; sourceTree = "<group>"; };
-		4621272F23B5D95A00105664 /* DevicePageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicePageController.swift; sourceTree = "<group>"; };
+		4621272F23B5D95A00105664 /* PageItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageItemController.swift; sourceTree = "<group>"; };
 		4621273123B5E8F600105664 /* CAGradientLayer-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CAGradientLayer-Ext.swift"; sourceTree = "<group>"; };
 		4621273323B5EA0A00105664 /* UIConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIConst.swift; sourceTree = "<group>"; };
 		4621273523B5EF6A00105664 /* DeviceHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceHeaderView.swift; sourceTree = "<group>"; };
@@ -314,8 +314,8 @@
 		46DF04A8240B983A00E3DE65 /* FixedInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedInfoCell.swift; sourceTree = "<group>"; };
 		46DF04AA240CAD6800E3DE65 /* InfoAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoAlertController.swift; sourceTree = "<group>"; };
 		46DF40CA242C46B60018F961 /* Workorder.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Workorder.json; sourceTree = "<group>"; };
-		46DF40CC242C75090018F961 /* BottomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomViewController.swift; sourceTree = "<group>"; };
-		46DF40CE242C7D080018F961 /* WorkorderAdditionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkorderAdditionController.swift; sourceTree = "<group>"; };
+		46DF40CC242C75090018F961 /* BottomController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomController.swift; sourceTree = "<group>"; };
+		46DF40CE242C7D080018F961 /* NewWorkorderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWorkorderController.swift; sourceTree = "<group>"; };
 		46DF40D0242C866D0018F961 /* TextInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInputCell.swift; sourceTree = "<group>"; };
 		46DF40D4242DAB930018F961 /* TaskAdditionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskAdditionCell.swift; sourceTree = "<group>"; };
 		46DF40D8242DD3D70018F961 /* UIViewController-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController-Ext.swift"; sourceTree = "<group>"; };
@@ -505,7 +505,7 @@
 		460F724B236FF44000CFC7C3 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				46DF40CC242C75090018F961 /* BottomViewController.swift */,
+				46DF40CC242C75090018F961 /* BottomController.swift */,
 				46DF40DA24304A560018F961 /* DatePickerController.swift */,
 				46E59DCF2429893A00C67E82 /* PhotoCollectionController.swift */,
 				4607ACE724331F1F00C13C57 /* ShareController.swift */,
@@ -555,10 +555,10 @@
 			isa = PBXGroup;
 			children = (
 				4621271323B197A900105664 /* DeviceListController.swift */,
-				4621272F23B5D95A00105664 /* DevicePageController.swift */,
+				4621272F23B5D95A00105664 /* PageItemController.swift */,
 				46100A9B23C5665300C43D1A /* ParamMeterController.swift */,
 				46227A4023C80FF400768799 /* DeviceTrendController.swift */,
-				4607DC7923FE093300E35015 /* DeviceAdditionAlertController.swift */,
+				4607DC7923FE093300E35015 /* NewDeviceAlertController.swift */,
 				46DF04AA240CAD6800E3DE65 /* InfoAlertController.swift */,
 				46B49350240899B50066863D /* FixedInfoChildController.swift */,
 				4621272B23B5CDBA00105664 /* DynamicDeviceController.swift */,
@@ -612,7 +612,7 @@
 			children = (
 				46FF950D241A0AC1002E36AD /* WorkorderListController.swift */,
 				46DBA50A241F55D100CFA7E7 /* WorkorderController.swift */,
-				46DF40CE242C7D080018F961 /* WorkorderAdditionController.swift */,
+				46DF40CE242C7D080018F961 /* NewWorkorderController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1178,12 +1178,12 @@
 				46DBA53C242490B300CFA7E7 /* AccountUtility.swift in Sources */,
 				46EDC79A24615C3D00F2F9EE /* HelpListController.swift in Sources */,
 				46227A4123C80FF400768799 /* DeviceTrendController.swift in Sources */,
-				46DF40CF242C7D080018F961 /* WorkorderAdditionController.swift in Sources */,
+				46DF40CF242C7D080018F961 /* NewWorkorderController.swift in Sources */,
 				460BA6D7237BCC23008E7CDF /* Workorder.swift in Sources */,
 				46E9062E245FDEAA00DE7AE3 /* ActionListController.swift in Sources */,
 				46F1618F24695384000BEA30 /* PasswordController.swift in Sources */,
 				4611720B2481F58F00094444 /* HomeFooterCell.swift in Sources */,
-				46DF40CD242C75090018F961 /* BottomViewController.swift in Sources */,
+				46DF40CD242C75090018F961 /* BottomController.swift in Sources */,
 				468BC3C423823738008BD62C /* MQTTService.swift in Sources */,
 				4670902E23D430B8008777ED /* DeviceUtility.swift in Sources */,
 				4621273A23B60BE100105664 /* UIColor-Ext.swift in Sources */,
@@ -1194,7 +1194,7 @@
 				46EE431D237153DC00DF22FB /* Tag.swift in Sources */,
 				462E0DEB244D237900A2F17E /* EnergyPrice.swift in Sources */,
 				46FF9E51244809EA000F5AB2 /* EnergyRatioCell.swift in Sources */,
-				4607DC7A23FE093300E35015 /* DeviceAdditionAlertController.swift in Sources */,
+				4607DC7A23FE093300E35015 /* NewDeviceAlertController.swift in Sources */,
 				46DF40D5242DAB930018F961 /* TaskAdditionCell.swift in Sources */,
 				462E0E012452B3A300A2F17E /* NoticeMessageCell.swift in Sources */,
 				460BA6D1237A4775008E7CDF /* JsonUtility.swift in Sources */,
@@ -1285,7 +1285,7 @@
 				46036A67245953CF00E59E41 /* MineSectionModel.swift in Sources */,
 				462D23AE23C076C500C28F15 /* IconPagingCell.swift in Sources */,
 				46DBA5182420995200CFA7E7 /* CheckBox.swift in Sources */,
-				4621273023B5D95A00105664 /* DevicePageController.swift in Sources */,
+				4621273023B5D95A00105664 /* PageItemController.swift in Sources */,
 				46F16195246A6D6A000BEA30 /* UIImageView-Ext.swift in Sources */,
 				46036A632459065A00E59E41 /* MineHeaderView.swift in Sources */,
 				46DBA5202421B5AB00CFA7E7 /* PhotoCell.swift in Sources */,

@@ -31,7 +31,7 @@
 /* confirm */
 "confirm" = "确认";
 /* cancel_alert */
-"cancel_alert" = "尚未保存";
+"cancel_alert" = "尚未保存！";
 
 /* superAdmin */
 "superAdmin" = "管理员";
@@ -78,7 +78,7 @@
 /* addAccountLimit */
 "addAccountLimit" = "管理组最多允许%d个用户，请先删減现有用户,或向EDS服务申请扩容！";
 /* imcomplete */
-"imcomplete" = "请完善必要的信息";
+"imcomplete" = "请完善必要的信息！";
 /* QRCodeHelp */
 "QRCodeHelp" = "此二维码动态生成，在%@前有效，截屏无效。";
 /* aboutCompany */
@@ -117,15 +117,15 @@
 /* home_notice_confirm */
 "home_notice_confirm" = "发布";
 /* home_notice_imcomplete */
-"home_notice_imcomplete" = "请完善必要的公告信息";
+"home_notice_imcomplete" = "请完善必要的公告信息！";
 /* home_banner */
-"home_banner" = "图片";
+"home_banner" = "封面";
 /* home_title */
-"home_title" = "标题";
+"home_title" = "名称";
 /* home_location */
 "home_location" = "地址";
 /* home_invalidQRCode */
-"home_invalidQRCode" = "不是有效的EDS二维码";
+"home_invalidQRCode" = "不是有效的EDS二维码！";
 
 /* energy_addition */
 "energy_addition" = "新增支路";
@@ -218,6 +218,8 @@
 
 /* uncommunicate */
 "uncommunicate" = "非通信型";
+/* added */
+"added" = "已添加";
 /* property */
 "property" = "资产";
 /* updating */
@@ -229,11 +231,11 @@
 /* password_error */
 "password_error" = "密码错误";
 /* userLocked */
-"userLocked" = "你没有执行此操作的权限，请向管理员申请授权。";
+"userLocked" = "你没有执行此操作的权限，请向管理员申请授权！";
 /* localLocked */
 "localLocked" = "此设备设定为【本地】模式，不能远程控制。";
 /* denied */
-"denied" = "操作失败";
+"denied" = "操作失败！";
 
 
 /* normal */
@@ -551,6 +553,10 @@
 "workorder_end_time" = "截止时间";
 /* workorder_instruction */
 "workorder_instruction" = "作业文档";
+/* workorder_instruction_none */
+"workorder_instruction_none" = "无";
+/* workorder_task_custom */
+"workorder_task_custom" = "自定义";
 /* workorder_add_task */
 "workorder_add_task" = "新增任务";
 /* workorder_time_range */

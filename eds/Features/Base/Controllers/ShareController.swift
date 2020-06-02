@@ -12,7 +12,7 @@ protocol ShareDelegate {
     func share(with shareType: ShareType)
 }
 
-class ShareController: BottomViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class ShareController: BottomController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
     var shareItems = ShareType.allCases
     var delegate: ShareDelegate?
@@ -38,7 +38,7 @@ class ShareController: BottomViewController, UICollectionViewDataSource, UIColle
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(ShareCell.self, forCellWithReuseIdentifier: String(describing: ShareCell.self))
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .systemBackground
         contentView.addSubview(collectionView)
         //上边缩进，避免遮盖⬇️下滑关闭按键
         collectionView.edgesToSuperview(excluding: .top)

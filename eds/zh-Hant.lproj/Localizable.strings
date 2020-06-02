@@ -31,7 +31,7 @@
 /* confirm */
 "confirm" = "確認";
 /* cancel_alert */
-"cancel_alert" = "尚未保存";
+"cancel_alert" = "尚未保存！";
 
 /* superAdmin */
 "superAdmin" = "管理員";
@@ -78,9 +78,9 @@
 /* addAccountLimit */
 "addAccountLimit" = "管理組最多允許%d個用戶，請先刪減現有用戶，或向EDS服務申請擴容！";
 /* imcomplete */
-"imcomplete" = "請完善必要的信息";
+"imcomplete" = "請完善必要的信息！";
 /* QRCodeHelp */
-"QRCodeHelp" = "此二維碼動態生成，在%d前有效，截屏無效。";
+"QRCodeHelp" = "此二維碼動態生成，在%@前有效，截屏無效。";
 /* aboutCompany */
 "aboutCompany" = "福建省廈門市集美區孫坂南路92、94、96號\r\nTEL：0592-6100660   FAX：0592-6100661\r\n士林電機廠股份有限公司 %d © All rights reserved.";
 /* aboutDescription */
@@ -117,11 +117,11 @@
 /* home_notice_confirm */
 "home_notice_confirm" = "發布";
 /* home_notice_imcomplete */
-"home_notice_imcomplete" = "請完善必要的公告信息";
+"home_notice_imcomplete" = "請完善必要的公告信息！";
 /* home_banner */
-"home_banner" = "圖片";
+"home_banner" = "封面";
 /* home_title */
-"home_title" = "標題";
+"home_title" = "名稱";
 /* home_location */
 "home_location" = "地址";
 /* home_invalidQRCode */
@@ -218,6 +218,8 @@
 
 /* uncommunicate */
 "uncommunicate" = "非通信型";
+/* added */
+"added" = "已添加";
 /* property */
 "property" = "資產";
 /* updating */
@@ -229,7 +231,7 @@
 /* password_error */
 "password_error" = "密碼錯誤";
 /* userLocked */
-"userLocked" = "你沒有執行此操作的權限，請向管理員申請授權。";
+"userLocked" = "你沒有執行此操作的權限，請向管理員申請授權！";
 /* localLocked */
 "localLocked" = "此設備設定為【本地】模式，不能遠程控制。";
 /* denied */
@@ -551,6 +553,10 @@
 "workorder_end_time" = "截止時間";
 /* workorder_instruction */
 "workorder_instruction" = "作業文檔";
+/* workorder_instruction_none */
+"workorder_instruction_none" = "無";
+/* workorder_task_custom */
+"workorder_task_custom" = "自定義";
 /* workorder_add_task */
 "workorder_add_task" = "新增任務";
 /* workorder_time_range */

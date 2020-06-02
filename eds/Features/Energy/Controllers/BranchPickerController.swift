@@ -14,7 +14,7 @@ protocol BranchPickerDelegate {
     func pick(branchDevice: Device, in parent: EnergyBranch?)
 }
 
-class BranchPickerController: BottomViewController {
+class BranchPickerController: BottomController {
 
     let branchPicker = UIPickerView()
     var devices: [Device] = []
@@ -62,5 +62,9 @@ extension BranchPickerController: UIPickerViewDelegate, UIPickerViewDataSource {
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return devices[row].title
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return edsHeight
     }
 }

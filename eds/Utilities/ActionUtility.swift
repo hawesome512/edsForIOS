@@ -19,7 +19,7 @@ class ActionUtility {
     private init () { }
     
     func loadProjectActionList() {
-        guard actionList.count == 0, let projID = AccountUtility.sharedInstance.account?.id else {
+        guard let projID = AccountUtility.sharedInstance.account?.id else {
             return
         }
         //获取最近一个月的报警记录（操作记录可能比较多）

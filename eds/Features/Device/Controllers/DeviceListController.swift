@@ -164,7 +164,7 @@ extension DeviceListController: AdditionDelegate {
         }
         
         //自定义【新增】弹出框
-        let alertController = DeviceAdditionAlertController.initController(device: inParent)
+        let alertController = NewDeviceAlertController.initController(device: inParent)
         //因需要处理ok之后到逻辑，故不在DeviceAdditionAlertController里面添加OKAction
         let okAction = UIAlertAction(title: "ok".localize(), style: .default) { _ in
             guard let projID = AccountUtility.sharedInstance.account?.id, let title = alertController.nameField.text else { return }

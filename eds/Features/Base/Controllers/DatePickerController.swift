@@ -29,7 +29,7 @@ enum DateLimit {
     case none
 }
 
-class DatePickerController: BottomViewController {
+class DatePickerController: BottomController {
 
     var delegate: PickerDelegate?
     var items: [String] = []

@@ -15,7 +15,7 @@
 /* energy */
 "energy" = "Energy";
 /* mine */
-"mine" = "Mine";
+"mine" = "Me";
 /* phone */
 "phone" = "Phone";
 /* sms */
@@ -31,7 +31,7 @@
 /* confirm */
 "confirm" = "Confirm";
 /* cancel_alert */
-"cancel_alert" = "not saved";
+"cancel_alert" = "Not Saved!";
 
 /* superAdmin */
 "superAdmin" = "admin";
@@ -48,7 +48,7 @@
 /* accountMember */
 "accountMember" = "Memberships";
 /* accountQRCode */
-"accountQRCode" = "Guest's qrcode";
+"accountQRCode" = "Guest's QR Code";
 /* abountEDS */
 "aboutEDS" = "About EDS";
 /* help */
@@ -64,9 +64,9 @@
 /* userlevel */
 "userlevel" = "Level";
 /* profile */
-"profile" = "Profile";
+"profile" = "Profile Photo";
 /* addAccount */
-"addAccount" = "Add account";
+"addAccount" = "Add Account";
 /* withoutAction */
 "withoutAction" = "No record";
 /* transfer */
@@ -74,19 +74,19 @@
 /* transferAccount */
 "transferAccount" = "Transfer";
 /* transferAccountAlert */
-"transferAccountAlert" = "After transfered admin level to other,you will become an operator and can't manege membership!";
+"transferAccountAlert" = "After transfered admin level to others,you will become an operator and can't manege membership any more!";
 /* addAccountLimit */
 "addAccountLimit" = "At most %d members allowed，please delete others or apply to EDS Service for more amount!";
 /* imcomplete */
-"imcomplete" = "Please complete necessary infos";
+"imcomplete" = "Please complete necessary infos!";
 /* QRCodeHelp */
-"QRCodeHelp" = "Dynamic guest's qrcode is valid before %@,screenshot not allowed!";
+"QRCodeHelp" = "Dynamic guest's QR Code is valid before %@,screenshot isn't allowed!";
 /* aboutCompany */
 "aboutCompany" = "No.92,94,96, Sunban South Road,Jimei,Xiamen,361021,Fujian,P.R. China\r\nTEL：0592-6100660   FAX：0592-6100661\r\nXSEEC %d © All rights reserved.";
 /* aboutDescription */
-"aboutDescription" = "EDS,an innovative cloud platform,privides a new solution for medium and low voltage distribution.Low-cost、Easy-deployed、High-compatibility、Flexible-dilatation,EDS can improve your distribution system smarter、safer and more convenient.";
+"aboutDescription" = "EDS,an innovative cloud platform,privides a new solution for medium and low voltage distribution.ECONOMY,CONVENIENT,COMPATIBLE,FLEXIBLE,EDS can make your distribution system smarter、safer and more convenient.";
 /* aboutMore */
-"aboutMore" = "Know more about EDS👉";
+"aboutMore" = "Learn More About EDS👉";
 
 /* home_energy */
 "home_energy" = "Energy";
@@ -115,20 +115,20 @@
 /* home_notice_time */
 "home_notice_time" = "Overdue";
 /* home_notice_confirm */
-"home_notice_confirm" = "PUBLISH";
+"home_notice_confirm" = "Publish";
 /* home_notice_imcomplete */
-"home_notice_imcomplete" = "Please complete necessary infos";
+"home_notice_imcomplete" = "Please complete necessary infos!";
 /* home_banner */
-"home_banner" = "Banner";
+"home_banner" = "Cover";
 /* home_title */
-"home_title" = "Title";
+"home_title" = "Name";
 /* home_location */
 "home_location" = "Address";
 /* home_invalidQRCode */
-"home_invalidQRCode" = "Invalid EDS's qrcode";
+"home_invalidQRCode" = "Invalid EDS's QR Code";
 
 /* energy_addition */
-"energy_addition" = "Add branch";
+"energy_addition" = "Add Branch";
 /* energy_title */
 "energy_title" = "Electric Analysis";
 /* energy_day */
@@ -144,7 +144,7 @@
 /* energy_percent */
 "energy_percent" = "Indicator";
 /* energy_time */
-"energy_time" = "Time range";
+"energy_time" = "Time Range";
 /* energy_valley */
 "energy_valley" = "valley";
 /* energy_plain */
@@ -152,7 +152,7 @@
 /* energy_peak */
 "energy_peak" = "peak";
 /* energy_branch */
-"energy_branch" = "Branch percentage(%)";
+"energy_branch" = "Branch Percentage(%)";
 /* energy_time_alert */
 "energy_time_alert" = "Analysis,based on time range ,only used in Mainland China：\r\n●valley at (00:00-07:00,23:00-24:00):\r\n¥0.4/kW.h\r\n●plain at (07:00-08:00,11:00-18:00):\r\n¥0.8/kW.h\r\n●peak at (08:00-11:00,18:00-23:00):\r\n¥1.2/kW.h";
 /* energy_branch_alert */
@@ -190,25 +190,25 @@
 "trend_time_alert" = "Invalid time range\r\n%@\r\n%@";
 
 /* add_room */
-"add_room" = "Add room";
+"add_room" = "Add Room";
 /* add_info */
-"add_info" = "Add device info";
+"add_info" = "Add Device's Info";
 /* info_limit */
 "info_limit" = "At most %d infos allowed，please delete others!";
 /* info */
 "info" = "Info";
 /* title */
-"title" = "Title";
+"title" = "Item";
 /* value */
 "value" = "Value";
 /* unit */
 "unit" = "Unit(optional)";
 /* room_addition */
-"room_addition" = "Room's name";
+"room_addition" = "Room's Name";
 /* box_addition */
-"box_addition" = "Box's name";
+"box_addition" = "Box's Name";
 /* property_addition */
-"property_addition" = "Device's name";
+"property_addition" = "Device's Name";
 /* delete_title */
 "delete_title" = "Delete [%@] and sub-infos";
 /* delete_info */
@@ -218,6 +218,8 @@
 
 /* uncommunicate */
 "uncommunicate" = "uncomm";
+/* added */
+"added" = "added";
 /* property */
 "property" = "Property";
 /* updating */
@@ -225,13 +227,13 @@
 /* update */
 "update" = "Modify";
 /* password_title */
-"password_title" = "Device's code";
+"password_title" = "Device's Code";
 /* password_error */
 "password_error" = "wrong code";
 /* userLocked */
 "userLocked" = "You aren't allowed to do this,please apply to admin for operator level.";
 /* localLocked */
-"localLocked" = "Device is locked in LOCAL mode,any operation is forbidden.";
+"localLocked" = "Device is locked as LOCAL mode,any operation is forbidden.";
 /* denied */
 "denied" = "Invalid action";
 
@@ -253,9 +255,9 @@
 /* status */
 "status" = "Status";
 /* positive */
-"positive" = "ABC";
+"positive" = "A-B-C";
 /* negative */
-"negative" = "ACB";
+"negative" = "A-C-B";
 /* open_phase */
 "open_phase" = "open phase";
 /* overload */
@@ -349,9 +351,9 @@
 "IdC" = "Ic";
 
 /* overload_protect */
-"overload_protect" = "Long time";
+"overload_protect" = "Long Time";
 /* short_protect */
-"short_protect" = "Short time";
+"short_protect" = "Short Time";
 /* instant_protect */
 "instant_protect" = "Instant";
 /* Isd_switch */
@@ -505,10 +507,10 @@
 /* alarm_unchecked */
 "alarm_unchecked" = "unchecked";
 /* alarm_add_alarm */
-"alarm_add_alarm" = "Add alarm";
+"alarm_add_alarm" = "Add Alarm";
 
 /* workorder_add_workorder */
-"workorder_add_workorder" = "Add workorder";
+"workorder_add_workorder" = "Add Workorder";
 /* workorder_plan */
 "workorder_plan" = "plan";
 /* workorder_alarm */
@@ -526,7 +528,7 @@
 /* workorder_audited */
 "workorder_audited" = "Audit";
 /* workorder_state */
-"workorder_state" = "State";
+"workorder_state" = "Status";
 /* workorder_task */
 "workorder_task" = "Task";
 /* workorder_basic */
@@ -544,15 +546,19 @@
 /* workorder_serial_number */
 "workorder_serial_number" = "ID";
 /* workorder_proper_time */
-"workorder_proper_time" = "Proper time";
+"workorder_proper_time" = "Proper Time";
 /* workorder_start_time */
-"workorder_start_time" = "Start time";
+"workorder_start_time" = "Start Time";
 /* workorder_end_time */
-"workorder_end_time" = "End time";
+"workorder_end_time" = "End Time";
 /* workorder_instruction */
 "workorder_instruction" = "Instruction";
+/* workorder_instruction_none */
+"workorder_instruction_none" = "None";
+/* workorder_task_custom */
+"workorder_task_custom" = "Custom";
 /* workorder_add_task */
-"workorder_add_task" = "Add task";
+"workorder_add_task" = "Add Task";
 /* workorder_time_range */
 "workorder_time_range" = "%@→%@";
 /* workorder_distribution */
@@ -628,7 +634,7 @@
 /* login_passwordType */
 "login_passwordType" = "Account";
 /* login_scanType */
-"login_scanType" = "Qrcode";
+"login_scanType" = "QR Code";
 /* login_phone */
 "login_phone" = "Number";
 /* login_code */
@@ -656,6 +662,6 @@
 /* login_freeVerify */
 "login_freeVerify" = "Freely login in 24h";
 /* login_invalidQRCode */
-"login_invalidQRCode" = "Invalid guest's qrcode";
+"login_invalidQRCode" = "Invalid Guest's QR Code";
 /* login_requestLogin */
 "login_requestLogin" = "Please log in first.";

@@ -143,6 +143,10 @@ class EnergyBranchController: UITableViewController {
         deleteVC.addAction(deleteAction)
         present(deleteVC, animated: true, completion: nil)
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = AdditionTableHeaderView()

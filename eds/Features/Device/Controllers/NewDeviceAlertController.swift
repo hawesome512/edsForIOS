@@ -8,16 +8,18 @@
 
 import UIKit
 
-class DeviceAdditionAlertController: UIAlertController, UITextFieldDelegate {
+class NewDeviceAlertController: UIAlertController, UITextFieldDelegate {
 
     let titleLable = UILabel()
     let nameField = LooseTextField()
     let devicePicker = UIPickerView()
 
     //新增设备（.fixed,.dynamic)时，可选设备列表：非通信型+通信型设备列表
-    lazy var deviceList: [String] = {
-        var devices = ["uncommunicate".localize()]
-        devices.append(contentsOf: TagUtility.sharedInstance.getDeviceList())
+    lazy var deviceList: [(device: String, added: Bool)] = {
+        var devices: [(device: String, added: Bool)] = [("uncommunicate".localize(), false)]
+        let addedDevices = DeviceUtility.sharedInstance.getDeviceList().map{$0.getShortID()}
+        let commDevices = TagUtility.sharedInstance.getCommDeviceList().map{ addedDevices.contains($0) ? ($0,true) : ($0,false) }
+        devices.append(contentsOf: commDevices)
         return devices
     }()
 
@@ -25,12 +27,11 @@ class DeviceAdditionAlertController: UIAlertController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         //AlertController不能依据view尺寸调整大小，根据经验设置title换行，匹配足够的高度空间。
         //新增pickerView时，controller会自动调整其尺寸以适应pickerView
         title = "\n\n\n"
-//        titleLable.text = "请输入配电房名称"
         titleLable.font = UIFont.preferredFont(forTextStyle: .headline)
         titleLable.textAlignment = .center
         view.addSubview(titleLable)
@@ -72,7 +73,7 @@ class DeviceAdditionAlertController: UIAlertController, UITextFieldDelegate {
     func getAddedDeviceId() -> String {
         //level=room/box/fixed时，row=0
         let selectedRow = devicePicker.selectedRow(inComponent: 0)
-        return selectedRow == 0 ? String.randomString(length: 5) : deviceList[selectedRow]
+        return selectedRow == 0 ? String.randomString(length: 5) : deviceList[selectedRow].device
     }
 
     func getAddedDeviceLevel() -> DeviceLevel {
@@ -89,8 +90,8 @@ class DeviceAdditionAlertController: UIAlertController, UITextFieldDelegate {
         }
     }
 
-    static func initController(device: Device?) -> DeviceAdditionAlertController {
-        let controller = DeviceAdditionAlertController(title: nil, message: nil, preferredStyle: .alert)
+    static func initController(device: Device?) -> NewDeviceAlertController {
+        let controller = NewDeviceAlertController(title: nil, message: nil, preferredStyle: .alert)
         var title: String?
         if let device = device {
             controller.parentDevice = device
@@ -121,7 +122,7 @@ class DeviceAdditionAlertController: UIAlertController, UITextFieldDelegate {
 
 }
 
-extension DeviceAdditionAlertController: UIPickerViewDataSource, UIPickerViewDelegate {
+extension NewDeviceAlertController: UIPickerViewDataSource, UIPickerViewDelegate {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -131,6 +132,20 @@ extension DeviceAdditionAlertController: UIPickerViewDataSource, UIPickerViewDel
     }
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return deviceList[row]
+        var device = deviceList[row].device
+        if deviceList[row].added {
+            device += "(\("added".localize()))"
+        }
+        return device
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if deviceList[row].added {
+            pickerView.selectRow(0, inComponent: 0, animated: true)
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return edsHeight
     }
 }

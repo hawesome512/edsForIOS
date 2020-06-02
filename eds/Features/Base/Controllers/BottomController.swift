@@ -10,7 +10,7 @@ import UIKit
 
 
 
-class BottomViewController: UIViewController {
+class BottomController: UIViewController {
 
     lazy var backdropView: UIView = {
         let bdView = UIView(frame: self.view.bounds)
@@ -48,7 +48,7 @@ class BottomViewController: UIViewController {
         contentView.edgesToSuperview(excluding: .top)
         contentView.height(viewHeight)
 
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(BottomViewController.handleTap(_:)))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(BottomController.handleTap(_:)))
         backdropView.addGestureRecognizer(tapGesture)
 
         dismissButton.tintColor = .systemGray
@@ -71,7 +71,7 @@ class BottomViewController: UIViewController {
     }
 }
 
-extension BottomViewController: UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning {
+extension BottomController: UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return self
     }

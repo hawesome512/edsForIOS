@@ -149,7 +149,7 @@ class AlarmListController: UITableViewController {
             }
             let message = WorkorderMessage.encode(with: alarm.id)
             workorder.setMessage([message])
-            let additionVC = WorkorderAdditionController()
+            let additionVC = NewWorkorderController()
             additionVC.workorder = workorder
             additionVC.delegate = self
             additionVC.hidesBottomBarWhenPushed = true

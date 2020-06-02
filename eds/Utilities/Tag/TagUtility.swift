@@ -120,7 +120,7 @@ class TagUtility: MQTTServiceDelegate {
     }
     
     /// 获取设备列表（淡化设备概念，用[String]
-    func getDeviceList() -> [String] {
+    func getCommDeviceList() -> [String] {
         var deviceNames: [String] = []
         tagList.forEach { tag in
             if !deviceNames.contains(tag.getDeviceName()) {
