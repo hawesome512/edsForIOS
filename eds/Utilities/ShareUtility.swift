@@ -86,19 +86,23 @@ class ShareUtility {
 
     /// 截屏分享
     /// - Parameter controller: <#controller description#>
-    static func sharePage(in controller: UIViewController,scrollView:UIScrollView?) {
+    static func sharePage(in controller: UIViewController, scrollView: UIScrollView?, sourceView: UIView) {
         if let scrollView = scrollView {
             scrollView.swContentScrollCapture{ image in
-                shareImage(image: image, controller: controller)
+                shareImage(image: image, controller: controller, sourceView: sourceView)
             }
         } else {
-            shareImage(image: controller.view.snapshot, controller: controller)
+            shareImage(image: controller.view.snapshot, controller: controller, sourceView: sourceView)
         }
     }
     
-    static func shareImage(image:UIImage?,controller:UIViewController){
+    static func shareImage(image:UIImage?,controller:UIViewController, sourceView: UIView){
         guard let image = image else { return }
         let activityVC = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+        if let ppc = activityVC.popoverPresentationController {
+            ppc.sourceView = sourceView
+            ppc.sourceRect = sourceView.bounds
+        }
         controller.present(activityVC, animated: true, completion: nil)
     }
 }

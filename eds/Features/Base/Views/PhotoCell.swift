@@ -17,10 +17,12 @@ class PhotoCell: UICollectionViewCell {
     let deleteButton = UIButton()
     let contentImage = UIImageView()
     let indexLabel = RoundLabel()
-
-    var url: URL? {
+    let largeButton = UIButton()
+    
+    var url: String? {
         didSet {
-            ViewUtility.setWebImage(in: contentImage, with: url, disposeBag: disposeBag)
+            guard let url = url else { return }
+            ViewUtility.setWebImage(in: contentImage, photo: url, small: true, disposeBag: disposeBag)
         }
     }
 
@@ -38,7 +40,19 @@ class PhotoCell: UICollectionViewCell {
         indexLabel.backgroundColor = edsLightGrayColor.withAlphaComponent(0.5)
         addSubview(indexLabel)
         indexLabel.centerXToSuperview()
-        indexLabel.bottomToSuperview(offset: -edsSpace)
+        indexLabel.bottomToSuperview(offset: -edsSpace,usingSafeArea: true)
+        
+        largeButton.setTitle("large_image".localize(), for: .normal)
+        largeButton.setTitleColor(edsDefaultColor, for: .normal)
+        largeButton.alpha = 0
+        largeButton.rx.tap.throttle(.seconds(1), scheduler: MainScheduler.instance).bind(onNext: {
+            guard let url = self.url else { return }
+            ViewUtility.setWebImage(in: self.contentImage, photo: url, small: false, disposeBag: self.disposeBag)
+            self.largeButton.alpha = 0
+        }).disposed(by: disposeBag)
+        addSubview(largeButton)
+        largeButton.centerY(to: indexLabel)
+        largeButton.leadingToSuperview(offset: edsSpace)
 
         deleteButton.setImage(UIImage(systemName: "xmark"), for: .normal)
         deleteButton.tintColor = .white

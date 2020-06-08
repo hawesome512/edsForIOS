@@ -32,6 +32,8 @@
 "confirm" = "确认";
 /* cancel_alert */
 "cancel_alert" = "尚未保存！";
+/* large_image */
+"large_image" = "查看原图";
 
 /* superAdmin */
 "superAdmin" = "管理员";
@@ -87,6 +89,8 @@
 "aboutDescription" = "EDS创新型云管理平台，提供中低压配电领域全新电力监控解决方案，具有低成本、易部署、高兼容、灵活扩容等优势，实现电气系统智能、便捷、安全地运行。";
 /* aboutMore */
 "aboutMore" = "了解更多EDS功能👉";
+/* versionUpdate */
+"versionUpdate" = "版本更新";
 
 /* home_energy */
 "home_energy" = "用电";
@@ -665,3 +669,5 @@
 "login_invalidQRCode" = "不是有效的EDS临时访客码";
 /* login_requestLogin */
 "login_requestLogin" = "请先登录";
+/* login_failure */
+"login_failure" = "登录失败，请检查网络连接并重试！";

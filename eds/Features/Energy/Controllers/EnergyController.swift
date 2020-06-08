@@ -62,7 +62,8 @@ class EnergyController: UITableViewController {
     }
     
     @objc func sharePage(){
-        ShareUtility.sharePage(in: self, scrollView: tableView)
+        let sourceView = navigationItem.rightBarButtonItem?.plainView
+        ShareUtility.sharePage(in: self, scrollView: tableView, sourceView: sourceView ?? view)
     }
 
     // MARK: - Table view data source

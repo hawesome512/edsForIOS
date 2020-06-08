@@ -30,8 +30,7 @@ class WorkorderMessageCell: UITableViewCell {
             if let name = message?.name {
                 nameLabel.text = name
                 if let photo = AccountUtility.sharedInstance.getPhone(by: name)?.photo {
-                    let url=photo.getEDSServletImageUrl()
-                    ViewUtility.setWebImage(in: userImage, with: url, disposeBag: disposeBag,placeholder: edsDefaultImage)
+                    ViewUtility.setWebImage(in: userImage, photo: photo, small: true, disposeBag: disposeBag,placeholder: edsDefaultImage)
                 } else {
                     userImage.image = UIImage(named: "eds")
                 }

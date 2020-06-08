@@ -23,8 +23,7 @@ class AlarmUtility {
     
     /// 从后台导入报警列表
     func loadProjectAlarmList() {
-        //获取后台服务设备列表请求在生命周期中只有一次
-        guard alarmList.count == 0, let projID = AccountUtility.sharedInstance.account?.id else {
+        guard let projID = AccountUtility.sharedInstance.account?.id else {
             return
         }
         //获取最近一年的报警记录(太久远的报警记录无意义）

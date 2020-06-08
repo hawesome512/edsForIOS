@@ -129,12 +129,12 @@ class Workorder: HandyJSON, Comparable {
         image = images.joined(separator: separator)
     }
 
-    func getImageURLs() -> [URL] {
+    func getImageURLs() -> [String] {
         //无图片
         if image.isEmpty {
-            return [URL]()
+            return [String]()
         }
-        return image.components(separatedBy: separator).map { $0.getEDSServletImageUrl() }
+        return image.components(separatedBy: separator)
     }
 
     func setState(with newState: WorkorderState, by name: String) {
@@ -196,7 +196,8 @@ class Workorder: HandyJSON, Comparable {
     }
 
     static func == (lhs: Workorder, rhs: Workorder) -> Bool {
-        return lhs.start == rhs.start
+        return lhs.id == rhs.id
+//        return lhs.start == rhs.start
     }
 
 }

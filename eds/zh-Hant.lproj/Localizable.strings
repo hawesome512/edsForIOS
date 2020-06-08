@@ -32,6 +32,8 @@
 "confirm" = "確認";
 /* cancel_alert */
 "cancel_alert" = "尚未保存！";
+/* large_image */
+"large_image" = "查看原圖";
 
 /* superAdmin */
 "superAdmin" = "管理員";
@@ -87,6 +89,8 @@
 "aboutDescription" = "EDS創新型雲管理平台，提供中低壓配電領域全新電力監控解決方案，具有低成本、易部署、高兼容、靈活擴容等優勢，實現電氣系統智能、便捷、安全地運行。";
 /* aboutMore */
 "aboutMore" = "了解更多EDS功能👉";
+/* versionUpdate */
+"versionUpdate" = "版本更新";
 
 /* home_energy */
 "home_energy" = "用電";
@@ -665,3 +669,5 @@
 "login_invalidQRCode" = "不是有效的EDS臨時訪客碼";
 /* login_requestLogin */
 "login_requestLogin" = "請先登錄";
+/* login_failure */
+"login_failure" = "登錄失敗，請檢查網路連接並重試！";

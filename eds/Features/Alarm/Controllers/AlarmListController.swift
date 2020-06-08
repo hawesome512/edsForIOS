@@ -41,7 +41,8 @@ class AlarmListController: UITableViewController {
             self.alarmList.reverse()
             self.tableView.reloadData()
         }).disposed(by: disposeBag)
-        navigationItem.rightBarButtonItem = reverseButton
+        let updateButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshAlarm))
+        navigationItem.rightBarButtonItems = [updateButton, reverseButton]
 
         searchVC.obscuresBackgroundDuringPresentation = false
         searchVC.searchResultsUpdater = self
@@ -172,6 +173,10 @@ class AlarmListController: UITableViewController {
         alarmVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(alarmVC, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    @objc func refreshAlarm(){
+        AlarmUtility.sharedInstance.loadProjectAlarmList()
     }
 
 }

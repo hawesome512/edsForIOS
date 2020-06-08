@@ -40,14 +40,25 @@ class AboutController: UIViewController {
         view.addSubview(versionLabel)
         versionLabel.centerXToSuperview()
         versionLabel.topToBottom(of: imageView, offset: edsMinSpace)
+        
+        let updateButton = UIButton()
+        updateButton.setTitleColor(.systemRed, for: .normal)
+        updateButton.setTitle("versionUpdate".localize(), for: .normal)
+        updateButton.rx.tap.bind(onNext: {
+            let path = "https://apps.apple.com/cn/app/eds/id1513537609"
+            ShareUtility.openWeb(path)
+        }).disposed(by: disposeBag)
+        view.addSubview(updateButton)
+        updateButton.centerXToSuperview()
+        updateButton.topToBottom(of: versionLabel,offset: edsMinSpace)
 
         let descriptionLabel = UILabel()
         descriptionLabel.text = "aboutDescription".localize()
         descriptionLabel.adjustsFontSizeToFitWidth = true
         descriptionLabel.numberOfLines = 0
-        descriptionLabel.font = UIFont.preferredFont(forTextStyle: .title3)
+        descriptionLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
         view.addSubview(descriptionLabel)
-        descriptionLabel.topToBottom(of: versionLabel, offset: edsMinSpace)
+        descriptionLabel.topToBottom(of: updateButton, offset: edsMinSpace)
         descriptionLabel.horizontalToSuperview(insets: .horizontal(edsSpace))
 
         let moreButton = UIButton()
@@ -73,7 +84,7 @@ class AboutController: UIViewController {
         view.addSubview(companyLabel)
         companyLabel.horizontalToSuperview(insets: .horizontal(edsSpace))
         companyLabel.bottomToSuperview(offset: -edsSpace, usingSafeArea: true)
-        companyLabel.topToBottom(of: moreButton,offset: edsMinSpace)
+        companyLabel.topToBottom(of: moreButton,offset: edsMinSpace,relation: .equalOrGreater)
     }
 
 }

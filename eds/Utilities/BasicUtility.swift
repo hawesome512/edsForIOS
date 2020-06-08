@@ -193,7 +193,9 @@ class BasicUtility {
             let currentDatas = branch.branches.map { $0.energyData?.chartValues.last?.values ?? [] }
             let currentData = uniteBranchValues(values: currentDatas)
             let chartValues = [("last".localize(with: prefixEnergy), lastData), ("current".localize(with: prefixEnergy), currentData)]
-            branch.energyData = EnergyData(dateItem, chartValues: chartValues)
+            let dbValues = branch.branches.map{$0.energyData?.doubleValues ?? []}
+            let doubleValues = uniteBranchValues(values: dbValues)
+            branch.energyData = EnergyData(dateItem, chartValues: chartValues,doubleValues: doubleValues)
         }
         return branch
     }
@@ -204,7 +206,7 @@ class BasicUtility {
         let doubleValues = filterAccumulatedValues(values: values)
         let unitedValues = uniteChartValues(values: doubleValues, dateItem: dateItem)
         let chartValues = separeteLinkValues(values: unitedValues, dateItem: dateItem)
-        let data = EnergyData(dateItem, chartValues: chartValues)
+        let data = EnergyData(dateItem, chartValues: chartValues, doubleValues: doubleValues)
         return data
     }
     

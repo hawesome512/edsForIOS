@@ -30,7 +30,8 @@ class FixedDeviceController: UIViewController, DevicePageScrollDelegate {
     
     @objc func sharePage(){
         let image = QRCodeUtility.generate(with: .device, param: device!.getShortID())
-        ShareUtility.shareImage(image: image, controller: self)
+        let sourceView = navigationItem.rightBarButtonItem?.plainView
+        ShareUtility.shareImage(image: image, controller: self, sourceView: sourceView ?? view)
     }
 
     override func viewWillAppear(_ animated: Bool) {

@@ -15,30 +15,37 @@ struct PhotoSource {
     private let disposeBag=DisposeBag()
     //图片来源：本机选择资源在前，网络资源在后
     var images: [UIImage] = []
-    var urls: [URL] = []
+    var webUrls: [String] = []
     
     func getTotal() -> Int {
-        return images.count + urls.count
+        return images.count + webUrls.count
     }
     
     func setImage(in view: UIImageView, at row: Int) {
-        guard images.count > 0 || urls.count > 0 else {
+        guard images.count > 0 || webUrls.count > 0 else {
             view.image = edsDefaultImage
             return
         }
         if row < images.count {
             view.image = images[row]
         } else {
-            let url = urls[row-images.count]
-            ViewUtility.setWebImage(in: view, with: url,disposeBag:disposeBag)
+            let url = webUrls[row-images.count]
+            ViewUtility.setWebImage(in: view, photo: url, small: true,disposeBag:disposeBag)
         }
+    }
+    
+    func getWebImage(at row: Int) -> String? {
+        guard images.count > 0 || webUrls.count > 0, row >= images.count else {
+            return nil
+        }
+        return webUrls[row-images.count]
     }
     
     mutating func removeImage(at row: Int) {
         if row < images.count {
             images.remove(at: row)
         } else {
-            urls.remove(at: row - images.count)
+            webUrls.remove(at: row - images.count)
         }
     }
 }
@@ -102,7 +109,9 @@ extension PhotoCollectionController: UICollectionViewDataSource, UICollectionVie
         cell.contentImage.enableZoom()
         cell.contentImage.transform = .identity
         photoSource.setImage(in: cell.contentImage, at: indexPath.row)
+        cell.url = photoSource.getWebImage(at: indexPath.row)
         cell.indexLabel.innerText = "\(indexPath.row + 1)/\(photoSource.getTotal())"
+        cell.largeButton.alpha = 1
         return cell
     }
     

@@ -23,6 +23,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
     //24小时（1 day）内免验证登录
     private let freeVerifyDay = 1
     private let loginIndicator = UIActivityIndicatorView()
+    private var timerDisposable: Disposable?
     
     let topImage = UIImageView()
     let bottomImage = UIImageView()
@@ -193,6 +194,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
         
         //请求验证码
         codeButton.rx.tap.bind(onNext: {
+            
             //验证输入手机号码格式
             guard let phoneNumber = self.phoneField.text, phoneNumber.verifyValidNumber(count: 11) else {
                 ControllerUtility.presentAlertController(content: "phoneFormat".localize(with: prefixLogin), controller: self)
@@ -200,15 +202,15 @@ class LoginController: UIViewController, UITextFieldDelegate {
             }
             self.codeField.becomeFirstResponder()
             //请求验证码
-            Observable<Int>.interval(DispatchTimeInterval.seconds(1), scheduler: MainScheduler.instance).map { self.codeSecendLimit - $0 }.filter { $0 >= 0 }.bind(onNext: { secend in
-                guard secend > 0 else {
+            self.timerDisposable = Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance).map{ self.codeSecendLimit-$0 }.filter{ $0>=0 }.bind(onNext: { second in
+                guard second > 0 else {
                     self.codeButton.isEnabled = true
                     self.codeButton.setTitle("acquire".localize(with: prefixLogin), for: .normal)
                     return
                 }
                 self.codeButton.isEnabled = false
-                self.codeButton.setTitle("\(secend)s", for: .normal)
-            }).disposed(by: self.disposeBag)
+                self.codeButton.setTitle("\(second)s", for: .normal)
+            })//.disposed(by: self.disposeBag)
             AccountUtility.sharedInstance.verifyCode(phoneNumber, controller: self)
         }).disposed(by: disposeBag)
         
@@ -216,10 +218,10 @@ class LoginController: UIViewController, UITextFieldDelegate {
         loginButton.rx.tap.bind(onNext: {
             
             //调试用，跳过数据请求
-//            let homeVC = WorkorderAdditionController() // MainController()
-//            homeVC.modalPresentationStyle = .fullScreen
-//            self.present(homeVC, animated: true, completion: nil)
-//            return
+            //            let homeVC = WorkorderAdditionController() // MainController()
+            //            homeVC.modalPresentationStyle = .fullScreen
+            //            self.present(homeVC, animated: true, completion: nil)
+            //            return
             
             //手机24小时免验证
             if self.loginType == .phoneType, self.freeVerified, let authorigy = UserDefaults.standard.string(forKey: AccountUtility.authorityKey)?.fromBase64() {
@@ -288,8 +290,11 @@ class LoginController: UIViewController, UITextFieldDelegate {
         })
     }
     
-    /// 验证成功后恢复输入界面
+    /// 验证成功/失败后恢复输入界面
     private func clearInputViews() {
+        timerDisposable?.dispose()
+        codeButton.isEnabled = true
+        codeButton.setTitle("acquire".localize(with: prefixLogin), for: .normal)
         phoneField.resignFirstResponder()
         codeField.resignFirstResponder()
         loginButton.alpha = 1

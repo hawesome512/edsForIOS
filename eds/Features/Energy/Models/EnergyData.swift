@@ -13,12 +13,13 @@ class EnergyData {
     var dateItem: EnergyDateItem
     //上一期和当前期的曲线值
     var chartValues: [(name: String, values: [Double])] = []
-    //支路占比,
-//    var branchData: Dictionary<String, Double> = ["1F": 25, "2F": 40, "3F": 35]
+    //未聚合之前的原始数据,用于分时计算
+    var doubleValues: [Double] = []
 
-    init(_ dateItem: EnergyDateItem, chartValues: [(name: String, values: [Double])]) {
+    init(_ dateItem: EnergyDateItem, chartValues: [(name: String, values: [Double])], doubleValues: [Double]) {
         self.dateItem = dateItem
         self.chartValues = chartValues
+        self.doubleValues = doubleValues
     }
 
     //当前期数据
@@ -34,6 +35,19 @@ class EnergyData {
     //当前期总值
     func getCurrentTotalValue() -> Double {
         return chartValues.last?.values.reduce(0, +) ?? 0
+    }
+    
+    //当前期的原始值
+    func getCurrentDoubleValues() -> [Double] {
+        let records = dateItem.getLastPeriodRecords()
+        guard doubleValues.count > records else { return [] }
+        if dateItem.dateType == .month, doubleValues.count > records*24 {
+            return Array(doubleValues.suffix(from: records*24))
+        } else if doubleValues.count > records {
+            return Array(doubleValues.suffix(from: records))
+        } else {
+            return []
+        }
     }
 
     //上一期总值
@@ -64,7 +78,8 @@ class EnergyData {
         guard dateItem.dateType != .year else {
             return data
         }
-        getCurrentValues().enumerated().forEach { (offset, element) in
+        let curDoubleValues = getCurrentDoubleValues()
+        curDoubleValues.enumerated().forEach { (offset, element) in
             let date = dateItem.date + offset.hours
             let priceType = EnergyPrice(hourOfDay: date.hour)
             data[priceType] = data[priceType]! + element

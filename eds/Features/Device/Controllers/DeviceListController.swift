@@ -37,6 +37,10 @@ class DeviceListController: UIViewController {
         tableView.delegate = self
         view.addSubview(tableView)
         tableView.edgesToSuperview()
+        
+        
+        let updateButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshDevice))
+        navigationItem.rightBarButtonItem = updateButton
     }
     
     fileprivate func initData(){
@@ -60,6 +64,10 @@ class DeviceListController: UIViewController {
             }
         }
         TagUtility.sharedInstance.updateTagList(with: statusTagList)
+    }
+    
+    @objc func refreshDevice(){
+        DeviceUtility.sharedInstance.loadProjectDeviceList()
     }
     
 }

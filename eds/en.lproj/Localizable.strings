@@ -32,6 +32,8 @@
 "confirm" = "Confirm";
 /* cancel_alert */
 "cancel_alert" = "Not Saved!";
+/* large_image */
+"large_image" = "Full Image";
 
 /* superAdmin */
 "superAdmin" = "admin";
@@ -87,6 +89,8 @@
 "aboutDescription" = "EDS,an innovative cloud platform,privides a new solution for medium and low voltage distribution.ECONOMY,CONVENIENT,COMPATIBLE,FLEXIBLE,EDS can make your distribution system smarter、safer and more convenient.";
 /* aboutMore */
 "aboutMore" = "Learn More About EDS👉";
+/* versionUpdate */
+"versionUpdate" = "Version Update";
 
 /* home_energy */
 "home_energy" = "Energy";
@@ -154,7 +158,7 @@
 /* energy_branch */
 "energy_branch" = "Branch Percentage(%)";
 /* energy_time_alert */
-"energy_time_alert" = "Analysis,based on time range ,only used in Mainland China：\r\n●valley at (00:00-07:00,23:00-24:00):\r\n¥0.4/kW.h\r\n●plain at (07:00-08:00,11:00-18:00):\r\n¥0.8/kW.h\r\n●peak at (08:00-11:00,18:00-23:00):\r\n¥1.2/kW.h";
+"energy_time_alert" = "Analysis,based on time range ,only used in Mainland China and disabled in YEAR mode：\r\n●valley at (00:00-07:00,23:00-24:00):\r\n¥0.4/kW.h\r\n●plain at (07:00-08:00,11:00-18:00):\r\n¥0.8/kW.h\r\n●peak at (08:00-11:00,18:00-23:00):\r\n¥1.2/kW.h";
 /* energy_branch_alert */
 "energy_branch_alert" = "Click bar chart below to get more infomation about branch's electric analysis.";
 /* energy_edit */
@@ -665,3 +669,5 @@
 "login_invalidQRCode" = "Invalid Guest's QR Code";
 /* login_requestLogin */
 "login_requestLogin" = "Please log in first.";
+/* login_failure */
+"login_failure" = "Logon failed,please check the network and try again!";

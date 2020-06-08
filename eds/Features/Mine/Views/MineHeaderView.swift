@@ -43,8 +43,7 @@ class MineHeaderView: UIView, UITextFieldDelegate {
     
     private func initData(phone: Phone){
         loginedPhone = phone
-        let profileURL = phone.photo.getEDSServletImageUrl()
-        ViewUtility.setWebImage(in: profileImage, with: profileURL, disposeBag: disposeBag,placeholder: UIImage(named: "eds"))
+        ViewUtility.setWebImage(in: profileImage, photo: phone.photo, small: true, disposeBag: disposeBag,placeholder: UIImage(named: "eds"))
         nameLabel.text = phone.name
         levelLabel.text = phone.level.getText()
         levelImage.image = phone.level.getIcon()?.withTintColor(.white, renderingMode: .alwaysTemplate)

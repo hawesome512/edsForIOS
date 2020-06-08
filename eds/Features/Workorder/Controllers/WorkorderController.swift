@@ -54,7 +54,7 @@ class WorkorderController: UIViewController {
             tasks = workorder.getTasks()
             messages = workorder.getMessages()
             infos = workorder.getInfos()
-            photoSource.urls = workorder.getImageURLs()
+            photoSource.webUrls = workorder.getImageURLs()
             
             initFoldView(type: .task, total: tasks.count)
             initFoldView(type: .message, total: messages.count)
@@ -62,14 +62,14 @@ class WorkorderController: UIViewController {
     }
     
     private func initFoldView(type: WorkorderSectionType, total: Int) {
-        if let view = foldViews[type] {
-            //任务清单的count保持不变，但留言可以增减，需更新totalCount
-            view.totalCount = total
-            view.foldButton.rx.tap.bind(onNext: {
-                view.folded = !view.folded
-                self.tableView.reloadData()
-            }).disposed(by: disposeBag)
-        }
+        guard let view = foldViews[type] else { return }
+        //任务清单的count保持不变，但留言可以增减，需更新totalCount
+        view.totalCount = total
+        view.foldButton.rx.tap.bind(onNext: {
+            view.folded = !view.folded
+            self.tableView.reloadData()
+        }).disposed(by: disposeBag)
+        
     }
     
     override func viewDidLoad() {
@@ -100,12 +100,25 @@ class WorkorderController: UIViewController {
             workorder?.setState(with: .distributed, by: accountName)
         }
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "paperplane"), style: .plain, target: self, action: #selector(sharePage))
+        let shareButton = UIBarButtonItem(image: UIImage(systemName: "paperplane"), style: .plain, target: self, action: #selector(sharePage))
+        let refreshBUtton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshWorkorder))
+        navigationItem.rightBarButtonItems = [shareButton,refreshBUtton]
     }
     
     @objc func sharePage(){
         let image = QRCodeUtility.generate(with: .workorder, param: workorder!.id)
-        ShareUtility.shareImage(image: image, controller: self)
+        let sourceView = navigationItem.rightBarButtonItem?.plainView
+        ShareUtility.shareImage(image: image, controller: self, sourceView: sourceView ?? view)
+    }
+    
+    @objc func refreshWorkorder(){
+        guard let id = workorder?.id else { return }
+        WorkorderUtility.sharedInstance.refreshWorkerorder(id)
+        WorkorderUtility.sharedInstance.successfulRefresh.throttle(.seconds(1), scheduler: MainScheduler.instance).bind(onNext: {refresh in
+            guard refresh == self.workorder else { return }
+            self.workorder = refresh
+            self.tableView.reloadData()
+        }).disposed(by: disposeBag)
     }
     
     private func initBarItems() {
@@ -382,7 +395,8 @@ extension WorkorderController {
         
         let indexPath = IndexPath(row: 0, section: WorkorderSectionType.photo.rawValue)
         let photoCell = tableView.cellForRow(at: indexPath)! as! WorkorderPhotoCollectionCell
-        let images = photoCell.photoSource.images
+        photoSource = photoCell.photoSource
+        let images = photoSource.images
         guard images.count > 0 else {
             prepareUpdateWorkorder(uploadedImages: [])
             return
@@ -412,7 +426,7 @@ extension WorkorderController {
         //更新工单任务和图片信息
         photoSource.images = uploadedImages.map { $0.image }
         var newImages = uploadedImages.map { $0.name }
-        newImages.append(contentsOf: photoSource.urls.map { $0.absoluteString.getImageNameFromURL() })
+        newImages.append(contentsOf: photoSource.webUrls)
         workorder?.setImages(newImages)
         workorder?.setTasks(tasks)
         workorder?.setState(with: .executed, by: accountName)
@@ -449,6 +463,7 @@ extension WorkorderController: MessageDelegate, UITextFieldDelegate {
             guard let message = msgVC.textFields?.first?.text, !message.isEmpty else { return }
             self.messages.append(WorkorderMessage.encode(with: message))
             self.foldViews[.message]?.totalCount = self.messages.count
+            self.foldViews[.message]?.folded = false
             self.workorder?.setMessage(self.messages)
             self.updateWorkorder()
         }

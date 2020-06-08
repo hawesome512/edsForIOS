@@ -25,20 +25,19 @@ class WorkorderCell: UITableViewCell {
 
     var workorder: Workorder? {
         didSet {
-            if let workorder = workorder {
-                titleLabel.text = workorder.title
-
-                typeLabel.alpha = 0.8
-                typeLabel.innerText = workorder.type.getText()
-                typeLabel.backgroundColor = workorder.type.getColor()
-                deviceLabel.text = workorder.location
-                timeLabel.text = workorder.getShortTimeRange()
-                let state = workorder.getFlowTimeLine().getState()
-                stateImageView.image = state.icon
-                stateImageView.tintColor = state.color
-                workerLabel.text = workorder.worker.separateNameAndPhone().name
-                cornerView.alpha = workorder.added ? 1 : 0
-            }
+            guard let workorder = workorder else { return }
+            titleLabel.text = workorder.title
+            
+            typeLabel.alpha = 0.8
+            typeLabel.innerText = workorder.type.getText()
+            typeLabel.backgroundColor = workorder.type.getColor()
+            deviceLabel.text = workorder.location
+            timeLabel.text = workorder.getShortTimeRange()
+            let state = workorder.getFlowTimeLine().getState()
+            stateImageView.image = state.icon
+            stateImageView.tintColor = state.color
+            workerLabel.text = workorder.worker.separateNameAndPhone().name
+            cornerView.alpha = workorder.added ? 1 : 0
         }
     }
 

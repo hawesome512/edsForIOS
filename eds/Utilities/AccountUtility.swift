@@ -79,15 +79,14 @@ class AccountUtility {
                 }
                 //验证失败
                 if let verifiedResult = JsonUtility.getPhoneVerifyResult(data: response.data)?.0, verifiedResult.isError() {
-                    //有验证码：错误or超时，取消登录动画
-                    if let _ = code {
-                        self.successfulUpdated.accept(false)
-                    }
+                    self.successfulUpdated.accept(false)
                     let message = String(describing: verifiedResult.self).localize(with: prefixLogin)
                     ControllerUtility.presentAlertController(content: message, controller: controller)
                 }
-            default:
-                break
+            case .failure:
+                self.successfulUpdated.accept(false)
+                let content = "failure".localize(with: prefixLogin)
+                ControllerUtility.presentAlertController(content: content, controller: controller)
             }
         }
     }
@@ -99,9 +98,7 @@ class AccountUtility {
     ///   - phoneNumber: 一天内免验证登录时，不为nil
     func loadProjectAccount(username: String, password: String, controller: UIViewController, phoneNumber: String? = nil, isScan: Bool = false) {
         //获取后台服务,请求在生命周期中只有一次
-        if let _ = account {
-            return
-        }
+        if let _ = account { return }
         //因为用户id的格式为数字/工程名，使用id="/"将获取所有账户，e.g.:2/XRD、1/XKB
         let factor = EDSServiceQueryFactor(id: "/")
         EDSService.getProvider().request(.queryAccountList(factor: factor)) { result in
@@ -130,8 +127,10 @@ class AccountUtility {
                     let message = "incorrectPassword".localize(with: prefixLogin)
                     ControllerUtility.presentAlertController(content: message, controller: controller)
                 }
-            default:
-                break
+            case .failure:
+                self.successfulUpdated.accept(false)
+                let content = "failure".localize(with: prefixLogin)
+                ControllerUtility.presentAlertController(content: content, controller: controller)
             }
         }
     }

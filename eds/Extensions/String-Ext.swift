@@ -122,6 +122,13 @@ extension String {
         let image = self.contains(".") ? self : "\(self).png"
         return URL(string: "\(EDSConfig.servicePath):8443/EDSServlet/upload/\(image)")!
     }
+    
+    /// EDS缩略图在服务器中的地址
+    func getEDSServletSmallImageUrl() -> URL {
+        //历史遗留，已存在xxx.jpg or xxx.jpeg 数据
+        let image = self.contains(".") ? self : "\(self).png"
+        return URL(string: "\(EDSConfig.servicePath):8443/EDSServlet/upload/small/\(image)")!
+    }
 
 
     /// EDS运维指导文件在服务器中的地址

@@ -36,10 +36,11 @@ class WorkorderListController: UITableViewController, WorkorderAdditionDelegate 
         tableView.register(WorkorderCell.self, forCellReuseIdentifier: Workorder.description)
         let reverseButton = UIBarButtonItem(image: UIImage(systemName: "arrow.up.arrow.down"), style: .plain, target: self, action: #selector(reverseWorkorder))
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addWorkorder))
+        let updateButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshWorkorder))
         if AccountUtility.sharedInstance.isOperable() {
-            navigationItem.rightBarButtonItems = [addButton, reverseButton]
+            navigationItem.rightBarButtonItems = [addButton, updateButton, reverseButton]
         } else {
-            navigationItem.rightBarButtonItems = [reverseButton]
+            navigationItem.rightBarButtonItems = [updateButton, reverseButton]
         }
         
         searchVC.searchResultsUpdater = self
@@ -123,6 +124,10 @@ class WorkorderListController: UITableViewController, WorkorderAdditionDelegate 
     @objc func reverseWorkorder() {
         workorderList = workorderList.reversed()
         tableView.reloadData()
+    }
+    
+    @objc func refreshWorkorder(){
+        WorkorderUtility.sharedInstance.loadProjectWorkerorderList()
     }
 
     func added(workorder: Workorder) {

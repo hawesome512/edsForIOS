@@ -16,6 +16,7 @@ class WorkorderUtility {
     //通过单列调取工单列表
     private var workorderList: [Workorder] = []
     private(set) var successfulUpdated = BehaviorRelay<Bool>(value: false)
+    private(set) var successfulRefresh = BehaviorRelay<Workorder?>(value: nil)
     
     private init() { }
     
@@ -37,6 +38,22 @@ class WorkorderUtility {
 //                self.workorderList = ((tempList?.filter { $0 != nil })! as! [Workorder]).sorted().reversed()
                 self.addWorkorderList(tempList)
                 print("WorkorderUtility:Load project workorder list.")
+            default:
+                break
+            }
+        }
+    }
+    
+    /// 更新单条工单
+    func refreshWorkerorder(_ id: String) {
+        let factor = EDSServiceQueryFactor(id: id, in: .none)
+        EDSService.getProvider().request(.queryWorkorderList(factor: factor)) { result in
+            switch result {
+            case .success(let response):
+                //后台返回数据类型[Workorder?]?👉[Workorder]
+                let tempList = JsonUtility.getEDSServiceList(with: response.data, type: [Workorder]())
+                self.refreshWorkorderList(tempList)
+                print("Refresh Workorder:\(id).")
             default:
                 break
             }
@@ -75,15 +92,23 @@ class WorkorderUtility {
     
     private func addWorkorderList(_ workorders:[Workorder?]?){
         let tempList=(workorders?.filter { $0 != nil })! as! [Workorder]
-        tempList.forEach{
-            if !workorderList.contains($0){
-                workorderList.append($0)
+        workorderList = tempList.map{temp in
+            if workorderList.count > 0, !workorderList.contains(temp) {
+                temp.added = true
             }
+            return temp
         }
         //按执行时间的先后排序，逆序
         workorderList.sort()
         workorderList.reverse()
         successfulUpdated.accept(true)
+    }
+    
+    private func refreshWorkorderList(_ workorders:[Workorder?]?){
+        guard let wo = workorders?.first, let workorder = wo, let index = workorderList.firstIndex(of: workorder) else { return }
+        workorderList[index] = workorder
+        successfulUpdated.accept(true)
+        successfulRefresh.accept(workorder)
     }
     
     func update(with workorder: Workorder) {

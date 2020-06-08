@@ -79,18 +79,25 @@ class ViewUtility {
     /// - Parameters:
     ///   - imageView: <#imageView description#>
     ///   - url: <#url description#>
-    static func setWebImage(in imageView:UIImageView,with url:URL?,disposeBag:DisposeBag,placeholder:Placeholder?=nil){
-        guard let url=url else { return }
+    static func setWebImage(in imageView:UIImageView, photo:String, small:Bool,disposeBag:DisposeBag,placeholder:UIImage?=nil, contentMode: UIView.ContentMode? = nil){
+        if photo.isEmpty {
+            imageView.image = placeholder
+            return
+        }
+        let url = small ? photo.getEDSServletSmallImageUrl() : photo.getEDSServletImageUrl()
+        let placeholder = placeholder ?? imageView.image
         imageView.kf.setImage(with: url,placeholder: placeholder){result in
             switch result{
             case .failure:
-                //只重试一次:3s后
+                //只重试一次:ns后
                 Observable.of(1).delay(RxTimeInterval.seconds(3), scheduler: MainScheduler.instance).bind(onNext: {_ in
                     imageView.kf.setImage(with: url,placeholder: placeholder)
+                    guard let mode = contentMode else { return }
+                    imageView.contentMode = mode
                 }).disposed(by: disposeBag)
-                break
-            default:
-                break
+            case .success:
+                guard let mode = contentMode else { return }
+                imageView.contentMode = mode
             }
         }
     }
