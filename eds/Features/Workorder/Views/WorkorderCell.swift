@@ -70,19 +70,19 @@ class WorkorderCell: UITableViewCell {
         workerIcon.leading(to: titleLabel)
         workerIcon.topToBottom(of: titleLabel, offset: edsMinSpace)
 
-        workerLabel.textColor = .systemGray
-        addSubview(workerLabel)
-        workerLabel.centerY(to: workerIcon)
-        workerLabel.leadingToTrailing(of: workerIcon, offset: edsMinSpace)
-        workerLabel.width(60)
-
         timeIcon.tintColor = .systemGray
         timeIcon.image = UIImage(systemName: "calendar")
         addSubview(timeIcon)
         timeIcon.width(edsIconSize)
         timeIcon.height(edsIconSize)
         timeIcon.centerY(to: workerIcon)
-        timeIcon.leadingToTrailing(of: workerLabel, offset: edsSpace)
+        timeIcon.centerXToSuperview(offset: -edsMinSpace)
+
+        workerLabel.textColor = .systemGray
+        addSubview(workerLabel)
+        workerLabel.centerY(to: workerIcon)
+        workerLabel.leadingToTrailing(of: workerIcon, offset: edsMinSpace)
+        workerLabel.trailingToLeading(of: timeIcon)
 
         timeLabel.textColor = .systemGray
         timeLabel.textAlignment = .right

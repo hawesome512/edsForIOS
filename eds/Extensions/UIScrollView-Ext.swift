@@ -26,7 +26,7 @@ extension UIScrollView {
         let bakOffset    = self.contentOffset
         
         // Divide
-        let page  = floorf(Float(self.contentSize.height / self.bounds.height))
+        let page  = floorf(Float(self.contentSize.height / self.bounds.height))+1
         
         UIGraphicsBeginImageContextWithOptions(self.contentSize, false, UIScreen.main.scale)
         

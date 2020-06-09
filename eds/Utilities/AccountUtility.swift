@@ -98,7 +98,8 @@ class AccountUtility {
     ///   - phoneNumber: 一天内免验证登录时，不为nil
     func loadProjectAccount(username: String, password: String, controller: UIViewController, phoneNumber: String? = nil, isScan: Bool = false) {
         //获取后台服务,请求在生命周期中只有一次
-        if let _ = account { return }
+        //if let _ = account { return }
+        
         //因为用户id的格式为数字/工程名，使用id="/"将获取所有账户，e.g.:2/XRD、1/XKB
         let factor = EDSServiceQueryFactor(id: "/")
         EDSService.getProvider().request(.queryAccountList(factor: factor)) { result in

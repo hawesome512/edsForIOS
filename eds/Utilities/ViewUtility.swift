@@ -11,6 +11,14 @@ import UIKit
 import Kingfisher
 import RxSwift
 
+
+/// 下载网络图片：小图、大图，都下载（先下载小图保证快速显示）
+enum ImageDownloadType {
+    case small
+    case large
+    case both
+}
+
 class ViewUtility {
 
     /// 设置大标题
@@ -79,12 +87,20 @@ class ViewUtility {
     /// - Parameters:
     ///   - imageView: <#imageView description#>
     ///   - url: <#url description#>
-    static func setWebImage(in imageView:UIImageView, photo:String, small:Bool,disposeBag:DisposeBag,placeholder:UIImage?=nil, contentMode: UIView.ContentMode? = nil){
+    static func setWebImage(in imageView:UIImageView, photo:String, download:ImageDownloadType,disposeBag:DisposeBag,placeholder:UIImage?=nil, contentMode: UIView.ContentMode? = nil){
+        //从后台返回的数据结构存在photo=""表示空值的情况
         if photo.isEmpty {
             imageView.image = placeholder
             return
         }
-        let url = small ? photo.getEDSServletSmallImageUrl() : photo.getEDSServletImageUrl()
+        let url:URL
+        switch download {
+        case .large:
+            url = photo.getEDSServletImageUrl()
+        default:
+            url = photo.getEDSServletSmallImageUrl()
+        }
+        //若imageView本身有图片，可代替placeholder
         let placeholder = placeholder ?? imageView.image
         imageView.kf.setImage(with: url,placeholder: placeholder){result in
             switch result{
@@ -98,6 +114,9 @@ class ViewUtility {
             case .success:
                 guard let mode = contentMode else { return }
                 imageView.contentMode = mode
+                if download == .both {
+                    setWebImage(in: imageView, photo: photo, download: .large, disposeBag: disposeBag)
+                }
             }
         }
     }

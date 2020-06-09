@@ -66,8 +66,9 @@ class DeviceListController: UIViewController {
         TagUtility.sharedInstance.updateTagList(with: statusTagList)
     }
     
-    @objc func refreshDevice(){
+    @objc func refreshDevice(_ sender: UIBarButtonItem){
         DeviceUtility.sharedInstance.loadProjectDeviceList()
+        sender.plainView.loadedWithAnimation()
     }
     
 }

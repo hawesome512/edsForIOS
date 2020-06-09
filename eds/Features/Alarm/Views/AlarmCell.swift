@@ -22,8 +22,7 @@ class AlarmCell: UITableViewCell {
         didSet {
             if let alarm = alarm, let device = DeviceUtility.sharedInstance.getDevice(of: alarm.device) {
                 self.device = device
-                ViewUtility.setWebImage(in: deviceImage, photo: device.image, small: true, disposeBag: disposeBag, placeholder: device.getDefaultImage(), contentMode: .scaleAspectFill)
-//                DeviceUtility.setImage(in: deviceImage, with: device)
+                ViewUtility.setWebImage(in: deviceImage, photo: device.image, download: .small, disposeBag: disposeBag, placeholder: device.getDefaultImage(), contentMode: .scaleAspectFill)
                 titleLabel.text = TagValueConverter.getAlarmText(with: alarm.alarm, device: device)
                 statusView.innerText = alarm.confirm.getText()
                 statusView.backgroundColor = alarm.confirm.getState().color

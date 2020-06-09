@@ -103,6 +103,7 @@ class ShareUtility {
             ppc.sourceView = sourceView
             ppc.sourceRect = sourceView.bounds
         }
+        //activityVC选择“保存图片”方式将直接退回登录页面，controller(基于MainVC的导航VC将被关闭）
         controller.present(activityVC, animated: true, completion: nil)
     }
 }

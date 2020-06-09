@@ -30,7 +30,7 @@ struct PhotoSource {
             view.image = images[row]
         } else {
             let url = webUrls[row-images.count]
-            ViewUtility.setWebImage(in: view, photo: url, small: true,disposeBag:disposeBag)
+            ViewUtility.setWebImage(in: view, photo: url, download: .small,disposeBag:disposeBag)
         }
     }
     

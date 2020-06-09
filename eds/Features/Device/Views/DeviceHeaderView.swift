@@ -25,8 +25,7 @@ class DeviceHeaderView: UIView, UITextFieldDelegate {
     var device: Device? {
         didSet {
             guard let device = device else { return }
-            ViewUtility.setWebImage(in: imageView, photo: device.image, small: true, disposeBag: disposeBag, placeholder: device.getDefaultImage(), contentMode: .scaleAspectFill)
-//            DeviceUtility.setImage(in: imageView, with: device!)
+            ViewUtility.setWebImage(in: imageView, photo: device.image, download: .both, disposeBag: disposeBag, placeholder: device.getDefaultImage(), contentMode: .scaleAspectFill)
         }
     }
 

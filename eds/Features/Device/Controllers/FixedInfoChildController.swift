@@ -81,9 +81,8 @@ class FixedInfoChildController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard AccountUtility.sharedInstance.isOperable() else {
-            return
-        }
+        guard indexPath.row < deviceInfos.count else { return }
+        guard AccountUtility.sharedInstance.isOperable() else { return }
 
         let menuController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let editAction = UIAlertAction(title: "edit".localize(), style: .default) { _ in

@@ -175,8 +175,9 @@ class AlarmListController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    @objc func refreshAlarm(){
+    @objc func refreshAlarm(_ sender: UIBarButtonItem){
         AlarmUtility.sharedInstance.loadProjectAlarmList()
+        sender.plainView.loadedWithAnimation()
     }
 
 }

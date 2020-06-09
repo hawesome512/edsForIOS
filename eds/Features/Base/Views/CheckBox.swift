@@ -24,15 +24,8 @@ class CheckBox: UIButton {
     }
     override var isEnabled: Bool {
         didSet {
-            if isEnabled {
-                let scaleTransform = CGAffineTransform(scaleX: 0.1, y: 0.1)
-                self.transform = scaleTransform
-                self.alpha = 0
-                UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.7, options: [], animations: {
-                    self.transform = .identity
-                    self.alpha = 1
-                }, completion: nil)
-            }
+            guard isEnabled else { return }
+            loadedWithAnimation()
         }
     }
     var selectedState = BehaviorRelay<Bool>(value: false)

@@ -15,16 +15,14 @@ class AlarmViewController: UIViewController {
 
     var alarm: Alarm? {
         didSet {
-            if let alarm = alarm, let device = DeviceUtility.sharedInstance.getDevice(of: alarm.device) {
-                headerView.device = device
-                let deviceType = DeviceModel.sharedInstance?.types.first { $0.type == TagUtility.getDeviceType(with: device.getShortID()) }
-                if let alarmMode = deviceType?.alarm {
-                    let tags = TagUtility.sharedInstance.getTagList(by: alarmMode.items, in: device.getShortID())
-                    let condition = WATagLogRequestCondition.alarmCondition(with: tags, time: alarm.time)
-                    let limits = getLimitValues(alarmMode: alarmMode, deviceName: device.getShortID())
-                    trendController.trend(with: tags, condition: condition, isAccumulated: false, upperLimit: limits.upper, lowerLimit: limits.lower)
-                }
-            }
+            guard let alarm = alarm, let device = DeviceUtility.sharedInstance.getDevice(of: alarm.device) else { return }
+            headerView.device = device
+            let deviceType = DeviceModel.sharedInstance?.types.first { $0.type == TagUtility.getDeviceType(with: device.getShortID()) }
+            guard let alarmMode = deviceType?.alarm else { return }
+            let tags = TagUtility.sharedInstance.getTagList(by: alarmMode.items, in: device.getShortID())
+            let condition = WATagLogRequestCondition.alarmCondition(with: tags, time: alarm.time)
+            let limits = getLimitValues(alarmMode: alarmMode, deviceName: device.getShortID())
+            trendController.trend(with: tags, condition: condition, isAccumulated: false, upperLimit: limits.upper, lowerLimit: limits.lower)
         }
     }
 

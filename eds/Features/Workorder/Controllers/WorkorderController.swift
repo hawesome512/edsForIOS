@@ -111,7 +111,7 @@ class WorkorderController: UIViewController {
         ShareUtility.shareImage(image: image, controller: self, sourceView: sourceView ?? view)
     }
     
-    @objc func refreshWorkorder(){
+    @objc func refreshWorkorder(_ sender: UIBarButtonItem){
         guard let id = workorder?.id else { return }
         WorkorderUtility.sharedInstance.refreshWorkerorder(id)
         WorkorderUtility.sharedInstance.successfulRefresh.throttle(.seconds(1), scheduler: MainScheduler.instance).bind(onNext: {refresh in
@@ -119,6 +119,7 @@ class WorkorderController: UIViewController {
             self.workorder = refresh
             self.tableView.reloadData()
         }).disposed(by: disposeBag)
+        sender.plainView.loadedWithAnimation()
     }
     
     private func initBarItems() {

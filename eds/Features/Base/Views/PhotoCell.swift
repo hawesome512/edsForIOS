@@ -22,7 +22,7 @@ class PhotoCell: UICollectionViewCell {
     var url: String? {
         didSet {
             guard let url = url else { return }
-            ViewUtility.setWebImage(in: contentImage, photo: url, small: true, disposeBag: disposeBag)
+            ViewUtility.setWebImage(in: contentImage, photo: url, download: .small, disposeBag: disposeBag)
         }
     }
 
@@ -47,7 +47,7 @@ class PhotoCell: UICollectionViewCell {
         largeButton.alpha = 0
         largeButton.rx.tap.throttle(.seconds(1), scheduler: MainScheduler.instance).bind(onNext: {
             guard let url = self.url else { return }
-            ViewUtility.setWebImage(in: self.contentImage, photo: url, small: false, disposeBag: self.disposeBag)
+            ViewUtility.setWebImage(in: self.contentImage, photo: url, download: .large, disposeBag: self.disposeBag)
             self.largeButton.alpha = 0
         }).disposed(by: disposeBag)
         addSubview(largeButton)

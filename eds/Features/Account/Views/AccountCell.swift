@@ -34,7 +34,7 @@ class AccountCell: UITableViewCell {
             } else {
                 levelButton.alpha = 0
             }
-            ViewUtility.setWebImage(in: profileImage, photo: phone.photo, small: true, disposeBag: disposeBag,placeholder: UIImage(named: "AppIcon"))
+            ViewUtility.setWebImage(in: profileImage, photo: phone.photo, download: .small, disposeBag: disposeBag,placeholder: UIImage(named: "AppIcon"))
             nameLabel.text = phone.name
             phoneLabel.text = phone.number
             emailLabel.text = phone.email

@@ -44,4 +44,15 @@ extension UIView {
             objc_setAssociatedObject(self, &SwViewCaptureKey_IsCapturing, num, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
+    
+    /// 加载动画
+    func loadedWithAnimation(){
+        let scaleTransform = CGAffineTransform(scaleX: 0.1, y: 0.1)
+        self.transform = scaleTransform
+        self.alpha = 0
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.7, options: [], animations: {
+            self.transform = .identity
+            self.alpha = 1
+        }, completion: nil)
+    }
 }
