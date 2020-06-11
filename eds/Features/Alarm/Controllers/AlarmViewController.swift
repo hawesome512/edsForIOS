@@ -74,10 +74,11 @@ class AlarmViewController: UIViewController {
         return .lightContent
     }
     
-    @objc func sharePage(){
+    @objc func sharePage(_ sender: UIBarButtonItem){
         let image = QRCodeUtility.generate(with: .alarm, param: alarm!.id)
         let sourceView = navigationItem.rightBarButtonItem?.plainView
         ShareUtility.shareImage(image: image, controller: self, sourceView: sourceView ?? view)
+        sender.plainView.loadedWithAnimation()
     }
 
 }

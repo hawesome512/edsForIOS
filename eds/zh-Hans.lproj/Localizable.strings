@@ -158,7 +158,7 @@
 /* energy_branch */
 "energy_branch" = "支路用电占比(%)";
 /* energy_time_alert */
-"energy_time_alert" = "仅供参考，EDS使用单一电价预估费用：\r\n●低谷(00:00-07:00,23:00-24:00):\r\n¥0.4/kW.h\r\n●平段(07:00-08:00,11:00-18:00):\r\n¥0.8/kW.h\r\n●高峰(08:00-11:00,18:00-23:00):\r\n¥1.2/kW.h\r\n注1：各地峰谷电价、时段政策不同，且未考虑大工业供电二部制电价、功率因素调整等，具体请咨询当地电业局。\r\n注2:年模式无法分析用电时段占比。";
+"energy_time_alert" = "仅供参考，限于中国大陆地区，EDS使用单一电价预估费用：\r\n●低谷(00:00-07:00,23:00-24:00):\r\n¥0.4/kW.h\r\n●平段(07:00-08:00,11:00-18:00):\r\n¥0.8/kW.h\r\n●高峰(08:00-11:00,18:00-23:00):\r\n¥1.2/kW.h\r\n注1：各地峰谷电价、时段政策不同，且未考虑大工业供电二部制电价、功率因素调整等，具体请咨询当地电业局。\r\n注2:年模式无法分析用电时段占比。";
 /* energy_branch_alert */
 "energy_branch_alert" = "点击下方柱状图了解支路详细用电信息。";
 /* energy_edit */
@@ -219,6 +219,8 @@
 "delete_info" = "该操作不可恢复！";
 /* device_limit */
 "device_limit" = "最多可添加%d个资产，请先删减！";
+/* sort_info */
+"sort_info" = "排序";
 
 /* uncommunicate */
 "uncommunicate" = "非通信型";
@@ -274,6 +276,8 @@
 "ground" = "接地";
 /* trip */
 "trip" = "脱扣";
+/* preoverload */
+"preoverload" = "预过载";
 
 /* Ia */
 "Ia" = "Ia";

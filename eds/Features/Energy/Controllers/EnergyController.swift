@@ -49,7 +49,7 @@ class EnergyController: UITableViewController {
 
         let shareButton = UIBarButtonItem(image: UIImage(systemName: "paperplane"), style: .plain, target: self, action: #selector(sharePage))
         if AccountUtility.sharedInstance.isOperable() {
-            let branchBUtton = UIBarButtonItem(image: UIImage(named: "branch"), style: .plain, target: self, action: #selector(editBranch))
+            let branchBUtton = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(editBranch))
             navigationItem.rightBarButtonItems = [shareButton, branchBUtton]
         } else {
             navigationItem.rightBarButtonItems = [shareButton]
@@ -61,9 +61,12 @@ class EnergyController: UITableViewController {
         navigationController?.pushViewController(branchVC, animated: true)
     }
     
-    @objc func sharePage(){
+    @objc func sharePage(_ sender: UIBarButtonItem){
+        //滚动到顶部，保证截图完整
+        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
         let sourceView = navigationItem.rightBarButtonItem?.plainView
         ShareUtility.sharePage(in: self, scrollView: tableView, sourceView: sourceView ?? view)
+        sender.plainView.loadedWithAnimation()
     }
 
     // MARK: - Table view data source
@@ -110,7 +113,7 @@ class EnergyController: UITableViewController {
         case .chart:
             let screenHeight = UIScreen.main.bounds.height
             let height = (traitCollection.verticalSizeClass == .regular) ? screenHeight * 0.3 : screenHeight * 0.8
-            return max(height, 240)
+            return min(height, 240)
         case .analysis:
             return 120
         default:

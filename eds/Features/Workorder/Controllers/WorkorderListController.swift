@@ -121,9 +121,10 @@ class WorkorderListController: UITableViewController, WorkorderAdditionDelegate 
         navigationController?.pushViewController(addVC, animated: true)
     }
     
-    @objc func reverseWorkorder() {
+    @objc func reverseWorkorder(_ sender: UIBarButtonItem) {
         workorderList = workorderList.reversed()
         tableView.reloadData()
+        sender.plainView.loadedWithAnimation()
     }
     
     @objc func refreshWorkorder(_ sender: UIBarButtonItem){

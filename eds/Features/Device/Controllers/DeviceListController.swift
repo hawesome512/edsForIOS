@@ -98,6 +98,7 @@ extension DeviceListController: UITableViewDelegate, UITableViewDataSource {
             cell.indentationLevel = device.getIndentationLevel()
             cell.device = device
             cell.foldButton.rx.tap.bind(onNext: {
+                cell.foldButton.loadedWithAnimation()
                 device.collapsed = !device.collapsed
                 self.deviceList = DeviceUtility.sharedInstance.getProjDeviceList()
                 tableView.reloadData()

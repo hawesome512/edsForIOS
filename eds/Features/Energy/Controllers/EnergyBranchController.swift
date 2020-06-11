@@ -102,6 +102,7 @@ class EnergyBranchController: UITableViewController {
         if branch.id.count < EnergyBranch.levelLimit {
             let addButton = UIButton(type: .contactAdd)
             addButton.rx.tap.bind(onNext: {
+                addButton.loadedWithAnimation()
                 let parent = self.energyBranches[indexPath.row]
                 guard parent.branches.count < EnergyBranch.branchLimit else {
                     self.showLimitAlert()

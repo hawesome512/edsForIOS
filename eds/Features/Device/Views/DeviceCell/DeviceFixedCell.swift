@@ -24,35 +24,35 @@ class DeviceFixedCell: UITableViewCell {
 
     var device: Device? {
         didSet {
-            if let device = device {
-                //不同类型的Device缩进不同，实现层级分支
-                let constant = CGFloat(indentationLevel) * edsSpace
-                leading?.constant = constant
-                //自定义cell控件约束不受layoutMargin影响，它只影响分割线
-                layoutMargins.left = constant
-
-                if let image = device.getCollapsedImage() {
-                    foldButton.setImage(image, for: .normal)
-                } else {
-                    foldButton.setImage(nil, for: .normal)
-                    //静态设备无>符号（20),且其与deviceImageView的水平间隙（10）也将取消，故左移1.5*space
-                    leading?.constant -= 1.5 * edsSpace
-                }
-                nameLabel.text = device.title
-                if device.level == .room {
-                    nameLabel.font=UIFont.boldSystemFont(ofSize: fontSize)
-                }
-//                nameLabel.textColor = device.getTintColor()
-                levelLabel.alpha = (device.level == DeviceLevel.fixed) ? 1 : 0
-                deviceImageView.image = device.getIcon()
-
-                if AccountUtility.sharedInstance.isOperable() {
-                    let accessoryButton = device.getAccessoryView()
-                    accessoryButton?.rx.tap.bind(onNext: {
-                        self.delegate?.add(inParent: device)
-                    }).disposed(by: disposeBag)
-                    accessoryView = accessoryButton
-                }
+            guard let device = device else { return }
+            //不同类型的Device缩进不同，实现层级分支
+            let constant = CGFloat(indentationLevel) * edsSpace
+            leading?.constant = constant
+            //自定义cell控件约束不受layoutMargin影响，它只影响分割线
+            layoutMargins.left = constant
+            
+            if let image = device.getCollapsedImage() {
+                foldButton.setImage(image, for: .normal)
+            } else {
+                foldButton.setImage(nil, for: .normal)
+                //静态设备无>符号（20),且其与deviceImageView的水平间隙（10）也将取消，故左移1.5*space
+                leading?.constant -= 1.5 * edsSpace
+            }
+            nameLabel.text = device.title
+            if device.level == .room {
+                nameLabel.font=UIFont.boldSystemFont(ofSize: fontSize)
+            }
+            nameLabel.textColor = device.getTintColor()
+            levelLabel.alpha = (device.level == DeviceLevel.fixed) ? 1 : 0
+            deviceImageView.image = device.getIcon()
+            
+            if AccountUtility.sharedInstance.isOperable() {
+                let accessoryButton = device.getAccessoryView()
+                accessoryButton?.rx.tap.bind(onNext: {
+                    accessoryButton?.loadedWithAnimation()
+                    self.delegate?.add(inParent: device)
+                }).disposed(by: disposeBag)
+                accessoryView = accessoryButton
             }
         }
     }

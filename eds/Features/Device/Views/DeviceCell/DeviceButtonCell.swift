@@ -47,7 +47,7 @@ extension DeviceButtonCell: DevicePageItemSource, PasswordVerifyDelegate {
                     addSubview(button)
                     buttons.append(button)
                     button.rx.tap.asObservable().throttle(.seconds(1), scheduler: MainScheduler.instance).subscribe({ _ in
-
+                        button.loadedWithAnimation()
                         //------------特殊处理-----------------
                         //XS遗留的问题，原先远程控制位0x5000只写，网关采集失败造成farCtrl点通讯无效，后来一些设备修改0x5000为可读可写
                         //但还是存在某些设备0x5000只写，为保证其通讯流程性，在云平台+网关设备点列表中移除farCtrl点，以至于在TagList中找不到控制点

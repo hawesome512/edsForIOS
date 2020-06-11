@@ -33,6 +33,7 @@ class CheckBox: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.rx.tap.bind(onNext: {
+            self.loadedWithAnimation()
             self.isSelected = !self.isSelected
         }).disposed(by: disposeBag)
     }

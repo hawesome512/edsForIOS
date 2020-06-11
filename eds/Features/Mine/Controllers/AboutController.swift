@@ -56,7 +56,7 @@ class AboutController: UIViewController {
         descriptionLabel.text = "aboutDescription".localize()
         descriptionLabel.adjustsFontSizeToFitWidth = true
         descriptionLabel.numberOfLines = 0
-        descriptionLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        descriptionLabel.font = UIFont.preferredFont(forTextStyle: .headline)
         view.addSubview(descriptionLabel)
         descriptionLabel.topToBottom(of: updateButton, offset: edsMinSpace)
         descriptionLabel.horizontalToSuperview(insets: .horizontal(edsSpace))
@@ -68,7 +68,8 @@ class AboutController: UIViewController {
         }).disposed(by: disposeBag)
         moreButton.setAttributedTitle(NSAttributedString(string: "aboutMore".localize(), attributes: [
             NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
-            NSAttributedString.Key.foregroundColor: edsDefaultColor
+            NSAttributedString.Key.foregroundColor: edsDefaultColor,
+            NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .headline)
         ]), for: .normal)
         moreButton.tintColor = edsDefaultColor
         view.addSubview(moreButton)

@@ -35,18 +35,25 @@ class AlarmListController: UITableViewController {
         tableView.backgroundColor = edsDivideColor
         tableView.separatorStyle = .none
         //记录排序切换：默认（未排查，已排查）
-        let reverseButton = UIBarButtonItem()
-        reverseButton.image = UIImage(systemName: "arrow.up.arrow.down")
-        reverseButton.rx.tap.bind(onNext: {
-            self.alarmList.reverse()
-            self.tableView.reloadData()
-        }).disposed(by: disposeBag)
+        let reverseImage = UIImage(systemName: "arrow.up.arrow.down")
+        let reverseButton = UIBarButtonItem(image: reverseImage, style: .plain, target: self, action: #selector(reverseAlarm))
         let updateButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshAlarm))
         navigationItem.rightBarButtonItems = [updateButton, reverseButton]
 
         searchVC.obscuresBackgroundDuringPresentation = false
         searchVC.searchResultsUpdater = self
         navigationItem.searchController = searchVC
+    }
+    
+    @objc func reverseAlarm(_ sender: UIBarButtonItem){
+        alarmList.reverse()
+        tableView.reloadData()
+        sender.plainView.loadedWithAnimation()
+    }
+    
+    @objc func refreshAlarm(_ sender: UIBarButtonItem){
+        AlarmUtility.sharedInstance.loadProjectAlarmList()
+        sender.plainView.loadedWithAnimation()
     }
     
     private func initData(){
@@ -173,11 +180,6 @@ class AlarmListController: UITableViewController {
         alarmVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(alarmVC, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
-    @objc func refreshAlarm(_ sender: UIBarButtonItem){
-        AlarmUtility.sharedInstance.loadProjectAlarmList()
-        sender.plainView.loadedWithAnimation()
     }
 
 }

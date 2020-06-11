@@ -219,6 +219,8 @@
 "delete_info" = "This action is unrecoverable!";
 /* device_limit */
 "device_limit" = "At most %d properties allowed，please delete others!";
+/* sort_info */
+"sort_info" = "Sort";
 
 /* uncommunicate */
 "uncommunicate" = "uncomm";
@@ -274,6 +276,8 @@
 "ground" = "ground";
 /* trip */
 "trip" = "trip";
+/* preoverload */
+"preoverload" = "pre overload";
 
 /* Ia */
 "Ia" = "Ia";

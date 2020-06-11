@@ -34,6 +34,7 @@ class WorkorderUtility {
             case .success(let response):
                 //后台返回数据类型[Workorder?]?👉[Workorder]
                 let tempList = JsonUtility.getEDSServiceList(with: response.data, type: [Workorder]())
+                self.covertOldWorkorder(tempList)
                 //按执行时间的先后排序，逆序
 //                self.workorderList = ((tempList?.filter { $0 != nil })! as! [Workorder]).sorted().reversed()
                 self.addWorkorderList(tempList)
@@ -52,6 +53,7 @@ class WorkorderUtility {
             case .success(let response):
                 //后台返回数据类型[Workorder?]?👉[Workorder]
                 let tempList = JsonUtility.getEDSServiceList(with: response.data, type: [Workorder]())
+                self.covertOldWorkorder(tempList)
                 self.refreshWorkorderList(tempList)
                 print("Refresh Workorder:\(id).")
             default:
@@ -77,6 +79,17 @@ class WorkorderUtility {
             loadProjectWorkerorderList()
         }
         return workorderList
+    }
+    
+    
+    /// 原先基于安卓版设计的workorder记录更新为新的类型
+    /// - Parameter workorder: <#workorder description#>
+    func covertOldWorkorder(_ workorders: [Workorder?]?){
+        workorders?.forEach{ workorder in
+            //旧工单，存在图片记录且state=1改为审核完成
+            guard let workorder = workorder, !workorder.image.removeNull().isEmpty, workorder.state == .distributed else { return }
+            workorder.state = .audited
+        }
     }
     
     

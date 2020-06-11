@@ -94,6 +94,7 @@ class WorkorderMessageCell: UITableViewCell {
         deleteButton.setBackgroundImage(UIImage(systemName: "xmark"), for: .normal)
         deleteButton.tintColor = .systemGray
         deleteButton.rx.tap.asObservable().bind(onNext: {
+            self.deleteButton.loadedWithAnimation()
             self.delegate?.delete(message: self.message!)
         }).disposed(by: disposeBag)
         addSubview(deleteButton)

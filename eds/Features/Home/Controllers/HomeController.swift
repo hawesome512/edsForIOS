@@ -30,7 +30,7 @@ class HomeController: UIViewController {
     }
     
     private func initViews() {
-        
+        tableView.backgroundColor = edsDivideColor
         //此处不设置title,因title将影响tab bar item的title,在本页中它应一直保持为“首页”
         BasicUtility.sharedInstance.successfulBasicInfoUpdated.throttle(.seconds(1), scheduler: MainScheduler.instance).bind(onNext: {result in
             self.navigationItem.title = BasicUtility.sharedInstance.getBasic()?.user

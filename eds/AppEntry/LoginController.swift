@@ -194,7 +194,6 @@ class LoginController: UIViewController, UITextFieldDelegate {
         
         //请求验证码
         codeButton.rx.tap.bind(onNext: {
-            
             //验证输入手机号码格式
             guard let phoneNumber = self.phoneField.text, phoneNumber.verifyValidNumber(count: 11) else {
                 ControllerUtility.presentAlertController(content: "phoneFormat".localize(with: prefixLogin), controller: self)

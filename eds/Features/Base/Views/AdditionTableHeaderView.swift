@@ -27,12 +27,11 @@ class AdditionTableHeaderView: UIView {
         backgroundColor = edsDivideColor
 
         let button = UIButton(type: .contactAdd)
-//        button.setImage(UIImage(systemName: "plus"), for: .normal)
         addSubview(button)
-//        button.size(CGSize(width: edsSpace, height: edsSpace))
         button.leadingToSuperview(offset: edsSpace)
         button.verticalToSuperview(insets: .vertical(edsSpace))
         button.rx.tap.bind(onNext: {
+            button.loadedWithAnimation()
             //新建配电房，无父级Device
             self.delegate?.add(inParent: nil)
         }).disposed(by: disposeBag)

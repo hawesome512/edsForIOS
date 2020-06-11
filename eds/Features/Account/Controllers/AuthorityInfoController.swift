@@ -14,7 +14,7 @@ class AuthorityInfoController: UIViewController {
         super.viewDidLoad()
 
         //因权限pdf文档固定为黑色字体，需设置灰度背景色
-        view.backgroundColor = .systemGray3
+        view.backgroundColor = .systemBackground
         // Do any additional setup after loading the view.
         let imageView=UIImageView(image: UIImage(named: "authority")?.withTintColor(.label))
         imageView.contentMode = .scaleAspectFit

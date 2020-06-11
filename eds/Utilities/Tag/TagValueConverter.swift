@@ -17,7 +17,6 @@ class TagValueConverter {
     ///   - value: 状态点值
     ///   - items: 开关位
     static func getText(value: Double, items: [String]?) -> (status: DeviceStatusType?, text: String) {
-
         if let items = items, items.count > 0 {
             //因为异常时需返回详情信息，无法使用rawValue，增加text状态文本
             let intValue = Int(value)

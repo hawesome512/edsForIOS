@@ -123,11 +123,11 @@ extension DeviceOnOffCell: DevicePageItemSource {
         }
         WAService.getProvider().request(.setTagValues(authority: authority, tagList: [newTag])) { result in
             switch result {
-            case .success(let response):
-                print(JsonUtility.didSettedValues(data: response.data))
+            case .success:
                 let deviceName = self.device?.title ?? ""
                 let value = self.valueSwitch.isOn ? "ON" : "OFF"
                 let log = "\(deviceName) \(self.nameLabel.text!):\(value)"
+                print(log)
                 ActionUtility.sharedInstance.addAction(.paramDevice, extra: log)
             default:
                 break

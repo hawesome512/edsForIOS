@@ -98,9 +98,12 @@ class Device: HandyJSON, Equatable, EDSDelegate {
     }
 
     func getTintColor() -> UIColor {
-        return UIColor.darkGray
-//        不设置黑色，在深色模式下显示不理想
-//        return level == .room ? UIColor.black : UIColor.darkGray
+        switch level {
+        case .room, .box:
+            return .label
+        default:
+            return .secondaryLabel
+        }
     }
 
     func getIcon() -> UIImage? {

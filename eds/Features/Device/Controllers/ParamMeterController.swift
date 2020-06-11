@@ -75,10 +75,13 @@ class ParamMeterController: UIViewController {
             let index = items.firstIndex(of: tagValue.clean) ?? self.getNearestIndex(items, tagValue)
             self.circularSlider.endPointValue = CGFloat(index)
             self.valueLabel.text = items[index]
-//            self.updateButton.isEnabled = true
+            if authority == .granted {
+                self.updateButton.isEnabled = true
+                self.updateButton.alpha = 1
+            }
         }).disposed(by: disposeBag)
 
-        updateButton.rx.tap.subscribe({ _ in
+        updateButton.rx.tap.throttle(.seconds(3), scheduler: MainScheduler.instance).subscribe({ _ in
             guard var newValue = self.valueLabel.text, let authority = AccountUtility.sharedInstance.account?.authority else {
                 return
             }
@@ -92,16 +95,16 @@ class ParamMeterController: UIViewController {
             }
             let newTag = Tag(name: tag.Name, value: newValue)
             self.valueLabel.text = "updating".localize()
-//            self.updateButton.isEnabled = false
+            self.updateButton.isEnabled = false
+            self.updateButton.alpha = 0.5
             WAService.getProvider().request(.setTagValues(authority: authority, tagList: [newTag])) { result in
                 switch result {
                 case .success(let response):
-                    if JsonUtility.didSettedValues(data: response.data) {
-                        print("update \(newTag.Name) value to \(newTag.Value!):true")
-                        let device = DeviceUtility.sharedInstance.getDevice(of: tag.getDeviceName())?.title
-                        let log = "\(device!) \(pageItem.name.localize()):\(newValue)"
-                        ActionUtility.sharedInstance.addAction(.paramDevice, extra: log)
-                    }
+                    guard JsonUtility.didSettedValues(data: response.data) else { return }
+                    print("update \(newTag.Name) value to \(newTag.Value!):true")
+                    let device = DeviceUtility.sharedInstance.getDevice(of: tag.getDeviceName())?.title
+                    let log = "\(device!) \(pageItem.name.localize()):\(newValue)"
+                    ActionUtility.sharedInstance.addAction(.paramDevice, extra: log)
                 default:
                     break
                 }

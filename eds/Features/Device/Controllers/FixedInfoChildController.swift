@@ -10,10 +10,14 @@
 import Foundation
 import UIKit
 import Moya
+import RxSwift
 
 class FixedInfoChildController: UITableViewController {
 
     private let countLimit = 10
+    private var sortingInfo = false
+    private let disposeBag = DisposeBag()
+    private let sortButton = UIButton()
     //↕️滚动，设备头图伸缩
     var scrollDelegate: DevicePageScrollDelegate?
 
@@ -64,6 +68,7 @@ class FixedInfoChildController: UITableViewController {
             let cell = DeviceCellType.info.getTableCell(parentVC: parentVC) as! FixedInfoCell
             cell.nameLabel.attributedText = deviceInfos[indexPath.row].title.formatNameAndUnit()
             cell.valueLabel.text = deviceInfos[indexPath.row].value
+            cell.valueLabel.alpha = sortingInfo ? 0 : 1
             return cell
         }
     }
@@ -110,6 +115,14 @@ class FixedInfoChildController: UITableViewController {
             return nil
         }
         let headerView = AdditionTableHeaderView()
+        sortButton.setTitle("sort_info".localize(), for: .normal)
+        sortButton.setTitleColor(edsDefaultColor, for: .normal)
+        sortButton.rx.tap.throttle(.seconds(1), scheduler: MainScheduler.instance).bind(onNext: {
+            self.sortInfo()
+        }).disposed(by: disposeBag)
+        headerView.addSubview(sortButton)
+        sortButton.trailingToSuperview(offset:edsSpace)
+        sortButton.verticalToSuperview(insets:.vertical(edsSpace))
         headerView.title.text = "add_info".localize()
         headerView.delegate = self
         return headerView
@@ -131,15 +144,14 @@ class FixedInfoChildController: UITableViewController {
         infoAlertController.deviceInfo = deviceInfo
         let cancel = UIAlertAction(title: "cancel".localize(), style: .cancel, handler: nil)
         let ok = UIAlertAction(title: "ok".localize(), style: .default) { _ in
-            if let newInfo = infoAlertController.getDeviceInfo() {
-                if let row = indexPath?.row {
-                    self.deviceInfos[row] = newInfo
-                } else {
-                    self.deviceInfos.append(newInfo)
-                }
-                self.update()
-                self.tableView.reloadData()
+            guard let newInfo = infoAlertController.getDeviceInfo() else { return }
+            if let row = indexPath?.row {
+                self.deviceInfos[row] = newInfo
+            } else {
+                self.deviceInfos.append(newInfo)
             }
+            self.update()
+            self.tableView.reloadData()
         }
         infoAlertController.addAction(cancel)
         infoAlertController.addAction(ok)
@@ -166,6 +178,49 @@ class FixedInfoChildController: UITableViewController {
         guard let device = device else { return }
         device.setInfos(infos: deviceInfos)
         DeviceUtility.sharedInstance.update(device)
+    }
+    
+    /// 重新排序
+    private func sortInfo(){
+        if sortingInfo {
+            update()
+        } else {
+            ControllerUtility.presentAlertController(content: "save_alert".localize(with: prefixWorkorder), controller: self)
+        }
+        sortingInfo = !sortingInfo
+        tableView.setEditing(sortingInfo, animated: true)
+        let title = sortingInfo ? "save".localize() : "sort_info".localize()
+        sortButton.setTitle(title, for: .normal)
+        sortButton.loadedWithAnimation()
+        //排序状态下cell右边存在排序按钮，此时设置valueLabel.alpha = 0(隐藏）
+        let indexPaths = (0..<deviceInfos.count).map{IndexPath(row: $0, section: 0)}
+        tableView.reloadRows(at: indexPaths, with: .automatic)
+    }
+    
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return indexPath.row < deviceInfos.count
+    }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return indexPath.row < deviceInfos.count
+    }
+    
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+
+    }
+    
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .none
+    }
+    
+    override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        guard sourceIndexPath.row < deviceInfos.count, proposedDestinationIndexPath.row < deviceInfos.count else {
+            return sourceIndexPath
+        }
+        let info = deviceInfos[sourceIndexPath.row]
+        deviceInfos.remove(at: sourceIndexPath.row)
+        deviceInfos.insert(info, at: proposedDestinationIndexPath.row)
+        return proposedDestinationIndexPath
     }
 }
 

@@ -219,6 +219,8 @@
 "delete_info" = "該操作不可恢復！";
 /* device_limit */
 "device_limit" = "最多可添加%d個資產，請先刪減！";
+/* sort_info */
+"sort_info" = "排序";
 
 /* uncommunicate */
 "uncommunicate" = "非通信型";
@@ -274,6 +276,8 @@
 "ground" = "接地";
 /* trip */
 "trip" = "脫扣";
+/* preoverload */
+"preoverload" = "預過載";
 
 /* Ia */
 "Ia" = "Ia";

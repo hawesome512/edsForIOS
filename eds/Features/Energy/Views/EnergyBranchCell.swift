@@ -121,7 +121,7 @@ class EnergyBranchCell: UITableViewCell {
         xAxis.labelFont = UIFont.preferredFont(forTextStyle: .body)
         addSubview(barChartView)
         barChartView.edgesToSuperview(excluding: .top, insets: .uniform(edsMinSpace))
-        barChartView.height(160)
+        barChartView.height(180)
         barChartView.topToBottom(of: branchIcon, offset: edsMinSpace)
     }
 

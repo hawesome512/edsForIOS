@@ -75,6 +75,7 @@ class DatePickerController: BottomController {
         //重选上一个日期
         preButton.setBackgroundImage(UIImage(systemName: "chevron.compact.left"), for: .normal)
         preButton.rx.tap.bind(onNext: {
+            self.preButton.loadedWithAnimation()
             self.index = (self.index == 0) ? self.index : self.index - 1
             self.pickerChanged()
         }).disposed(by: disposeBag)
@@ -86,6 +87,7 @@ class DatePickerController: BottomController {
 
         //下一个，当为最后一个时就返回数据
         nextButton.rx.tap.bind(onNext: {
+            self.nextButton.loadedWithAnimation()
             if self.index<self.dates.count {
                 self.dates[self.index] = self.picker.date
             }else{
