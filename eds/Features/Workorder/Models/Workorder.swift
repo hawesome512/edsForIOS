@@ -62,14 +62,14 @@ class Workorder: HandyJSON, Comparable {
     }
 
     func getTimeRange() -> String {
-        let startDate = start.toDate()?.date.toDateString() ?? ""
-        let endDate = end.toDate()?.date.toDateString() ?? ""
+        let startDate = start.toDate(nil, region: .local)?.date.toDateString() ?? ""
+        let endDate = end.toDate(nil, region: .local)?.date.toDateString() ?? ""
         return String(format: "time_range".localize(with: prefixWorkorder), startDate, endDate)
     }
 
     func getShortTimeRange() -> String {
-        let startDate = start.toDate()?.date.toShortDateString() ?? ""
-        let endDate = end.toDate()?.date.toShortDateString() ?? ""
+        let startDate = start.toDate(nil, region: .local)?.date.toShortDateString() ?? ""
+        let endDate = end.toDate(nil, region: .local)?.date.toShortDateString() ?? ""
         return String(format: "time_range".localize(with: prefixWorkorder), startDate, endDate)
     }
 
@@ -87,8 +87,8 @@ class Workorder: HandyJSON, Comparable {
             flowTimeLine = .done//(UIImage(systemName: "checkmark.circle.fill"), .systemGreen)
             return
         }
-        let nowTime = DateInRegion(Date(), region: .current)
-        if let endTime = end.toDate(nil, region: .current), nowTime > endTime {
+        let nowTime = DateInRegion(Date(), region: .local)
+        if let endTime = end.toDate(nil, region: .local), nowTime > endTime {
             flowTimeLine = .overdue//(UIImage(systemName: "bell.circle.fill"), .systemRed)
             return
         }
@@ -123,6 +123,10 @@ class Workorder: HandyJSON, Comparable {
 
     func getInfos() -> [WorkorderInfo] {
         return WorkorderInfo.generateInfos(with: self)
+    }
+    
+    func getDeviceTitles() -> [String] {
+        return location.components(separatedBy: separator)
     }
 
     func setImages(_ images: [String]) {
@@ -174,7 +178,7 @@ class Workorder: HandyJSON, Comparable {
             let rolers = [creator, worker, auditor].filter { $0 != name }
             factor = factor - rolers.count * 10
         }
-        if let endDate = end.toDate() {
+        if let endDate = end.toDate(nil, region: .local) {
             if let deltaDay = (DateInRegion(Date(), region: .current) - endDate).toUnit(.day) {
                 //截止日期已经过期的权重更大,截止日期离得近的（deltaDay越小）权重更大
                 let ratio: Double = deltaDay > 0 ? 1 : 2
@@ -189,7 +193,7 @@ class Workorder: HandyJSON, Comparable {
 
     // MARK: -工单列表排序
     static func < (lhs: Workorder, rhs: Workorder) -> Bool {
-        if let left = lhs.start.toDate(), let right = rhs.start.toDate() {
+        if let left = lhs.start.toDate(nil, region: .local), let right = rhs.start.toDate(nil, region: .local) {
             return left.isBeforeDate(right, granularity: .second)
         }
         return true

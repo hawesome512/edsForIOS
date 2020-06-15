@@ -86,6 +86,8 @@
 		4663A691247F66E400985BD4 /* HomeAlarmCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4663A690247F66E400985BD4 /* HomeAlarmCell.swift */; };
 		4670902C23D3FD1E008777ED /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4670902B23D3FD1E008777ED /* Device.swift */; };
 		4670902E23D430B8008777ED /* DeviceUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4670902D23D430B8008777ED /* DeviceUtility.swift */; };
+		46791E322493120700269EF4 /* DeviceSorterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46791E312493120700269EF4 /* DeviceSorterController.swift */; };
+		46791E34249356DD00269EF4 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46791E33249356DD00269EF4 /* DataModel.swift */; };
 		468BC3C423823738008BD62C /* MQTTService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468BC3C323823738008BD62C /* MQTTService.swift */; };
 		468BC3C623824B50008BD62C /* MQTTConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468BC3C523824B50008BD62C /* MQTTConfig.swift */; };
 		468BC3CA23829BA4008BD62C /* MQTTTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468BC3C923829BA4008BD62C /* MQTTTag.swift */; };
@@ -272,6 +274,8 @@
 		4663A690247F66E400985BD4 /* HomeAlarmCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAlarmCell.swift; sourceTree = "<group>"; };
 		4670902B23D3FD1E008777ED /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		4670902D23D430B8008777ED /* DeviceUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceUtility.swift; sourceTree = "<group>"; };
+		46791E312493120700269EF4 /* DeviceSorterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceSorterController.swift; sourceTree = "<group>"; };
+		46791E33249356DD00269EF4 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		468BC3C323823738008BD62C /* MQTTService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MQTTService.swift; sourceTree = "<group>"; };
 		468BC3C523824B50008BD62C /* MQTTConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MQTTConfig.swift; sourceTree = "<group>"; };
 		468BC3C923829BA4008BD62C /* MQTTTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MQTTTag.swift; sourceTree = "<group>"; };
@@ -564,6 +568,7 @@
 				4621272B23B5CDBA00105664 /* DynamicDeviceController.swift */,
 				46B4934E240897800066863D /* FixedDeviceController.swift */,
 				46F1618E24695383000BEA30 /* PasswordController.swift */,
+				46791E312493120700269EF4 /* DeviceSorterController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -713,6 +718,7 @@
 				46EDC795246151FE00F2F9EE /* Help.swift */,
 				46FB2674243EF61B0080362C /* Mine.swift */,
 				46036A66245953CF00E59E41 /* MineSectionModel.swift */,
+				46791E33249356DD00269EF4 /* DataModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1133,6 +1139,7 @@
 				46FF950224162EDF002E36AD /* AlarmListController.swift in Sources */,
 				46FF9E3C244442DD000F5AB2 /* DeviceClass.swift in Sources */,
 				460F726E2371111100CFC7C3 /* WAService.swift in Sources */,
+				46791E322493120700269EF4 /* DeviceSorterController.swift in Sources */,
 				462E0DED244D882900A2F17E /* EnergyBranchCell.swift in Sources */,
 				4621272C23B5CDBA00105664 /* DynamicDeviceController.swift in Sources */,
 				46FB866823BAE87800754E88 /* DevicePageItemSource.swift in Sources */,
@@ -1197,6 +1204,7 @@
 				4607DC7A23FE093300E35015 /* NewDeviceAlertController.swift in Sources */,
 				46DF40D5242DAB930018F961 /* TaskAdditionCell.swift in Sources */,
 				462E0E012452B3A300A2F17E /* NoticeMessageCell.swift in Sources */,
+				46791E34249356DD00269EF4 /* DataModel.swift in Sources */,
 				460BA6D1237A4775008E7CDF /* JsonUtility.swift in Sources */,
 				468BC3CA23829BA4008BD62C /* MQTTTag.swift in Sources */,
 				4607ACE52432D6D000C13C57 /* CornerView.swift in Sources */,
@@ -1467,14 +1475,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "eds/EDS云管理.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = DB24XNH42B;
 				INFOPLIST_FILE = eds/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.9;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xseec.eds;
 				PRODUCT_NAME = "EDS云管理";
 				SWIFT_VERSION = 5.0;
@@ -1489,14 +1497,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "eds/EDS云管理.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = DB24XNH42B;
 				INFOPLIST_FILE = eds/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.9;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xseec.eds;
 				PRODUCT_NAME = "EDS云管理";
 				SWIFT_VERSION = 5.0;

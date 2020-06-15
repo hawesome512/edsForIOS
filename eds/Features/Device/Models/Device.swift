@@ -82,6 +82,10 @@ class Device: HandyJSON, Equatable, EDSDelegate {
     func addBranch(with shortId: String) {
         branch = branch.removeNull().isEmpty ? shortId : (branch + listSeparator + shortId)
     }
+    
+    func setBranches(with devices: [Device]) {
+        branch = devices.map{ $0.getShortID() }.joined(separator: listSeparator)
+    }
 
     func removeBranch(with shortId: String) {
         branch = branch.removeNull()
@@ -171,7 +175,7 @@ enum DeviceLevel: Int, HandyJSONEnum {
 }
 
 struct DeviceInfo {
-
+    static let infoLimit = 10
     static let infoSeparator = ":"
     var title: String = ""
     var value: String = ""

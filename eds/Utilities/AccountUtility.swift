@@ -151,7 +151,6 @@ class AccountUtility {
         return phoneList.first { $0.name == validName }
     }
 
-
     /// 验证当前用户是否有操作权限
     func isOperable() -> Bool {
         guard let level = loginedPhone?.level else {

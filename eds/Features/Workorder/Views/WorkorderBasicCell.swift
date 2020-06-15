@@ -12,7 +12,8 @@ import CallKit
 import MessageUI
 
 class WorkorderBasicCell: UITableViewCell {
-
+    
+    private let disposeBag = DisposeBag()
     private let workerIcon = UIImageView()
     private let workerLabel = UILabel()
 //    private let workerButton = UIButton()
@@ -20,13 +21,16 @@ class WorkorderBasicCell: UITableViewCell {
     private let timeLabel = UILabel()
     private let deviceIcon = UIImageView()
     private let deviceLabel = UILabel()
+    private let deviceButton = UIButton()
 
-    var viewController: UIViewController?
+    var parentVC: UIViewController?
     var workorder: Workorder? {
         didSet {
-            workerLabel.text = workorder?.worker
-            deviceLabel.text = workorder?.location
-            timeLabel.text = workorder?.getTimeRange()
+            guard let workorder = workorder else { return }
+            workerLabel.text = workorder.worker
+//            deviceLabel.text = workorder.location
+            timeLabel.text = workorder.getTimeRange()
+            deviceLabel.attributedText = NSMutableAttributedString(string: workorder.location, attributes: [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue])
         }
     }
 
@@ -62,6 +66,21 @@ class WorkorderBasicCell: UITableViewCell {
         deviceLabel.centerY(to: deviceIcon)
         deviceLabel.leadingToTrailing(of: deviceIcon, offset: edsMinSpace)
         deviceLabel.trailingToSuperview(offset: edsSpace)
+        
+        deviceButton.rx.tap.throttle(.seconds(1), scheduler: MainScheduler.instance).bind(onNext: {
+            guard let device = WorkorderUtility.getDevice(of: self.workorder) else { return }
+            if device.level == .dynamic {
+                let dynamicVC = DynamicDeviceController()
+                dynamicVC.device = device
+                self.parentVC?.navigationController?.present(dynamicVC, animated: true, completion: nil)//(dynamicVC, animated: true)
+            } else {
+                let fixedVC = FixedDeviceController()
+                fixedVC.device = device
+                self.parentVC?.navigationController?.present(fixedVC, animated: true, completion: nil)//(dynamicVC, animated: true)
+            }
+        }).disposed(by: disposeBag)
+        addSubview(deviceButton)
+        deviceButton.edges(to: deviceLabel)
 
         timeIcon.image = UIImage(systemName: "calendar")
         timeIcon.tintColor = .systemGreen

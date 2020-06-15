@@ -34,6 +34,8 @@
 "cancel_alert" = "尚未保存！";
 /* large_image */
 "large_image" = "查看原图";
+/* sort */
+"sort" = "排序";
 
 /* superAdmin */
 "superAdmin" = "管理员";
@@ -91,6 +93,34 @@
 "aboutMore" = "了解更多EDS功能👉";
 /* versionUpdate */
 "versionUpdate" = "版本更新";
+/* accountData */
+"accountData" = "用户数据声明";
+/* dataValid */
+"dataValid" = "数据有效期";
+/* systemLimit */
+"systemLimit" = "平台资源";
+/* accountInfo */
+"accountInfo" = "用户资料";
+/* accountAction */
+"accountAction" = "操作记录";
+/* propertyLevel */
+"propertyLevel" = "资产层级";
+/* propertyInfo */
+"propertyInfo" = "单台设备资料";
+/* workorderImage */
+"workorderImage" = "单条工单可上传图片";
+/* energyLevel */
+"energyLevel" = "用电分析层级";
+/* energyLevelLimit */
+"energyLevelLimit" = "用电分析单层支路";
+/* validLong */
+"validLong" = "不限";
+/* valid3Year */
+"valid3Year" = "3年";
+/* validYear */
+"validYear" = "1年";
+/* validMonth */
+"validMonth" = "1月";
 
 /* home_energy */
 "home_energy" = "用电";
@@ -219,8 +249,6 @@
 "delete_info" = "该操作不可恢复！";
 /* device_limit */
 "device_limit" = "最多可添加%d个资产，请先删减！";
-/* sort_info */
-"sort_info" = "排序";
 
 /* uncommunicate */
 "uncommunicate" = "非通信型";

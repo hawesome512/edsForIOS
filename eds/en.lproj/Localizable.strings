@@ -34,6 +34,8 @@
 "cancel_alert" = "Not Saved!";
 /* large_image */
 "large_image" = "Full Image";
+/* sort */
+"sort" = "Sort";
 
 /* superAdmin */
 "superAdmin" = "admin";
@@ -91,6 +93,34 @@
 "aboutMore" = "Learn More About EDS👉";
 /* versionUpdate */
 "versionUpdate" = "Version Update";
+/* accountData */
+"accountData" = "Data Info";
+/* dataValid */
+"dataValid" = "Data Valid";
+/* systemLimit */
+"systemLimit" = "System Limit";
+/* accountInfo */
+"accountInfo" = "Account Info";
+/* accountAction */
+"accountAction" = "Account Action";
+/* propertyLevel */
+"propertyLevel" = "Property Level";
+/* propertyInfo */
+"propertyInfo" = "Per Property's Info Limit";
+/* workorderImage */
+"workorderImage" = "Per Workorder's Image Limit";
+/* energyLevel */
+"energyLevel" = "Energy Level";
+/* energyLevelLimit */
+"energyLevelLimit" = "Per Energy's Branch Limit";
+/* validLong */
+"validLong" = "Unlimited";
+/* valid3Year */
+"valid3Year" = "3 Year";
+/* validYear */
+"validYear" = "1 Year";
+/* validMonth */
+"validMonth" = "1 Month";
 
 /* home_energy */
 "home_energy" = "Energy";
@@ -219,8 +249,6 @@
 "delete_info" = "This action is unrecoverable!";
 /* device_limit */
 "device_limit" = "At most %d properties allowed，please delete others!";
-/* sort_info */
-"sort_info" = "Sort";
 
 /* uncommunicate */
 "uncommunicate" = "uncomm";

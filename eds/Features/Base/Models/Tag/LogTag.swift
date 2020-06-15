@@ -88,7 +88,7 @@ struct WATagLogRequestCondition: HandyJSON {
     /// 获取间隔点的时间显示样式，用于DeviceTrendChartCell>横坐标
     /// - Parameter index: <#index description#>
     func getShortTimeString(with index: Int) -> String {
-        guard var time = StartTime.toDate() else {
+        guard var time = StartTime.toDate(nil, region: .local) else {
             return "\(index)"
         }
         switch LogIntervalType(rawValue: IntervalType) {
@@ -114,7 +114,7 @@ struct WATagLogRequestCondition: HandyJSON {
     /// 获取间隔点的具体时间显示样式，用于DeviceTrendAnalysisCell>最大/小值时间
     /// - Parameter index: <#index description#>
     func getLongTimeString(with index: Int) -> String {
-        guard var time = StartTime.toDate() else {
+        guard var time = StartTime.toDate(nil, region: .local) else {
             return "\(index)"
         }
         switch LogIntervalType(rawValue: IntervalType) {

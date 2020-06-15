@@ -36,7 +36,7 @@ class DeviceFixedCell: UITableViewCell {
             } else {
                 foldButton.setImage(nil, for: .normal)
                 //静态设备无>符号（20),且其与deviceImageView的水平间隙（10）也将取消，故左移1.5*space
-                leading?.constant -= 1.5 * edsSpace
+                leading?.constant -= (edsMinSpace+edsIconSize)
             }
             nameLabel.text = device.title
             if device.level == .room {
@@ -59,11 +59,11 @@ class DeviceFixedCell: UITableViewCell {
 
     private func initViews() {
         tintColor = .systemGray
-        foldButton.size(CGSize(width: edsSpace, height: edsSpace))
+        foldButton.size(CGSize(width: edsIconSize, height: edsIconSize))
         addSubview(foldButton)
         leading = foldButton.leadingToSuperview(offset: edsSpace)
         foldButton.centerYToSuperview()
-
+        
         deviceImageView.contentMode = .scaleAspectFit
         addSubview(deviceImageView)
         deviceImageView.heightToSuperview(offset: -edsSpace)

@@ -209,7 +209,7 @@ extension WorkorderController: UITableViewDataSource, UITableViewDelegate {
         case .basic:
             let cell = WorkorderBasicCell()
             cell.workorder = workorder
-            cell.viewController = self
+            cell.parentVC = self
             return cell
         case .task:
             let cell = WorkorderTaskCell()

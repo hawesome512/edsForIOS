@@ -77,7 +77,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
         loginType = .phoneType
         
         topImage.image = UIImage(named: "login_top")
-        topImage.contentMode = .scaleToFill
+        topImage.contentMode = .scaleAspectFill
         topImage.alpha = traitCollection.verticalSizeClass == .compact ? 0 : 1
         view.addSubview(topImage)
         topImage.edgesToSuperview(excluding: .bottom)

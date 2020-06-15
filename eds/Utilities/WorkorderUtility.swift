@@ -81,7 +81,6 @@ class WorkorderUtility {
         return workorderList
     }
     
-    
     /// 原先基于安卓版设计的workorder记录更新为新的类型
     /// - Parameter workorder: <#workorder description#>
     func covertOldWorkorder(_ workorders: [Workorder?]?){
@@ -131,6 +130,12 @@ class WorkorderUtility {
             workorderList.insert(workorder, at: 0)
         }
         successfulUpdated.accept(true)
+    }
+    
+    static func getDevice(of workorder: Workorder?) -> Device? {
+        guard let title = workorder?.getDeviceTitles().first else { return nil }
+        let deviceList = DeviceUtility.sharedInstance.getDeviceList()
+        return deviceList.first{ $0.title == title}
     }
     
     func removeWorkorder(_ workorder:Workorder){

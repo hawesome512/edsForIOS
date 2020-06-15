@@ -34,6 +34,8 @@
 "cancel_alert" = "尚未保存！";
 /* large_image */
 "large_image" = "查看原圖";
+/* sort */
+"sort" = "排序";
 
 /* superAdmin */
 "superAdmin" = "管理員";
@@ -91,6 +93,34 @@
 "aboutMore" = "了解更多EDS功能👉";
 /* versionUpdate */
 "versionUpdate" = "版本更新";
+/* accountData */
+"accountData" = "用戶數據聲明";
+/* dataValid */
+"dataValid" = "數據有效期";
+/* systemLimit */
+"systemLimit" = "平台資源";
+/* accountInfo */
+"accountInfo" = "用戶資料";
+/* accountAction */
+"accountAction" = "操作記錄";
+/* propertyLevel */
+"propertyLevel" = "資產層級";
+/* propertyInfo */
+"propertyInfo" = "單台設備資料";
+/* workorderImage */
+"workorderImage" = "單條工單可上傳圖片";
+/* energyLevel */
+"energyLevel" = "用電分析層級";
+/* energyLevelLimit */
+"energyLevelLimit" = "用電分析單層支路";
+/* validLong */
+"validLong" = "不限";
+/* valid3Year */
+"valid3Year" = "3年";
+/* validYear */
+"validYear" = "1年";
+/* validMonth */
+"validMonth" = "1月";
 
 /* home_energy */
 "home_energy" = "用電";

@@ -12,13 +12,12 @@ class WorkorderStateCell: UITableViewCell {
 
     var flows: [WorkorderFlow]? {
         didSet {
-            if let flows = flows {
-                for (index, flow) in flows.enumerated() {
-                    let state = flow.timeLine.getState()
-                    stepImages[index].image = state.icon
-                    stepImages[index].tintColor = state.color
-                    stepTimes[index].text = flow.date
-                }
+            guard let flows = flows else { return }
+            for (index, flow) in flows.enumerated() {
+                let state = flow.timeLine.getState()
+                stepImages[index].image = state.icon
+                stepImages[index].tintColor = state.color
+                stepTimes[index].text = flow.date
             }
         }
     }
@@ -85,7 +84,6 @@ class WorkorderStateCell: UITableViewCell {
     }
 
     override func draw(_ rect: CGRect) {
-
         let startX = edsSpace + edsHeight / 2
         let step = (rect.width - startX * 2) / CGFloat(stepImages.count - 1)
         let centerY = edsMinSpace + edsHeight / 2

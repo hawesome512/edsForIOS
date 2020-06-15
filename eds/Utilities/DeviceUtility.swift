@@ -93,10 +93,13 @@ class DeviceUtility {
         successfulUpdated.accept(true)
     }
     
-    func update(_ device: Device) {
+    func update(_ device: Device, notifyUpdated: Bool = false) {
         EDSService.getProvider().request(.updateDevice(device: device)) { _ in }
         ActionUtility.sharedInstance.addAction(.editDevice, extra: device.title)
-        //编辑设备不触发successfulUpdated.
+        //编辑设备不触发,排序触发successfulUpdated.
+        if notifyUpdated {
+            successfulUpdated.accept(true)
+        }
     }
     
     func clearDeviceList(){
@@ -141,16 +144,24 @@ class DeviceUtility {
         //可视化：展开时才添加支路，实际时：visible=false
         if (visiable ? !device.collapsed : true) {
             device.getBranches().forEach { branch in
-                if let branchDevice = devices.first(where: { $0.id == branch }) {
-                    result.append(branchDevice)
-                    //若之路还有支路，继续循环
-                    if !branchDevice.branch.isEmpty {
-                        result.append(contentsOf: getBranceList(device: branchDevice, visiableOnly: visiable, sources: devices))
-                    }
+                guard let branchDevice = devices.first(where: { $0.id == branch }) else { return }
+                result.append(branchDevice)
+                //若之路还有支路，继续循环
+                if !branchDevice.branch.isEmpty {
+                    result.append(contentsOf: getBranceList(device: branchDevice, visiableOnly: visiable, sources: devices))
                 }
             }
         }
         return result
+    }
+    
+    
+    /// 获取直系支路，不继续展开
+    /// - Parameter device: <#device description#>
+    /// - Returns: <#description#>
+    func getNextBranchList(device: Device) -> [Device] {
+        let branches = device.getBranches()
+        return deviceList.filter{branches.contains($0.id)}
     }
     
     func getParent(of child: Device) -> Device? {

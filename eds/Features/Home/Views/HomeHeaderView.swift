@@ -53,7 +53,7 @@ class HomeHeaderView: UIView, UITextFieldDelegate {
         }
         if pickedImage == nil {
             let banner = basic.banner
-            ViewUtility.setWebImage(in: imageView, photo: banner, download: .both, disposeBag: disposeBag, contentMode: .scaleToFill)
+            ViewUtility.setWebImage(in: imageView, photo: banner, download: .both, disposeBag: disposeBag, contentMode: .scaleAspectFill)
         } else {
             imageView.image = pickedImage
         }

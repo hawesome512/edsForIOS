@@ -114,6 +114,10 @@ extension MineController: UITableViewDataSource, UITableViewDelegate {
                     let qrcodeVC = AccountQRCodeController()
                     qrcodeVC.hidesBottomBarWhenPushed = true
                     navigationController?.pushViewController(qrcodeVC, animated: true)
+                } else if indexPath.row == 2 {
+                    let dataVC = DataController()
+                    dataVC.hidesBottomBarWhenPushed = true
+                    navigationController?.pushViewController(dataVC, animated: true)
                 }
             case .eds:
                 if indexPath.row == 0 {

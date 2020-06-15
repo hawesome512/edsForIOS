@@ -17,7 +17,7 @@ enum MineSectionModel: Int, CaseIterable {
     func getNumberOfRows() -> Int {
         switch self {
         case .user:
-            return 2
+            return 3
         case .eds:
             return 3
         case .exit:
@@ -36,6 +36,8 @@ enum MineSectionModel: Int, CaseIterable {
                 return "accountMember".localize()
             case 1:
                 return "accountQRCode".localize()
+            case 2:
+                return "accountData".localize()
             default:
                 return nil
             }

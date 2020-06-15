@@ -24,7 +24,6 @@ class WorkorderPhotoCollectionCell: UITableViewCell {
     }
     var parentVC: UIViewController?
     private let photoHeight: CGFloat = 120
-    private let countLimit = 12
 
     private let rightImage = UIImageView()
     //单行显示图片数量，为方便计算使用cgfloat格式

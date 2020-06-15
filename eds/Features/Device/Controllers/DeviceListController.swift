@@ -147,17 +147,47 @@ extension DeviceListController: UITableViewDelegate, UITableViewDataSource {
         return tableView.estimatedRowHeight
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) { guard AccountUtility.sharedInstance.isOperable() else { return }
-        //删除设备：弹出框确认▶️删除设备及所属设备▶️更新父级支路
-        if editingStyle == .delete {
-            let deleteDevice = deviceList[indexPath.row]
-            let alertController = ControllerUtility.generateDeletionAlertController(with: deleteDevice.title)
-            let okAction = UIAlertAction(title: "delete".localize(), style: .destructive) { _ in
-                DeviceUtility.sharedInstance.remove(deleteDevice)
-            }
-            alertController.addAction(okAction)
-            present(alertController, animated: true, completion: nil)
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        guard AccountUtility.sharedInstance.isOperable() else { return nil }
+        
+        let device = deviceList[indexPath.row]
+        let deleteAction = UIContextualAction(style: .destructive, title: "delete".localize()){_,_,completionHandler in
+            self.deleteDevice(device)
+            completionHandler(true)
         }
+        let sortAction = UIContextualAction(style: .normal, title: "sort".localize()){_,_,completionHandler in
+            self.sortDevice(device)
+            completionHandler(true)
+        }
+        deleteAction.backgroundColor = .systemRed
+        deleteAction.image = UIImage(systemName: "trash")
+        sortAction.backgroundColor = .systemGreen
+        sortAction.image = UIImage(systemName: "line.horizontal.3")
+        
+        let actions: [UIContextualAction]
+        //只有在配电房/柜层级，且支路≧2时才有排序功能
+        if device.getBranches().count >= 2, device.level.rawValue <= DeviceLevel.box.rawValue {
+            actions = [deleteAction, sortAction]
+        } else {
+            actions = [deleteAction]
+        }
+        return UISwipeActionsConfiguration(actions: actions)
+    }
+    
+    private func deleteDevice(_ deleteDevice: Device){
+        let alertController = ControllerUtility.generateDeletionAlertController(with: deleteDevice.title)
+        let okAction = UIAlertAction(title: "delete".localize(), style: .destructive) { _ in
+            DeviceUtility.sharedInstance.remove(deleteDevice)
+        }
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    private func sortDevice(_ sortDevice: Device){
+        let sortVC = DeviceSorterController()
+        sortVC.parentDevice = sortDevice
+        sortVC.hidesBottomBarWhenPushed = true
+        navigationController?.present(sortVC, animated: true, completion: nil)
     }
 }
 

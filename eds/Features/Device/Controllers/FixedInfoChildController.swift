@@ -12,10 +12,23 @@ import UIKit
 import Moya
 import RxSwift
 
+enum SortType{
+    case unsort
+    case sort
+    
+    func getIcon() -> UIImage? {
+        let imageName = (self == .unsort) ? "line.horizontal.3" : "checkmark"
+        return UIImage(systemName: imageName)
+    }
+    
+    mutating func toggle() {
+        self = (self == .unsort) ? .sort : .unsort
+    }
+}
+
 class FixedInfoChildController: UITableViewController {
 
-    private let countLimit = 10
-    private var sortingInfo = false
+    private var sortingInfo = SortType.unsort
     private let disposeBag = DisposeBag()
     private let sortButton = UIButton()
     //↕️滚动，设备头图伸缩
@@ -23,9 +36,8 @@ class FixedInfoChildController: UITableViewController {
 
     var device: Device? {
         didSet {
-            if let device = device {
-                deviceInfos = device.getInfos()
-            }
+            guard let device = device else { return }
+            deviceInfos = device.getInfos()
         }
     }
     var deviceInfos: [DeviceInfo] = []
@@ -68,7 +80,7 @@ class FixedInfoChildController: UITableViewController {
             let cell = DeviceCellType.info.getTableCell(parentVC: parentVC) as! FixedInfoCell
             cell.nameLabel.attributedText = deviceInfos[indexPath.row].title.formatNameAndUnit()
             cell.valueLabel.text = deviceInfos[indexPath.row].value
-            cell.valueLabel.alpha = sortingInfo ? 0 : 1
+            cell.valueLabel.alpha = (sortingInfo == .sort) ? 0 : 1
             return cell
         }
     }
@@ -115,8 +127,8 @@ class FixedInfoChildController: UITableViewController {
             return nil
         }
         let headerView = AdditionTableHeaderView()
-        sortButton.setTitle("sort_info".localize(), for: .normal)
-        sortButton.setTitleColor(edsDefaultColor, for: .normal)
+        sortButton.setBackgroundImage(sortingInfo.getIcon(), for: .normal)
+        sortButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         sortButton.rx.tap.throttle(.seconds(1), scheduler: MainScheduler.instance).bind(onNext: {
             self.sortInfo()
         }).disposed(by: disposeBag)
@@ -182,16 +194,16 @@ class FixedInfoChildController: UITableViewController {
     
     /// 重新排序
     private func sortInfo(){
-        if sortingInfo {
+        sortButton.loadedWithAnimation()
+        guard deviceInfos.count > 1 else { return }
+        if sortingInfo == .sort {
             update()
         } else {
             ControllerUtility.presentAlertController(content: "save_alert".localize(with: prefixWorkorder), controller: self)
         }
-        sortingInfo = !sortingInfo
-        tableView.setEditing(sortingInfo, animated: true)
-        let title = sortingInfo ? "save".localize() : "sort_info".localize()
-        sortButton.setTitle(title, for: .normal)
-        sortButton.loadedWithAnimation()
+        sortingInfo.toggle()
+        tableView.setEditing(sortingInfo == .sort, animated: true)
+        sortButton.setBackgroundImage(sortingInfo.getIcon(), for: .normal)
         //排序状态下cell右边存在排序按钮，此时设置valueLabel.alpha = 0(隐藏）
         let indexPaths = (0..<deviceInfos.count).map{IndexPath(row: $0, section: 0)}
         tableView.reloadRows(at: indexPaths, with: .automatic)
@@ -206,7 +218,9 @@ class FixedInfoChildController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-
+        let info = deviceInfos[sourceIndexPath.row]
+        deviceInfos.remove(at: sourceIndexPath.row)
+        deviceInfos.insert(info, at: destinationIndexPath.row)
     }
     
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
@@ -217,17 +231,14 @@ class FixedInfoChildController: UITableViewController {
         guard sourceIndexPath.row < deviceInfos.count, proposedDestinationIndexPath.row < deviceInfos.count else {
             return sourceIndexPath
         }
-        let info = deviceInfos[sourceIndexPath.row]
-        deviceInfos.remove(at: sourceIndexPath.row)
-        deviceInfos.insert(info, at: proposedDestinationIndexPath.row)
         return proposedDestinationIndexPath
     }
 }
 
 extension FixedInfoChildController: AdditionDelegate {
     func add(inParent parent: Device?) {
-        if deviceInfos.count >= countLimit {
-            let content = String(format: "info_limit".localize(), countLimit)
+        if deviceInfos.count >= DeviceInfo.infoLimit {
+            let content = String(format: "info_limit".localize(), DeviceInfo.infoLimit)
             ControllerUtility.presentAlertController(content: content, controller: self)
             return
         }

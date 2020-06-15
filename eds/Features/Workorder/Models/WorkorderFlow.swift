@@ -22,7 +22,7 @@ struct WorkorderFlow {
     init(state: WorkorderState, workorder: Workorder) {
         self.state = state
         //默认填写截止时间
-        date = workorder.end.toDate()?.date.toShortDate()
+        date = workorder.end.toDate(nil, region: .local)?.date.toShortDate()
 
         //判定时效性
         switch state.rawValue {
@@ -33,7 +33,7 @@ struct WorkorderFlow {
         case workorder.state.rawValue + 1:
             //下一个流程,对比当前时间和截止时间
             let nowTime = DateInRegion(Date(), region: .current)
-            if let endTime = workorder.end.toDate(nil, region: .current), nowTime > endTime {
+            if let endTime = workorder.end.toDate(nil, region: .local), nowTime > endTime {
                 timeLine = .overdue
             } else {
                 timeLine = .planing
@@ -50,7 +50,7 @@ struct WorkorderFlow {
         let regex = try? NSRegularExpression(pattern: pattern, options: .allowCommentsAndWhitespace)
         if let result = regex?.firstMatch(in: flow, options: [], range: range) {
             let dateTime = (flow as NSString).substring(with: result.range(at: 2))
-            date = dateTime.toDate()?.date.toShortDate()
+            date = dateTime.toDate(nil,region: .local)?.date.toShortDate()
         }
     }
 
