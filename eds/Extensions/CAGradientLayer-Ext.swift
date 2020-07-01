@@ -29,6 +29,24 @@ extension CAGradientLayer {
         startPoint = CGPoint(x: 0, y: 0.5)
         endPoint = CGPoint(x: 1, y: 0.5)
     }
+    
+    /// 生成水平渐变层（颜色由右边渐淡直至透明）
+    /// - Parameter centerColor: 中间颜色
+    func setHorRightGradientLayer(centerColor: UIColor) {
+        //水平渐变颜色：透明，color，透明
+        let gradientsColors = [
+            centerColor.withAlphaComponent(0).cgColor,
+            centerColor.cgColor
+        ]
+        //位置：起始（透明），中间（color），结束（透明）
+        let gradientLocations: [NSNumber] = [0, 1]
+
+        colors = gradientsColors
+        locations = gradientLocations
+        //水平横向；（tips:x<横向>,y<纵向>范围：0～1）
+        startPoint = CGPoint(x: 0, y: 0.5)
+        endPoint = CGPoint(x: 1, y: 0.5)
+    }
 
     /// 生成对角线渐变层
     /// - Parameter endColor: 末端颜色

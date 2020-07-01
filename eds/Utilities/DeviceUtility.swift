@@ -47,6 +47,11 @@ class DeviceUtility {
         }
     }
     
+    func clearDeviceList(){
+        deviceList.removeAll()
+        successfulUpdated.accept(false)
+    }
+    
     // MARK: - DeviceList对外接口
     
     func add(_ device:Device, parent: Device?){
@@ -100,11 +105,6 @@ class DeviceUtility {
         if notifyUpdated {
             successfulUpdated.accept(true)
         }
-    }
-    
-    func clearDeviceList(){
-        deviceList.removeAll()
-        successfulUpdated.accept(false)
     }
     
     func getDeviceList()->[Device]{

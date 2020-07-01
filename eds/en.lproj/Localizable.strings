@@ -121,6 +121,18 @@
 "validYear" = "1 Year";
 /* validMonth */
 "validMonth" = "1 Month";
+/* changePassword */
+"changePassword" = "Change Password";
+/* oldPassword */
+"oldPassword" = "Old Password";
+/* newPassword */
+"newPassword" = "New Password";
+/* confirmPassword */
+"confirmPassword" = "Confirm Password";
+/* passwordCount */
+"passwordCount" = "At least %d chars.";
+/* invalidConfirmPassword */
+"invalidConfirmPassword" = "Entered passwords differ!";
 
 /* home_energy */
 "home_energy" = "Energy";
@@ -180,23 +192,37 @@
 /* energy_time */
 "energy_time" = "Time Range";
 /* energy_valley */
-"energy_valley" = "valley";
-/* energy_plain */
-"energy_plain" = "plain";
+"energy_valley" = "Valley";
+/* energy_flat */
+"energy_flat" = "Flat";
 /* energy_peak */
-"energy_peak" = "peak";
+"energy_peak" = "Peak";
+/* energy_sharp */
+"energy_sharp" = "Sharp";
 /* energy_branch */
 "energy_branch" = "Branch Percentage(%)";
+/* energy_percent_alert */
+"energy_percent_alert" = "Indicator:\r\nCurrent Total/Last Totalx100%\r\nRatio:\r\n(Current[1~n]-Last[1~n])/Last[1~n]x100%";
 /* energy_time_alert */
-"energy_time_alert" = "Analysis,based on time range ,only used in Mainland China and disabled in YEAR mode：\r\n●valley at (00:00-07:00,23:00-24:00):\r\n¥0.4/kW.h\r\n●plain at (07:00-08:00,11:00-18:00):\r\n¥0.8/kW.h\r\n●peak at (08:00-11:00,18:00-23:00):\r\n¥1.2/kW.h";
+"energy_time_alert" = "Analysis,based on time range ,only used in Mainland China and disabled in YEAR mode.";
 /* energy_branch_alert */
-"energy_branch_alert" = "Click bar chart below to get more infomation about branch's electric analysis.";
+"energy_branch_alert" = "Click bar chart below to get more infomation about branch's electric analysis.You can change in [Config]";
 /* energy_edit */
-"energy_edit" = "Edit Branch";
+"energy_edit" = "Config";
+/* energy_time_edit */
+"energy_time_edit" = "Edit Time Range";
+/* energy_price */
+"energy_price" = "Electrovalence";
+/* energy_hours */
+"energy_hours" = "Hours";
+/* energy_currency */
+"energy_currency" = "Dollar Sign";
+/* energy_unselected */
+"energy_unselected" = "%@ remain to be classified!";
 /* energy_limit */
 "energy_limit" = "At most %d branches allowed，please delete others in this level!";
 /* energy_save */
-"energy_save" = "Saved,take effect after logged in again!";
+"energy_save" = "Saved,edited branches take effect after logged in again!";
 
 /* trend_title */
 "trend_title" = "Trend";
@@ -625,7 +651,7 @@
 /* action_editHome */
 "action_editHome" = "Edit home";
 /* action_editBranch */
-"action_editBranch" = "Edit elec branch";
+"action_editBranch" = "Edit elec config";
 /* action_addDevice */
 "action_addDevice" = "Add device";
 /* action_deleteDevice */

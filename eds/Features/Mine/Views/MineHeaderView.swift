@@ -157,10 +157,9 @@ class MineHeaderView: UIView, UITextFieldDelegate {
     }
 
     func showEditVC() {
-        //系统管理员/临时的手机身份是虚拟生成的，无法编辑
-        guard loginedPhone?.level != .systemAdmin, loginedPhone?.level != .qrcodeObserver else {
-            return
-        }
+        //系统管理员(修改密码）/临时的手机身份是虚拟生成的，无法编辑
+        guard loginedPhone?.level != .qrcodeObserver else { return }
+        
         let menuVC = UIAlertController(title: "edit".localize(), message: nil, preferredStyle: .actionSheet)
         let confirm = "confirm".localize()
         //头像
@@ -176,8 +175,7 @@ class MineHeaderView: UIView, UITextFieldDelegate {
                         case .success:
                             //上传头像成功
                             self.loginedPhone?.photo = imageID
-                            AccountUtility.sharedInstance.updatePhone()
-                            ActionUtility.sharedInstance.addAction(.editPerson)
+                            AccountUtility.sharedInstance.updatePhone(editPerson: true)
                         default:
                             break
                         }
@@ -194,8 +192,7 @@ class MineHeaderView: UIView, UITextFieldDelegate {
                 guard let newValue = editVC.textFields?.first?.text, !newValue.isEmpty else { return }
                 self.loginedPhone?.name = newValue
                 self.nameLabel.text = newValue
-                AccountUtility.sharedInstance.updatePhone()
-                ActionUtility.sharedInstance.addAction(.editPerson)
+                AccountUtility.sharedInstance.updatePhone(editPerson: true)
             })
             editVC.addAction(confirmAction)
             self.parentVC?.present(editVC, animated: true, completion: nil)
@@ -208,8 +205,7 @@ class MineHeaderView: UIView, UITextFieldDelegate {
                 guard let newValue = editVC.textFields?.first?.text, !newValue.isEmpty else { return }
                 self.loginedPhone?.number = newValue
                 self.phoneLabel.text = newValue
-                AccountUtility.sharedInstance.updatePhone()
-                ActionUtility.sharedInstance.addAction(.editPerson)
+                AccountUtility.sharedInstance.updatePhone(editPerson: true)
             })
             editVC.addAction(confirmAction)
             self.parentVC?.present(editVC, animated: true, completion: nil)
@@ -222,19 +218,29 @@ class MineHeaderView: UIView, UITextFieldDelegate {
                 guard let newValue = editVC.textFields?.first?.text, !newValue.isEmpty else { return }
                 self.loginedPhone?.email = newValue
                 self.emailLabel.text = newValue
-                AccountUtility.sharedInstance.updatePhone()
-                ActionUtility.sharedInstance.addAction(.editPerson)
+                AccountUtility.sharedInstance.updatePhone(editPerson: true)
             })
             editVC.addAction(confirmAction)
             self.parentVC?.present(editVC, animated: true, completion: nil)
         })
+        
+        //帐号+密码登录：修改密码
+        let password = "password".localize(with: prefixLogin)
+        let passwordAction = UIAlertAction(title: password, style: .default, handler: { _ in
+            NewPasswordController.present(in: self.parentVC)
+        })
+        
         //取消
         let cancelAction = UIAlertAction(title: "cancel".localize(), style: .cancel, handler: nil)
 
-        menuVC.addAction(profileAction)
-        menuVC.addAction(nameAction)
-        menuVC.addAction(phoneAction)
-        menuVC.addAction(emailAction)
+        if loginedPhone?.level == .systemAdmin {
+            menuVC.addAction(passwordAction)
+        } else {
+            menuVC.addAction(profileAction)
+            menuVC.addAction(nameAction)
+            menuVC.addAction(phoneAction)
+            menuVC.addAction(emailAction)
+        }
         menuVC.addAction(cancelAction)
         if let ppc = menuVC.popoverPresentationController {
             ppc.sourceView = self

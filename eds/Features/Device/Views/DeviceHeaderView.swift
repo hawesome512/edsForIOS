@@ -16,7 +16,7 @@ import Kingfisher
 class DeviceHeaderView: UIView, UITextFieldDelegate {
 
     private let cornerGradientLayer = CAGradientLayer()
-    private let indicatorVIew = UIActivityIndicatorView()
+    private let indicatorView = UIActivityIndicatorView()
     let imageView = UIImageView()
     let imageButton = UIButton()
     private let disposeBag = DisposeBag()
@@ -64,12 +64,12 @@ class DeviceHeaderView: UIView, UITextFieldDelegate {
             self.parentVC?.present(menuVC, animated: true, completion: nil)
         }).disposed(by: disposeBag)
 
-        indicatorVIew.style = .large
-        indicatorVIew.color = .systemRed
-        indicatorVIew.alpha = 0
-        indicatorVIew.startAnimating()
-        addSubview(indicatorVIew)
-        indicatorVIew.centerInSuperview()
+        indicatorView.style = .large
+        indicatorView.color = .systemRed
+        indicatorView.alpha = 0
+        indicatorView.startAnimating()
+        addSubview(indicatorView)
+        indicatorView.centerInSuperview()
     }
 
     required init?(coder: NSCoder) {
@@ -88,9 +88,9 @@ class DeviceHeaderView: UIView, UITextFieldDelegate {
                 self.imageView.image = photo
                 self.imageView.contentMode = .scaleAspectFill
                 let imageID = AccountUtility.sharedInstance.generateImageID()
-                self.indicatorVIew.alpha = 1
+                self.indicatorView.alpha = 1
                 EDSService.getProvider().request(.upload(data: photo.pngData()!, fileName: imageID)) { response in
-                    self.indicatorVIew.alpha = 0
+                    self.indicatorView.alpha = 0
                     switch(response) {
                     case .success:
                         if let device = self.device {

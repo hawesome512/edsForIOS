@@ -16,7 +16,9 @@ class Account: HandyJSON {
     // MARK: - EDSService
     //🆔，e.g.：1/XRD
     var id = ""
-    //权限
+    //EDS Key,默认同与authority,可更改
+    var edskey = ""
+    //WebAccess权限
     var authority = ""
     //授权手机账户数量
     var number = 0

@@ -57,9 +57,7 @@ class Workorder: HandyJSON, Comparable {
     //工单的时间状态，初始化是未判定
     private var flowTimeLine: FlowTimeLine = .none
 
-    required init() {
-        id = AccountUtility.sharedInstance.generateID()
-    }
+    required init() { }
 
     func getTimeRange() -> String {
         let startDate = start.toDate(nil, region: .local)?.date.toDateString() ?? ""

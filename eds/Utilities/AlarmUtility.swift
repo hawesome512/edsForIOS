@@ -47,6 +47,11 @@ class AlarmUtility {
         }
     }
     
+    func clearAlarmList(){
+        alarmList.removeAll()
+        successfulUpdated.accept(false)
+    }
+    
     func getAlarmList()->[Alarm]{
         //登录时更新数据失败的情况（排除工程中本来没有异常数据）
         if alarmList.count==0,!successfulUpdated.value {
@@ -61,11 +66,6 @@ class AlarmUtility {
             result[confirm] = alarmList.filter{$0.confirm == confirm}
         }
         return result
-    }
-    
-    func clearAlarmList(){
-        alarmList.removeAll()
-        successfulUpdated.accept(false)
     }
     
     func get(by id: String) -> Alarm? {

@@ -13,6 +13,7 @@ import Foundation
 class HelpListController: UITableViewController {
 
     private let disposeBag = DisposeBag()
+    private let indicatorView = UIActivityIndicatorView(style: .large)
 
     var helpList = [Help]()
     var searchHelpList = [Help]()
@@ -24,6 +25,12 @@ class HelpListController: UITableViewController {
     }
 
     private func initViews() {
+        
+        indicatorView.color = .systemRed
+        tableView.addSubview(indicatorView)
+        indicatorView.centerInSuperview()
+        indicatorView.startAnimating()
+        
         searchVC.searchResultsUpdater = self
         searchVC.obscuresBackgroundDuringPresentation = false
         tableView.tableHeaderView = searchVC.searchBar
@@ -31,11 +38,11 @@ class HelpListController: UITableViewController {
         tableView.register(HelpCell.self, forCellReuseIdentifier: String(describing: HelpCell.self))
         EDSResourceUtility.sharedInstance.loadHelpList()
         EDSResourceUtility.sharedInstance.successfulLoadedHelpList.bind(onNext: { loaded in
-            if loaded {
-                DispatchQueue.main.async {
-                    self.helpList = EDSResourceUtility.sharedInstance.helpList
-                    self.tableView.reloadData()
-                }
+            guard loaded else { return }
+            DispatchQueue.main.async {
+                self.helpList = EDSResourceUtility.sharedInstance.helpList
+                self.tableView.reloadData()
+                self.indicatorView.alpha = 0
             }
         }).disposed(by: disposeBag)
     }

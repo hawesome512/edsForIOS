@@ -21,6 +21,8 @@ class AccountUtility {
 
     //随机码，62^5≈10亿种组合
     private let idCount = 5
+    //密钥分隔符（guest:xseec).toBase64()
+    private let keySeparator = ":"
 
     //单例，只允许存在一个实例
     static let sharedInstance = AccountUtility()
@@ -74,7 +76,7 @@ class AccountUtility {
                     //保存登录信息:手机号，登录时间，密钥
                     UserDefaults.standard.set(phoneNumber, forKey: AccountUtility.phoneKey)
                     UserDefaults.standard.set(Date().toDateTimeString(), forKey: AccountUtility.timeKey)
-                    UserDefaults.standard.set(account.authority, forKey: AccountUtility.authorityKey)
+                    UserDefaults.standard.set(account.edskey, forKey: AccountUtility.authorityKey)
                     return
                 }
                 //验证失败
@@ -107,8 +109,8 @@ class AccountUtility {
             case .success(let response):
                 //后台返回数据类型[Account?]?👉[Account]
                 let tempList = JsonUtility.getEDSServiceList(with: response.data, type: [Account]())
-                let inputAuthority = "\(username):\(password)".toBase64()
-                if let account = (tempList?.filter { $0 != nil } as! [Account]).first(where: { $0.authority == inputAuthority }) {
+                let inputAuthority = "\(username)\(self.keySeparator)\(password)".toBase64()
+                if let account = (tempList?.filter { $0 != nil } as! [Account]).first(where: { $0.edskey == inputAuthority }) {
 
                     let loginText = isScan ? nil : (phoneNumber ?? username)
                     self.loginSucceeded(account, phoneNumber: loginText)
@@ -143,6 +145,7 @@ class AccountUtility {
         AlarmUtility.sharedInstance.loadProjectAlarmList()
         WorkorderUtility.sharedInstance.loadProjectWorkerorderList()
         BasicUtility.sharedInstance.loadProjectBasicInfo()
+        EnergyUtility.sharedInstance.loadProjectEnergy()
     }
 
     func getPhone(by name: String) -> Phone? {
@@ -179,14 +182,35 @@ class AccountUtility {
         updatePhone()
     }
 
-    func updatePhone() {
+    func updatePhone(editPerson:Bool = false) {
         guard let account = self.account else {
             return
         }
         //排除虚拟手机管理员
         account.setPhone(phones: phoneList.filter { $0.level != .systemAdmin })
         EDSService.getProvider().request(.updateAccount(account: account)) { _ in }
+        if editPerson {
+            //编辑当前用户个人信息：头像、姓名、电话、邮箱
+            ActionUtility.sharedInstance.addAction(.editPerson)
+        }
         successfulUpdated.accept(true)
+    }
+    
+    func changePassword(with newPassword: String, in controller: UIViewController){
+        guard let account = account else { return }
+        guard let username = account.edskey.fromBase64()?.components(separatedBy: keySeparator).first else { return }
+        account.edskey = "\(username)\(keySeparator)\(newPassword)".toBase64()
+        EDSService.getProvider().request(.updateAccount(account: account)){ result in
+            switch result{
+            case .success(let response):
+                guard JsonUtility.didUpdatedEDSServiceSuccess(data: response.data) else { return }
+                ActionUtility.sharedInstance.addAction(.editPerson)
+                self.prepareExitAccount()
+                controller.dismiss(animated: true, completion: nil)
+            case .failure:
+                break
+            }
+        }
     }
     
     /// 退出前清空资源
@@ -210,6 +234,7 @@ class AccountUtility {
         WorkorderUtility.sharedInstance.clearWorkorderList()
         AlarmUtility.sharedInstance.clearAlarmList()
         BasicUtility.sharedInstance.clearInfo()
+        EnergyUtility.sharedInstance.clearEnergy()
         ActionUtility.sharedInstance.clearAction()
         EDSResourceUtility.sharedInstance.clearResource()
     }

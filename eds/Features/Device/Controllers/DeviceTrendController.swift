@@ -78,7 +78,7 @@ class DeviceTrendController: UIViewController,UITableViewDataSource,UITableViewD
             
             if isAccumulation {
                 //返回累加值被处理后的值
-                let tranValues = BasicUtility.filterAccumulatedValues(values: values)
+                let tranValues = EnergyUtility.filterAccumulatedValues(values: values)
                 return result.append((source.getTagShortName(), tranValues))
             } else {
                 let doubleValues = values.map { Double($0) ?? Tag.nilValue }

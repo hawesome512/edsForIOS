@@ -9,26 +9,33 @@
 import UIKit
 import RxSwift
 
-class EnergyBranchController: UITableViewController {
+class EnergyConfigController: UITableViewController {
 
     private let cellID = "cell"
     private let disposeBag = DisposeBag()
-    //支路是否被编辑过，用于提示退出保存
-    private var branchEdited = false
-
-    var energyBranches: [EnergyBranch] = []
+    private let branchSection = 0
+    
+    private var energy: Energy?
+    private var energyBranches: [EnergyBranch] = []
+    private var energyTimeDatas: [TimeData] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         initViews()
+        EnergyUtility.sharedInstance.successfulUpdated.throttle(.seconds(1), scheduler: MainScheduler.instance).bind(onNext: {updated in
+            guard updated else { return }
+            self.energy = EnergyUtility.sharedInstance.energy
+            self.energyTimeDatas = self.energy?.getTimeData() ?? []
+            self.tableView.reloadData()
+        }).disposed(by: disposeBag)
     }
 
     private func initViews() {
         title = "edit".localize(with: prefixEnergy)
-        energyBranches = BasicUtility.sharedInstance.getEnergyBranch()?.getAllBranches() ?? []
+        energyBranches = EnergyUtility.sharedInstance.getEnergyBranch()?.getAllBranches() ?? []
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
         tableView.tableFooterView = UIView()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(saveBranch))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(saveConfig))
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismissAction))
     }
 
@@ -41,7 +48,18 @@ class EnergyBranchController: UITableViewController {
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
 
-    @objc func saveBranch() {
+    @objc func saveConfig() {
+        
+        var totalHours = Set<Int>()
+        let allHours = Set(0..<24)
+        energyTimeDatas.forEach{ totalHours = totalHours.union(Set($0.hours)) }
+        let unSelHours = Array(allHours.symmetricDifference(totalHours)).sorted()
+        guard unSelHours.count == 0 else {
+            let alert = String(format: "unselected".localize(with: prefixEnergy), unSelHours.map{"\($0):00"}.joined(separator: "/"))
+            ControllerUtility.presentAlertController(content: alert, controller: self)
+            return
+        }
+        
         if energyBranches.count > 0 {
             let topIDCount = energyBranches[0].id.count
             let topLevelBranchs = energyBranches.filter { $0.id.count == topIDCount }
@@ -50,8 +68,9 @@ class EnergyBranchController: UITableViewController {
 
         //处理支路更新
         let branch = EnergyBranch.getBranchMessage(energyBranches)
-        BasicUtility.sharedInstance.updateBranch(branch)
-        ActionUtility.sharedInstance.addAction(.editBranch)
+        energy?.branch = branch
+        energy?.setTimeData(energyTimeDatas)
+        EnergyUtility.sharedInstance.updateEnergy()
         let alertVC = UIAlertController(title: "save".localize(with: prefixEnergy), message: nil, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "ok".localize(), style: .cancel) { _ in
             self.navigationController?.popViewController(animated: true)
@@ -61,12 +80,8 @@ class EnergyBranchController: UITableViewController {
     }
 
     @objc func dismissAction() {
-        if branchEdited {
-            let alertVC = ControllerUtility.generateSaveAlertController(navigationController: navigationController)
-            present(alertVC, animated: true, completion: nil)
-        } else {
-            navigationController?.popViewController(animated: true)
-        }
+        let alertVC = ControllerUtility.generateSaveAlertController(navigationController: navigationController)
+        present(alertVC, animated: true, completion: nil)
     }
 
     //同一层级的id重新排列
@@ -83,13 +98,42 @@ class EnergyBranchController: UITableViewController {
 
     // MARK: - Table view data source
 
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return energyBranches.count
+        return section == branchSection ? energyBranches.count : 6
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        if indexPath.section != branchSection {
+            switch indexPath.row {
+            case 0:
+                let cell = TimeRangeCell()
+                cell.timeDatas = energyTimeDatas
+                return cell
+            case 1...4:
+                let cell = TimeItemCell()
+                if energyTimeDatas.count > 0 {
+                    cell.timeData = energyTimeDatas[indexPath.row-1]
+                }
+                cell.parentVC = self
+                cell.delegate = self
+                return cell
+            default:
+                let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
+                cell.textLabel?.text = "currency".localize(with: prefixEnergy)
+                cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .title3)
+                cell.detailTextLabel?.text = energy?.currency
+                cell.detailTextLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
+                cell.detailTextLabel?.textColor = .label
+                return cell
+            }
+        }
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         let branch = energyBranches[indexPath.row]
         cell.textLabel?.text = branch.title
@@ -115,12 +159,15 @@ class EnergyBranchController: UITableViewController {
         } else {
             cell.accessoryView = nil
         }
-
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return indexPath.section == branchSection
     }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        guard editingStyle == .delete else {
+        guard editingStyle == .delete, indexPath.section == branchSection else {
             return
         }
         let branch = energyBranches[indexPath.row]
@@ -139,7 +186,6 @@ class EnergyBranchController: UITableViewController {
                 }
             }
             tableView.reloadData()
-            self.branchEdited = true
         }
         deleteVC.addAction(deleteAction)
         present(deleteVC, animated: true, completion: nil)
@@ -147,13 +193,28 @@ class EnergyBranchController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        guard indexPath.section != branchSection, indexPath.row == 5 else { return }
+        let alertVC = ControllerUtility.generateInputAlertController(title: "currency".localize(with: prefixEnergy), placeholder: energy?.currency, delegate: self)
+        let confirmAction = UIAlertAction(title: "confirm".localize(), style: .default){ _ in
+            guard let text = alertVC.textFields?.first?.text, !text.isEmpty else { return }
+            self.energy?.currency = text
+            tableView.cellForRow(at: indexPath)?.detailTextLabel?.text = text
+        }
+        alertVC.addAction(confirmAction)
+        present(alertVC, animated: true, completion: nil)
     }
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = AdditionTableHeaderView()
-        header.title.text = "addition".localize(with: prefixEnergy)
-        header.delegate = self
-        return header
+        if section == branchSection {
+            let header = AdditionTableHeaderView()
+            header.title.text = "addition".localize(with: prefixEnergy)
+            header.delegate = self
+            return header
+        } else {
+            let header = SectionHeaderView()
+            header.title = "time_edit".localize(with: prefixEnergy)
+            return header
+        }
     }
 
     func pickBranch(parent: EnergyBranch?) {
@@ -173,7 +234,16 @@ class EnergyBranchController: UITableViewController {
 
 }
 
-extension EnergyBranchController: AdditionDelegate, BranchPickerDelegate {
+extension EnergyConfigController: AdditionDelegate, BranchPickerDelegate, UITextFieldDelegate, TimeItemDelegate {
+    
+    func changeItem(_ changedItem: TimeData) {
+        energyTimeDatas.forEach{ td in
+            guard changedItem.energyTime != td.energyTime else { return }
+            td.hours = td.hours.filter{ !changedItem.hours.contains($0) }
+        }
+        tableView.reloadSections(NSIndexSet(index: 1) as IndexSet, with: .automatic)
+    }
+    
     func pick(branchDevice: Device, in parent: EnergyBranch?) {
         let newBranch = EnergyBranch()
         newBranch.tagName = branchDevice.getShortID() + ":EP"
@@ -195,11 +265,14 @@ extension EnergyBranchController: AdditionDelegate, BranchPickerDelegate {
             energyBranches.append(newBranch)
         }
         tableView.reloadData()
-        branchEdited = true
     }
 
     //table>title新增第1⃣️级支路
     func add(inParent parent: Device?) {
         pickBranch(parent: nil)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
     }
 }

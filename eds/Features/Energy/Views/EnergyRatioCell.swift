@@ -7,14 +7,19 @@
 //
 
 import UIKit
+import RxSwift
 
 class EnergyRatioCell: UITableViewCell {
+    
+    private let disposeBag = DisposeBag()
 
-    let slider = HorSliderView()
-    let ratioLabel = UILabel()
-    let currentView = HomeEnergyView()
-    let lastView = HomeEnergyView()
-    let linkRatioView = HomeRatioView()
+    private let slider = HorSliderView()
+    private let ratioLabel = UILabel()
+    private let currentView = HomeEnergyView()
+    private let lastView = HomeEnergyView()
+    private let linkRatioView = HomeRatioView()
+    
+    var parentVC: UIViewController?
 
     func setData(data: EnergyData) {
         let currentTotal = data.getCurrentTotalValue()
@@ -52,10 +57,27 @@ class EnergyRatioCell: UITableViewCell {
 
         let sliderLabel = UILabel()
         sliderLabel.font = UIFont.preferredFont(forTextStyle: .title3)
-        sliderLabel.text = "percent".localize(with: prefixEnergy)
+        let title = "percent".localize(with: prefixEnergy)
+        sliderLabel.text = title
         addSubview(sliderLabel)
         sliderLabel.centerY(to: timeIcon)
         sliderLabel.leadingToTrailing(of: timeIcon, offset: edsMinSpace)
+        
+        let tipButton = UIButton()
+        tipButton.tintColor = .systemGray3
+        tipButton.setBackgroundImage(UIImage(systemName: "info.circle.fill"), for: .normal)
+        tipButton.rx.tap.bind(onNext: {
+            let message = "percent_alert".localize(with: prefixEnergy)
+            let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "ok".localize(), style: .cancel, handler: nil)
+            alertVC.addAction(okAction)
+            self.parentVC?.present(alertVC, animated: true, completion: nil)
+        }).disposed(by: disposeBag)
+        addSubview(tipButton)
+        tipButton.width(edsSpace)
+        tipButton.height(edsSpace)
+        tipButton.leadingToTrailing(of: sliderLabel, offset: 2)
+        tipButton.centerY(to: timeIcon, offset: -6)
 
         ratioLabel.text = "0%"
         ratioLabel.textColor = edsDefaultColor

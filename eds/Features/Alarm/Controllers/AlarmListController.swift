@@ -148,7 +148,7 @@ class AlarmListController: UITableViewController {
             navigationController?.pushViewController(workorderVC, animated: true)
         } else {
             workorderAlarm = alarm
-            let workorder = Workorder()
+            let workorder = WorkorderUtility.initWorkorder()
             let cell = tableView.cellForRow(at: indexPath) as! AlarmCell
             workorder.title = cell.titleLabel.text ?? ""
             workorder.type = .alarm

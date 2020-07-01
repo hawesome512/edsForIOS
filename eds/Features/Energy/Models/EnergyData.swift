@@ -72,18 +72,19 @@ class EnergyData {
     }
 
     //分时能耗
-    func calTimePrice() -> Dictionary<EnergyPrice, Double> {
-        var data = [EnergyPrice.valley: 0.0, EnergyPrice.plain: 0.0, EnergyPrice.peek: 0.0]
-        //年摸索，数值不能精细到hour,不能进行分时统计
-        guard dateItem.dateType != .year else {
-            return data
-        }
-        let curDoubleValues = getCurrentDoubleValues()
-        curDoubleValues.enumerated().forEach { (offset, element) in
-            let date = dateItem.date + offset.hours
-            let priceType = EnergyPrice(hourOfDay: date.hour)
-            data[priceType] = data[priceType]! + element
-        }
-        return data
-    }
+//    func calTimeRange() -> Dictionary<EnergyTime, Double> {
+//        var data: Dictionary<EnergyTime, Double> = [:]
+//        EnergyTime.allCases.forEach{
+//            data[$0] = 0
+//        }
+//        //年模式，数值不能精细到hour,不能进行分时统计
+//        guard dateItem.dateType != .year else { return data }
+//        let curDoubleValues = getCurrentDoubleValues()
+//        curDoubleValues.enumerated().forEach { (offset, element) in
+//            let date = dateItem.date + offset.hours
+//            let priceType = EnergyTime(hourOfDay: date.hour)
+//            data[priceType] = data[priceType]! + element
+//        }
+//        return data
+//    }
 }

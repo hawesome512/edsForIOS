@@ -116,6 +116,8 @@ class DeviceTrendChartCell: UITableViewCell {
         var datas: [LineChartDataSet] = []
         //调色板
         let colors = ChartColorTemplates.material()
+        //不超过2条时，可以填充渐变色块
+        let drawFilled = logTags.count <= 2
         logTags.forEach { logTag in
 
             let chartValues = logTag.values.enumerated().map {
@@ -133,18 +135,27 @@ class DeviceTrendChartCell: UITableViewCell {
             set.drawCirclesEnabled = logTags.count == 1 ? true : false
             set.circleColors = [color]
             set.circleRadius = 4
+            
             datas.append(set)
-        }
-        //只有一条线时，填充渐变色块
-        if datas.count == 1 {
-            let gradientColors = [colors[0].withAlphaComponent(0).cgColor,
-                colors[0].withAlphaComponent(1).cgColor]
+            
+            guard drawFilled else { return }
+            let gradientColors = [color.withAlphaComponent(0).cgColor,color.withAlphaComponent(1).cgColor]
             let gradient = CGGradient(colorsSpace: nil, colors: gradientColors as CFArray, locations: nil)!
-
-            datas[0].fillAlpha = 1
-            datas[0].fill = Fill(linearGradient: gradient, angle: 90) //.linearGradient(gradient, angle: 90)
-            datas[0].drawFilledEnabled = true
+            set.fillAlpha = 1
+            set.fill = Fill(linearGradient: gradient, angle: 90)
+            set.drawFilledEnabled = true
         }
+        
+        //只有一条线时，填充渐变色块
+//        if datas.count == 1 {
+//            let gradientColors = [colors[0].withAlphaComponent(0).cgColor,
+//                colors[0].withAlphaComponent(1).cgColor]
+//            let gradient = CGGradient(colorsSpace: nil, colors: gradientColors as CFArray, locations: nil)!
+//
+//            datas[0].fillAlpha = 1
+//            datas[0].fill = Fill(linearGradient: gradient, angle: 90) //.linearGradient(gradient, angle: 90)
+//            datas[0].drawFilledEnabled = true
+//        }
 
         let data = LineChartData(dataSets: datas)
         lineChartView.data = data

@@ -66,11 +66,14 @@
 		46227A4123C80FF400768799 /* DeviceTrendController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46227A4023C80FF400768799 /* DeviceTrendController.swift */; };
 		46227A4323C8231300768799 /* BallonMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46227A4223C8231300768799 /* BallonMarker.swift */; };
 		46227A4523C82A4C00768799 /* ViewUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46227A4423C82A4C00768799 /* ViewUtility.swift */; };
+		4626D83E249C39BD005D8929 /* Energy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4626D83D249C39BD005D8929 /* Energy.swift */; };
+		4626D840249C4D22005D8929 /* EnergyUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4626D83F249C4D22005D8929 /* EnergyUtility.swift */; };
+		4626D844249C860E005D8929 /* TimeRangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4626D843249C860E005D8929 /* TimeRangeCell.swift */; };
+		4626D846249C8C2E005D8929 /* TimeItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4626D845249C8C2E005D8929 /* TimeItemCell.swift */; };
 		462D23AE23C076C500C28F15 /* IconPagingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462D23AD23C076C500C28F15 /* IconPagingCell.swift */; };
-		462E0DEB244D237900A2F17E /* EnergyPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462E0DEA244D237900A2F17E /* EnergyPrice.swift */; };
 		462E0DED244D882900A2F17E /* EnergyBranchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462E0DEC244D882800A2F17E /* EnergyBranchCell.swift */; };
 		462E0DEF244E8BF500A2F17E /* EnergyBranch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462E0DEE244E8BF500A2F17E /* EnergyBranch.swift */; };
-		462E0DF1245116BD00A2F17E /* EnergyBranchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462E0DF0245116BD00A2F17E /* EnergyBranchController.swift */; };
+		462E0DF1245116BD00A2F17E /* EnergyConfigController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462E0DF0245116BD00A2F17E /* EnergyConfigController.swift */; };
 		462E0DF3245135A200A2F17E /* BranchPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462E0DF2245135A200A2F17E /* BranchPickerController.swift */; };
 		462E0DF524526AB700A2F17E /* Basic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462E0DF424526AB700A2F17E /* Basic.swift */; };
 		462E0DF7245273AD00A2F17E /* Notice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462E0DF6245273AD00A2F17E /* Notice.swift */; };
@@ -139,6 +142,7 @@
 		46E0E3D02374074F00116DA2 /* String-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E0E3CF2374074F00116DA2 /* String-Ext.swift */; };
 		46E59DD02429893A00C67E82 /* PhotoCollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E59DCF2429893A00C67E82 /* PhotoCollectionController.swift */; };
 		46E59DD22429DB7F00C67E82 /* UICollectionViewFlowLayout-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E59DD12429DB7F00C67E82 /* UICollectionViewFlowLayout-Ext.swift */; };
+		46E713F824A1EC3200BC9FD8 /* NewPasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E713F724A1EC3200BC9FD8 /* NewPasswordController.swift */; };
 		46E9062A245FA67400DE7AE3 /* ActionUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E90629245FA67400DE7AE3 /* ActionUtility.swift */; };
 		46E9062C245FCA8E00DE7AE3 /* ActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E9062B245FCA8E00DE7AE3 /* ActionCell.swift */; };
 		46E9062E245FDEAA00DE7AE3 /* ActionListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E9062D245FDEAA00DE7AE3 /* ActionListController.swift */; };
@@ -254,11 +258,14 @@
 		46227A4023C80FF400768799 /* DeviceTrendController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTrendController.swift; sourceTree = "<group>"; };
 		46227A4223C8231300768799 /* BallonMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BallonMarker.swift; sourceTree = "<group>"; };
 		46227A4423C82A4C00768799 /* ViewUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewUtility.swift; sourceTree = "<group>"; };
+		4626D83D249C39BD005D8929 /* Energy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Energy.swift; sourceTree = "<group>"; };
+		4626D83F249C4D22005D8929 /* EnergyUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyUtility.swift; sourceTree = "<group>"; };
+		4626D843249C860E005D8929 /* TimeRangeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRangeCell.swift; sourceTree = "<group>"; };
+		4626D845249C8C2E005D8929 /* TimeItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeItemCell.swift; sourceTree = "<group>"; };
 		462D23AD23C076C500C28F15 /* IconPagingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconPagingCell.swift; sourceTree = "<group>"; };
-		462E0DEA244D237900A2F17E /* EnergyPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyPrice.swift; sourceTree = "<group>"; };
 		462E0DEC244D882800A2F17E /* EnergyBranchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyBranchCell.swift; sourceTree = "<group>"; };
 		462E0DEE244E8BF500A2F17E /* EnergyBranch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyBranch.swift; sourceTree = "<group>"; };
-		462E0DF0245116BD00A2F17E /* EnergyBranchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyBranchController.swift; sourceTree = "<group>"; };
+		462E0DF0245116BD00A2F17E /* EnergyConfigController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyConfigController.swift; sourceTree = "<group>"; };
 		462E0DF2245135A200A2F17E /* BranchPickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchPickerController.swift; sourceTree = "<group>"; };
 		462E0DF424526AB700A2F17E /* Basic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Basic.swift; sourceTree = "<group>"; };
 		462E0DF6245273AD00A2F17E /* Notice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notice.swift; sourceTree = "<group>"; };
@@ -327,6 +334,7 @@
 		46E0E3CF2374074F00116DA2 /* String-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String-Ext.swift"; sourceTree = "<group>"; };
 		46E59DCF2429893A00C67E82 /* PhotoCollectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionController.swift; sourceTree = "<group>"; };
 		46E59DD12429DB7F00C67E82 /* UICollectionViewFlowLayout-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewFlowLayout-Ext.swift"; sourceTree = "<group>"; };
+		46E713F724A1EC3200BC9FD8 /* NewPasswordController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordController.swift; sourceTree = "<group>"; };
 		46E90629245FA67400DE7AE3 /* ActionUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionUtility.swift; sourceTree = "<group>"; };
 		46E9062B245FCA8E00DE7AE3 /* ActionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCell.swift; sourceTree = "<group>"; };
 		46E9062D245FDEAA00DE7AE3 /* ActionListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionListController.swift; sourceTree = "<group>"; };
@@ -670,11 +678,11 @@
 		460F7259236FF57300CFC7C3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4626D83D249C39BD005D8929 /* Energy.swift */,
 				46FF9E452446E8C1000F5AB2 /* EnergyCellType.swift */,
 				46FF9E492446ECCE000F5AB2 /* EnergySegmentType.swift */,
 				46FF9E4E24470B5B000F5AB2 /* EnergyDateItem.swift */,
 				46FF9E5624498A83000F5AB2 /* EnergyData.swift */,
-				462E0DEA244D237900A2F17E /* EnergyPrice.swift */,
 				462E0DEE244E8BF500A2F17E /* EnergyBranch.swift */,
 			);
 			path = Models;
@@ -688,6 +696,8 @@
 				46FF9E50244809EA000F5AB2 /* EnergyRatioCell.swift */,
 				46FF9E5224482C5B000F5AB2 /* EnergyTimeCell.swift */,
 				462E0DEC244D882800A2F17E /* EnergyBranchCell.swift */,
+				4626D843249C860E005D8929 /* TimeRangeCell.swift */,
+				4626D845249C8C2E005D8929 /* TimeItemCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -696,7 +706,7 @@
 			isa = PBXGroup;
 			children = (
 				46FF9E432446E87C000F5AB2 /* EnergyController.swift */,
-				462E0DF0245116BD00A2F17E /* EnergyBranchController.swift */,
+				462E0DF0245116BD00A2F17E /* EnergyConfigController.swift */,
 				462E0DF2245135A200A2F17E /* BranchPickerController.swift */,
 			);
 			path = Controllers;
@@ -740,6 +750,7 @@
 				46E9062F245FEF3800DE7AE3 /* AccountQRCodeController.swift */,
 				46EDC79124610EDB00F2F9EE /* AboutController.swift */,
 				4663A686247E033D00985BD4 /* DataController.swift */,
+				46E713F724A1EC3200BC9FD8 /* NewPasswordController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -769,6 +780,7 @@
 				46DBA53B242490B300CFA7E7 /* AccountUtility.swift */,
 				46DBA53D242498E500CFA7E7 /* ShareUtility.swift */,
 				46FF9E5424484D11000F5AB2 /* BasicUtility.swift */,
+				4626D83F249C4D22005D8929 /* EnergyUtility.swift */,
 				46E90629245FA67400DE7AE3 /* ActionUtility.swift */,
 				46EDC79324614D8400F2F9EE /* EDSResourceUtility.swift */,
 			);
@@ -1142,6 +1154,7 @@
 				46791E322493120700269EF4 /* DeviceSorterController.swift in Sources */,
 				462E0DED244D882900A2F17E /* EnergyBranchCell.swift in Sources */,
 				4621272C23B5CDBA00105664 /* DynamicDeviceController.swift in Sources */,
+				46E713F824A1EC3200BC9FD8 /* NewPasswordController.swift in Sources */,
 				46FB866823BAE87800754E88 /* DevicePageItemSource.swift in Sources */,
 				4621272023B19FF400105664 /* DeviceFixedCell.swift in Sources */,
 				46DBA5282422114F00CFA7E7 /* WorkorderTask.swift in Sources */,
@@ -1178,6 +1191,7 @@
 				46DC535B2412412F00217ECD /* ImageButton.swift in Sources */,
 				4621272523B19FF400105664 /* DeviceRangeCell.swift in Sources */,
 				4621273C23B6205200105664 /* UINavigationController-Ext.swift in Sources */,
+				4626D846249C8C2E005D8929 /* TimeItemCell.swift in Sources */,
 				46FB2671243EF40B0080362C /* HomeController.swift in Sources */,
 				462E0DF7245273AD00A2F17E /* Notice.swift in Sources */,
 				46FB2673243EF58E0080362C /* Home.swift in Sources */,
@@ -1199,7 +1213,6 @@
 				46B3823F246539D8008C9B3C /* ScannerViewController.swift in Sources */,
 				46FF950E241A0AC1002E36AD /* WorkorderListController.swift in Sources */,
 				46EE431D237153DC00DF22FB /* Tag.swift in Sources */,
-				462E0DEB244D237900A2F17E /* EnergyPrice.swift in Sources */,
 				46FF9E51244809EA000F5AB2 /* EnergyRatioCell.swift in Sources */,
 				4607DC7A23FE093300E35015 /* NewDeviceAlertController.swift in Sources */,
 				46DF40D5242DAB930018F961 /* TaskAdditionCell.swift in Sources */,
@@ -1210,7 +1223,7 @@
 				4607ACE52432D6D000C13C57 /* CornerView.swift in Sources */,
 				460BA6DB237CE08A008E7CDF /* Action.swift in Sources */,
 				469BB70D23CAEBB800A57C51 /* TrendEvaluation.swift in Sources */,
-				462E0DF1245116BD00A2F17E /* EnergyBranchController.swift in Sources */,
+				462E0DF1245116BD00A2F17E /* EnergyConfigController.swift in Sources */,
 				462E0DFD2452992B00A2F17E /* MapController.swift in Sources */,
 				46DF40DB24304A560018F961 /* DatePickerController.swift in Sources */,
 				46227A3F23C80FA500768799 /* DeviceTrendEvaluationCell.swift in Sources */,
@@ -1248,6 +1261,7 @@
 				46036A6D245AB37700E59E41 /* AccountAdditionController.swift in Sources */,
 				46DF40D9242DD3D70018F961 /* UIViewController-Ext.swift in Sources */,
 				4621273623B5EF6A00105664 /* DeviceHeaderView.swift in Sources */,
+				4626D844249C860E005D8929 /* TimeRangeCell.swift in Sources */,
 				46FB866A23BB17EA00754E88 /* Double-Ext.swift in Sources */,
 				46B4934F240897800066863D /* FixedDeviceController.swift in Sources */,
 				46FF950024161B87002E36AD /* AlarmUtility.swift in Sources */,
@@ -1305,6 +1319,8 @@
 				46DF40D1242C866D0018F961 /* TextInputCell.swift in Sources */,
 				46DBA50B241F55D100CFA7E7 /* WorkorderController.swift in Sources */,
 				46DBA52624220CF100CFA7E7 /* WorkorderMessage.swift in Sources */,
+				4626D840249C4D22005D8929 /* EnergyUtility.swift in Sources */,
+				4626D83E249C39BD005D8929 /* Energy.swift in Sources */,
 				46DF04A9240B983A00E3DE65 /* FixedInfoCell.swift in Sources */,
 				462E0DFF2452B25F00A2F17E /* NoticeController.swift in Sources */,
 			);
@@ -1475,14 +1491,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "eds/EDS云管理.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = DB24XNH42B;
 				INFOPLIST_FILE = eds/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 1.1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xseec.eds;
 				PRODUCT_NAME = "EDS云管理";
 				SWIFT_VERSION = 5.0;
@@ -1497,14 +1513,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "eds/EDS云管理.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = DB24XNH42B;
 				INFOPLIST_FILE = eds/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 1.1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xseec.eds;
 				PRODUCT_NAME = "EDS云管理";
 				SWIFT_VERSION = 5.0;

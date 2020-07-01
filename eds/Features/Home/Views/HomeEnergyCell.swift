@@ -93,9 +93,9 @@ class HomeEnergyCell: UITableViewCell {
     }
     
     private func initData(){
-        BasicUtility.sharedInstance.successfulLoadedEnergyData.throttle(.seconds(1), scheduler: MainScheduler.instance).bind(onNext: { loaded in
+        EnergyUtility.sharedInstance.successfulUpdated.throttle(.seconds(1), scheduler: MainScheduler.instance).bind(onNext: { loaded in
             guard loaded==true else { return }
-            guard let data = BasicUtility.sharedInstance.getEnergyBranch()?.energyData else { return }
+            guard let data = EnergyUtility.sharedInstance.getEnergyBranch()?.energyData else { return }
             let currentTotal = data.getCurrentTotalValue()
             let lastPeriod = data.getLastPeriodTotalValue()
             self.currentView.value = currentTotal.roundToPlaces(places: 0).clean
@@ -117,7 +117,7 @@ class HomeEnergyCell: UITableViewCell {
         guard selected==true else { return }
         let energyVC = EnergyController()
         //copy传递副本，在用电分析中branch.energyData会更改，不能影响EnergyUtility.energyBranch
-        energyVC.energyBranch = BasicUtility.sharedInstance.getEnergyBranch()?.copy()
+        energyVC.energyBranch = EnergyUtility.sharedInstance.getEnergyBranch()?.copy()
         energyVC.hidesBottomBarWhenPushed = true
         parentVC?.navigationController?.pushViewController(energyVC, animated: true)
         

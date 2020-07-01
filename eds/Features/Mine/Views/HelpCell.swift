@@ -54,7 +54,7 @@ class HelpCell: UITableViewCell {
         addSubview(sizeLabel)
         sizeLabel.trailingToSuperview(offset: edsSpace)
         sizeLabel.centerY(to: typeImage)
-        sizeLabel.leadingToTrailing(of: nameLabel, offset: -edsSpace, relation: .equalOrLess)
+        sizeLabel.leadingToTrailing(of: nameLabel, offset: edsSpace, relation: .equalOrGreater)
     }
 
 }

@@ -12,11 +12,10 @@ class RoundLabel: UILabel {
 
     var innerText: String? {
         didSet {
-            if let innerText = innerText {
-                //圆角时，水平方向缩进两个空格，避免被圆角切割
-                text = "  \(innerText)  "
-                layoutIfNeeded()
-            }
+            guard let innerText = innerText else { return }
+            //圆角时，水平方向缩进两个空格，避免被圆角切割
+            text = "  \(innerText)  "
+            layoutIfNeeded()
         }
     }
 

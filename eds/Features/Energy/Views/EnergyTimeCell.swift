@@ -8,51 +8,64 @@
 
 import UIKit
 import RxSwift
+import SwiftDate
 
 class EnergyTimeCell: UITableViewCell {
-
-    private let minLabel = UILabel()
-    private let avgLabel = UILabel()
-    private let maxLabel = UILabel()
-    private let minValueLabel = UILabel()
-    private let maxValueLabel = UILabel()
-    private let avgValueLabel = UILabel()
-    private let minMoneyLabel = UILabel()
-    private let maxMoneyLabel = UILabel()
-    private let avgMoneyLabel = UILabel()
+    
+    private let viewSpace: CGFloat = 2
+    private let energyTimes = EnergyTime.allCases
+    private var widthConstraints :[NSLayoutConstraint] = []
+    private var widthRatios: [Double] = []
+    private var titleLabels: [UILabel] = []
+    private var valueLabels: [UILabel] = []
+    private var subValueLabels : [UILabel] = []
+    private var showViews: [UIView] = []
+    private var priceLabel = UILabel()
+    
     private let disposeBag = DisposeBag()
 
     var parentVC: UIViewController?
-
-    func setData(_ data: EnergyData) {
-        let total = data.getCurrentTotalValue()
-        if total == 0 {
-            minValueLabel.text = "0%"
-            avgValueLabel.text = "0%"
-            maxValueLabel.text = "0%"
-            minMoneyLabel.text = "¥ 0"
-            avgMoneyLabel.text = "¥ 0"
-            maxMoneyLabel.text = "¥ 0"
+    var energyData: EnergyData?{
+        didSet{
+            updateViews()
         }
+    }
+    var energy: Energy?
 
-        let timeData = data.calTimePrice()
-        let minTotal = timeData[.valley]!
-        let minRatio = total == 0 ? 0 : minTotal / total * 100
-        minValueLabel.text = minRatio.roundToPlaces(places: 0).clean + "%"
-        let minMoney = Double(minTotal) * EnergyPrice.valley.getPrice()
-        minMoneyLabel.text = "¥ \(minMoney.roundToPlaces(places: 0).clean)"
-
-        let avgTotal = timeData[.plain]!
-        let avgRatio =  total == 0 ? 0 : avgTotal / total * 100
-        avgValueLabel.text = avgRatio.roundToPlaces(places: 0).clean + "%"
-        let avgMoney = Double(avgTotal) * EnergyPrice.plain.getPrice()
-        avgMoneyLabel.text = "¥ \(avgMoney.roundToPlaces(places: 0).clean)"
-
-        let maxTotal = timeData[.peek]!
-        let maxRatio =  total == 0 ? 0 : maxTotal / total * 100
-        maxValueLabel.text = maxRatio.roundToPlaces(places: 0).clean + "%"
-        let maxMoney = Double(maxTotal) * EnergyPrice.peek.getPrice()
-        maxMoneyLabel.text = "¥ \(maxMoney.roundToPlaces(places: 0).clean)"
+    func updateViews() {
+        
+        guard let data = energyData, let energy = energy else { return }
+        
+        let total = data.getCurrentTotalValue()
+        widthRatios = widthConstraints.map{ _ in 0 }
+        //年模式，数值不能精细到hour,不能进行分时统计
+        let yearMode = data.dateItem.dateType == .year
+        
+        let curDoubleValues = data.getCurrentDoubleValues()
+        let hoursDic = energy.getHourDic()
+        let timeDatas = energy.getTimeData()
+        if !yearMode {
+            curDoubleValues.enumerated().forEach { (offset, element) in
+                let date = data.dateItem.date + offset.hours
+                let index = hoursDic[date.hour]?.rawValue ?? 0
+                timeDatas[index].totalValue += element
+            }
+        }
+        
+        var price: Double = 0
+        timeDatas.forEach{ timeData in
+            let energyTime = timeData.energyTime
+            let index = energyTime.rawValue
+            let ratio = total == 0 ? 0 : timeData.totalValue / total * 100
+            valueLabels[index].text = ratio.roundToPlaces(places: 0).clean + "%"
+            let money = timeData.totalValue * timeData.price
+            price += money.roundToPlaces(places: 0)
+            subValueLabels[index].text = "\(energy.currency)\(money.roundToPlaces(places: 0).clean)"
+            //年模式下所有值为0，时段等分占比显示
+            widthRatios[index] = yearMode ? 1/Double(timeDatas.count) : ratio / 100
+        }
+        priceLabel.text = "\(energy.currency)\(price.clean)"
+        setNeedsDisplay()
     }
 
     private func initViews() {
@@ -70,6 +83,7 @@ class EnergyTimeCell: UITableViewCell {
         let title = "time".localize(with: prefixEnergy)
         timeLabel.text = title
         timeLabel.font = UIFont.preferredFont(forTextStyle: .title3)
+        timeLabel.adjustsFontSizeToFitWidth = true
         addSubview(timeLabel)
         timeLabel.leadingToTrailing(of: timeIcon, offset: edsMinSpace)
         timeLabel.centerY(to: timeIcon)
@@ -89,103 +103,96 @@ class EnergyTimeCell: UITableViewCell {
         tipButton.height(edsSpace)
         tipButton.leadingToTrailing(of: timeLabel, offset: 2)
         tipButton.centerY(to: timeIcon, offset: -6)
+        
+        priceLabel.textColor = edsDefaultColor
+        priceLabel.font = UIFont.preferredFont(forTextStyle: .largeTitle)
+        priceLabel.textAlignment = .right
+        priceLabel.adjustsFontSizeToFitWidth = true
+        addSubview(priceLabel)
+        priceLabel.trailingToSuperview(offset: edsSpace)
+        priceLabel.centerY(to: timeIcon)
+        priceLabel.leadingToTrailing(of: tipButton, offset: edsSpace, relation: .equalOrGreater)
 
-        //低谷
-        minValueLabel.text = "0%"
-        minValueLabel.font = UIFont.preferredFont(forTextStyle: .headline)
-        addSubview(minValueLabel)
-        minValueLabel.leadingToSuperview(offset: edsSpace)
-        minValueLabel.topToBottom(of: timeLabel, offset: edsMinSpace)
-
-        minMoneyLabel.text = "¥ 0"
-        minMoneyLabel.textColor = .systemYellow
-        addSubview(minMoneyLabel)
-        minMoneyLabel.leadingToSuperview(offset: edsSpace)
-        minMoneyLabel.bottomToSuperview(offset: -edsMinSpace)
-
-        minLabel.text = "valley".localize(with: prefixEnergy)
-        minLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
-        addSubview(minLabel)
-        minLabel.leadingToSuperview(offset: edsSpace)
-        minLabel.bottomToTop(of: minMoneyLabel, offset: -edsMinSpace)
-        minLabel.topToBottom(of: minValueLabel, offset: 2 * edsSpace)
-
-        //平段
-        avgValueLabel.text = "0%"
-        avgValueLabel.font = UIFont.preferredFont(forTextStyle: .headline)
-        addSubview(avgValueLabel)
-        avgValueLabel.centerXToSuperview()
-        avgValueLabel.topToBottom(of: timeLabel, offset: edsMinSpace)
-
-        avgMoneyLabel.text = "¥ 0"
-        avgMoneyLabel.textColor = .systemYellow
-        addSubview(avgMoneyLabel)
-        avgMoneyLabel.centerXToSuperview()
-        avgMoneyLabel.bottomToSuperview(offset: -edsMinSpace)
-
-        avgLabel.text = "plain".localize(with: prefixEnergy)
-        avgLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
-        addSubview(avgLabel)
-        avgLabel.centerXToSuperview()
-        avgLabel.bottomToTop(of: avgMoneyLabel, offset: -edsMinSpace)
-
-        //高峰
-        maxValueLabel.text = "0%"
-        maxValueLabel.font = UIFont.preferredFont(forTextStyle: .headline)
-        addSubview(maxValueLabel)
-        maxValueLabel.trailingToSuperview(offset: edsSpace)
-        maxValueLabel.topToBottom(of: timeLabel, offset: edsMinSpace)
-
-        maxMoneyLabel.text = "¥ 0"
-        maxMoneyLabel.textColor = .systemYellow
-        addSubview(maxMoneyLabel)
-        maxMoneyLabel.trailingToSuperview(offset: edsSpace)
-        maxMoneyLabel.bottomToSuperview(offset: -edsMinSpace)
-
-        maxLabel.text = "peak".localize(with: prefixEnergy)
-        maxLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
-        addSubview(maxLabel)
-        maxLabel.trailingToSuperview(offset: edsSpace)
-        maxLabel.bottomToTop(of: maxMoneyLabel, offset: -edsMinSpace)
+        for i in 0..<energyTimes.count {
+            
+            let textAlignment: NSTextAlignment
+            switch i {
+            case 0:
+                textAlignment = .left
+            case energyTimes.count-1:
+                textAlignment = .right
+            default:
+                textAlignment = .center
+            }
+            
+            let valueLabel = UILabel()
+            valueLabel.textAlignment = textAlignment
+            valueLabel.text = "0%"
+            valueLabel.font = UIFont.preferredFont(forTextStyle: .headline)
+            valueLabel.adjustsFontSizeToFitWidth = true
+            addSubview(valueLabel)
+            valueLabel.topToBottom(of: priceLabel,offset: edsMinSpace)
+            if i == 0 {
+                valueLabel.leadingToSuperview(offset: edsSpace)
+            } else {
+                valueLabel.leadingToTrailing(of: valueLabels[i-1],offset: viewSpace)
+            }
+            let constraint = valueLabel.widthAnchor.constraint(equalToConstant: 0)
+            constraint.isActive = true
+            valueLabels.append(valueLabel)
+            widthConstraints.append(constraint)
+            
+            let showView = UIView()
+            showView.backgroundColor = energyTimes[i].getColor()
+            addSubview(showView)
+            showView.height(edsMinSpace)
+            showView.width(to: valueLabel)
+            showView.topToBottom(of: valueLabel,offset: edsMinSpace)
+            showView.leading(to: valueLabel)
+            
+            let subValueLabel = UILabel()
+            subValueLabel.textAlignment = textAlignment
+            subValueLabel.text = "¥0"
+            subValueLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
+            subValueLabel.adjustsFontSizeToFitWidth = true
+            addSubview(subValueLabel)
+            subValueLabel.bottomToSuperview(offset: -edsMinSpace)
+            subValueLabel.leading(to: valueLabel)
+            subValueLabel.width(to: valueLabel)
+            subValueLabels.append(subValueLabel)
+            
+            let titleLabel = UILabel()
+            titleLabel.textAlignment = textAlignment
+            titleLabel.text = energyTimes[i].getText()
+            titleLabel.textColor = energyTimes[i].getColor()
+            titleLabel.adjustsFontSizeToFitWidth = true
+            addSubview(titleLabel)
+            titleLabel.bottomToTop(of: subValueLabel, offset: -edsMinSpace)
+            titleLabel.topToBottom(of: showView, offset: edsMinSpace)
+            titleLabel.leading(to: valueLabel)
+            titleLabel.width(to: subValueLabel)
+            titleLabels.append(titleLabel)
+        }
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         initViews()
+        EnergyUtility.sharedInstance.successfulUpdated.throttle(.seconds(1), scheduler: MainScheduler.instance).bind(onNext: { updated in
+            guard updated else { return }
+            self.energy = EnergyUtility.sharedInstance.energy
+            self.updateViews()
+        }).disposed(by: disposeBag)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func draw(_ rect: CGRect) {
-        //绘黑线,在居中偏下（+4）的位置
-        let centerY: CGFloat = rect.height * 0.5 + 4
-        let radius: CGFloat = 6
-        let start = CGPoint(x: edsSpace + radius, y: centerY)
-        let end = CGPoint(x: rect.width - edsSpace, y: centerY)
-        let center = CGPoint(x: rect.width / 2, y: centerY)
-
-        let path = UIBezierPath()
-        path.lineWidth = 2
-        UIColor.lightGray.setStroke()
-        path.move(to: start)
-        path.addLine(to: end)
-        path.stroke()
-
-        let circle1 = UIBezierPath()
-        circle1.addArc(withCenter: start, radius: radius, startAngle: 0, endAngle: CGFloat(Double.pi * 2), clockwise: true)
-        UIColor.systemGreen.setFill()
-        circle1.fill()
-
-        let circle2 = UIBezierPath()
-        circle2.addArc(withCenter: end, radius: radius, startAngle: 0, endAngle: CGFloat(Double.pi * 2), clockwise: true)
-        UIColor.systemRed.setFill()
-        circle2.fill()
-
-        let circle3 = UIBezierPath()
-        circle3.addArc(withCenter: center, radius: radius, startAngle: 0, endAngle: CGFloat(Double.pi * 2), clockwise: true)
-        UIColor.systemBlue.setFill()
-        circle3.fill()
+        let width = rect.width - 2 * edsSpace - CGFloat(widthRatios.count - 1) * viewSpace
+        for i in 0..<widthRatios.count {
+            widthConstraints[i].constant = width * CGFloat(widthRatios[i])
+        }
     }
 }

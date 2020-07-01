@@ -217,13 +217,15 @@ class LoginController: UIViewController, UITextFieldDelegate {
         loginButton.rx.tap.bind(onNext: {
             
             //调试用，跳过数据请求
-            //            let homeVC = WorkorderAdditionController() // MainController()
-            //            homeVC.modalPresentationStyle = .fullScreen
-            //            self.present(homeVC, animated: true, completion: nil)
-            //            return
+//            let homeVC = EnergyConfigController()
+//            homeVC.modalPresentationStyle = .fullScreen
+//            self.present(homeVC, animated: true, completion: nil)
+//            return
             
-            //手机24小时免验证
-            if self.loginType == .phoneType, self.freeVerified, let authorigy = UserDefaults.standard.string(forKey: AccountUtility.authorityKey)?.fromBase64() {
+            //手机24小时免验证(验证码重新，即不为空，输入将重新验证）
+            if self.loginType == .phoneType, self.freeVerified,
+                let authorigy = UserDefaults.standard.string(forKey: AccountUtility.authorityKey)?.fromBase64(),
+                let codeText = self.codeField.text, codeText.isEmpty{
                 self.startLoginAnimating()
                 let keys = authorigy.components(separatedBy: ":")
                 AccountUtility.sharedInstance.loadProjectAccount(username: keys[0], password: keys[1], controller: self, phoneNumber: self.phoneField.text)

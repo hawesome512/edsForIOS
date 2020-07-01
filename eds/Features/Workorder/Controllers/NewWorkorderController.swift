@@ -33,7 +33,7 @@ class NewWorkorderController: UITableViewController, UINavigationBarDelegate {
     //任务清单
     private var tasks: [String] = []
 
-    var workorder = Workorder()
+    var workorder = WorkorderUtility.initWorkorder()
     var delegate: WorkorderAdditionDelegate?
 
     override func viewDidLoad() {

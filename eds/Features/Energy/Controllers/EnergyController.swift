@@ -34,7 +34,7 @@ class EnergyController: UITableViewController {
             chartCell.setData(data.chartValues, dateItem: data.dateItem)
             analysisCell.setEnergyData(data.getCurrentValues(), date: data.dateItem)
             ratioCell.setData(data: data)
-            timeCell.setData(data)
+            timeCell.energyData = data
             branchCell.setEnergyData(branch)
         }
     }
@@ -57,7 +57,7 @@ class EnergyController: UITableViewController {
     }
 
     @objc func editBranch() {
-        let branchVC = EnergyBranchController()
+        let branchVC = EnergyConfigController()
         navigationController?.pushViewController(branchVC, animated: true)
     }
     
@@ -91,6 +91,7 @@ class EnergyController: UITableViewController {
             return cell
         case .ratio:
             let cell = cells[cellType]! as! EnergyRatioCell
+            cell.parentVC = self 
             return cell
         case .analysis:
             let cell = cells[cellType]! as! DeviceTrendAnalysisCell
@@ -140,7 +141,7 @@ extension EnergyController: DateSegmentDelegate, ChartViewDelegate {
             switch result {
             case .success(let response):
                 let results = JsonUtility.getTagLogValues(data: response.data) ?? []
-                self.energyBranch = BasicUtility.updateBranchData(in: branch, with: results, dateItem: dateItem)
+                self.energyBranch = EnergyUtility.updateBranchData(in: branch, with: results, dateItem: dateItem)
                 break
             default:
                 break

@@ -78,7 +78,7 @@ enum ActionType: String {
     case deleteNotice
     //编辑首页
     case editHome
-    //编辑用电支路
+    //编辑用电分析
     case editBranch
     //新增资产 +extra e.g.:成型1#柜
     case addDevice

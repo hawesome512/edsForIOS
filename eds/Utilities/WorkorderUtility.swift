@@ -45,6 +45,11 @@ class WorkorderUtility {
         }
     }
     
+    func clearWorkorderList(){
+        workorderList.removeAll()
+        successfulUpdated.accept(false)
+    }
+    
     /// 更新单条工单
     func refreshWorkerorder(_ id: String) {
         let factor = EDSServiceQueryFactor(id: id, in: .none)
@@ -132,10 +137,23 @@ class WorkorderUtility {
         successfulUpdated.accept(true)
     }
     
+    //MARK: -静态方法
+    
     static func getDevice(of workorder: Workorder?) -> Device? {
         guard let title = workorder?.getDeviceTitles().first else { return nil }
         let deviceList = DeviceUtility.sharedInstance.getDeviceList()
         return deviceList.first{ $0.title == title}
+    }
+    
+    
+    /// 工单初始化
+    /// - Returns: <#description#>
+    static func initWorkorder() -> Workorder{
+        //需要携带id，在Workorder中直接初始化从耦合设计等角度考虑不合适
+        //在报警列表和新建工单页面调用
+        let workorder = Workorder()
+        workorder.id = AccountUtility.sharedInstance.generateID()
+        return workorder
     }
     
     func removeWorkorder(_ workorder:Workorder){
@@ -144,10 +162,5 @@ class WorkorderUtility {
         ActionUtility.sharedInstance.addAction(.deleteWorkorder, extra: workorder.title)
         workorderList.removeAll(where: {$0.id == workorder.id})
         successfulUpdated.accept(true)
-    }
-    
-    func clearWorkorderList(){
-        workorderList.removeAll()
-        successfulUpdated.accept(false)
     }
 }
