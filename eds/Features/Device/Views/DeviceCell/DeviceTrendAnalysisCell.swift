@@ -34,19 +34,19 @@ class DeviceTrendAnalysisCell: UITableViewCell {
 
         //在validValues查找最大/最小值，在values查找最大/小值所处的位置
         if let max = validValues.max() {
-            maxValueLabel.text = max.roundToPlaces().clean
+            maxValueLabel.text = max.roundToPlaces().clean.toLocalNumber()
             //因数据已合并，且保留所有点，可用求余得出位置
             let maxIndex = totalValues.firstIndex(of: max)! % dataCount
             maxTimeLabel.text = condition.getLongTimeString(with: maxIndex)
         }
         if let min = validValues.min() {
-            minValueLabel.text = min.roundToPlaces().clean
+            minValueLabel.text = min.roundToPlaces().clean.toLocalNumber()
             let minIndex = totalValues.firstIndex(of: min)! % dataCount
             minTimeLabel.text = condition.getLongTimeString(with: minIndex)
         }
         //计算平均值，忽略所有通讯无效点
         let avg = validValues.reduce(0, +) / Double(validValues.count)
-        avgValueLabel.text = avg.roundToPlaces().clean
+        avgValueLabel.text = avg.roundToPlaces().clean.toLocalNumber()
     }
 
     func setEnergyData(_ values: [Double], date: EnergyDateItem) {
@@ -54,15 +54,15 @@ class DeviceTrendAnalysisCell: UITableViewCell {
             return
         }
         if let max = values.max(), let maxIndex = values.firstIndex(of: max) {
-            maxValueLabel.text = max.clean
+            maxValueLabel.text = max.clean.toLocalNumber()
             maxTimeLabel.text = date.getLongTimeString(with: maxIndex)
         }
         if let min = values.min(), let minIndex = values.firstIndex(of: min) {
-            minValueLabel.text = min.clean
+            minValueLabel.text = min.clean.toLocalNumber()
             minTimeLabel.text = date.getLongTimeString(with: minIndex)
         }
         let avg = values.reduce(0, +) / Double(values.count)
-        avgValueLabel.text = avg.roundToPlaces().clean
+        avgValueLabel.text = avg.roundToPlaces().clean.toLocalNumber()
     }
 
     private func initViews() {

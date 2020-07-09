@@ -93,13 +93,14 @@ class TimeItemCell: UITableViewCell, UITextFieldDelegate {
         hoursButton.rx.tap.throttle(.seconds(1), scheduler: MainScheduler.instance).bind(onNext: {
             self.dropDown.show()
         }).disposed(by: disposeBag)
+        hoursButton.titleLabel?.adjustsFontSizeToFitWidth = true
         addSubview(hoursButton)
         hoursButton.topToBottom(of: titleLabel,offset: edsMinSpace)
         hoursButton.bottomToSuperview(offset: -edsMinSpace)
         hoursButton.leadingToSuperview(offset: edsSpace)
 //        hoursButton.trailingToSuperview(offset: edsSpace, relation: .equalOrGreater)
         
-        totalLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
+//        totalLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
         addSubview(totalLabel)
         totalLabel.trailingToSuperview(offset: edsSpace)
         totalLabel.centerY(to: hoursButton)
@@ -113,12 +114,20 @@ class TimeItemCell: UITableViewCell, UITextFieldDelegate {
         appearance.shadowRadius = 25
         appearance.animationduration = 0.25
         appearance.textFont = UIFont.preferredFont(forTextStyle: .title3)
-        dropDown.dataSource = Array(0..<24).map{ String(format: "   %02d:00   ---   %02d:00   ", $0, $0+1) }
+        
+        dropDown.dataSource = Array(0..<TimeData.hourSectionCount).map{
+            if $0 % 2 == 0 {
+                return String(format: "   %02d:00   ---   %02d:30   ", $0/2, $0/2)
+            } else {
+                return String(format: "   %02d:30   ---   %02d:00   ", $0/2, $0/2+1)
+            }
+        }
         dropDown.anchorView = hoursButton
         dropDown.multiSelectionAction = { [unowned self] (indexs: [Int], items: [String]) in
             guard let timeData = self.timeData else { return }
             timeData.hours = indexs.sorted()
             self.setHours()
+            //每次选择都提交，不合理，浪费资源
             self.delegate?.changeItem(timeData)
         }
     }
@@ -131,9 +140,9 @@ class TimeItemCell: UITableViewCell, UITextFieldDelegate {
     
     private func setHours() {
         guard let timeData = timeData else { return }
-        let hours = timeData.hours.map{ "\($0)" }.joined(separator: " / ")
+        let hours = timeData.toHourRangeString()//.hours.map{ "\($0)" }.joined(separator: " / ")
         hoursButton.setTitle(hours, for: .normal)
-        totalLabel.text = "\(timeData.hours.count)h"
+        totalLabel.text = "\(timeData.hours.count/2)h"
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

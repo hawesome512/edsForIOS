@@ -44,11 +44,14 @@ class EnergyTimeCell: UITableViewCell {
         let curDoubleValues = data.getCurrentDoubleValues()
         let hoursDic = energy.getHourDic()
         let timeDatas = energy.getTimeData()
+        //尖峰平谷计算模式见于Energy.class
         if !yearMode {
             curDoubleValues.enumerated().forEach { (offset, element) in
                 let date = data.dateItem.date + offset.hours
-                let index = hoursDic[date.hour]?.rawValue ?? 0
-                timeDatas[index].totalValue += element
+                let index1 = hoursDic[date.hour * 2]?.rawValue ?? 0
+                timeDatas[index1].totalValue += element/2
+                let index2 = hoursDic[date.hour * 2 + 1]?.rawValue ?? 0
+                timeDatas[index2].totalValue += element/2
             }
         }
         
@@ -57,14 +60,14 @@ class EnergyTimeCell: UITableViewCell {
             let energyTime = timeData.energyTime
             let index = energyTime.rawValue
             let ratio = total == 0 ? 0 : timeData.totalValue / total * 100
-            valueLabels[index].text = ratio.roundToPlaces(places: 0).clean + "%"
+            valueLabels[index].text = ratio.roundToPlaces(fractions: 0).clean + "%"
             let money = timeData.totalValue * timeData.price
-            price += money.roundToPlaces(places: 0)
-            subValueLabels[index].text = "\(energy.currency)\(money.roundToPlaces(places: 0).clean)"
+            price += money.roundToPlaces(fractions: 0)
+            subValueLabels[index].text = money.toCurrencyValue() //"\(energy.currency)\(money.roundToPlaces(fractions: 0).clean)"
             //年模式下所有值为0，时段等分占比显示
             widthRatios[index] = yearMode ? 1/Double(timeDatas.count) : ratio / 100
         }
-        priceLabel.text = "\(energy.currency)\(price.clean)"
+        priceLabel.text = price.toCurrencyValue() //"\(energy.currency)\(price.clean)"
         setNeedsDisplay()
     }
 

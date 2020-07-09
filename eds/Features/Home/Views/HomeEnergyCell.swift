@@ -98,14 +98,14 @@ class HomeEnergyCell: UITableViewCell {
             guard let data = EnergyUtility.sharedInstance.getEnergyBranch()?.energyData else { return }
             let currentTotal = data.getCurrentTotalValue()
             let lastPeriod = data.getLastPeriodTotalValue()
-            self.currentView.value = currentTotal.roundToPlaces(places: 0).clean
-            self.lastView.value = lastPeriod.roundToPlaces(places: 0).clean
-            self.ratioView.value = data.getLinkRatio().roundToPlaces(places: 0)
+            self.currentView.value = currentTotal.roundToPlaces(fractions: 0).clean
+            self.lastView.value = lastPeriod.roundToPlaces(fractions: 0).clean
+            self.ratioView.value = data.getLinkRatio().roundToPlaces(fractions: 0)
             
             //当未设定能耗指标时，选择上期总值为指标
             let current = data.getCurrentTotalValue()
             let last = data.getLastTotalValue()
-            let ratio = last == 0 ? 0 : (current / last * 100).roundToPlaces(places: 0)
+            let ratio = last == 0 ? 0 : (current / last * 100).roundToPlaces(fractions: 0)
             self.slider.value = CGFloat(ratio)
         }).disposed(by: disposeBag)
     }

@@ -15,8 +15,20 @@ extension Double {
         return self.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0f", self) : String(self)
     }
 
-    func roundToPlaces(places: Int = 1) -> Double {
-        let divisor = pow(10.0, Double(places))
+    func roundToPlaces(fractions: Int = 1) -> Double {
+        let divisor = pow(10.0, Double(fractions))
         return (self * divisor).rounded() / divisor
+    }
+    
+    
+    /// 货币格式
+    /// - Parameter fractions: 小数位数
+    /// - Returns: <#description#>
+    func toCurrencyValue(fractions: Int = 0) -> String? {
+        let number = NSNumber(value: self)
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = fractions
+        formatter.numberStyle = .currency
+        return formatter.string(from: number)
     }
 }

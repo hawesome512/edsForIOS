@@ -28,8 +28,10 @@ enum DeviceCellType: String {
     case range
     //大标题文字
     case text
-    //可调参数
+    //可调参数1
     case item
+    //可调参数2
+    case slider
     //默认，文字，default是系统关键字
     case list
 
@@ -54,7 +56,7 @@ enum DeviceCellType: String {
             return max(0.25 * height, 240)
         case .text, .button, .range, .goto:
             return max(0.125 * height, 120)
-        case .onoff, .list, .item, .dynamic, .fixed, .info:
+        case .onoff, .list, .item, .slider, .dynamic, .fixed, .info:
             return max(0.0625 * height, 60)
         }
     }
@@ -85,7 +87,7 @@ enum DeviceCellType: String {
             return cell
         case .text:
             return DeviceTextCell(style: .default, reuseIdentifier: rawValue)
-        case .list, .item:
+        case .list, .item, .slider:
             let cell = DeviceListCell(style: .default, reuseIdentifier: rawValue)
             cell.parentVC = parentVC
             return cell

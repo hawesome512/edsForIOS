@@ -51,11 +51,12 @@ class EnergyConfigController: UITableViewController {
     @objc func saveConfig() {
         
         var totalHours = Set<Int>()
-        let allHours = Set(0..<24)
+        let allHours = Set(0..<TimeData.hourSectionCount)
         energyTimeDatas.forEach{ totalHours = totalHours.union(Set($0.hours)) }
         let unSelHours = Array(allHours.symmetricDifference(totalHours)).sorted()
         guard unSelHours.count == 0 else {
-            let alert = String(format: "unselected".localize(with: prefixEnergy), unSelHours.map{"\($0):00"}.joined(separator: "/"))
+            let temps = unSelHours.map{ $0 % 2 == 0 ? "\($0/2):00" : "\($0/2):30"}
+            let alert = String(format: "unselected".localize(with: prefixEnergy), temps.joined(separator: "/"))
             ControllerUtility.presentAlertController(content: alert, controller: self)
             return
         }
@@ -104,17 +105,13 @@ class EnergyConfigController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return section == branchSection ? energyBranches.count : 6
+        return section == branchSection ? energyBranches.count : 5 //6 不再需要设定货币符号
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.section != branchSection {
             switch indexPath.row {
-            case 0:
-                let cell = TimeRangeCell()
-                cell.timeDatas = energyTimeDatas
-                return cell
             case 1...4:
                 let cell = TimeItemCell()
                 if energyTimeDatas.count > 0 {
@@ -124,13 +121,17 @@ class EnergyConfigController: UITableViewController {
                 cell.delegate = self
                 return cell
             default:
-                let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
-                cell.textLabel?.text = "currency".localize(with: prefixEnergy)
-                cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .title3)
-                cell.detailTextLabel?.text = energy?.currency
-                cell.detailTextLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
-                cell.detailTextLabel?.textColor = .label
+                let cell = TimeRangeCell()
+                cell.timeDatas = energyTimeDatas
                 return cell
+//            default:
+//                let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
+//                cell.textLabel?.text = "currency".localize(with: prefixEnergy)
+//                cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .title3)
+//                cell.detailTextLabel?.text = energy?.currency
+//                cell.detailTextLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
+//                cell.detailTextLabel?.textColor = .label
+//                return cell
             }
         }
         
@@ -167,9 +168,7 @@ class EnergyConfigController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        guard editingStyle == .delete, indexPath.section == branchSection else {
-            return
-        }
+        guard editingStyle == .delete, indexPath.section == branchSection else { return }
         let branch = energyBranches[indexPath.row]
         let deleteVC = ControllerUtility.generateDeletionAlertController(with: branch.title)
         let deleteAction = UIAlertAction(title: "delete".localize(), style: .destructive) { _ in
@@ -193,15 +192,15 @@ class EnergyConfigController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard indexPath.section != branchSection, indexPath.row == 5 else { return }
-        let alertVC = ControllerUtility.generateInputAlertController(title: "currency".localize(with: prefixEnergy), placeholder: energy?.currency, delegate: self)
-        let confirmAction = UIAlertAction(title: "confirm".localize(), style: .default){ _ in
-            guard let text = alertVC.textFields?.first?.text, !text.isEmpty else { return }
-            self.energy?.currency = text
-            tableView.cellForRow(at: indexPath)?.detailTextLabel?.text = text
-        }
-        alertVC.addAction(confirmAction)
-        present(alertVC, animated: true, completion: nil)
+//        guard indexPath.section != branchSection, indexPath.row == 5 else { return }
+//        let alertVC = ControllerUtility.generateInputAlertController(title: "currency".localize(with: prefixEnergy), placeholder: energy?.currency, delegate: self)
+//        let confirmAction = UIAlertAction(title: "confirm".localize(), style: .default){ _ in
+//            guard let text = alertVC.textFields?.first?.text, !text.isEmpty else { return }
+//            self.energy?.currency = text
+//            tableView.cellForRow(at: indexPath)?.detailTextLabel?.text = text
+//        }
+//        alertVC.addAction(confirmAction)
+//        present(alertVC, animated: true, completion: nil)
     }
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

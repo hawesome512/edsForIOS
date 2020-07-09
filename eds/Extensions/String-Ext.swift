@@ -145,6 +145,13 @@ extension String {
     func getImageNameFromURL() -> String {
         return self.components(separatedBy: "/").last ?? NIL
     }
+    
+    /// 本地化数字形式：1000👉1,000
+    func toLocalNumber() -> String {
+        guard let value = Decimal(string: self) else { return self }
+        let number = value as NSNumber
+        return NumberFormatter.localizedString(from: number, number: .decimal)
+    }
 
     /// 静态方法生成固定长度的随机字符串
     /// - Parameter length: <#length description#>

@@ -33,15 +33,14 @@ class TimeRangeCell: UITableViewCell {
     }
     
     private func initViews(){
-        //24段小时
-        for i in 0..<24 {
+        for i in 0..<TimeData.hourSectionCount {
             let view = UIView()
             hourViews.append(view)
             view.backgroundColor = EnergyTime.valley.getColor()
             addSubview(view)
             view.topToSuperview(offset: edsSpace)
             view.height(edsMinSpace)
-            view.widthToSuperview(multiplier: 1/24, offset: -2*edsSpace/24)
+            view.widthToSuperview(multiplier: 1/CGFloat(TimeData.hourSectionCount), offset: -2*edsSpace/CGFloat(TimeData.hourSectionCount))
             if i == 0 {
                 view.leadingToSuperview(offset: edsSpace)
             } else {
@@ -65,7 +64,7 @@ class TimeRangeCell: UITableViewCell {
         let label3 = UILabel()
         label3.text = "24"
         addSubview(label3)
-        label3.trailing(to: hourViews[23])
+        label3.trailing(to: hourViews[TimeData.hourSectionCount-1])
         label3.centerY(to: label1)
     }
     

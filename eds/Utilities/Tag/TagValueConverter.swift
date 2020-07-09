@@ -8,9 +8,27 @@
 
 import Foundation
 import UIKit
+import SwiftDate
 
 class TagValueConverter {
-
+    
+    //Tag.Value数值显示转换
+    static func convert(with value: String, of converter: ValueConverter) -> String {
+        switch converter {
+        case .demandPowerTime:
+            let nValue = Int(value) ?? 0
+            let hexHigh = 0x100000000
+            let hexMiddle = 0x10000
+            let high = nValue / hexHigh
+            let middle = nValue % hexHigh / hexMiddle
+            let low = nValue % hexHigh % hexMiddle
+            let hexStr = String(format: "%04X%04X%04X",high,middle,low)
+            let date = DateInRegion(hexStr, format: "yyMMddHHmmss", region: .current)
+            return date?.date.toDateTimeString() ?? value
+        case .none:
+            return value
+        }
+    }
 
     /// 转换设备状态信息
     /// - Parameters:

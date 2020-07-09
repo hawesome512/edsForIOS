@@ -4,7 +4,12 @@
 //
 //  Created by 厦门士林电机有限公司 on 2020/6/19.
 //  Copyright © 2020 厦门士林电机有限公司. All rights reserved.
-//
+//  用电分析类
+//  尖峰平谷计算模式说明：
+//  将一天分为48个时段：0.5h/时段
+//  在查询用电数据时，为保证查询数据的响应速度，最小粒度只到小时，故将小时数据平分给不同时区
+//  e.g.: 查询xx年xx月xx日7:00～8:00用电：1000kW.h，7:00～7:30属平段，7:30～8:00属峰段
+//        则：平段=峰段=1000/2=500
 
 import Foundation
 import HandyJSON
@@ -35,7 +40,7 @@ class Energy: HandyJSON {
     var st: String = ""
     //sharp price:尖峰电价
     var sp: String = ""
-    //币制符号：$ ￥
+    //已舍弃，币制符号：$ ￥
     var currency: String = ""
     
     required init() { }
@@ -84,6 +89,9 @@ class Energy: HandyJSON {
 }
 
 class TimeData {
+    //全天分成48段（半小时）
+    static let hourSectionCount = 48
+    
     var energyTime: EnergyTime
     var hours: [Int] = []
     var price: Double = 0
@@ -94,6 +102,26 @@ class TimeData {
         self.energyTime = energyTime
         self.hours = hours
         self.price = Double(price) ?? 0
+    }
+    
+    func toHourRangeString() -> String {
+        var range = getHourStart(hours[0])
+        let count = hours.count
+        for i in 1..<count {
+            if hours[i] != hours[i-1] + 1 {
+                range += "~\(getHourEnd(hours[i-1]))/\(getHourStart(hours[i]))"
+            }
+        }
+        range += "~\(getHourEnd(hours[count-1]))"
+        return range
+    }
+    
+    private func getHourStart(_ index: Int) -> String {
+        return index % 2 == 0 ? "\(index/2):00" : "\(index/2):30"
+    }
+    
+    private func getHourEnd(_ index: Int) -> String {
+        return index % 2 == 0 ? "\(index/2):30" : "\(index/2+1):00"
     }
 }
 

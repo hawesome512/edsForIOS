@@ -67,14 +67,13 @@ extension DeviceTextCell: DevicePageItemSource {
     }
 
     func initViews(with pageItem: DevicePageItem, rx tags: [Tag], rowIndex: Int) {
-        if let tag = tags.first {
-            tag.showValue.asObservable().throttle(.seconds(1), scheduler: MainScheduler.instance).subscribe(onNext: { value in
-                let status = TagValueConverter.getText(value: value, items: pageItem.items)
-                //文本，背景横向渐变
-                self.valueLabel.text = status.text
-                self.backgroundGradientColor = status.status?.getStatusColor() ?? edsDefaultColor
-            }).disposed(by: disposeBag)
-        }
+        guard let tag = tags.first else { return }
+        tag.showValue.asObservable().throttle(.seconds(1), scheduler: MainScheduler.instance).subscribe(onNext: { value in
+            let status = TagValueConverter.getText(value: value, items: pageItem.items)
+            //文本，背景横向渐变
+            self.valueLabel.text = status.text.toLocalNumber()
+            self.backgroundGradientColor = status.status?.getStatusColor() ?? edsDefaultColor
+        }).disposed(by: disposeBag)
     }
 }
 

@@ -122,7 +122,7 @@ class DeviceTrendChartCell: UITableViewCell {
 
             let chartValues = logTag.values.enumerated().map {
                 //离线点置-1处理,取至多1位精度
-                return ChartDataEntry(x: Double($0.offset), y: $0.element.roundToPlaces(places: 1))
+                return ChartDataEntry(x: Double($0.offset), y: $0.element.roundToPlaces(fractions: 1))
             }
             let set = LineChartDataSet(entries: chartValues, label: logTag.name)
             set.drawValuesEnabled = false

@@ -109,11 +109,11 @@
 			"type":"M2",
 			"producer":"xs",
 			"category":"breaker",
-            "status":{"tag":"Status","items":["","","","","","","","","overload","short","instant","ground","","","off/on","trip"]},
+            "status":{"tag":"Status","items":["","","","","","","","","overload","short","instant","ground","","preoverload","off/on","trip"]},
             "alarm":{"items":["Ia","Ib","Ic"],"upper":"IrReal"},
 			"authority":["CtrlMode/76/local/82/remote","CtrlCode/%04X"],
 			"pages":[
-				 {"title":"realtime","content":[        {"name":"status","tags":["Status"],"display":"text","items":["","","","","","","","","overload","short","instant","ground","","","off/on","trip"],"section":"status"},
+				 {"title":"realtime","content":[        {"name":"status","tags":["Status"],"display":"text","items":["","","","","","","","","overload","short","instant","ground","","preoverload","off/on","trip"],"section":"status"},
 						{"name":"current","tags":["Ia","Ib","Ic"],"display":"bar","unit":"Ir","section":"current"},
 						{"name":"current_others","tags":["In","Igf"],"display":"list"}]},
 				 {"title":"parameter","content":[
@@ -157,28 +157,89 @@
 				 {"title":"parameter","content":[
 						{"name":"switch_mode","tags":["WorkMode"],"display":"onoff","items":["5/off/on"],"section":"setting"},
 						{"name":"operator_mode","tags":["WorkMode"],"display":"onoff","items":["1/off/on"]},
-						{"name":"CT","tags":["CT"],"display":"item","items":["step","25","625","3150"]},
-						{"name":"Ul","tags":["Ul"],"display":"item","items":["step","75","1","95"],"section":"voltage_protect"},
-						{"name":"UlR","tags":["UlR"],"display":"item","items":["step","78","1","98"]},
-						{"name":"Uo","tags":["Uo"],"display":"item","items":["step","105","1","125"]},
-						{"name":"UoR","tags":["UoR"],"display":"item","items":["step","102","1","122"]},
+						{"name":"CT","tags":["CT"],"display":"slider","items":["step","25","1","3150"]},
+						{"name":"Ul","tags":["Ul"],"display":"slider","items":["step","75","1","95"],"section":"voltage_protect"},
+						{"name":"UlR","tags":["UlR"],"display":"slider","items":["step","78","1","98"]},
+						{"name":"Uo","tags":["Uo"],"display":"slider","items":["step","105","1","125"]},
+						{"name":"UoR","tags":["UoR"],"display":"slider","items":["step","102","1","122"]},
 						{"name":"freq_switch","tags":["Switch"],"display":"onoff","items":["0"],"section":"freq_protect"},
-						{"name":"Fl","tags":["Fl"],"display":"item","items":["step","90","0.5","99"]},
-						{"name":"FlR","tags":["FlR"],"display":"item","items":["step","90.5","0.5","99.5"]},
-						{"name":"Fo","tags":["Fo"],"display":"item","items":["step","101","0.5","110"]},
-						{"name":"FoR","tags":["FoR"],"display":"item","items":["step","100.5","0.5","109.5"]},
+						{"name":"Fl","tags":["Fl"],"display":"slider","items":["step","90","0.5","99"]},
+						{"name":"FlR","tags":["FlR"],"display":"slider","items":["step","90.5","0.5","99.5"]},
+						{"name":"Fo","tags":["Fo"],"display":"slider","items":["step","101","0.5","110"]},
+						{"name":"FoR","tags":["FoR"],"display":"slider","items":["step","100.5","0.5","109.5"]},
 						{"name":"Up_switch","tags":["Switch"],"display":"onoff","items":["2"],"section":"Up_protect"},
-						{"name":"UpSet","tags":["UpSet"],"display":"item","items":["step","10","1","30"]},
-						{"name":"UpRSet","tags":["UpRSet"],"display":"item","items":["step","5","1","25"]},
-						{"name":"T1","tags":["T1"],"display":"item","items":["step","0","60","600"],"section":"delay"},
-						{"name":"T2","tags":["T2"],"display":"item","items":["step","0","6","60"]},
-						{"name":"T3","tags":["T3"],"display":"item","items":["step","0","180","1800"]},
-						{"name":"T4","tags":["T4"],"display":"item","items":["step","0","6","60"]},
-						{"name":"T5","tags":["T5"],"display":"item","items":["step","0","180","1800"]}]},
+						{"name":"UpSet","tags":["UpSet"],"display":"slider","items":["step","10","1","30"]},
+						{"name":"UpRSet","tags":["UpRSet"],"display":"slider","items":["step","5","1","25"]},
+						{"name":"T1","tags":["T1"],"display":"slider","items":["step","0","1","600"],"section":"delay"},
+						{"name":"T2","tags":["T2"],"display":"slider","items":["step","0","1","60"]},
+						{"name":"T3","tags":["T3"],"display":"slider","items":["step","0","1","1800"]},
+						{"name":"T4","tags":["T4"],"display":"slider","items":["step","0","1","60"]},
+						{"name":"T5","tags":["T5"],"display":"slider","items":["step","0","1","1800"]}]},
 				 {"title":"control","content":[
 						{"name":"work","tags":["St2"],"display":"ATSStatus","items":["","1off/1on","1normal/1fault","","2off/2on","2normal/2fault"],"section":"work"},
 						{"name":"control","tags":["FarCtrl"],"display":"button","items":["I/21845/red","OFF/43605/green","II/43690/red"]}]}
 			]
-		}
+		},
+        {
+            "type":"P1",
+            "producer":"xs",
+            "category":"pm",
+            "status":{"tag":"Status","items":["overVolt_DO1","lowVolt_DO1","overCurrent_DO1","overFreq_DO1","lowFreq_DO1","Unbal_DO1","Inbal_DO1","overVolt_DO2","lowVolt_DO2","overCurrent_DO2","overFreq_DO2","lowFreq_DO2","Unbal_DO2","Inbal_DO2","PhaseRot"]},
+            "authority":["CtrlMode/0/local/1/remote","CtrlCode/%04D"],
+            "pages":[
+                 {"title":"realtime","content":[
+                        {"name":"status","tags":["Status"],"display":"text","items":["overVolt_DO1","lowVolt_DO1","overCurrent_DO1","overFreq_DO1","lowFreq_DO1","Unbal_DO1","Inbal_DO1","overVolt_DO2","lowVolt_DO2","overCurrent_DO2","overFreq_DO2","lowFreq_DO2","Unbal_DO2","Inbal_DO2","PhaseRot"],"section":"status"},
+                        {"name":"energy","tags":["EP"],"display":"text","section":"EP"},
+                        {"name":"phase_voltage","tags":["Ua","Ub","Uc"],"display":"bar","section":"phase_voltage"},
+                        {"name":"Uavg","tags":["Uavg"],"display":"list"},
+                        {"name":"line_voltage","tags":["Uab","Ubc","Uca"],"display":"bar","section":"line_voltage"},
+                        {"name":"ULavg","tags":["ULavg"],"display":"list"},
+                        {"name":"current","tags":["Ia","Ib","Ic"],"display":"bar","section":"current"},
+                        {"name":"current_others","tags":["Iavg","In"],"display":"list"},
+                        {"name":"power","tags":["P","Q","S"],"display":"list","section":"power"},
+                        {"name":"power_factor","tags":["PF"],"display":"range","items":["80","red","90","green","100"]},
+                        {"name":"energy","tags":["EP","EQ","EPin","EPout","EQin","EQout"],"display":"list","items":["accumulation"],"section":"energy"},
+                        {"name":"demand","tags":["IdA","IdB","IdC"],"display":"bar","section":"pm_demand"},
+                        {"name":"Pd","tags":["Pd"],"display":"list","section":"pm_demand"},
+                        {"name":"Pdt","tags":["Pdt"],"display":"list","converter":"pdt"},
+                        {"name":"F","tags":["F"],"display":"list","section":"other"},
+                        {"name":"Phase","tags":["Phase"],"display":"list","items":["8","negative","0","positive"]},
+                        {"name":"thd","tags":["THD_Ia","THD_Ib","THD_Ic","THD_Ua","THD_Ub","THD_Uc"],"display":"list","section":"thd"}]},
+                 {"title":"parameter","content":[
+                     {"name":"PT","tags":["PT"],"display":"slider","items":["step","1","1","9999"],"section":""},
+                        {"name":"CT","tags":["CT"],"display":"slider","items":["step","1","1","9999"]},
+                        {"name":"Connect","tags":["Connect"],"display":"onoff","items":["0/off/on"],"section":""},
+                        {"name":"Pulse","tags":["Pulse"],"display":"slider","items":["step","20","1","8000"]},
+                        {"name":"AO1","tags":["Switch"],"display":"onoff","items":["0"],"section":""},
+                        {"name":"AO2","tags":["Switch"],"display":"onoff","items":["1"]},
+                        {"name":"DO1","tags":["Switch"],"display":"onoff","items":["2"]},
+                        {"name":"DO2","tags":["Switch"],"display":"onoff","items":["3"]}]},
+                 {"title":"control","content":[
+                        {"name":"status","tags":["Status"],"display":"text","items":["overVolt_DO1","lowVolt_DO1","overCurrent_DO1","overFreq_DO1","lowFreq_DO1","Unbal_DO1","Inbal_DO1","overVolt_DO2","lowVolt_DO2","overCurrent_DO2","overFreq_DO2","lowFreq_DO2","Unbal_DO2","Inbal_DO2","PhaseRot"],"section":"status"},
+                        {"name":"control1","tags":["DO1"],"display":"button","items":["ON/43690/red","OFF/21845/green"],"section":"DO1"},
+                        {"name":"control2","tags":["DO2"],"display":"button","items":["ON/43690/red","OFF/21845/green"],"section":"DO2"}]}
+            ]
+        },
+        {
+            "type":"P2",
+            "producer":"xs",
+            "category":"pm",
+            "status":{"tag":"Status","items":["overVolt_DO1","lowVolt_DO1","overCurrent_DO1","overFreq_DO1","lowFreq_DO1","Unbal_DO1","Inbal_DO1","overVolt_DO2","lowVolt_DO2","overCurrent_DO2","overFreq_DO2","lowFreq_DO2","Unbal_DO2","Inbal_DO2","PhaseRot"]},
+            "pages":[
+                 {"title":"realtime","content":[
+                        {"name":"status","tags":["Status"],"display":"text","items":["overVolt_DO1","lowVolt_DO1","overCurrent_DO1","overFreq_DO1","lowFreq_DO1","Unbal_DO1","Inbal_DO1","overVolt_DO2","lowVolt_DO2","overCurrent_DO2","overFreq_DO2","lowFreq_DO2","Unbal_DO2","Inbal_DO2","PhaseRot"],"section":"status"},
+                        {"name":"energy","tags":["EP"],"display":"text","section":"EP"},
+                        {"name":"voltage","tags":["Uab","Ubc","Uca"],"display":"bar","section":"voltage"},
+                        {"name":"ULavg","tags":["ULavg"],"display":"list"},
+                        {"name":"current","tags":["Ia","Ib","Ic"],"display":"bar","section":"current"},
+                        {"name":"Iavg","tags":["Iavg"],"display":"list"},
+                        {"name":"power","tags":["P","Q","S"],"display":"list","section":"power"},
+                        {"name":"power_factor","tags":["PF"],"display":"range","items":["80","red","90","green","100"]},
+                        {"name":"energy","tags":["EP","EQ"],"display":"list","items":["accumulation"],"section":"energy"},
+                        {"name":"Pd","tags":["Pd"],"display":"list","section":"pm_demand"},
+                        {"name":"Pdt","tags":["Pdt"],"display":"list","converter":"demandPowerTime"},
+                        {"name":"thd","tags":["THD_Ua","THD_Ub","THD_Uc"],"display":"list","section":"thd"}]}
+            ]
+        }
 	]
 }

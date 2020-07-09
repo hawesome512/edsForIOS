@@ -24,4 +24,5 @@ target 'eds' do
   pod 'EFQRCode'
   pod 'DropDown'
   pod 'TextFieldEffects'
+  pod 'fluid-slider'
 end

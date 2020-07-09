@@ -95,4 +95,14 @@ struct DevicePageItem: HandyJSON {
     var unit: String?
     //是否显示Section标题
     var section: String?
+    //特殊转换模式
+    var converter: String?
+}
+
+
+enum ValueConverter: String {
+    //默认：无
+    case none
+    //PM40智能电力仪表：最大需用功率发生时间
+    case demandPowerTime
 }

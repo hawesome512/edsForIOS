@@ -140,6 +140,7 @@
 		46DF40D9242DD3D70018F961 /* UIViewController-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DF40D8242DD3D70018F961 /* UIViewController-Ext.swift */; };
 		46DF40DB24304A560018F961 /* DatePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DF40DA24304A560018F961 /* DatePickerController.swift */; };
 		46E0E3D02374074F00116DA2 /* String-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E0E3CF2374074F00116DA2 /* String-Ext.swift */; };
+		46E3D4F524B553240036943A /* ParamSliderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E3D4F424B553240036943A /* ParamSliderController.swift */; };
 		46E59DD02429893A00C67E82 /* PhotoCollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E59DCF2429893A00C67E82 /* PhotoCollectionController.swift */; };
 		46E59DD22429DB7F00C67E82 /* UICollectionViewFlowLayout-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E59DD12429DB7F00C67E82 /* UICollectionViewFlowLayout-Ext.swift */; };
 		46E713F824A1EC3200BC9FD8 /* NewPasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E713F724A1EC3200BC9FD8 /* NewPasswordController.swift */; };
@@ -332,6 +333,7 @@
 		46DF40D8242DD3D70018F961 /* UIViewController-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController-Ext.swift"; sourceTree = "<group>"; };
 		46DF40DA24304A560018F961 /* DatePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerController.swift; sourceTree = "<group>"; };
 		46E0E3CF2374074F00116DA2 /* String-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String-Ext.swift"; sourceTree = "<group>"; };
+		46E3D4F424B553240036943A /* ParamSliderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParamSliderController.swift; sourceTree = "<group>"; };
 		46E59DCF2429893A00C67E82 /* PhotoCollectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionController.swift; sourceTree = "<group>"; };
 		46E59DD12429DB7F00C67E82 /* UICollectionViewFlowLayout-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewFlowLayout-Ext.swift"; sourceTree = "<group>"; };
 		46E713F724A1EC3200BC9FD8 /* NewPasswordController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordController.swift; sourceTree = "<group>"; };
@@ -569,6 +571,7 @@
 				4621271323B197A900105664 /* DeviceListController.swift */,
 				4621272F23B5D95A00105664 /* PageItemController.swift */,
 				46100A9B23C5665300C43D1A /* ParamMeterController.swift */,
+				46E3D4F424B553240036943A /* ParamSliderController.swift */,
 				46227A4023C80FF400768799 /* DeviceTrendController.swift */,
 				4607DC7923FE093300E35015 /* NewDeviceAlertController.swift */,
 				46DF04AA240CAD6800E3DE65 /* InfoAlertController.swift */,
@@ -1161,6 +1164,7 @@
 				462E0DEF244E8BF500A2F17E /* EnergyBranch.swift in Sources */,
 				46F16197246E3E51000BEA30 /* UIView-Ext.swift in Sources */,
 				4605D14C237297E100558500 /* LogTag.swift in Sources */,
+				46E3D4F524B553240036943A /* ParamSliderController.swift in Sources */,
 				46B3823B2464E20D008C9B3C /* LoginType.swift in Sources */,
 				4621272A23B332B500105664 /* TagValueConverter.swift in Sources */,
 				46FB267F24403AF50080362C /* HomeEnergyCell.swift in Sources */,

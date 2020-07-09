@@ -296,7 +296,10 @@
 "localLocked" = "Device is locked as LOCAL mode,any operation is forbidden.";
 /* denied */
 "denied" = "Invalid action";
-
+/* stepArrayTip */
+"stepArrayTip" = "Range: %@ ~ %@ ,step: %@";
+/* stepInputError */
+"stepInputError" = "Inputed value is out of range!";
 
 /* normal */
 "normal" = "normal";
@@ -512,7 +515,7 @@
 /* operator_mode_on */
 "operator_mode_on" = "manual";
 /* ct_ratio */
-"CT" = "CT(5A)";
+"CT" = "CT Ratio";
 
 /* voltage_protect */
 "voltage_protect" = "Voltage(%Un)";
@@ -559,6 +562,75 @@
 "T4" = "T4";
 /* T5 */
 "T5" = "T5";
+
+/* overVolt_DO1 */
+"overVolt_DO1" = "DO1 Uo";
+/* lowVolt_DO1 */
+"lowVolt_DO1" = "DO1 Ul";
+/* overCurrent_DO1 */
+"overCurrent_DO1" = "DO1 Io";
+/* overFreq_DO1 */
+"overFreq_DO1" = "DO1 Fo";
+/* lowFreq_DO1 */
+"lowFreq_DO1" = "DO1 Fl";
+/* Unbal_DO1 */
+"Unbal_DO1" = "DO1 Unbal";
+/* Inbal_DO1 */
+"Inbal_DO1" = "DO1 Inbal";
+/* overVolt_DO2 */
+"overVolt_DO2" = "DO2 Uo";
+/* lowVolt_DO2 */
+"lowVolt_DO2" = "DO2 Ul";
+/* overCurrent_DO2 */
+"overCurrent_DO2" = "DO2 Io";
+/* overFreq_DO2 */
+"overFreq_DO2" = "DO2 Fo";
+/* lowFreq_DO2 */
+"lowFreq_DO2" = "DO2 Fl";
+/* Unbal_DO2 */
+"Unbal_DO2" = "DO2 Unbal";
+/* Inbal_DO2 */
+"Inbal_DO2" = "DO2 Inbal";
+/* phase_voltage */
+"phase_voltage" = "Phase Voltage(V)";
+/* line_voltage */
+"line_voltage" = "Line Voltage(V)";
+/* Uavg */
+"Uavg" = "Uavg";
+/* ULavg */
+"ULavg" = "ULavg";
+/* Iavg */
+"Iavg" = "Iavg";
+/* THD_Ia */
+"THD_Ia" = "Ia";
+/* THD_Ib */
+"THD_Ib" = "Ib";
+/* THD_Ic */
+"THD_Ic" = "Ic";
+/* THD_In */
+"THD_In" = "In";
+/* THD_Ua */
+"THD_Ua" = "Ua";
+/* THD_Ub */
+"THD_Ub" = "Ub";
+/* THD_Uc */
+"THD_Uc" = "Uc";
+/* pm_demand */
+"pm_demand" = "Demand";
+/* Pd */
+"Pd" = "Pdemand(kW)";
+/* Pdt */
+"Pdt" = "Time";
+/* PT */
+"PT" = "PT Ratio";
+/* Connect */
+"Connect" = "Connect";
+/* Connect_off */
+"Connect_off" = "3P3L";
+/* Connect_on */
+"Connect_on" = "3P4L";
+/* Pulse */
+"Pulse" = "Pulse";
 
 /* alarm_check */
 "alarm_check" = "Check";

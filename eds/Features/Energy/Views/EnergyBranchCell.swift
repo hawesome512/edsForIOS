@@ -26,7 +26,7 @@ class EnergyBranchCell: UITableViewCell {
         for element in branch.branches {
             xItems.append(element.title)
             let value = element.energyData?.getCurrentTotalValue() ?? 0
-            values.append(Double(value / total * 100).roundToPlaces(places: 0))
+            values.append(Double(value / total * 100).roundToPlaces(fractions: 0))
         }
         barChartView.xAxis.valueFormatter = BarAxisFormatter(items: xItems)
         barChartView.xAxis.labelCount = xItems.count

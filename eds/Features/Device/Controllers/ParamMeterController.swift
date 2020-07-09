@@ -66,7 +66,7 @@ class ParamMeterController: UIViewController {
 
         tag.showValue.asObservable().throttle(.seconds(1), scheduler: MainScheduler.instance).subscribe(onNext: {
             var tagValue = $0
-            self.titleLabel.text = pageItem.name.localize() + ":\(tagValue.clean)"
+            self.titleLabel.text = pageItem.name.localize() + ":\(tagValue.clean.toLocalNumber())"
             //单位换算
             if let unitValue = unitTag?.getValue() {
                 tagValue = tagValue / unitValue

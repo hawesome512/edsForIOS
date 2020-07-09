@@ -17,7 +17,7 @@ class HomeEnergyView: UIView {
     var valueFont = UIFont.preferredFont(forTextStyle: .title1)
     var value: String = "0" {
         didSet {
-            let attrText = NSMutableAttributedString(string: value, attributes: [
+            let attrText = NSMutableAttributedString(string: value.toLocalNumber(), attributes: [
                 NSAttributedString.Key.foregroundColor: tintColor as Any,
                 NSAttributedString.Key.font: valueFont
             ])

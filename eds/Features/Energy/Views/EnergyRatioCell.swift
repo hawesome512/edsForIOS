@@ -25,12 +25,12 @@ class EnergyRatioCell: UITableViewCell {
         let currentTotal = data.getCurrentTotalValue()
         let lastPeriod = data.getLastPeriodTotalValue()
         let lastTotal = data.getLastTotalValue()
-        currentView.value = currentTotal.roundToPlaces(places: 0).clean
-        lastView.value = lastPeriod.roundToPlaces(places: 0).clean
-        linkRatioView.value = data.getLinkRatio().roundToPlaces(places: 0)
+        currentView.value = currentTotal.roundToPlaces(fractions: 0).clean
+        lastView.value = lastPeriod.roundToPlaces(fractions: 0).clean
+        linkRatioView.value = data.getLinkRatio().roundToPlaces(fractions: 0)
 
         //当未设定能耗指标时，选择上期总值为指标
-        let ratio = lastTotal == 0 ? 0 : Double(currentTotal / lastTotal * 100).roundToPlaces(places: 0)
+        let ratio = lastTotal == 0 ? 0 : Double(currentTotal / lastTotal * 100).roundToPlaces(fractions: 0)
         slider.value = CGFloat(ratio)
         ratioLabel.text = ratio.clean + "%"
     }

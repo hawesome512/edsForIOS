@@ -17,7 +17,7 @@ class DeviceATSStatusCell: UITableViewCell {
     private let rightRatio: CGFloat = 0.9
     private let space: CGFloat = 10
     private let lineWidth: CGFloat = 2
-    private let lineColor: UIColor = UIColor.black.withAlphaComponent(0.8)
+    private let lineColor: UIColor = UIColor.label//.withAlphaComponent(0.8)
     private let disposeBag = DisposeBag()
 
     //5个状态指示灯，用字典存储，避免顺序混乱

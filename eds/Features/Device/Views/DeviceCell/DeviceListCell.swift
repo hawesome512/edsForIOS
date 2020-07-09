@@ -22,6 +22,7 @@ class DeviceListCell: UITableViewCell, PasswordVerifyDelegate {
     //是否累加值，在DeviceTrendViewController使用
     private var isAccumulated = false
     private var device: Device?
+    private var cellType: DeviceCellType = .list
 
     var parentVC: UIViewController?
 
@@ -58,27 +59,19 @@ class DeviceListCell: UITableViewCell, PasswordVerifyDelegate {
             return
         }
         //参数修改页面or趋势评估页面
-        if isItemCell() {
+        if cellType == .list {
+            let trendViewController = DeviceTrendController()
+            trendViewController.title = nameLabel.text
+            trendViewController.trend(with: [listTag!], condition: nil, isAccumulated: isAccumulated)
+            parentVC?.navigationController?.pushViewController(trendViewController, animated: true)
+        } else {
             if let verified = device?.verified, verified {
                 presentMeterViewController(authority: .granted)
                 return
             }
             let authorityResult = VerifyUtility.verify(tag: listTag!, delegate: self, parentVC: parentVC)
             presentMeterViewController(authority: authorityResult)
-        } else {
-            let trendViewController = DeviceTrendController()
-            trendViewController.title = nameLabel.text
-            trendViewController.trend(with: [listTag!], condition: nil, isAccumulated: isAccumulated)
-            parentVC?.navigationController?.pushViewController(trendViewController, animated: true)
         }
-    }
-
-    //判断Cell是否为Item Cell
-    private func isItemCell() -> Bool {
-        guard let display = pageItem?.display, DeviceCellType(rawValue: display) == .item else {
-            return false
-        }
-        return true
     }
 
     //修改参数时，密码验证成功，打开参数表盘界面
@@ -90,13 +83,18 @@ class DeviceListCell: UITableViewCell, PasswordVerifyDelegate {
     //打开参数表盘界面，本地模式/权限限制只能查看
     private func presentMeterViewController(authority: AuthorityResult) {
         //正在验证中，等待返回结果
-        if authority == .verifying {
-            return
+        if authority == .verifying { return }
+        
+        //等差数列,["*","0","0.1","10"]
+        if cellType == .slider {
+            let sliderVC = ParamSliderController()
+            sliderVC.initViews(with: pageItem!, tag: listTag!, authority: authority)
+            parentVC?.navigationController?.pushViewController(sliderVC, animated: true)
+        } else {
+            let itemMeterViewController = UIStoryboard(name: "Device", bundle: nil).instantiateViewController(withIdentifier: String(describing: ParamMeterController.self)) as! ParamMeterController
+            itemMeterViewController.initViews(with: pageItem!, tag: listTag!, authority: authority)
+            parentVC?.navigationController?.pushViewController(itemMeterViewController, animated: true)
         }
-        let itemMeterViewController = UIStoryboard(name: "Device", bundle: nil).instantiateViewController(withIdentifier: String(describing: ParamMeterController.self)) as! ParamMeterController
-        itemMeterViewController.initViews(with: pageItem!, tag: listTag!, authority: authority)
-        //导航的方式打开新vc
-        parentVC?.navigationController?.pushViewController(itemMeterViewController, animated: true)
     }
 }
 
@@ -109,6 +107,7 @@ extension DeviceListCell: DevicePageItemSource {
     func initViews(with pageItem: DevicePageItem, rx tags: [Tag], rowIndex: Int) {
         let tag = tags[rowIndex]
         self.pageItem = pageItem
+        cellType = DeviceCellType(rawValue: pageItem.display) ?? .list
         self.device = DeviceUtility.sharedInstance.getDevice(of: tag.getDeviceName())
         listTag = tag
         if pageItem.items?.first == DeviceModel.itemsAccumulation {
@@ -123,7 +122,10 @@ extension DeviceListCell: DevicePageItemSource {
             if let items = pageItem.items, items.first != DeviceModel.itemsAccumulation, DeviceCellType(rawValue: pageItem.display) == .list {
                 value = TagValueConverter.getFixedText(value: $0, items: items).localize()
             }
-            self.valueLabel.text = value
+            if let converter = pageItem.converter, let cov = ValueConverter(rawValue: converter) {
+                value = TagValueConverter.convert(with: value, of: cov)
+            }
+            self.valueLabel.text = value.toLocalNumber()
         }).disposed(by: disposeBag)
 
     }
