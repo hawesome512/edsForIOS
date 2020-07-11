@@ -10,7 +10,7 @@ import Foundation
 import HandyJSON
 import SwiftDate
 
-struct LogTag: HandyJSON {
+struct LogTag: HandyJSON, Equatable, Hashable{
 
     static let nilValue = "#"
 
@@ -32,6 +32,9 @@ struct LogTag: HandyJSON {
         return Name.components(separatedBy: Tag.nameSeparator)[1]
     }
 
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.Name == rhs.Name
+    }
 }
 
 struct WATagLogRequestCondition: HandyJSON {

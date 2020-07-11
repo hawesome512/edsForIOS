@@ -16,6 +16,7 @@ class BasicUtility {
     static let sharedInstance = BasicUtility()
     
     private var basic: Basic?
+    private(set) var accountBasicList: [Basic] = []
     private(set) var successfulBasicInfoUpdated = BehaviorRelay<Bool?>(value: nil)
     
     private init() { }
@@ -24,11 +25,15 @@ class BasicUtility {
         guard let projID = AccountUtility.sharedInstance.account?.id else {
             return
         }
-        let factor = EDSServiceQueryFactor(id: projID)
+        
+        //因为用户id的格式为数字/工程名，使用id="/"将获取所有账户，e.g.:2/XRD、1/XKB
+        let factor = EDSServiceQueryFactor(id: "/")//projID)
         EDSService.getProvider().request(.queryProjectInfoList(factor: factor)) { result in
             switch result {
             case .success(let response):
-                self.basic = JsonUtility.getEDSServiceList(with: response.data, type: [Basic]())?.first ?? nil
+                guard let temps = JsonUtility.getEDSServiceList(with: response.data, type: [Basic]())  else { return }
+                self.accountBasicList = (temps.filter { $0 != nil } as! [Basic])
+                self.basic = self.accountBasicList.first{ $0.id == projID }
                 self.successfulBasicInfoUpdated.accept(true)
                 print("load project basic info")
             default:
@@ -51,6 +56,7 @@ class BasicUtility {
     /// 退出前清空资源
     func clearInfo(){
         basic=nil
+        accountBasicList = []
         successfulBasicInfoUpdated.accept(nil)
     }
     

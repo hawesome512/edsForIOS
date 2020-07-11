@@ -82,6 +82,9 @@
 		462E0DFF2452B25F00A2F17E /* NoticeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462E0DFE2452B25F00A2F17E /* NoticeController.swift */; };
 		462E0E012452B3A300A2F17E /* NoticeMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462E0E002452B3A300A2F17E /* NoticeMessageCell.swift */; };
 		462E0E032452B73500A2F17E /* NoticeAdditionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462E0E022452B73500A2F17E /* NoticeAdditionCell.swift */; };
+		462FB6C824B812780045458B /* EnergyRankController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462FB6C724B812780045458B /* EnergyRankController.swift */; };
+		462FB6CA24B812980045458B /* RankCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462FB6C924B812980045458B /* RankCell.swift */; };
+		462FB6CC24B8550E0045458B /* RankData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462FB6CB24B8550E0045458B /* RankData.swift */; };
 		4663A687247E033D00985BD4 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4663A686247E033D00985BD4 /* DataController.swift */; };
 		4663A689247E3C7400985BD4 /* AuthorityInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4663A688247E3C7400985BD4 /* AuthorityInfoController.swift */; };
 		4663A68B247E4D5C00985BD4 /* UIScrollView-Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4663A68A247E4D5C00985BD4 /* UIScrollView-Ext.swift */; };
@@ -275,6 +278,9 @@
 		462E0DFE2452B25F00A2F17E /* NoticeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeController.swift; sourceTree = "<group>"; };
 		462E0E002452B3A300A2F17E /* NoticeMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeMessageCell.swift; sourceTree = "<group>"; };
 		462E0E022452B73500A2F17E /* NoticeAdditionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeAdditionCell.swift; sourceTree = "<group>"; };
+		462FB6C724B812780045458B /* EnergyRankController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyRankController.swift; sourceTree = "<group>"; };
+		462FB6C924B812980045458B /* RankCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankCell.swift; sourceTree = "<group>"; };
+		462FB6CB24B8550E0045458B /* RankData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankData.swift; sourceTree = "<group>"; };
 		4663A686247E033D00985BD4 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		4663A688247E3C7400985BD4 /* AuthorityInfoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorityInfoController.swift; sourceTree = "<group>"; };
 		4663A68A247E4D5C00985BD4 /* UIScrollView-Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView-Ext.swift"; sourceTree = "<group>"; };
@@ -687,6 +693,7 @@
 				46FF9E4E24470B5B000F5AB2 /* EnergyDateItem.swift */,
 				46FF9E5624498A83000F5AB2 /* EnergyData.swift */,
 				462E0DEE244E8BF500A2F17E /* EnergyBranch.swift */,
+				462FB6CB24B8550E0045458B /* RankData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -701,6 +708,7 @@
 				462E0DEC244D882800A2F17E /* EnergyBranchCell.swift */,
 				4626D843249C860E005D8929 /* TimeRangeCell.swift */,
 				4626D845249C8C2E005D8929 /* TimeItemCell.swift */,
+				462FB6C924B812980045458B /* RankCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -711,6 +719,7 @@
 				46FF9E432446E87C000F5AB2 /* EnergyController.swift */,
 				462E0DF0245116BD00A2F17E /* EnergyConfigController.swift */,
 				462E0DF2245135A200A2F17E /* BranchPickerController.swift */,
+				462FB6C724B812780045458B /* EnergyRankController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1261,6 +1270,7 @@
 				46FB267B243FFF200080362C /* HomeDeviceCell.swift in Sources */,
 				460BA6DF237D2C9A008E7CDF /* PhoneVerification.swift in Sources */,
 				46FF9E5724498A83000F5AB2 /* EnergyData.swift in Sources */,
+				462FB6CA24B812980045458B /* RankCell.swift in Sources */,
 				46FF9510241A0AE9002E36AD /* WorkorderCell.swift in Sources */,
 				46036A6D245AB37700E59E41 /* AccountAdditionController.swift in Sources */,
 				46DF40D9242DD3D70018F961 /* UIViewController-Ext.swift in Sources */,
@@ -1295,6 +1305,7 @@
 				46FF950424162F8A002E36AD /* AlarmCell.swift in Sources */,
 				4621273223B5E8F600105664 /* CAGradientLayer-Ext.swift in Sources */,
 				46DBA51A24209F1400CFA7E7 /* FoldView.swift in Sources */,
+				462FB6C824B812780045458B /* EnergyRankController.swift in Sources */,
 				46FB2677243EF69C0080362C /* MineController.swift in Sources */,
 				46FB268724406B9E0080362C /* HorSliderView.swift in Sources */,
 				46FB2679243F013C0080362C /* HomeHeaderView.swift in Sources */,
@@ -1317,6 +1328,7 @@
 				46DBA5202421B5AB00CFA7E7 /* PhotoCell.swift in Sources */,
 				46DF04AB240CAD6800E3DE65 /* InfoAlertController.swift in Sources */,
 				46DBA52A24221EF100CFA7E7 /* WorkorderInfo.swift in Sources */,
+				462FB6CC24B8550E0045458B /* RankData.swift in Sources */,
 				46FF9E4F24470B5B000F5AB2 /* EnergyDateItem.swift in Sources */,
 				4607DC7C23FE0D0500E35015 /* LooseTextField.swift in Sources */,
 				46FD463A2384C35500A796BC /* TagUtility.swift in Sources */,
@@ -1495,14 +1507,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "eds/EDS云管理.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = DB24XNH42B;
 				INFOPLIST_FILE = eds/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.5;
+				MARKETING_VERSION = 1.1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xseec.eds;
 				PRODUCT_NAME = "EDS云管理";
 				SWIFT_VERSION = 5.0;
@@ -1517,14 +1529,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "eds/EDS云管理.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = DB24XNH42B;
 				INFOPLIST_FILE = eds/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.5;
+				MARKETING_VERSION = 1.1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xseec.eds;
 				PRODUCT_NAME = "EDS云管理";
 				SWIFT_VERSION = 5.0;

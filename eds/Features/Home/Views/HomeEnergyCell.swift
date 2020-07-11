@@ -120,7 +120,6 @@ class HomeEnergyCell: UITableViewCell {
         energyVC.energyBranch = EnergyUtility.sharedInstance.getEnergyBranch()?.copy()
         energyVC.hidesBottomBarWhenPushed = true
         parentVC?.navigationController?.pushViewController(energyVC, animated: true)
-        
     }
     
 }

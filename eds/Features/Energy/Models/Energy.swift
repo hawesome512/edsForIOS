@@ -104,6 +104,10 @@ class TimeData {
         self.price = Double(price) ?? 0
     }
     
+    func getMoney() -> Double {
+        return totalValue * price
+    }
+    
     func toHourRangeString() -> String {
         var range = getHourStart(hours[0])
         let count = hours.count

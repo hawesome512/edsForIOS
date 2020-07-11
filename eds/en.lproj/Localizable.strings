@@ -223,6 +223,8 @@
 "energy_limit" = "At most %d branches allowed，please delete others in this level!";
 /* energy_save */
 "energy_save" = "Saved,edited branches take effect after logged in again!";
+/* energy_rank */
+"energy_rank" = "Energy Rank";
 
 /* trend_title */
 "trend_title" = "Trend";

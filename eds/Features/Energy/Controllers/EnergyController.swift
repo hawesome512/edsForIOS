@@ -48,17 +48,23 @@ class EnergyController: UITableViewController {
         tableView.allowsSelection = false
 
         let shareButton = UIBarButtonItem(image: UIImage(systemName: "paperplane"), style: .plain, target: self, action: #selector(sharePage))
+        let rankButton = UIBarButtonItem(image: UIImage(systemName: "list.number"), style: .plain, target: self, action: #selector(showRank))
         if AccountUtility.sharedInstance.isOperable() {
             let branchBUtton = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(editBranch))
-            navigationItem.rightBarButtonItems = [shareButton, branchBUtton]
+            navigationItem.rightBarButtonItems = [shareButton, rankButton, branchBUtton]
         } else {
-            navigationItem.rightBarButtonItems = [shareButton]
+            navigationItem.rightBarButtonItems = [shareButton, rankButton]
         }
     }
 
     @objc func editBranch() {
         let branchVC = EnergyConfigController()
         navigationController?.pushViewController(branchVC, animated: true)
+    }
+    
+    @objc func showRank() {
+        let rankVC = EnergyRankController()
+        navigationController?.pushViewController(rankVC, animated: true)
     }
     
     @objc func sharePage(_ sender: UIBarButtonItem){

@@ -152,6 +152,17 @@ extension String {
         let number = value as NSNumber
         return NumberFormatter.localizedString(from: number, number: .decimal)
     }
+    
+    
+    /// 隐藏部分文本
+    /// - Parameter showCount: <#showCount description#>
+    /// - Returns: <#description#>
+    func toHiddenString(showCount: Int = 3) -> String {
+        guard self.count > showCount else { return "......" }
+        let start = self.index(self.startIndex, offsetBy: showCount - 1)
+        let end = self.index(self.endIndex, offsetBy: -1)
+        return self.replacingCharacters(in: start..<end, with: " ...... ")
+    }
 
     /// 静态方法生成固定长度的随机字符串
     /// - Parameter length: <#length description#>

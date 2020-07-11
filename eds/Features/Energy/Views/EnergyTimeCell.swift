@@ -36,38 +36,28 @@ class EnergyTimeCell: UITableViewCell {
         
         guard let data = energyData, let energy = energy else { return }
         
-        let total = data.getCurrentTotalValue()
-        widthRatios = widthConstraints.map{ _ in 0 }
         //年模式，数值不能精细到hour,不能进行分时统计
         let yearMode = data.dateItem.dateType == .year
-        
-        let curDoubleValues = data.getCurrentDoubleValues()
-        let hoursDic = energy.getHourDic()
-        let timeDatas = energy.getTimeData()
-        //尖峰平谷计算模式见于Energy.class
-        if !yearMode {
-            curDoubleValues.enumerated().forEach { (offset, element) in
-                let date = data.dateItem.date + offset.hours
-                let index1 = hoursDic[date.hour * 2]?.rawValue ?? 0
-                timeDatas[index1].totalValue += element/2
-                let index2 = hoursDic[date.hour * 2 + 1]?.rawValue ?? 0
-                timeDatas[index2].totalValue += element/2
+        let total = data.getCurrentTotalValue()
+        var price: Double = 0
+        widthRatios = energyTimes.map{ _ in 1/Double(energyTimes.count) }
+        if yearMode {
+            valueLabels.forEach { $0.text = "0%" }
+            subValueLabels.forEach{ $0.text = 0.0.toCurrencyValue() }
+        } else {
+            let timeDatas = EnergyUtility.calTimeDatas(energy: energy, data: data)
+            timeDatas.forEach{ timeData in
+                let energyTime = timeData.energyTime
+                let index = energyTime.rawValue
+                let ratio = total == 0 ? 0 : timeData.totalValue / total
+                valueLabels[index].text = NumberFormatter.localizedString(from: ratio as NSNumber, number: .percent)
+                let money = timeData.totalValue * timeData.price
+                price += money.roundToPlaces(fractions: 0)
+                subValueLabels[index].text = money.toCurrencyValue()
+                widthRatios[index] = ratio
             }
         }
-        
-        var price: Double = 0
-        timeDatas.forEach{ timeData in
-            let energyTime = timeData.energyTime
-            let index = energyTime.rawValue
-            let ratio = total == 0 ? 0 : timeData.totalValue / total * 100
-            valueLabels[index].text = ratio.roundToPlaces(fractions: 0).clean + "%"
-            let money = timeData.totalValue * timeData.price
-            price += money.roundToPlaces(fractions: 0)
-            subValueLabels[index].text = money.toCurrencyValue() //"\(energy.currency)\(money.roundToPlaces(fractions: 0).clean)"
-            //年模式下所有值为0，时段等分占比显示
-            widthRatios[index] = yearMode ? 1/Double(timeDatas.count) : ratio / 100
-        }
-        priceLabel.text = price.toCurrencyValue() //"\(energy.currency)\(price.clean)"
+        priceLabel.text = price.toCurrencyValue()
         setNeedsDisplay()
     }
 
@@ -194,8 +184,9 @@ class EnergyTimeCell: UITableViewCell {
     
     override func draw(_ rect: CGRect) {
         let width = rect.width - 2 * edsSpace - CGFloat(widthRatios.count - 1) * viewSpace
+        let balancedRatios = EnergyUtility.balancedShowRatio(with: widthRatios)
         for i in 0..<widthRatios.count {
-            widthConstraints[i].constant = width * CGFloat(widthRatios[i])
+            widthConstraints[i].constant = width * CGFloat(balancedRatios[i])
         }
     }
 }

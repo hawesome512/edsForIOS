@@ -223,6 +223,8 @@
 "energy_limit" = "最多可添加%d條支路，請先刪減本層其他支路！";
 /* energy_save */
 "energy_save" = "已保存，變更的用電支路需要重新登錄後才能生效！";
+/* energy_rank */
+"energy_rank" = "用電水平排行榜";
 
 /* trend_title */
 "trend_title" = "運行趨勢";
