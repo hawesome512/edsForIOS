@@ -20,6 +20,21 @@ extension Double {
         return (self * divisor).rounded() / divisor
     }
     
+    func autoRounded() -> Double {
+        var fractions = 0
+        switch abs(self) {
+        case 0...1:
+            return self
+        case 1..<10:
+            fractions = 2
+        case 10..<100:
+            fractions = 1
+        default:
+            fractions = 0
+        }
+        let divisor = pow(10.0, Double(fractions))
+        return (self * divisor).rounded() / divisor
+    }
     
     /// 货币格式
     /// - Parameter fractions: 小数位数

@@ -304,6 +304,12 @@
 "stepArrayTip" = "範圍：%@～%@，步長：%@";
 /* stepInputError */
 "stepInputError" = "輸入數值不在允許的範圍內！";
+/* dangerous */
+"dangerous" = "危險";
+/* dangerous_content */
+"dangerous_content" = "如果不能保證該操作的安全性，請不要繼續，以免造成安全事故及財產損失！";
+/* continue */
+"continue" = "繼續";
 
 /* normal */
 "normal" = "正常";
@@ -509,7 +515,7 @@
 /* switch_mode */
 "switch_mode" = "轉換模式";
 /* switch_mode_off */
-"switch_mode_off" = "自投不自復";
+"switch_mode_off" = "自投不復";
 /* switch_mode_on */
 "switch_mode_on" = "自投自復";
 /* operator_mode */

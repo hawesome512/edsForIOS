@@ -46,7 +46,7 @@ class DeviceTrendAnalysisCell: UITableViewCell {
         }
         //计算平均值，忽略所有通讯无效点
         let avg = validValues.reduce(0, +) / Double(validValues.count)
-        avgValueLabel.text = avg.roundToPlaces().clean.toLocalNumber()
+        avgValueLabel.text = "\(avg.autoRounded())"//.roundToPlaces().clean.toLocalNumber()
     }
 
     func setEnergyData(_ values: [Double], date: EnergyDateItem) {

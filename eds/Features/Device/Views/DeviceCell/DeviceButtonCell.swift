@@ -48,17 +48,19 @@ extension DeviceButtonCell: DevicePageItemSource, PasswordVerifyDelegate {
                     buttons.append(button)
                     button.rx.tap.asObservable().throttle(.seconds(1), scheduler: MainScheduler.instance).subscribe({ _ in
                         button.loadedWithAnimation()
-                        //------------特殊处理-----------------
-                        //XS遗留的问题，原先远程控制位0x5000只写，网关采集失败造成farCtrl点通讯无效，后来一些设备修改0x5000为可读可写
-                        //但还是存在某些设备0x5000只写，为保证其通讯流程性，在云平台+网关设备点列表中移除farCtrl点，以至于在TagList中找不到控制点
-                        var authorityResult: AuthorityResult = .localLocked
-                        if tags.count != 0 {
-                            //发送指令：0xAAAA/0x5555,json中已配置为十进制
-                            self.buttonTag = Tag(name: tags[0].Name, value: infos[1])
-                            authorityResult = VerifyUtility.verify(tag: tags[0], delegate: self, parentVC: self.parentVC)
-                        }
-                        self.showVerifiedMessage(authority: authorityResult)
-
+                        DangerousAlertController.present(in: self.parentVC, handler: {_ in
+                            //------------特殊处理-----------------
+                            //XS遗留的问题，原先远程控制位0x5000只写，网关采集失败造成farCtrl点通讯无效，后来一些设备修改0x5000为可读可写
+                            //但还是存在某些设备0x5000只写，为保证其通讯流程性，在云平台+网关设备点列表中移除farCtrl点，以至于在TagList中找不到控制点
+                            var authorityResult: AuthorityResult = .localLocked
+                            if tags.count != 0 {
+                                //发送指令：0xAAAA/0x5555,json中已配置为十进制
+                                self.buttonTag = Tag(name: tags[0].Name, value: infos[1])
+                                authorityResult = VerifyUtility.verify(tag: tags[0], delegate: self, parentVC: self.parentVC)
+                            }
+                            self.showVerifiedMessage(authority: authorityResult)
+                        })
+                        
                     }).disposed(by: disposeBag)
                 }
             }

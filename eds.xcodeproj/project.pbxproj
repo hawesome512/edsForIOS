@@ -106,6 +106,7 @@
 		46B3823F246539D8008C9B3C /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B3823E246539D8008C9B3C /* ScannerViewController.swift */; };
 		46B4934F240897800066863D /* FixedDeviceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B4934E240897800066863D /* FixedDeviceController.swift */; };
 		46B49351240899B50066863D /* FixedInfoChildController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B49350240899B50066863D /* FixedInfoChildController.swift */; };
+		46D26C2124C81D1F00270D27 /* DangerousAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D26C2024C81D1F00270D27 /* DangerousAlertController.swift */; };
 		46DBA50B241F55D100CFA7E7 /* WorkorderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DBA50A241F55D100CFA7E7 /* WorkorderController.swift */; };
 		46DBA510241F5E2300CFA7E7 /* WorkorderStateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DBA50F241F5E2300CFA7E7 /* WorkorderStateCell.swift */; };
 		46DBA5122420524200CFA7E7 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DBA5112420524200CFA7E7 /* SectionHeaderView.swift */; };
@@ -302,6 +303,7 @@
 		46B3823E246539D8008C9B3C /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
 		46B4934E240897800066863D /* FixedDeviceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedDeviceController.swift; sourceTree = "<group>"; };
 		46B49350240899B50066863D /* FixedInfoChildController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedInfoChildController.swift; sourceTree = "<group>"; };
+		46D26C2024C81D1F00270D27 /* DangerousAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DangerousAlertController.swift; sourceTree = "<group>"; };
 		46DBA50A241F55D100CFA7E7 /* WorkorderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkorderController.swift; sourceTree = "<group>"; };
 		46DBA50F241F5E2300CFA7E7 /* WorkorderStateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkorderStateCell.swift; sourceTree = "<group>"; };
 		46DBA5112420524200CFA7E7 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
@@ -586,6 +588,7 @@
 				46B4934E240897800066863D /* FixedDeviceController.swift */,
 				46F1618E24695383000BEA30 /* PasswordController.swift */,
 				46791E312493120700269EF4 /* DeviceSorterController.swift */,
+				46D26C2024C81D1F00270D27 /* DangerousAlertController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1209,6 +1212,7 @@
 				462E0DF7245273AD00A2F17E /* Notice.swift in Sources */,
 				46FB2673243EF58E0080362C /* Home.swift in Sources */,
 				460F7234236FC14500CFC7C3 /* AppDelegate.swift in Sources */,
+				46D26C2124C81D1F00270D27 /* DangerousAlertController.swift in Sources */,
 				46DBA53C242490B300CFA7E7 /* AccountUtility.swift in Sources */,
 				46EDC79A24615C3D00F2F9EE /* HelpListController.swift in Sources */,
 				46227A4123C80FF400768799 /* DeviceTrendController.swift in Sources */,
@@ -1507,14 +1511,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "eds/EDS云管理.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = DB24XNH42B;
 				INFOPLIST_FILE = eds/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.6;
+				MARKETING_VERSION = 1.1.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xseec.eds;
 				PRODUCT_NAME = "EDS云管理";
 				SWIFT_VERSION = 5.0;
@@ -1529,14 +1533,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "eds/EDS云管理.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = DB24XNH42B;
 				INFOPLIST_FILE = eds/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.6;
+				MARKETING_VERSION = 1.1.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xseec.eds;
 				PRODUCT_NAME = "EDS云管理";
 				SWIFT_VERSION = 5.0;

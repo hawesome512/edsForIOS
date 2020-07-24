@@ -5,6 +5,7 @@
 //  Created by 厦门士林电机有限公司 on 2019/12/11.
 //  Copyright © 2019 厦门士林电机有限公司. All rights reserved.
 //  Device柱状图:init＞setPreferredStyle>values(setData)
+//  为简化显示效果，不显示数值小数部分
 
 import UIKit
 import Charts
@@ -62,7 +63,6 @@ class DeviceBarCell: UITableViewCell {
         let xItems = pageItem.tags
         let yItems = pageItem.items
 
-
         barChartView.xAxis.valueFormatter = BarAxisFormatter(items: xItems)
         barChartView.xAxis.labelCount = xItems.count
 
@@ -97,9 +97,9 @@ class DeviceBarCell: UITableViewCell {
         guard values.count > 0 else {
             return
         }
-        //[values]->[(index,value)]
+        //[values]->[(index,value)],暂定不显示小数，取整
         let entries = values.enumerated().map {
-            BarChartDataEntry(x: Double($0.offset), y: $0.element)
+            BarChartDataEntry(x: Double($0.offset), y: $0.element.autoRounded())
         }
         //values太小时，若在柱状图下面绘制将遮挡xAxis的Labels
         let drawValueAbove = values.max()! <= barChartView.leftAxis.axisMaximum * 0.15
@@ -147,16 +147,16 @@ extension DeviceBarCell: DevicePageItemSource {
         }
         setPreferredStyle(pageItem)
         Observable.combineLatest(tags.map { $0.showValue.asObservable() }).throttle(.seconds(1), scheduler: MainScheduler.instance).subscribe(onNext: {
-            if let unit = pageItem.unit, tags.count > 0, let items = pageItem.items, items.count > 0 {
-                //需换算，用百分比表示
-                let unitTag = TagUtility.sharedInstance.getRelatedTag(with: unit, related: tags[0])
-                let ratio = Double(unitTag?.Value ?? "1") ?? 1
-                self.setData(values: $0.map { value in
-                    return value / ratio * 100
-                })
-            } else {
+            guard let unit = pageItem.unit, tags.count > 0, let items = pageItem.items, items.count > 0 else {
                 self.setData(values: $0)
+                return
             }
+            //需换算，用百分比表示
+            let unitTag = TagUtility.sharedInstance.getRelatedTag(with: unit, related: tags[0])
+            let ratio = Double(unitTag?.Value ?? "1") ?? 1
+            self.setData(values: $0.map { value in
+                return value / ratio * 100
+            })
         }).disposed(by: disposeBag)
     }
 }
@@ -172,5 +172,5 @@ class BarAxisFormatter: IAxisValueFormatter {
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
         return items[Int(value)].localize()
     }
-
 }
+

@@ -148,8 +148,9 @@ extension String {
     
     /// 本地化数字形式：1000👉1,000
     func toLocalNumber() -> String {
-        guard let value = Decimal(string: self) else { return self }
-        let number = value as NSNumber
+        //此处不用Decimal(string: self)，因sss-123-sss可转为123
+        guard let value = Double(self) else { return self }
+        let number = value.autoRounded() as NSNumber
         return NumberFormatter.localizedString(from: number, number: .decimal)
     }
     

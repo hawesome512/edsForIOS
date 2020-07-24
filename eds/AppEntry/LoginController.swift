@@ -217,7 +217,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
         loginButton.rx.tap.bind(onNext: {
             
             //调试用，跳过数据请求
-//            let homeVC = EnergyRankController() //EnergyConfigController()
+//            let homeVC = DangerousAlertController(title: nil, message: "dangerous_content".localize(), preferredStyle: .alert)
 //            homeVC.modalPresentationStyle = .fullScreen
 //            self.present(homeVC, animated: true, completion: nil)
 //            return

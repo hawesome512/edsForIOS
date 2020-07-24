@@ -38,12 +38,17 @@ class VerifyUtility {
             return .granted
         }
 
-        //【格式】："authority":["CtrlMode/0/local/1/remote","CtrlCode/%04X"]
+        //【格式】："authority":["CtrlMode/-1/0/local/1/remote","CtrlCode/%04X"]
         let modeTag = TagUtility.sharedInstance.getTagList(by: [DeviceModel.authorityMode], in: deviceName).first
-        let modeInfos = authorities.first { $0.contains(DeviceModel.authorityMode) }?.components(separatedBy: DeviceModel.itemInfoSeparator)
-        if let modeTag = modeTag {
-            let modeIndex = modeInfos?.firstIndex(of: modeTag.getValue().clean)
-            if modeIndex == 1 {
+        var modeInfos = authorities.first { $0.contains(DeviceModel.authorityMode) }?.components(separatedBy: DeviceModel.itemInfoSeparator)
+        modeInfos?.removeFirst()
+        if let modeTag = modeTag,modeInfos?.count == 5,let switchIndex = Int(modeInfos![0]) {
+            var modeValue = Int(modeTag.getValue())
+            //验证开关位是否为1
+            if switchIndex >= 0 {
+                modeValue = TagValueConverter.getSwitch(value: modeTag.getValue(), items: modeInfos) ? 1 : 0
+            }
+            if modeInfos!.firstIndex(of: "\(modeValue)") == 1 {
                 return .localLocked
             }
         }

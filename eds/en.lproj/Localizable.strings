@@ -302,6 +302,12 @@
 "stepArrayTip" = "Range: %@ ~ %@ ,step: %@";
 /* stepInputError */
 "stepInputError" = "Inputed value is out of range!";
+/* dangerous */
+"dangerous" = "WARNING";
+/* dangerous_content */
+"dangerous_content" = "Please cancel this action if you can't ensure its safety,to avoid accidents or property losses!";
+/* continue */
+"continue" = "Continue";
 
 /* normal */
 "normal" = "normal";
@@ -324,19 +330,19 @@
 /* negative */
 "negative" = "A-C-B";
 /* open_phase */
-"open_phase" = "open phase";
+"open_phase" = "Open-Phase";
 /* overload */
-"overload" = "overload";
+"overload" = "Overload";
 /* short */
-"short" = "short";
+"short" = "Short";
 /* instant */
-"instant" = "instant";
+"instant" = "Instant";
 /* ground */
-"ground" = "ground";
+"ground" = "Ground";
 /* trip */
-"trip" = "trip";
+"trip" = "Trip";
 /* preoverload */
-"preoverload" = "pre overload";
+"preoverload" = "Pre-Overload";
 
 /* Ia */
 "Ia" = "Ia";
@@ -393,7 +399,7 @@
 /* F */
 "F" = "F(Hz)";
 /* Phase */
-"Phase" = "Phase";
+"Phase" = "Phase Sequence";
 /* thd */
 "thd" = "THD(%)";
 /* THD1_Ia */
@@ -459,19 +465,19 @@
 /* work */
 "work" = "Status";
 /* oil */
-"oil" = "oil";
+"oil" = "Generator";
 /* sources */
-"sources" = "sources";
+"sources" = "Both Power";
 /* refuse */
-"refuse" = "refuse";
+"refuse" = "Action";
 /* ferroelectric */
-"ferroelectric" = "ferroelectric";
+"ferroelectric" = "Ferroelectric";
 /* feedback */
-"feedback" = "feedback";
+"feedback" = "Feedback";
 /* disturb */
-"disturb" = "disturb";
+"disturb" = "Disturb";
 /* rotary */
-"rotary" = "rotary";
+"rotary" = "Rotary";
 
 /* source1 */
 "source1" = "I(V)";
@@ -490,80 +496,80 @@
 /* Uc_2 */
 "Uc_2" = "Uc";
 /* source1_quality */
-"source1_quality" = "Upmax(%)";
+"source1_quality" = "Uun.max(%)";
 /* source2_quality */
-"source2_quality" = "Upmax(%)";
+"source2_quality" = "Uun.max(%)";
 /* F_1 */
 "F_1" = "F(Hz)";
 /* F_2 */
 "F_2" = "F(Hz)";
 /* Phase_1 */
-"Phase_1" = "Phase";
+"Phase_1" = "Phase Sequence";
 /* Phase_2 */
-"Phase_2" = "Phase";
+"Phase_2" = "Phase Sequence";
 
 /* setting */
 "setting" = "Set";
 /* switch_mode */
-"switch_mode" = "Switch";
+"switch_mode" = "Switching Modes";
 /* switch_mode_off */
-"switch_mode_off" = "off";
+"switch_mode_off" = "Manual Back";
 /* switch_mode_on */
-"switch_mode_on" = "on";
+"switch_mode_on" = "Auto Back";
 /* operator_mode */
-"operator_mode" = "Operator";
+"operator_mode" = "Switching Control";
 /* operator_mode_off */
-"operator_mode_off" = "auto";
+"operator_mode_off" = "Auto";
 /* operator_mode_on */
-"operator_mode_on" = "manual";
+"operator_mode_on" = "Manual";
 /* ct_ratio */
 "CT" = "CT Ratio";
 
 /* voltage_protect */
 "voltage_protect" = "Voltage(%Un)";
 /* Ul */
-"Ul" = "Ul";
+"Ul" = "Under Voltage Switching";
 /* UlR */
-"UlR" = "UlR";
+"UlR" = "Under Voltage Hysteresis";
 /* Uo */
-"Uo" = "Uo";
+"Uo" = "Over Voltage Switching";
 /* UoR */
-"UoR" = "UoR";
+"UoR" = "Over Voltage Hysteresis";
 
 /* freq_protect */
-"freq_protect" = "F(%Fn)";
+"freq_protect" = "Frequency(%Fn)";
 /* freq_switch */
 "freq_switch" = "Function";
 /* Fl */
-"Fl" = "Fl";
+"Fl" = "Under Frequency Switching";
 /* FlR */
-"FlR" = "FlR";
+"FlR" = "Under Frequency Hysteresis";
 /* Fo */
-"Fo" = "Fo";
+"Fo" = "Over Frequency Switching";
 /* FoR */
-"FoR" = "FoR";
+"FoR" = "Over Frequency Hysteresis";
 
 /* Up_protect */
-"Up_protect" = "Up(%Un)";
+"Up_protect" = "Unblance(%Un)";
 /* Up_switch */
 "Up_switch" = "Function";
 /* UpSet */
-"UpSet" = "UpSet";
+"UpSet" = "Unblance Switching";
 /* UpRSet */
-"UpRSet" = "UpRSet";
+"UpRSet" = "Unblance Hysteresis";
 
 /* delay */
 "delay" = "Delay(s)";
 /* T1 */
-"T1" = "T1";
+"T1" = "Switch[T1]";
 /* T2 */
-"T2" = "T2";
+"T2" = "O Position Stay[T2]";
 /* T3 */
-"T3" = "T3";
+"T3" = "Back Switch[T3]";
 /* T4 */
-"T4" = "T4";
+"T4" = "R-Power Available[T4]";
 /* T5 */
-"T5" = "T5";
+"T5" = "Generotor Stop[T5]";
 
 /* overVolt_DO1 */
 "overVolt_DO1" = "DO1 Uo";

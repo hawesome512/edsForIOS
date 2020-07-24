@@ -39,7 +39,7 @@ class EnergyBranchCell: UITableViewCell {
         }
         //[values]->[(index,value)]
         let entries = values.enumerated().map {
-            BarChartDataEntry(x: Double($0.offset), y: $0.element)
+            BarChartDataEntry(x: Double($0.offset), y: $0.element.autoRounded())
         }
         //values太小时，若在柱状图下面绘制将遮挡xAxis的Labels
         let drawValueAbove = values.max()! <= barChartView.leftAxis.axisMaximum * 0.15
