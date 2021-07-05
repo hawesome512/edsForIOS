@@ -26,13 +26,13 @@ class WorkorderTaskCell: UITableViewCell {
     private func initViews() {
 
 //        checkBox.isSelected = false
-        addSubview(checkBox)
+        contentView.addSubview(checkBox)
         checkBox.width(edsIconSize)
         checkBox.height(edsIconSize)
         checkBox.centerYToSuperview()
         checkBox.trailingToSuperview(offset: edsSpace)
 
-        addSubview(titleLabel)
+        contentView.addSubview(titleLabel)
         titleLabel.centerYToSuperview()
         titleLabel.leadingToSuperview(offset: edsSpace)
         titleLabel.trailingToLeading(of: checkBox, offset: edsSpace, relation: .equalOrGreater)

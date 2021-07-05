@@ -60,19 +60,19 @@ class DeviceFixedCell: UITableViewCell {
     private func initViews() {
         tintColor = .systemGray
         foldButton.size(CGSize(width: edsIconSize, height: edsIconSize))
-        addSubview(foldButton)
+        contentView.addSubview(foldButton)
         leading = foldButton.leadingToSuperview(offset: edsSpace)
         foldButton.centerYToSuperview()
         
         deviceImageView.contentMode = .scaleAspectFit
-        addSubview(deviceImageView)
+        contentView.addSubview(deviceImageView)
         deviceImageView.heightToSuperview(offset: -edsSpace)
         deviceImageView.widthToHeight(of: deviceImageView)
         deviceImageView.leadingToTrailing(of: foldButton, offset: edsSpace / 2)
         deviceImageView.centerYToSuperview()
 
         nameLabel.textAlignment = .center
-        addSubview(nameLabel)
+        contentView.addSubview(nameLabel)
         nameLabel.centerYToSuperview()
         nameLabel.font = UIFont.preferredFont(forTextStyle: .title3)
         nameLabel.leadingToTrailing(of: deviceImageView, offset: edsSpace / 2)
@@ -81,7 +81,7 @@ class DeviceFixedCell: UITableViewCell {
         levelLabel.layer.borderColor = UIColor.systemGray3.cgColor
         levelLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
         levelLabel.innerText = "uncommunicate".localize()
-        addSubview(levelLabel)
+        contentView.addSubview(levelLabel)
         levelLabel.top(to: nameLabel)
         levelLabel.height(24)
         levelLabel.leadingToTrailing(of: nameLabel, offset: edsSpace / 2)

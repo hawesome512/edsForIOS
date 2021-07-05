@@ -53,7 +53,7 @@ class EnergySegmentCell: UITableViewCell {
             self.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .right)
             self.delegate?.pick(dateItem: dates.last!)
         }).disposed(by: disposeBag)
-        addSubview(dateSegment)
+        contentView.addSubview(dateSegment)
         dateSegment.edgesToSuperview(excluding: .bottom)
         dateSegment.height(edsIconSize)
 
@@ -61,7 +61,7 @@ class EnergySegmentCell: UITableViewCell {
         collectionView.delegate = self
         collectionView.backgroundColor = edsDivideColor
         collectionView.register(DateCollectionCell.self, forCellWithReuseIdentifier: cellID)
-        addSubview(collectionView)
+        contentView.addSubview(collectionView)
         collectionView.edgesToSuperview(excluding: .top)
         //适当增加高度，防止误触
         collectionView.height(60)
@@ -77,20 +77,26 @@ class EnergySegmentCell: UITableViewCell {
 
     //首次选择并调整到最新项（最右边）,只有在视图加载出来后跳转才能生效
     override func layoutSubviews() {
+        var indexPath = IndexPath(row: 0, section: 0)
         if let dateType = dateItem?.dateType {
             dateSegment.selectedSegmentIndex = dateType.rawValue
             dates = dateType.getDates()
             let index = dates.firstIndex(where: { $0 == dateItem }) ?? 0
-            let indexPath = IndexPath(row: index, section: 0)
-            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .right)
+            indexPath = IndexPath(row: index, section: 0)
+//            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .right)
         } else {
             //默认月模式
             let selectedType: EnergySegmentType = .month
             dateSegment.selectedSegmentIndex = selectedType.rawValue
             dates = selectedType.getDates()
-            let indexPath = IndexPath(row: dates.count - 1, section: 0)
-            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .right)
+            indexPath = IndexPath(row: dates.count - 1, section: 0)
+//            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .right)
         }
+        //在首次触发layoutSubviews时，cell未完全加载显示，此时调用collectionView.scrollPosition无效
+        //设置一个延迟触发机制
+        Observable<Int>.timer(.milliseconds(100), scheduler: MainScheduler.instance).bind(onNext: {_ in
+            self.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .right)
+        }).disposed(by: disposeBag)
     }
 
 }
@@ -115,5 +121,4 @@ extension EnergySegmentCell: UICollectionViewDataSource, UICollectionViewDelegat
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         delegate?.pick(dateItem: dates[indexPath.row])
     }
-
 }

@@ -63,10 +63,12 @@ class EnergyTimeCell: UITableViewCell {
 
     private func initViews() {
 
+        backgroundColor = .systemBackground
+        
         let timeIcon = UIImageView()
         timeIcon.tintColor = .label
         timeIcon.image = UIImage(systemName: "clock")
-        addSubview(timeIcon)
+        contentView.addSubview(timeIcon)
         timeIcon.width(edsIconSize)
         timeIcon.height(edsIconSize)
         timeIcon.leadingToSuperview(offset: edsSpace)
@@ -77,7 +79,7 @@ class EnergyTimeCell: UITableViewCell {
         timeLabel.text = title
         timeLabel.font = UIFont.preferredFont(forTextStyle: .title3)
         timeLabel.adjustsFontSizeToFitWidth = true
-        addSubview(timeLabel)
+        contentView.addSubview(timeLabel)
         timeLabel.leadingToTrailing(of: timeIcon, offset: edsMinSpace)
         timeLabel.centerY(to: timeIcon)
 
@@ -91,7 +93,7 @@ class EnergyTimeCell: UITableViewCell {
             alertVC.addAction(okAction)
             self.parentVC?.present(alertVC, animated: true, completion: nil)
         }).disposed(by: disposeBag)
-        addSubview(tipButton)
+        contentView.addSubview(tipButton)
         tipButton.width(edsSpace)
         tipButton.height(edsSpace)
         tipButton.leadingToTrailing(of: timeLabel, offset: 2)
@@ -101,7 +103,7 @@ class EnergyTimeCell: UITableViewCell {
         priceLabel.font = UIFont.preferredFont(forTextStyle: .largeTitle)
         priceLabel.textAlignment = .right
         priceLabel.adjustsFontSizeToFitWidth = true
-        addSubview(priceLabel)
+        contentView.addSubview(priceLabel)
         priceLabel.trailingToSuperview(offset: edsSpace)
         priceLabel.centerY(to: timeIcon)
         priceLabel.leadingToTrailing(of: tipButton, offset: edsSpace, relation: .equalOrGreater)
@@ -123,7 +125,7 @@ class EnergyTimeCell: UITableViewCell {
             valueLabel.text = "0%"
             valueLabel.font = UIFont.preferredFont(forTextStyle: .headline)
             valueLabel.adjustsFontSizeToFitWidth = true
-            addSubview(valueLabel)
+            contentView.addSubview(valueLabel)
             valueLabel.topToBottom(of: priceLabel,offset: edsMinSpace)
             if i == 0 {
                 valueLabel.leadingToSuperview(offset: edsSpace)
@@ -137,7 +139,7 @@ class EnergyTimeCell: UITableViewCell {
             
             let showView = UIView()
             showView.backgroundColor = energyTimes[i].getColor()
-            addSubview(showView)
+            contentView.addSubview(showView)
             showView.height(edsMinSpace)
             showView.width(to: valueLabel)
             showView.topToBottom(of: valueLabel,offset: edsMinSpace)
@@ -148,7 +150,7 @@ class EnergyTimeCell: UITableViewCell {
             subValueLabel.text = "¥0"
             subValueLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
             subValueLabel.adjustsFontSizeToFitWidth = true
-            addSubview(subValueLabel)
+            contentView.addSubview(subValueLabel)
             subValueLabel.bottomToSuperview(offset: -edsMinSpace)
             subValueLabel.leading(to: valueLabel)
             subValueLabel.width(to: valueLabel)
@@ -159,7 +161,7 @@ class EnergyTimeCell: UITableViewCell {
             titleLabel.text = energyTimes[i].getText()
             titleLabel.textColor = energyTimes[i].getColor()
             titleLabel.adjustsFontSizeToFitWidth = true
-            addSubview(titleLabel)
+            contentView.addSubview(titleLabel)
             titleLabel.bottomToTop(of: subValueLabel, offset: -edsMinSpace)
             titleLabel.topToBottom(of: showView, offset: edsMinSpace)
             titleLabel.leading(to: valueLabel)

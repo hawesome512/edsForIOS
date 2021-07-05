@@ -49,11 +49,11 @@ class DeviceTrendChartCell: UITableViewCell {
         lineChartView.animate(xAxisDuration: 2.5)
 
         lineChartView.alpha = 0
-        addSubview(lineChartView)
+        contentView.addSubview(lineChartView)
         lineChartView.edgesToSuperview()
 
         activityIndicatorView.startAnimating()
-        addSubview(activityIndicatorView)
+        contentView.addSubview(activityIndicatorView)
         activityIndicatorView.centerInSuperview()
 
     }

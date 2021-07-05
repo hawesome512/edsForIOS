@@ -38,7 +38,7 @@ class TaskAdditionCell: UITableViewCell, UITextFieldDelegate {
         addButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: edsSpace*2, bottom: 0, right: 0)
         addButton.setTitle(title, for: .normal)
         addButton.setTitleColor(edsDefaultColor, for: .normal)
-        addSubview(addButton)
+        contentView.addSubview(addButton)
         addButton.verticalToSuperview()
         addButton.horizontalToSuperview(insets: .horizontal(edsSpace))
         

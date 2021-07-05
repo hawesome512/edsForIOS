@@ -59,7 +59,7 @@ class DeviceDynamicCell: UITableViewCell {
 
         deviceImageView.image = UIImage(named: "device_fixed")?.withTintColor(edsDefaultColor)
         deviceImageView.contentMode = .scaleAspectFit
-        addSubview(deviceImageView)
+        contentView.addSubview(deviceImageView)
         deviceImageView.heightToSuperview(offset: -edsSpace)
         deviceImageView.widthToHeight(of: deviceImageView)
         imageViewLeading = deviceImageView.leadingToSuperview(offset: edsSpace)
@@ -68,7 +68,7 @@ class DeviceDynamicCell: UITableViewCell {
         nameLabel.text = "#000"
         nameLabel.font = UIFont.preferredFont(forTextStyle: .title3)
         nameLabel.textColor = edsDefaultColor
-        addSubview(nameLabel)
+        contentView.addSubview(nameLabel)
         nameLabel.centerY(to: deviceImageView)
         nameLabel.leadingToTrailing(of: deviceImageView, offset: edsSpace / 2)
         nameLabel.height(to: deviceImageView, multiplier: 0.5)
@@ -78,7 +78,7 @@ class DeviceDynamicCell: UITableViewCell {
 //        statusView.numberOfLines = 1
         //不显示边框
         statusView.layer.borderColor = edsDefaultColor.withAlphaComponent(0).cgColor
-        addSubview(statusView)
+        contentView.addSubview(statusView)
         statusView.height(24)
         statusView.centerY(to: nameLabel)
         statusView.leadingToTrailing(of: nameLabel, offset: edsSpace / 2)

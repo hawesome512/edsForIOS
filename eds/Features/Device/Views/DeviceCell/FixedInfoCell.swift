@@ -20,15 +20,15 @@ class FixedInfoCell: UITableViewCell {
 
         nameLabel.textColor = edsDefaultColor
         nameLabel.font = preferredFont
-        addSubview(nameLabel)
+        contentView.addSubview(nameLabel)
         nameLabel.centerYToSuperview()
 //        nameLabel.verticalToSuperview(insets:.vertical(edsSpace))
         nameLabel.leadingToSuperview(offset: edsSpace)
         valueLabel.font = preferredFont
-        addSubview(valueLabel)
+        contentView.addSubview(valueLabel)
         valueLabel.centerYToSuperview()
         //因cell右边存在accessoryType，space*2,避免其被覆盖
-        valueLabel.trailingToSuperview(offset: edsSpace * 2)
+        valueLabel.trailingToSuperview(offset: edsMinSpace)
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

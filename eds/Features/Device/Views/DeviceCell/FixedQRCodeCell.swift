@@ -14,7 +14,7 @@ class FixedQRCodeCell: UITableViewCell {
 
     private func initViews() {
         qrImageView.contentMode = .scaleAspectFit
-        addSubview(qrImageView)
+        contentView.addSubview(qrImageView)
         qrImageView.width(240)
         qrImageView.height(240)
         qrImageView.edgesToSuperview(insets: .uniform(edsSpace))

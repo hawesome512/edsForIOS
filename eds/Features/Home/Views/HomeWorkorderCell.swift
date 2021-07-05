@@ -33,12 +33,12 @@ class HomeWorkorderCell: UITableViewCell {
     
     private func initViews() {
         tintColor = .white
-        let contentView = ViewUtility.addCardEffect(in: self)
-        ViewUtility.addColorEffect(in: contentView)
+        let cardEffectView = ViewUtility.addCardEffect(in: self)
+        ViewUtility.addColorEffect(in: cardEffectView)
         
         let workorderImage = UIImageView()
         workorderImage.image = Workorder.icon
-        contentView.addSubview(workorderImage)
+        cardEffectView.addSubview(workorderImage)
         workorderImage.width(edsIconSize)
         workorderImage.height(edsIconSize)
         workorderImage.leadingToSuperview(offset: edsMinSpace)
@@ -48,14 +48,14 @@ class HomeWorkorderCell: UITableViewCell {
         workorderLabel.textColor = .white
         workorderLabel.text = "workorder".localize(with: prefixHome)
         workorderLabel.font = UIFont.preferredFont(forTextStyle: .title3)
-        contentView.addSubview(workorderLabel)
+        cardEffectView.addSubview(workorderLabel)
         workorderLabel.centerY(to: workorderImage)
         workorderLabel.leadingToTrailing(of: workorderImage, offset: edsMinSpace)
         
         let state = FlowTimeLine.planing.getState()
         stateImage.tintColor = state.color
         stateImage.image = state.icon
-        contentView.addSubview(stateImage)
+        cardEffectView.addSubview(stateImage)
         stateImage.width(edsIconSize)
         stateImage.height(edsIconSize)
         stateImage.centerYToSuperview()
@@ -66,13 +66,13 @@ class HomeWorkorderCell: UITableViewCell {
         titleLabel.textColor = .white
         titleLabel.font = UIFont.preferredFont(forTextStyle: .title1)
         titleLabel.adjustsFontSizeToFitWidth = true
-        contentView.addSubview(titleLabel)
+        cardEffectView.addSubview(titleLabel)
         titleLabel.leading(to: workorderImage)
         titleLabel.trailingToLeading(of: stateImage, offset: -edsSpace, relation: .equalOrLess)
         titleLabel.centerYToSuperview()
         
         slider.value = 0
-        contentView.addSubview(slider)
+        cardEffectView.addSubview(slider)
         slider.height(HorSliderView.lineWidth)
         slider.centerY(to: workorderImage)
         slider.leadingToTrailing(of: workorderLabel,offset: edsSpace)
@@ -91,7 +91,7 @@ class HomeWorkorderCell: UITableViewCell {
                 wolistVC.hidesBottomBarWhenPushed = true
                 self.parentVC?.navigationController?.pushViewController(wolistVC, animated: true)
             }).disposed(by: disposeBag)
-            contentView.addSubview(itemButton)
+            cardEffectView.addSubview(itemButton)
             itemButton.widthToSuperview(multiplier: 1/3)
             itemButton.height(edsIconSize+edsSpace)
             itemButton.bottomToSuperview()

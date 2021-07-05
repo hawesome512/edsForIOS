@@ -67,7 +67,7 @@ class TextInputCell: UITableViewCell, UITextFieldDelegate {
         textField.borderStyle = .bezel
         textField.font = textFont
         textField.delegate = self
-        addSubview(textField)
+        contentView.addSubview(textField)
         textField.horizontalToSuperview(insets: .horizontal(edsSpace))
         textField.verticalToSuperview(insets: .vertical(edsMinSpace))
         textField.clearButtonMode = .unlessEditing

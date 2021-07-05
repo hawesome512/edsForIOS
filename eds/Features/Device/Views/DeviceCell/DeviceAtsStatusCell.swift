@@ -19,7 +19,16 @@ class DeviceATSStatusCell: UITableViewCell {
     private let lineWidth: CGFloat = 2
     private let lineColor: UIColor = UIColor.label//.withAlphaComponent(0.8)
     private let disposeBag = DisposeBag()
-
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        backgroundColor = .systemBackground
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     //5个状态指示灯，用字典存储，避免顺序混乱
     private lazy var statusValueViews: [ATSStatusViewType: UIView] = {
         var views = [ATSStatusViewType: UIView]()
@@ -102,7 +111,7 @@ class DeviceATSStatusCell: UITableViewCell {
         view.layer.borderWidth = 1
         view.clipsToBounds = true
         view.backgroundColor = .systemGreen
-        addSubview(view)
+        contentView.addSubview(view)
         return view
     }
 

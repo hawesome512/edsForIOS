@@ -23,7 +23,7 @@ class DeviceBarCell: UITableViewCell {
 
     fileprivate func initViews() {
         barChartView = BarChartView()
-        addSubview(barChartView)
+        contentView.addSubview(barChartView)
         barChartView.edgesToSuperview(insets: .uniform(edsSpace))
     }
 

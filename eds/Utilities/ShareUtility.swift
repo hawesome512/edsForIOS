@@ -10,9 +10,7 @@ import Foundation
 import UIKit
 import MessageUI
 
-
 class ShareUtility {
-
 
     /// 用浏览器打开网页
     /// - Parameter path: <#path description#>
@@ -29,10 +27,11 @@ class ShareUtility {
 
     /// 拨打电话，使用CXCallObserver监听同行状态
     /// - Parameter number: 电话号码
-    static func callPhone(to number: String) {
+    static func callPhone(to number: String, delegate: CallDelegate) {
         let phone = "tel://\(number)"
         if let url = URL(string: phone), UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            delegate.callActived()
         } else {
             print("Call failed")
         }

@@ -8,7 +8,7 @@
 
 import UIKit
 import RxSwift
-import CallKit
+//import CallKit
 import MessageUI
 
 class WorkorderBasicCell: UITableViewCell {
@@ -41,20 +41,20 @@ class WorkorderBasicCell: UITableViewCell {
 
         workerIcon.image = UIImage(systemName: "person")
         workerIcon.tintColor = .systemBlue
-        addSubview(workerIcon)
+        contentView.addSubview(workerIcon)
         workerIcon.width(edsIconSize)
         workerIcon.height(edsIconSize)
         workerIcon.leadingToSuperview(offset: edsSpace)
         workerIcon.topToSuperview(offset: edsMinSpace)
 
         workerLabel.font=UIFont.preferredFont(forTextStyle: .headline)
-        addSubview(workerLabel)
+        contentView.addSubview(workerLabel)
         workerLabel.centerY(to: workerIcon)
         workerLabel.leadingToTrailing(of: workerIcon, offset: edsMinSpace)
 
         deviceIcon.image = Device.icon
         deviceIcon.tintColor = .systemRed
-        addSubview(deviceIcon)
+        contentView.addSubview(deviceIcon)
         deviceIcon.width(edsIconSize)
         deviceIcon.height(edsIconSize)
         deviceIcon.topToBottom(of: workerIcon, offset: edsMinSpace)
@@ -62,7 +62,7 @@ class WorkorderBasicCell: UITableViewCell {
 
         deviceLabel.font=UIFont.preferredFont(forTextStyle: .headline)
         deviceLabel.numberOfLines = 0
-        addSubview(deviceLabel)
+        contentView.addSubview(deviceLabel)
         deviceLabel.centerY(to: deviceIcon)
         deviceLabel.leadingToTrailing(of: deviceIcon, offset: edsMinSpace)
         deviceLabel.trailingToSuperview(offset: edsSpace)
@@ -79,12 +79,12 @@ class WorkorderBasicCell: UITableViewCell {
                 self.parentVC?.navigationController?.present(fixedVC, animated: true, completion: nil)//(dynamicVC, animated: true)
             }
         }).disposed(by: disposeBag)
-        addSubview(deviceButton)
+        contentView.addSubview(deviceButton)
         deviceButton.edges(to: deviceLabel)
 
         timeIcon.image = UIImage(systemName: "calendar")
         timeIcon.tintColor = .systemGreen
-        addSubview(timeIcon)
+        contentView.addSubview(timeIcon)
         timeIcon.width(edsIconSize)
         timeIcon.height(edsIconSize)
         timeIcon.topToBottom(of: deviceIcon, offset: edsMinSpace)
@@ -92,7 +92,7 @@ class WorkorderBasicCell: UITableViewCell {
         timeIcon.bottomToSuperview(offset: -edsMinSpace)
 
         timeLabel.font=UIFont.preferredFont(forTextStyle: .headline)
-        addSubview(timeLabel)
+        contentView.addSubview(timeLabel)
         timeLabel.leadingToTrailing(of: timeIcon, offset: edsMinSpace)
         timeLabel.centerY(to: timeIcon)
         timeLabel.trailingToSuperview(offset: edsSpace)

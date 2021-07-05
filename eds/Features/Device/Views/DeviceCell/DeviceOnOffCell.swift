@@ -29,18 +29,18 @@ class DeviceOnOffCell: UITableViewCell, PasswordVerifyDelegate {
 //        nameLabel.text = "短路保护"
         nameLabel.textColor = UIColor.systemBlue
         nameLabel.font = UIFont.preferredFont(forTextStyle: .title3)
-        addSubview(nameLabel)
+        contentView.addSubview(nameLabel)
         nameLabel.centerYToSuperview()
         nameLabel.leadingToSuperview(offset: space)
 
         valueSwitch.isOn = false
         valueSwitch.isUserInteractionEnabled = false
-        addSubview(valueSwitch)
+        contentView.addSubview(valueSwitch)
         valueSwitch.centerYToSuperview()
         valueSwitch.trailingToSuperview(offset: space)
 
         extraLabel.textColor = .systemGray
-        addSubview(extraLabel)
+        contentView.addSubview(extraLabel)
         extraLabel.trailingToLeading(of: valueSwitch, offset: -space)
         extraLabel.verticalToSuperview()
     }

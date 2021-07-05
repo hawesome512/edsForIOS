@@ -41,7 +41,7 @@ class ViewUtility {
 
     /// 卡片风格的View
     /// - Parameter container: 先添加卡片风格，然后在容器上添加其他控件
-    static func addCardEffect(in container: UIView) -> UIView {
+    static func addCardEffect(in container: UITableViewCell) -> UIView {
         container.backgroundColor = edsDivideColor
         let backView = UIView()
         backView.layer.shadowColor = UIColor.systemGray.cgColor
@@ -49,7 +49,9 @@ class ViewUtility {
         backView.layer.cornerRadius = 5
         backView.clipsToBounds = true
         backView.backgroundColor = .systemBackground
-        container.addSubview(backView)
+//        container.addSubview(backView)
+        //在ios14中在tabelviewcell中添加subview不能响应点击事件，因其默认绘制在底层，应当在contentView中添加子控件
+        container.contentView.addSubview(backView)
         backView.edgesToSuperview(insets: .uniform(edsMinSpace))
         return backView
     }
@@ -102,7 +104,7 @@ class ViewUtility {
         }
         //若imageView本身有图片，可代替placeholder
         let placeholder = placeholder ?? imageView.image
-        imageView.kf.setImage(with: url,placeholder: placeholder){result in
+        imageView.kf.setImage(with: url,placeholder: placeholder, completionHandler: {result in
             switch result{
             case .failure:
                 //只重试一次:ns后
@@ -118,6 +120,6 @@ class ViewUtility {
                     setWebImage(in: imageView, photo: photo, download: .large, disposeBag: disposeBag)
                 }
             }
-        }
+        })
     }
 }

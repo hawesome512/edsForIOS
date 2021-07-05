@@ -59,7 +59,7 @@ class TimeItemCell: UITableViewCell, UITextFieldDelegate {
         
         titleLabel.font = UIFont.preferredFont(forTextStyle: .title3)
         titleLabel.text = EnergyTime.valley.getText()
-        addSubview(titleLabel)
+        contentView.addSubview(titleLabel)
         titleLabel.topToSuperview(offset: edsMinSpace)
         titleLabel.leadingToSuperview(offset: edsSpace)
         
@@ -80,7 +80,7 @@ class TimeItemCell: UITableViewCell, UITextFieldDelegate {
             alertVC.addAction(confirmAction)
             self.parentVC?.present(alertVC, animated: true, completion: nil)
         }).disposed(by: disposeBag)
-        addSubview(priceButton)
+        contentView.addSubview(priceButton)
         priceButton.centerY(to: titleLabel)
         priceButton.trailingToSuperview(offset: edsSpace)
         priceButton.height(edsIconSize)
@@ -94,14 +94,14 @@ class TimeItemCell: UITableViewCell, UITextFieldDelegate {
             self.dropDown.show()
         }).disposed(by: disposeBag)
         hoursButton.titleLabel?.adjustsFontSizeToFitWidth = true
-        addSubview(hoursButton)
+        contentView.addSubview(hoursButton)
         hoursButton.topToBottom(of: titleLabel,offset: edsMinSpace)
         hoursButton.bottomToSuperview(offset: -edsMinSpace)
         hoursButton.leadingToSuperview(offset: edsSpace)
 //        hoursButton.trailingToSuperview(offset: edsSpace, relation: .equalOrGreater)
         
 //        totalLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
-        addSubview(totalLabel)
+        contentView.addSubview(totalLabel)
         totalLabel.trailingToSuperview(offset: edsSpace)
         totalLabel.centerY(to: hoursButton)
         hoursButton.trailingToLeading(of: totalLabel, offset: -edsSpace)

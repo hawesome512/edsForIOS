@@ -28,12 +28,12 @@ class HomeDeviceCell: UITableViewCell {
 
     private func initViews() {
         tintColor = .white
-        let contentView = ViewUtility.addCardEffect(in: self)
-        ViewUtility.addColorEffect(in: contentView)
+        let cardEffectView = ViewUtility.addCardEffect(in: self)
+        ViewUtility.addColorEffect(in: cardEffectView)
 
         let deviceImage = UIImageView()
         deviceImage.image = Device.icon
-        contentView.addSubview(deviceImage)
+        cardEffectView.addSubview(deviceImage)
         deviceImage.width(edsIconSize)
         deviceImage.height(edsIconSize)
         deviceImage.leadingToSuperview(offset: edsMinSpace)
@@ -43,7 +43,7 @@ class HomeDeviceCell: UITableViewCell {
         deviceLabel.textColor = .white
         deviceLabel.text = Device.description
         deviceLabel.font = UIFont.preferredFont(forTextStyle: .title3)
-        contentView.addSubview(deviceLabel)
+        cardEffectView.addSubview(deviceLabel)
         deviceLabel.centerY(to: deviceImage)
         deviceLabel.leadingToTrailing(of: deviceImage, offset: edsMinSpace)
 
@@ -64,8 +64,7 @@ class HomeDeviceCell: UITableViewCell {
                 self.parentVC?.navigationController?.present(deviceListVC, animated: true, completion: nil)
             }).disposed(by: disposeBag)
             deviceViews[item] = view
-
-            contentView.addSubview(view)
+            cardEffectView.addSubview(view)
             //横向等宽
             view.widthToSuperview(multiplier: 1.0 / CGFloat(DeviceClass.allCases.count))
             view.topToBottom(of: deviceImage, offset: edsMinSpace)

@@ -66,54 +66,56 @@ class DeviceTrendAnalysisCell: UITableViewCell {
     }
 
     private func initViews() {
-
+        
+        backgroundColor = .systemBackground
+        
         minLabel.text = "min".localize(with: prefixTrend)
         minLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
-        addSubview(minLabel)
+        contentView.addSubview(minLabel)
         minLabel.leadingToSuperview(offset: edsSpace)
         minLabel.centerYToSuperview(offset: edsMinSpace)
 
         minValueLabel.text = "0"
         minValueLabel.font = UIFont.preferredFont(forTextStyle: .headline)
-        addSubview(minValueLabel)
+        contentView.addSubview(minValueLabel)
         minValueLabel.leadingToSuperview(offset: edsSpace)
         minValueLabel.topToSuperview(offset: edsMinSpace)
 
         minTimeLabel.text = Date().toDateTimeString()
         minTimeLabel.textColor = edsGrayColor
         minTimeLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
-        addSubview(minTimeLabel)
+        contentView.addSubview(minTimeLabel)
         minTimeLabel.topToBottom(of: minLabel, offset: 10)
         minTimeLabel.leadingToSuperview(offset: edsSpace)
 
         maxLabel.text = "max".localize(with: prefixTrend)
         maxLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
-        addSubview(maxLabel)
+        contentView.addSubview(maxLabel)
         maxLabel.trailingToSuperview(offset: edsSpace)
         maxLabel.centerYToSuperview(offset: edsMinSpace)
 
         maxValueLabel.text = "100"
         maxValueLabel.font = UIFont.preferredFont(forTextStyle: .headline)
-        addSubview(maxValueLabel)
+        contentView.addSubview(maxValueLabel)
         maxValueLabel.trailingToSuperview(offset: edsSpace)
         maxValueLabel.topToSuperview(offset: edsMinSpace)
 
         maxTimeLabel.text = Date().toDateTimeString()
         maxTimeLabel.textColor = edsGrayColor
         maxTimeLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
-        addSubview(maxTimeLabel)
+        contentView.addSubview(maxTimeLabel)
         maxTimeLabel.topToBottom(of: minLabel, offset: 10)
         maxTimeLabel.trailingToSuperview(offset: edsSpace)
 
         avgLabel.text = "avg".localize(with: prefixTrend)
         avgLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
-        addSubview(avgLabel)
+        contentView.addSubview(avgLabel)
         avgLabel.centerXToSuperview()
         avgLabel.centerYToSuperview(offset: edsMinSpace)
 
         avgValueLabel.text = "50"
         avgValueLabel.font = UIFont.preferredFont(forTextStyle: .headline)
-        addSubview(avgValueLabel)
+        contentView.addSubview(avgValueLabel)
         avgValueLabel.centerXToSuperview()
         avgValueLabel.topToSuperview(offset: edsMinSpace)
     }

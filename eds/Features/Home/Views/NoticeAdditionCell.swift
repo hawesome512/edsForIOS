@@ -35,7 +35,7 @@ class NoticeAdditionCell: UITableViewCell, UITextFieldDelegate, PickerDelegate {
         let titleLabel = UILabel()
         titleLabel.text = "notice_new".localize(with: prefixHome)
         titleLabel.font = UIFont.preferredFont(forTextStyle: .largeTitle)
-        addSubview(titleLabel)
+        contentView.addSubview(titleLabel)
         titleLabel.leadingToSuperview(offset: edsSpace)
         titleLabel.topToSuperview(offset: edsSpace)
         
@@ -88,7 +88,7 @@ class NoticeAdditionCell: UITableViewCell, UITextFieldDelegate, PickerDelegate {
             ActionUtility.sharedInstance.addAction(.addNotice)
             self.parentVC?.navigationController?.popViewController(animated: true)
         }).disposed(by: disposeBag)
-        addSubview(noticeButton)
+        contentView.addSubview(noticeButton)
         noticeButton.height(60)
         noticeButton.horizontalToSuperview(insets: .horizontal(edsSpace))
         noticeButton.topToBottom(of: dateField, offset: edsSpace)
@@ -103,7 +103,7 @@ class NoticeAdditionCell: UITableViewCell, UITextFieldDelegate, PickerDelegate {
         textField.borderStyle = .bezel
         textField.font = textFont
         textField.delegate = self
-        addSubview(textField)
+        contentView.addSubview(textField)
         textField.height(60)
         textField.horizontalToSuperview(insets: .horizontal(edsSpace))
         textField.clearButtonMode = .unlessEditing

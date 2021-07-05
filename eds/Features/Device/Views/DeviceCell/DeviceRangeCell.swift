@@ -52,17 +52,19 @@ class DeviceRangeCell: UITableViewCell {
     }
 
     fileprivate func initViews() {
+        //ios14中若不设置背景色，draw()中绘制的线条不能显示
+        backgroundColor = .systemBackground
         //设置width为2*horSpace将方便游标▶️顶点与value重合，减少换算和偏移处理
         let size = CGSize(width: horSpace * 2, height: horSpace * 3)
         valueRangeMaker = RangeMakerView()
         valueRangeMaker.frame.size = size
         //游标置于范围条上方，间隔verSpace
         valueRangeMaker.frame.origin = CGPoint(x: 0, y: verSpace * 2)
-        addSubview(valueRangeMaker)
+        contentView.addSubview(valueRangeMaker)
 
         nameLabel.textColor = edsDefaultColor
         nameLabel.font = UIFont.preferredFont(forTextStyle: .title3)
-        addSubview(nameLabel)
+        contentView.addSubview(nameLabel)
         nameLabel.leadingToSuperview(offset: horSpace)
         nameLabel.topToSuperview(offset: verSpace)
     }
@@ -70,7 +72,7 @@ class DeviceRangeCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         initViews()
-//        addSubview(marker)
+//        contentView.addSubview(marker)
     }
 
     required init?(coder: NSCoder) {
@@ -89,6 +91,7 @@ class DeviceRangeCell: UITableViewCell {
     }
 
     override func draw(_ rect: CGRect) {
+        
         //最少是一段（无意义）：start-color-end
         guard items.count >= 3 else {
             return
@@ -121,7 +124,7 @@ class DeviceRangeCell: UITableViewCell {
             let label = UILabel()
             label.text = $0.element
             label.textAlignment = .center
-            addSubview(label)
+            contentView.addSubview(label)
             rangeLabels.append(label)
         }
     }

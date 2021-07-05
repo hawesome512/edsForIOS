@@ -46,6 +46,6 @@ struct EDSQRCode {
         guard let account = AccountUtility.sharedInstance.account else {
             return nil
         }
-        return "Node:\(account.id);Key:\(account.authority);Type:\(type.rawValue);Param:\(param)"
+        return "Node:\(account.id);Key:\(account.edskey);Type:\(type.rawValue);Param:\(param)"
     }
 }

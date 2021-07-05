@@ -75,7 +75,7 @@ class EnergyBranchCell: UITableViewCell {
         let branchIcon = UIImageView()
         branchIcon.tintColor = .label
         branchIcon.image = UIImage(named: "branch")?.withRenderingMode(.alwaysTemplate)
-        addSubview(branchIcon)
+        contentView.addSubview(branchIcon)
         branchIcon.width(edsIconSize)
         branchIcon.height(edsIconSize)
         branchIcon.leadingToSuperview(offset: edsSpace)
@@ -85,7 +85,7 @@ class EnergyBranchCell: UITableViewCell {
         let title = "branch".localize(with: prefixEnergy)
         branchLabel.text = title
         branchLabel.font = UIFont.preferredFont(forTextStyle: .title3)
-        addSubview(branchLabel)
+        contentView.addSubview(branchLabel)
         branchLabel.leadingToTrailing(of: branchIcon, offset: edsMinSpace)
         branchLabel.centerY(to: branchIcon)
         
@@ -99,7 +99,7 @@ class EnergyBranchCell: UITableViewCell {
             alertVC.addAction(okAction)
             self.parentVC?.present(alertVC, animated: true, completion: nil)
         }).disposed(by: disposeBag)
-        addSubview(tipButton)
+        contentView.addSubview(tipButton)
         tipButton.width(edsSpace)
         tipButton.height(edsSpace)
         tipButton.leadingToTrailing(of: branchLabel, offset: 2)
@@ -119,7 +119,7 @@ class EnergyBranchCell: UITableViewCell {
         xAxis.labelPosition = .bottom
         xAxis.granularity = 1
         xAxis.labelFont = UIFont.preferredFont(forTextStyle: .body)
-        addSubview(barChartView)
+        contentView.addSubview(barChartView)
         barChartView.edgesToSuperview(excluding: .top, insets: .uniform(edsMinSpace))
         barChartView.height(180)
         barChartView.topToBottom(of: branchIcon, offset: edsMinSpace)

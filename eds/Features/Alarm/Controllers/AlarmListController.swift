@@ -42,6 +42,7 @@ class AlarmListController: UITableViewController {
 
         searchVC.obscuresBackgroundDuringPresentation = false
         searchVC.searchResultsUpdater = self
+        searchVC.searchBar.placeholder = "search".localize(with: prefixAlarm)
         navigationItem.searchController = searchVC
     }
     

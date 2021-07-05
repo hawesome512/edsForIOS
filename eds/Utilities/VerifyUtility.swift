@@ -42,13 +42,18 @@ class VerifyUtility {
         let modeTag = TagUtility.sharedInstance.getTagList(by: [DeviceModel.authorityMode], in: deviceName).first
         var modeInfos = authorities.first { $0.contains(DeviceModel.authorityMode) }?.components(separatedBy: DeviceModel.itemInfoSeparator)
         modeInfos?.removeFirst()
-        if let modeTag = modeTag,modeInfos?.count == 5,let switchIndex = Int(modeInfos![0]) {
+        if let modeTag = modeTag,var modeInfos = modeInfos,modeInfos.count == 5,let switchIndex = Int(modeInfos[0]) {
             var modeValue = Int(modeTag.getValue())
             //验证开关位是否为1
             if switchIndex >= 0 {
                 modeValue = TagValueConverter.getSwitch(value: modeTag.getValue(), items: modeInfos) ? 1 : 0
             }
-            if modeInfos!.firstIndex(of: "\(modeValue)") == 1 {
+            //开关位-1可能跟后面的标志位值一样，避免后续找firstIndex冲突先remove
+            modeInfos.removeFirst()
+            if let valueIndex = modeInfos.firstIndex(of: "\(modeValue)"),
+               valueIndex >= 0,
+               valueIndex <= modeInfos.count - 2,
+               modeInfos[valueIndex+1] == DeviceModel.localMode {
                 return .localLocked
             }
         }

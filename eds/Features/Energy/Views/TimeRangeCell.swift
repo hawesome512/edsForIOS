@@ -37,7 +37,7 @@ class TimeRangeCell: UITableViewCell {
             let view = UIView()
             hourViews.append(view)
             view.backgroundColor = EnergyTime.valley.getColor()
-            addSubview(view)
+            contentView.addSubview(view)
             view.topToSuperview(offset: edsSpace)
             view.height(edsMinSpace)
             view.widthToSuperview(multiplier: 1/CGFloat(TimeData.hourSectionCount), offset: -2*edsSpace/CGFloat(TimeData.hourSectionCount))
@@ -50,20 +50,20 @@ class TimeRangeCell: UITableViewCell {
         //3段标注：0/12/24
         let label1 = UILabel()
         label1.text = "0"
-        addSubview(label1)
+        contentView.addSubview(label1)
         label1.leading(to: hourViews[0])
         label1.topToBottom(of: hourViews[0], offset: edsMinSpace)
         label1.bottomToSuperview(offset: -edsMinSpace)
         
         let label2 = UILabel()
         label2.text = "12"
-        addSubview(label2)
+        contentView.addSubview(label2)
         label2.centerXToSuperview()
         label2.centerY(to: label1)
         
         let label3 = UILabel()
         label3.text = "24"
-        addSubview(label3)
+        contentView.addSubview(label3)
         label3.trailing(to: hourViews[TimeData.hourSectionCount-1])
         label3.centerY(to: label1)
     }

@@ -59,7 +59,7 @@ class DeviceTrendEvaluationCell: UITableViewCell {
 
         titleLabel.text = "evaluation".localize(with: prefixTrend)
         titleLabel.font = UIFont.preferredFont(forTextStyle: .largeTitle)
-        addSubview(titleLabel)
+        contentView.addSubview(titleLabel)
         titleLabel.topToSuperview(offset: edsSpace)
         titleLabel.leadingToSuperview(offset: edsSpace)
 
@@ -71,7 +71,7 @@ class DeviceTrendEvaluationCell: UITableViewCell {
 
         evaluationLabel.textColor = .systemGreen
         evaluationLabel.font = UIFont.boldSystemFont(ofSize: 50)
-        addSubview(evaluationLabel)
+        contentView.addSubview(evaluationLabel)
         evaluationLabel.centerY(to: titleLabel)
         evaluationLabel.trailingToSuperview(offset: edsSpace)
     }
@@ -82,7 +82,7 @@ class DeviceTrendEvaluationCell: UITableViewCell {
         //子项，设置透明度，在显示红色背景时不至于太显眼
         label.alpha = 0.7
 //        label.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
-        addSubview(label)
+        contentView.addSubview(label)
         label.topToBottom(of: titleLabel, offset: edsSpace)
         if let leading = leading {
             label.leadingToTrailing(of: leading, offset: edsSpace / 2)

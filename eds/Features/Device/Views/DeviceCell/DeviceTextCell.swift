@@ -32,7 +32,7 @@ class DeviceTextCell: UITableViewCell {
         valueLabel.textAlignment = .center
         valueLabel.numberOfLines = 1
         valueLabel.textColor = .white
-        addSubview(valueLabel)
+        contentView.addSubview(valueLabel)
         valueLabel.horizontalToSuperview(insets: .horizontal(space))
         valueLabel.heightToSuperview()
 

@@ -52,7 +52,7 @@ class WorkorderMessageCell: UITableViewCell {
 //        userImage.image = UIImage(named: "device_A1")
         userImage.contentMode = .scaleAspectFit
         userImage.tintColor = .systemGray
-        addSubview(userImage)
+        contentView.addSubview(userImage)
         userImage.width(edsHeight)
         userImage.height(edsHeight)
         userImage.topToSuperview(offset: edsMinSpace)
@@ -63,14 +63,14 @@ class WorkorderMessageCell: UITableViewCell {
 
         nameLabel.font = UIFont.preferredFont(forTextStyle: .headline)
 //        nameLabel.text = "徐海生"
-        addSubview(nameLabel)
+        contentView.addSubview(nameLabel)
         nameLabel.top(to: userImage)
         nameLabel.leadingToTrailing(of: userImage, offset: edsSpace)
 
         levelImage.tintColor = .systemRed
         levelImage.image = UIImage(named: "manager")?.withRenderingMode(.alwaysTemplate)
         levelImage.contentMode = .scaleAspectFit
-        addSubview(levelImage)
+        contentView.addSubview(levelImage)
         levelImage.width(edsSpace)
         levelImage.height(edsSpace)
         levelImage.centerY(to: nameLabel)
@@ -79,13 +79,13 @@ class WorkorderMessageCell: UITableViewCell {
         timeLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
         timeLabel.textColor = .systemGray
 //        timeLabel.text = Date().toDateString()
-        addSubview(timeLabel)
+        contentView.addSubview(timeLabel)
         timeLabel.bottom(to: userImage)
         timeLabel.leadingToTrailing(of: userImage, offset: edsSpace)
 
         messageLabel.numberOfLines = 0
 //        messageLabel.text = "EDS云管理平台EDS云管理平台EDS云管理平台"
-        addSubview(messageLabel)
+        contentView.addSubview(messageLabel)
         messageLabel.topToBottom(of: userImage, offset: edsMinSpace)
         messageLabel.bottomToSuperview(offset: -edsMinSpace)
         messageLabel.leadingToTrailing(of: userImage, offset: edsSpace)
@@ -97,7 +97,7 @@ class WorkorderMessageCell: UITableViewCell {
             self.deleteButton.loadedWithAnimation()
             self.delegate?.delete(message: self.message!)
         }).disposed(by: disposeBag)
-        addSubview(deleteButton)
+        contentView.addSubview(deleteButton)
         deleteButton.width(edsSpace)
         deleteButton.height(edsSpace)
         deleteButton.top(to: userImage)

@@ -16,7 +16,7 @@ class Account: HandyJSON {
     // MARK: - EDSService
     //🆔，e.g.：1/XRD
     var id = ""
-    //EDS Key,默认同与authority,可更改
+    //EDS Key,默认同与authority,可更改,临时访客授权码密钥使用这个
     var edskey = ""
     //WebAccess权限
     var authority = ""

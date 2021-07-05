@@ -528,7 +528,7 @@
 "CT" = "CT變比";
 
 /* voltage_protect */
-"voltage_protect" = "電壓保護(%Un)";
+"voltage_protect" = "電壓切換閾值(%Un)";
 /* Ul */
 "Ul" = "欠壓轉換";
 /* UlR */
@@ -539,9 +539,9 @@
 "UoR" = "過壓返回";
 
 /* freq_protect */
-"freq_protect" = "頻率保護(%Fn)";
+"freq_protect" = "頻率切換閾值(%Fn)";
 /* freq_switch */
-"freq_switch" = "保護功能";
+"freq_switch" = "功能開關";
 /* Fl */
 "Fl" = "欠頻轉換";
 /* FlR */
@@ -552,9 +552,9 @@
 "FoR" = "過頻返回";
 
 /* Up_protect */
-"Up_protect" = "不平衡保護(%Un)";
+"Up_protect" = "不平衡切換閾值(%Un)";
 /* Up_switch */
-"Up_switch" = "保護功能";
+"Up_switch" = "功能開關";
 /* UpSet */
 "UpSet" = "不平衡轉換";
 /* UpRSet */
@@ -652,6 +652,8 @@
 "alarm_unchecked" = "未排查";
 /* alarm_add_alarm */
 "alarm_add_alarm" = "新增報警";
+/* alarm_search */
+"alarm_search" = "查詢報警類型、設備";
 
 /* workorder_add_workorder */
 "workorder_add_workorder" = "新增工單";
@@ -721,6 +723,8 @@
 "workorder_done" = "已完成";
 /* workorder_overdue */
 "workorder_overdue" = "逾期";
+/* workorder_search */
+"workorder_search" = "查詢工單主題、姓名、時間、資產等";
 
 /* action_phoneLogin */
 "action_phoneLogin" = "手機快捷登錄";

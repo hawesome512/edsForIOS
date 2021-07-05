@@ -526,7 +526,7 @@
 "CT" = "CT Ratio";
 
 /* voltage_protect */
-"voltage_protect" = "Voltage(%Un)";
+"voltage_protect" = "Voltage‘s Treshhold(%Un)";
 /* Ul */
 "Ul" = "Under Voltage Switching";
 /* UlR */
@@ -537,7 +537,7 @@
 "UoR" = "Over Voltage Hysteresis";
 
 /* freq_protect */
-"freq_protect" = "Frequency(%Fn)";
+"freq_protect" = "Frequency's Treshhold(%Fn)";
 /* freq_switch */
 "freq_switch" = "Function";
 /* Fl */
@@ -550,7 +550,7 @@
 "FoR" = "Over Frequency Hysteresis";
 
 /* Up_protect */
-"Up_protect" = "Unblance(%Un)";
+"Up_protect" = "Unblance's Treshhold(%Un)";
 /* Up_switch */
 "Up_switch" = "Function";
 /* UpSet */
@@ -650,6 +650,8 @@
 "alarm_unchecked" = "unchecked";
 /* alarm_add_alarm */
 "alarm_add_alarm" = "Add Alarm";
+/* alarm_search */
+"alarm_search" = "search alarm type or device";
 
 /* workorder_add_workorder */
 "workorder_add_workorder" = "Add Workorder";
@@ -719,6 +721,8 @@
 "workorder_done" = "done";
 /* workorder_overdue */
 "workorder_overdue" = "overdue";
+/* workorder_search */
+"workorder_search" = "search title,name,time or property";
 
 /* action_phoneLogin */
 "action_phoneLogin" = "Phone log in";

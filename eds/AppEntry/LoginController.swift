@@ -216,8 +216,8 @@ class LoginController: UIViewController, UITextFieldDelegate {
         //请求登录
         loginButton.rx.tap.bind(onNext: {
             
-            //调试用，跳过数据请求
-//            let homeVC = DangerousAlertController(title: nil, message: "dangerous_content".localize(), preferredStyle: .alert)
+            //FIXME:调试入口，正式程序需删除
+//            let homeVC = CodeTestController()
 //            homeVC.modalPresentationStyle = .fullScreen
 //            self.present(homeVC, animated: true, completion: nil)
 //            return

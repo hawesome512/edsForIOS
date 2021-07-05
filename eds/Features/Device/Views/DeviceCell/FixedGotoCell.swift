@@ -36,7 +36,7 @@ class FixedGotoCell: UITableViewCell {
             workorderListController.deviceFilter = self.device?.title
             self.parentVC?.navigationController?.pushViewController(workorderListController, animated: true)
         }).disposed(by: disposeBag)
-        addSubview(workorderButton)
+        contentView.addSubview(workorderButton)
         workorderButton.widthToSuperview(multiplier: 0.5, offset: -edsSpace * 1.5)
         workorderButton.edgesToSuperview(excluding: .leading, insets: .uniform(edsSpace))
 
@@ -48,7 +48,7 @@ class FixedGotoCell: UITableViewCell {
             alarmListController.deviceFilter = self.device?.getShortID()
             self.parentVC?.navigationController?.pushViewController(alarmListController, animated: true)
         }).disposed(by: disposeBag)
-        addSubview(alarmButton)
+        contentView.addSubview(alarmButton)
         alarmButton.widthToSuperview(multiplier: 0.5, offset: -edsSpace * 1.5)
         alarmButton.edgesToSuperview(excluding: .trailing, insets: .uniform(edsSpace))
     }

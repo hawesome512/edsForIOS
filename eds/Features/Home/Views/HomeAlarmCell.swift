@@ -31,12 +31,12 @@ class HomeAlarmCell: UITableViewCell {
     
     private func initViews() {
         tintColor = .white
-        let contentView = ViewUtility.addCardEffect(in: self)
-        ViewUtility.addColorEffect(in: contentView)
+        let cardEffectView = ViewUtility.addCardEffect(in: self)
+        ViewUtility.addColorEffect(in: cardEffectView)
         
         let icon = UIImageView()
         icon.image = Alarm.icon
-        contentView.addSubview(icon)
+        cardEffectView.addSubview(icon)
         icon.width(edsIconSize)
         icon.height(edsIconSize)
         icon.leadingToSuperview(offset: edsMinSpace)
@@ -46,14 +46,14 @@ class HomeAlarmCell: UITableViewCell {
         title.textColor = .white
         title.text = Alarm.description
         title.font = UIFont.preferredFont(forTextStyle: .title3)
-        contentView.addSubview(title)
+        cardEffectView.addSubview(title)
         title.centerY(to: icon)
         title.leadingToTrailing(of: icon, offset: edsMinSpace)
         
         let state = AlarmConfirm.unchecked.getState()
         stateImage.tintColor = state.color
         stateImage.image = state.icon
-        contentView.addSubview(stateImage)
+        cardEffectView.addSubview(stateImage)
         stateImage.width(edsIconSize)
         stateImage.height(edsIconSize)
         stateImage.centerYToSuperview()
@@ -63,7 +63,7 @@ class HomeAlarmCell: UITableViewCell {
         titleLabel.textColor = .white
         titleLabel.font = UIFont.preferredFont(forTextStyle: .title1)
         titleLabel.adjustsFontSizeToFitWidth = true
-        contentView.addSubview(titleLabel)
+        cardEffectView.addSubview(titleLabel)
         titleLabel.leading(to: icon)
         titleLabel.trailingToLeading(of: stateImage, offset: -edsSpace, relation: .equalOrLess)
         titleLabel.centerYToSuperview()
@@ -80,7 +80,7 @@ class HomeAlarmCell: UITableViewCell {
                 alarmsVC.hidesBottomBarWhenPushed = true
                 self.parentVC?.navigationController?.pushViewController(alarmsVC, animated: true)
             }).disposed(by: disposeBag)
-            contentView.addSubview(itemButton)
+            cardEffectView.addSubview(itemButton)
             itemButton.widthToSuperview(multiplier: 1/2)
             itemButton.height(edsIconSize+edsSpace)
             itemButton.bottomToSuperview()

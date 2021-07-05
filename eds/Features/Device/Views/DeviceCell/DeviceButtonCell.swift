@@ -44,7 +44,7 @@ extension DeviceButtonCell: DevicePageItemSource, PasswordVerifyDelegate {
                     button.tintColor = UIColor.white
                     button.setTitle(infos[0], for: .normal)
                     button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .largeTitle)
-                    addSubview(button)
+                    contentView.addSubview(button)
                     buttons.append(button)
                     button.rx.tap.asObservable().throttle(.seconds(1), scheduler: MainScheduler.instance).subscribe({ _ in
                         button.loadedWithAnimation()

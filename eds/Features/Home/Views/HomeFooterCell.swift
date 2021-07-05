@@ -16,7 +16,7 @@ class HomeFooterCell: UITableViewCell {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "home_footer")
         imageView.contentMode = .scaleAspectFill
-        addSubview(imageView)
+        contentView.addSubview(imageView)
         imageView.edgesToSuperview()
     }
     

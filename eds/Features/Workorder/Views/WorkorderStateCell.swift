@@ -27,6 +27,7 @@ class WorkorderStateCell: UITableViewCell {
     private var stepTimes = [UILabel]()
 
     private func initViews() {
+        backgroundColor = .systemBackground
         //因Images/Title/Time控件位置需在draw定位，用户点击会laySubviews,在draw中的定位将失效
         //禁止用户点击此单元格
         isUserInteractionEnabled = false
@@ -44,7 +45,7 @@ class WorkorderStateCell: UITableViewCell {
         //设置背景色可以遮挡底部进度线，因图片有透明，
         imageView.backgroundColor = .systemBackground
         stepImages.append(imageView)
-        addSubview(imageView)
+        contentView.addSubview(imageView)
         imageView.centerYToSuperview()
     }
 
@@ -53,7 +54,7 @@ class WorkorderStateCell: UITableViewCell {
         titleLabel.text = title
         titleLabel.font = UIFont.preferredFont(forTextStyle: .headline)
         stepTitles.append(titleLabel)
-        addSubview(titleLabel)
+        contentView.addSubview(titleLabel)
         //此处使用centerX经调试没有效果，因x方向上位置不固定，需在draw()中确定
         titleLabel.topToSuperview(offset: edsHeight + edsMinSpace * 2)
     }
@@ -63,7 +64,7 @@ class WorkorderStateCell: UITableViewCell {
         timeLabel.textColor = .systemGray
         timeLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
         stepTimes.append(timeLabel)
-        addSubview(timeLabel)
+        contentView.addSubview(timeLabel)
         timeLabel.topToBottom(of: stepTitles[index], offset: edsMinSpace)
         timeLabel.bottomToSuperview(offset: -edsMinSpace)
     }

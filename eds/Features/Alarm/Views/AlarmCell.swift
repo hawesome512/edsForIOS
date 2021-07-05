@@ -42,7 +42,7 @@ class AlarmCell: UITableViewCell {
         deviceImage.layer.cornerRadius = 5
         deviceImage.clipsToBounds = true
         deviceImage.image = Device.icon
-        addSubview(deviceImage)
+        contentView.addSubview(deviceImage)
         deviceImage.heightToSuperview(offset: -edsSpace * 2)
         deviceImage.widthToHeight(of: deviceImage)
         deviceImage.leadingToSuperview(offset: edsSpace)
@@ -50,7 +50,7 @@ class AlarmCell: UITableViewCell {
 
 //        titleLabel.text = "过载"
         titleLabel.font = UIFont.preferredFont(forTextStyle: .title1)
-        addSubview(titleLabel)
+        contentView.addSubview(titleLabel)
         titleLabel.top(to: deviceImage)
         titleLabel.leadingToTrailing(of: deviceImage, offset: edsMinSpace)
 
@@ -59,7 +59,7 @@ class AlarmCell: UITableViewCell {
 //        statusView.backgroundColor = .systemRed
         statusView.adjustsFontSizeToFitWidth = true
         statusView.layer.borderColor = edsDefaultColor.withAlphaComponent(0).cgColor
-        addSubview(statusView)
+        contentView.addSubview(statusView)
         statusView.height(24)
         statusView.centerY(to: titleLabel)
         statusView.leadingToTrailing(of: titleLabel, offset: edsMinSpace)
@@ -68,7 +68,7 @@ class AlarmCell: UITableViewCell {
         let deviceIcon = UIImageView()
         deviceIcon.tintColor = .systemGray
         deviceIcon.image = Device.icon
-        addSubview(deviceIcon)
+        contentView.addSubview(deviceIcon)
         deviceIcon.width(edsIconSize)
         deviceIcon.height(edsIconSize)
         deviceIcon.topToBottom(of: titleLabel, offset: edsMinSpace)
@@ -76,14 +76,14 @@ class AlarmCell: UITableViewCell {
 
 //        deviceLabel.text = "成型3#4#柜"
         deviceLabel.textColor = .systemGray
-        addSubview(deviceLabel)
+        contentView.addSubview(deviceLabel)
         deviceLabel.centerY(to: deviceIcon)
         deviceLabel.leadingToTrailing(of: deviceIcon, offset: edsMinSpace)
 
         let timeImage = UIImageView()
         timeImage.tintColor = .systemGray
         timeImage.image = UIImage(systemName: "clock")
-        addSubview(timeImage)
+        contentView.addSubview(timeImage)
         timeImage.width(edsIconSize)
         timeImage.height(edsIconSize)
         timeImage.topToBottom(of: deviceIcon, offset: edsMinSpace)
@@ -92,7 +92,7 @@ class AlarmCell: UITableViewCell {
 //        timeLabel.text = Date().toDateTimeString()
         timeLabel.textColor = .systemGray
         timeLabel.adjustsFontSizeToFitWidth = true
-        addSubview(timeLabel)
+        contentView.addSubview(timeLabel)
         timeLabel.centerY(to: timeImage)
         timeLabel.leadingToTrailing(of: timeImage, offset: edsMinSpace)
         timeLabel.trailingToSuperview(offset: edsSpace)

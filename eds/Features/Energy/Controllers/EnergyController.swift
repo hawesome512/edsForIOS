@@ -133,7 +133,7 @@ extension EnergyController: DateSegmentDelegate, ChartViewDelegate {
 
     //选择能耗日期模式
     func pick(dateItem: EnergyDateItem) {
-
+        
         guard let branch = energyBranch else {
             return
         }

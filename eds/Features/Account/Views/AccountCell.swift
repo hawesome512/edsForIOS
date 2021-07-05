@@ -71,7 +71,7 @@ class AccountCell: UITableViewCell {
         profileImage.layer.cornerRadius = edsHeight / 2
         profileImage.layer.borderWidth = 2
         profileImage.layer.borderColor = edsDefaultColor.cgColor
-        addSubview(profileImage)
+        contentView.addSubview(profileImage)
         profileImage.width(edsHeight)
         profileImage.height(edsHeight)
         profileImage.leadingToSuperview(offset: edsSpace)
@@ -79,14 +79,14 @@ class AccountCell: UITableViewCell {
 
         nameLabel.text = "XSEEC"
         nameLabel.font = UIFont.preferredFont(forTextStyle: .title1)
-        addSubview(nameLabel)
+        contentView.addSubview(nameLabel)
         nameLabel.leadingToTrailing(of: profileImage, offset: edsMinSpace)
         nameLabel.centerY(to: profileImage)
 
         let phoneImage = UIImageView()
         phoneImage.image = UIImage(systemName: "phone")
         phoneImage.contentMode = .scaleAspectFit
-        addSubview(phoneImage)
+        contentView.addSubview(phoneImage)
         phoneImage.width(edsIconSize)
         phoneImage.height(edsIconSize)
         phoneImage.topToBottom(of: profileImage, offset: edsMinSpace)
@@ -95,14 +95,14 @@ class AccountCell: UITableViewCell {
         phoneLabel.text = "18700000000"
         phoneLabel.textColor = .systemGray
         phoneLabel.adjustsFontSizeToFitWidth = true
-        addSubview(phoneLabel)
+        contentView.addSubview(phoneLabel)
         phoneLabel.centerY(to: phoneImage)
         phoneLabel.leadingToTrailing(of: phoneImage)
 
         let emailImage = UIImageView()
         emailImage.image = UIImage(systemName: "envelope")
         emailImage.contentMode = .scaleAspectFit
-        addSubview(emailImage)
+        contentView.addSubview(emailImage)
         emailImage.width(edsIconSize)
         emailImage.height(edsIconSize)
         emailImage.centerY(to: phoneLabel)
@@ -112,7 +112,7 @@ class AccountCell: UITableViewCell {
         emailLabel.text = "shihlineds@xseec.cn"
 //        emailLabel.adjustsFontSizeToFitWidth = true
         emailLabel.textColor = .systemGray
-        addSubview(emailLabel)
+        contentView.addSubview(emailLabel)
         emailLabel.centerY(to: emailImage)
         emailLabel.widthToSuperview(multiplier: 0.4)
         emailLabel.leadingToTrailing(of: emailImage)
@@ -121,7 +121,7 @@ class AccountCell: UITableViewCell {
         let actionImage = UIImageView()
         actionImage.image = UIImage(systemName: "clock")
         actionImage.contentMode = .scaleAspectFit
-        addSubview(actionImage)
+        contentView.addSubview(actionImage)
         actionImage.width(edsIconSize)
         actionImage.height(edsIconSize)
         actionImage.leading(to: phoneImage)
@@ -130,7 +130,7 @@ class AccountCell: UITableViewCell {
 
         actionButton.image = UIImage(systemName: "chevron.right.circle.fill")
         actionButton.tintColor = edsDefaultColor
-        addSubview(actionButton)
+        contentView.addSubview(actionButton)
         actionButton.width(edsIconSize)
         actionButton.height(edsIconSize)
         actionButton.centerY(to: actionImage)
@@ -138,7 +138,7 @@ class AccountCell: UITableViewCell {
 
         actionLabel.text = "withoutAction".localize()
         actionLabel.textColor = .systemGray
-        addSubview(actionLabel)
+        contentView.addSubview(actionLabel)
         actionLabel.centerY(to: actionImage)
         actionLabel.leading(to: phoneLabel)
         actionLabel.trailingToLeading(of: actionButton)
@@ -147,7 +147,7 @@ class AccountCell: UITableViewCell {
 
         levelImage.image = level.getIcon()
         levelImage.contentMode = .scaleAspectFit
-        addSubview(levelImage)
+        contentView.addSubview(levelImage)
         levelImage.width(edsIconSize)
         levelImage.height(edsIconSize)
         levelImage.trailingToSuperview(offset: edsSpace)
@@ -155,7 +155,7 @@ class AccountCell: UITableViewCell {
 
         levelLabel.text = level.getText()
         levelLabel.font = UIFont.preferredFont(forTextStyle: .headline)
-        addSubview(levelLabel)
+        contentView.addSubview(levelLabel)
         levelLabel.trailingToLeading(of: levelImage)
         levelLabel.centerY(to: profileImage)
 
@@ -167,7 +167,7 @@ class AccountCell: UITableViewCell {
             AccountUtility.sharedInstance.updatePhone()
             ActionUtility.sharedInstance.addAction(.editAccount, extra: self.phone?.name)
         }).disposed(by: disposeBag)
-        addSubview(levelButton)
+        contentView.addSubview(levelButton)
         levelButton.width(edsIconSize)
         levelButton.height(edsIconSize)
         levelButton.centerY(to: levelImage)

@@ -526,7 +526,7 @@
 "CT" = "CT变比";
 
 /* voltage_protect */
-"voltage_protect" = "电压保护(%Un)";
+"voltage_protect" = "电压切换阈值(%Un)";
 /* Ul */
 "Ul" = "欠压转换";
 /* UlR */
@@ -537,9 +537,9 @@
 "UoR" = "过压返回";
 
 /* freq_protect */
-"freq_protect" = "频率保护(%Fn)";
+"freq_protect" = "频率切换阈值(%Fn)";
 /* freq_switch */
-"freq_switch" = "保护功能";
+"freq_switch" = "功能开关";
 /* Fl */
 "Fl" = "欠频转换";
 /* FlR */
@@ -550,9 +550,9 @@
 "FoR" = "过频返回";
 
 /* Up_protect */
-"Up_protect" = "不平衡保护(%Un)";
+"Up_protect" = "不平衡切换阈值(%Un)";
 /* Up_switch */
-"Up_switch" = "保护功能";
+"Up_switch" = "功能开关";
 /* UpSet */
 "UpSet" = "不平衡转换";
 /* UpRSet */
@@ -650,6 +650,8 @@
 "alarm_unchecked" = "未排查";
 /* alarm_add_alarm */
 "alarm_add_alarm" = "新增报警";
+/* alarm_search */
+"alarm_search" = "查询报警类型、设备";
 
 /* workorder_add_workorder */
 "workorder_add_workorder" = "新增工单";
@@ -719,6 +721,8 @@
 "workorder_done" = "已完成";
 /* workorder_overdue */
 "workorder_overdue" = "逾期";
+/* workorder_search */
+"workorder_search" = "查询工单主题、姓名、时间、资产等";
 
 /* action_phoneLogin */
 "action_phoneLogin" = "手机快捷登录";

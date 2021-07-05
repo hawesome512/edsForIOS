@@ -45,6 +45,7 @@ class WorkorderListController: UITableViewController, WorkorderAdditionDelegate 
         
         searchVC.searchResultsUpdater = self
         searchVC.obscuresBackgroundDuringPresentation = false
+        searchVC.searchBar.placeholder = "search".localize(with: prefixWorkorder)
         navigationItem.searchController = searchVC
         
         WorkorderUtility.sharedInstance.successfulUpdated.throttle(.seconds(1), scheduler: MainScheduler.instance).bind(onNext: {result in

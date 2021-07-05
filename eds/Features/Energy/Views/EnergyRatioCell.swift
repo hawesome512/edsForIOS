@@ -49,7 +49,7 @@ class EnergyRatioCell: UITableViewCell {
         let timeIcon = UIImageView()
         timeIcon.tintColor = .label
         timeIcon.image = UIImage(systemName: "gauge")
-        addSubview(timeIcon)
+        contentView.addSubview(timeIcon)
         timeIcon.width(edsIconSize)
         timeIcon.height(edsIconSize)
         timeIcon.leadingToSuperview(offset: edsSpace)
@@ -59,7 +59,7 @@ class EnergyRatioCell: UITableViewCell {
         sliderLabel.font = UIFont.preferredFont(forTextStyle: .title3)
         let title = "percent".localize(with: prefixEnergy)
         sliderLabel.text = title
-        addSubview(sliderLabel)
+        contentView.addSubview(sliderLabel)
         sliderLabel.centerY(to: timeIcon)
         sliderLabel.leadingToTrailing(of: timeIcon, offset: edsMinSpace)
         
@@ -73,7 +73,7 @@ class EnergyRatioCell: UITableViewCell {
             alertVC.addAction(okAction)
             self.parentVC?.present(alertVC, animated: true, completion: nil)
         }).disposed(by: disposeBag)
-        addSubview(tipButton)
+        contentView.addSubview(tipButton)
         tipButton.width(edsSpace)
         tipButton.height(edsSpace)
         tipButton.leadingToTrailing(of: sliderLabel, offset: 2)
@@ -82,13 +82,13 @@ class EnergyRatioCell: UITableViewCell {
         ratioLabel.text = "0%"
         ratioLabel.textColor = edsDefaultColor
         ratioLabel.font = UIFont.preferredFont(forTextStyle: .largeTitle)
-        addSubview(ratioLabel)
+        contentView.addSubview(ratioLabel)
         ratioLabel.centerY(to: sliderLabel)
         ratioLabel.trailingToSuperview(offset: edsSpace)
 
         slider.trackColor = .lightGray
         slider.thumbColor = edsDefaultColor
-        addSubview(slider)
+        contentView.addSubview(slider)
         slider.height(HorSliderView.lineWidth)
         slider.horizontalToSuperview(insets: .horizontal(edsSpace))
         slider.topToBottom(of: timeIcon, offset: edsSpace)
@@ -98,7 +98,7 @@ class EnergyRatioCell: UITableViewCell {
         currentView.value = "0"
         currentView.nameLabel.textColor = .darkGray
         currentView.nameLabel.text = "current".localize(with: prefixEnergy)
-        addSubview(currentView)
+        contentView.addSubview(currentView)
         currentView.leadingToSuperview(offset: edsSpace)
         currentView.topToBottom(of: slider, offset: edsMinSpace)
 
@@ -107,7 +107,7 @@ class EnergyRatioCell: UITableViewCell {
         lastView.value = "0"
         lastView.nameLabel.textColor = .darkGray
         lastView.nameLabel.text = "last".localize(with: prefixEnergy)
-        addSubview(lastView)
+        contentView.addSubview(lastView)
         lastView.leadingToSuperview(offset: edsSpace)
         lastView.topToBottom(of: currentView, offset: edsMinSpace)
         lastView.bottomToSuperview(offset: -edsMinSpace)
@@ -115,14 +115,14 @@ class EnergyRatioCell: UITableViewCell {
         linkRatioView.value = 0
         linkRatioView.valueLabel.textColor = .label
         linkRatioView.valueLabel.font = valueFont
-        addSubview(linkRatioView)
+        contentView.addSubview(linkRatioView)
         linkRatioView.trailingToSuperview(offset: edsMinSpace)
         linkRatioView.centerY(to: lastView)
 
         let linkRatioLabel = UILabel()
         linkRatioLabel.textColor = .darkGray
         linkRatioLabel.text = "ratio".localize(with: prefixHome)
-        addSubview(linkRatioLabel)
+        contentView.addSubview(linkRatioLabel)
         linkRatioLabel.leading(to: linkRatioView)
         linkRatioLabel.centerY(to: currentView)
     }

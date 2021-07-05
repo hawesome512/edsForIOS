@@ -58,7 +58,7 @@ class NoticeMessageCell: UITableViewCell {
             deleteVC.addAction(deleteAction)
             self.parentVC?.present(deleteVC, animated: true, completion: nil)
         }).disposed(by: disposeBag)
-        addSubview(clearButton)
+        contentView.addSubview(clearButton)
         clearButton.width(edsSpace)
         clearButton.height(edsSpace)
         clearButton.topToSuperview(offset: edsMinSpace)
@@ -66,7 +66,7 @@ class NoticeMessageCell: UITableViewCell {
 
         messageLabel.numberOfLines = 0
         messageLabel.textAlignment = .center
-        addSubview(messageLabel)
+        contentView.addSubview(messageLabel)
         messageLabel.horizontalToSuperview(insets: .horizontal(edsSpace))
         messageLabel.topToBottom(of: clearButton, offset: edsMinSpace)
         messageLabel.bottomToSuperview(offset: -edsSpace)

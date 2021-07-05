@@ -52,19 +52,19 @@ class WorkorderCell: UITableViewCell {
         cornerView.title = "new".localize()
 
         titleLabel.font = UIFont.preferredFont(forTextStyle: .title1)
-        addSubview(titleLabel)
+        contentView.addSubview(titleLabel)
         titleLabel.topToSuperview(offset: edsSpace * 1.5)
         titleLabel.leadingToSuperview(offset: edsSpace)
 
         typeLabel.textColor = .white
         typeLabel.layer.borderColor = edsDefaultColor.withAlphaComponent(0).cgColor
-        addSubview(typeLabel)
+        contentView.addSubview(typeLabel)
         typeLabel.centerY(to: titleLabel)
         typeLabel.leadingToTrailing(of: titleLabel, offset: edsMinSpace)
 
         workerIcon.tintColor = .systemGray
         workerIcon.image = UIImage(systemName: "person")
-        addSubview(workerIcon)
+        contentView.addSubview(workerIcon)
         workerIcon.width(edsIconSize)
         workerIcon.height(edsIconSize)
         workerIcon.leading(to: titleLabel)
@@ -72,25 +72,25 @@ class WorkorderCell: UITableViewCell {
 
         timeIcon.tintColor = .systemGray
         timeIcon.image = UIImage(systemName: "calendar")
-        addSubview(timeIcon)
+        contentView.addSubview(timeIcon)
         timeIcon.width(edsIconSize)
         timeIcon.height(edsIconSize)
         timeIcon.centerY(to: workerIcon)
         timeIcon.centerXToSuperview(offset: -edsMinSpace)
 
         workerLabel.textColor = .systemGray
-        addSubview(workerLabel)
+        contentView.addSubview(workerLabel)
         workerLabel.centerY(to: workerIcon)
         workerLabel.leadingToTrailing(of: workerIcon, offset: edsMinSpace)
         workerLabel.trailingToLeading(of: timeIcon)
 
         timeLabel.textColor = .systemGray
         timeLabel.textAlignment = .right
-        addSubview(timeLabel)
+        contentView.addSubview(timeLabel)
         timeLabel.leadingToTrailing(of: timeIcon, offset: edsMinSpace)
         timeLabel.centerY(to: workerIcon)
 
-        addSubview(stateImageView)
+        contentView.addSubview(stateImageView)
         stateImageView.width(edsIconSize)
         stateImageView.height(edsIconSize)
         stateImageView.centerY(to: workerIcon)
@@ -98,14 +98,14 @@ class WorkorderCell: UITableViewCell {
 
         deviceIcon.image = Device.icon
         deviceIcon.tintColor = .systemGray
-        addSubview(deviceIcon)
+        contentView.addSubview(deviceIcon)
         deviceIcon.width(edsIconSize)
         deviceIcon.height(edsIconSize)
         deviceIcon.topToBottom(of: workerIcon, offset: edsMinSpace)
         deviceIcon.leading(to: titleLabel)
 
         deviceLabel.textColor = .systemGray
-        addSubview(deviceLabel)
+        contentView.addSubview(deviceLabel)
         deviceLabel.centerY(to: deviceIcon)
         deviceLabel.leadingToTrailing(of: deviceIcon, offset: edsMinSpace)
         deviceLabel.trailingToSuperview(offset: edsSpace)

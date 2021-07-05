@@ -37,12 +37,12 @@ class RankCell: UITableViewCell {
     private func initViews(){
         
         rankLabel.font = UIFont.preferredFont(forTextStyle: .title1)
-        addSubview(rankLabel)
+        contentView.addSubview(rankLabel)
         rankLabel.topToSuperview(offset: edsSpace)
         rankLabel.leadingToSuperview(offset: edsSpace)
         
         rankIcon.image = UIImage(named: "rank1")
-        addSubview(rankIcon)
+        contentView.addSubview(rankIcon)
         rankIcon.width(edsHeight)
         rankIcon.height(edsHeight)
         rankIcon.leadingToSuperview(offset:edsMinSpace)
@@ -50,14 +50,14 @@ class RankCell: UITableViewCell {
 
         titleLabel.font = UIFont.preferredFont(forTextStyle: .title1)
         titleLabel.adjustsFontSizeToFitWidth = true
-        addSubview(titleLabel)
+        contentView.addSubview(titleLabel)
         titleLabel.leadingToTrailing(of: rankIcon, offset: edsMinSpace)
         titleLabel.topToSuperview(offset: edsSpace)
         
         scoreLabel.text = "0"
         scoreLabel.font = UIFont.italicSystemFont(ofSize: 40)
         scoreLabel.textColor = .systemOrange
-        addSubview(scoreLabel)
+        contentView.addSubview(scoreLabel)
         scoreLabel.trailingToSuperview(offset: edsSpace)
         scoreLabel.centerY(to: titleLabel)
         scoreLabel.leadingToTrailing(of: titleLabel, offset: edsSpace, relation: .equalOrGreater)
@@ -82,7 +82,7 @@ class RankCell: UITableViewCell {
             valueLabel.text = "0%"
             valueLabel.textColor = .secondaryLabel
             valueLabel.adjustsFontSizeToFitWidth = true
-            addSubview(valueLabel)
+            contentView.addSubview(valueLabel)
             valueLabel.topToBottom(of: rankIcon,offset: edsMinSpace)
             if i == 0 {
                 valueLabel.leadingToSuperview(offset: edsSpace)
@@ -97,7 +97,7 @@ class RankCell: UITableViewCell {
             let showView = UIView()
             showView.alpha = 0.7
             showView.backgroundColor = energyTimes[i].getColor()
-            addSubview(showView)
+            contentView.addSubview(showView)
             showView.height(edsMinSpace)
             showView.width(to: valueLabel)
             showView.topToBottom(of: valueLabel,offset: edsMinSpace)
@@ -108,7 +108,7 @@ class RankCell: UITableViewCell {
             titleLabel.text = energyTimes[i].getText()
             titleLabel.textColor = energyTimes[i].getColor()
             titleLabel.adjustsFontSizeToFitWidth = true
-            addSubview(titleLabel)
+            contentView.addSubview(titleLabel)
             titleLabel.bottomToSuperview(offset: -edsMinSpace)
             titleLabel.topToBottom(of: showView, offset: edsMinSpace)
             titleLabel.leading(to: valueLabel)

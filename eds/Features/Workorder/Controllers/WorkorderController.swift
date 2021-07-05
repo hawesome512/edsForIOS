@@ -12,7 +12,7 @@ import RxCocoa
 import YPImagePicker
 import Kingfisher
 import Moya
-import CallKit
+//import CallKit
 import MessageUI
 
 class WorkorderController: UIViewController {
@@ -31,8 +31,8 @@ class WorkorderController: UIViewController {
     private var foldViews: [WorkorderSectionType: FoldView] = [.task: FoldView(), .message: FoldView()]
     private let disposeBag = DisposeBag()
     
-    //电话派发工单，监听电话接通状态
-    private let callObserver = CXCallObserver()
+    //电话派发工单，监听电话接通状态,在中国地区不可使用CallKit功能
+//    private let callObserver = CXCallObserver()
     
     //执行
     private let executeBarIndex = 2
@@ -80,7 +80,7 @@ class WorkorderController: UIViewController {
     
     private func initViews() {
         
-        callObserver.setDelegate(self, queue: DispatchQueue.main)
+//        callObserver.setDelegate(self, queue: DispatchQueue.main)
         
         tableView.rowHeight = UITableView.automaticDimension
         tableView.dataSource = self
@@ -305,9 +305,13 @@ extension WorkorderController {
     }
 }
 
+//在中国地区不可使用CallKit功能，电话派发后直接调用代替委托
+protocol CallDelegate {
+    func callActived()
+}
 
-// MARK: - 派发工单
-extension WorkorderController: ShareDelegate, CXCallObserverDelegate, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate {
+// MARK: - 派发工单//, CXCallObserverDelegate
+extension WorkorderController: ShareDelegate, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate, CallDelegate {
     
     //派发方式选择界面：电话/短信/邮件/微信等等
     @objc func selectDistribution() {
@@ -325,7 +329,7 @@ extension WorkorderController: ShareDelegate, CXCallObserverDelegate, MFMessageC
         let sentContent = String(format: "distribution".localize(with: prefixWorkorder), executor.name!, workorder.title, workorder.getShortTimeRange(), workorder.location, workorder.id)
         switch shareType {
         case .phone:
-            ShareUtility.callPhone(to: executor.number!)
+            ShareUtility.callPhone(to: executor.number!,delegate: self)
         case .sms:
             ShareUtility.sendSMS(to: executor.number!, with: sentContent, imageData: nil, in: self)
         case .mail:
@@ -335,11 +339,14 @@ extension WorkorderController: ShareDelegate, CXCallObserverDelegate, MFMessageC
     }
     
     //监听电话派发的状态
-    func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
-        //已经接通电话，已经结束通话，电话派发工单成功
-        if call.hasConnected && call.hasEnded {
-            distributed()
-        }
+//    func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
+//        //已经接通电话，已经结束通话，电话派发工单成功
+//        if call.hasConnected && call.hasEnded {
+//            distributed()
+//        }
+//    }
+    func callActived() {
+        distributed()
     }
     
     //短信派发状态
@@ -391,18 +398,19 @@ extension WorkorderController {
     }
     
     func uploadImages() {
+        
         //上传指示器
         toolbarItems?[executeBarIndex] = UIBarButtonItem(customView: indicator)
         progressCount = 0
         
         let indexPath = IndexPath(row: 0, section: WorkorderSectionType.photo.rawValue)
-        let photoCell = tableView.cellForRow(at: indexPath)! as! WorkorderPhotoCollectionCell
-        photoSource = photoCell.photoSource
-        let images = photoSource.images
-        guard images.count > 0 else {
+        //cell可能还未加载(没有上滑到它的位置)为nil
+        let photoCell = tableView.cellForRow(at: indexPath) as? WorkorderPhotoCollectionCell
+        guard let images = photoCell?.photoSource.images, images.count > 0 else {
             prepareUpdateWorkorder(uploadedImages: [])
             return
         }
+        photoSource = photoCell!.photoSource
         var uploadedImages: [(name: String, image: UIImage)] = []
         images.forEach { image in
             let fileName = AccountUtility.sharedInstance.generateImageID()

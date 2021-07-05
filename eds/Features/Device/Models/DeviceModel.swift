@@ -23,6 +23,8 @@ struct DeviceModel: HandyJSON {
     static let itemsAccumulation = "accumulation"
     //设备模式：本地/远程
     static let authorityMode = "CtrlMode"
+    //设备本地模式
+    static let localMode = "local"
     //设备密码
     static let authorityCode = "CtrlCode"
 

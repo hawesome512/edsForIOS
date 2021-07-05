@@ -31,12 +31,12 @@ class HomeEnergyCell: UITableViewCell {
     
     private func initViews() {
         tintColor = .white
-        let contentView = ViewUtility.addCardEffect(in: self)
-        ViewUtility.addColorEffect(in: contentView)
+        let cardEffectView = ViewUtility.addCardEffect(in: self)
+        ViewUtility.addColorEffect(in: cardEffectView)
         
         let energyImage = UIImageView()
         energyImage.image = UIImage(systemName: "gauge")
-        contentView.addSubview(energyImage)
+        cardEffectView.addSubview(energyImage)
         energyImage.width(edsIconSize)
         energyImage.height(edsIconSize)
         energyImage.leadingToSuperview(offset: edsMinSpace)
@@ -46,11 +46,11 @@ class HomeEnergyCell: UITableViewCell {
         energyLabel.textColor = .white
         energyLabel.text = "energy".localize(with: prefixHome)
         energyLabel.font = UIFont.preferredFont(forTextStyle: .title3)
-        contentView.addSubview(energyLabel)
+        cardEffectView.addSubview(energyLabel)
         energyLabel.centerY(to: energyImage)
         energyLabel.leadingToTrailing(of: energyImage, offset: edsMinSpace)
         
-        contentView.addSubview(slider)
+        cardEffectView.addSubview(slider)
         slider.height(HorSliderView.lineWidth)
         slider.leadingToTrailing(of: energyLabel, offset: edsSpace)
         slider.trailingToSuperview(offset: edsSpace)
@@ -60,31 +60,31 @@ class HomeEnergyCell: UITableViewCell {
         sliderLabel.textColor = .systemGray
         sliderLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
         sliderLabel.text = "percent".localize(with: prefixHome)
-        contentView.addSubview(sliderLabel)
+        cardEffectView.addSubview(sliderLabel)
         sliderLabel.topToBottom(of: slider)
         sliderLabel.trailing(to: slider)
         
         currentView.value = "0"
         currentView.nameLabel.text = "current".localize(with: prefixHome)
-        contentView.addSubview(currentView)
+        cardEffectView.addSubview(currentView)
         currentView.leadingToSuperview(offset: edsMinSpace)
         currentView.centerYToSuperview()
         
         lastView.value = "0"
         lastView.nameLabel.text = "last".localize(with: prefixHome)
-        contentView.addSubview(lastView)
+        cardEffectView.addSubview(lastView)
         lastView.leadingToSuperview(offset: edsMinSpace)
         lastView.bottomToSuperview(offset: -edsMinSpace)
         
         ratioView.value = 0
-        contentView.addSubview(ratioView)
+        cardEffectView.addSubview(ratioView)
         ratioView.trailingToSuperview(offset: edsMinSpace)
         ratioView.centerY(to: lastView)
         
         let ratioLabel = UILabel()
         ratioLabel.text = "ratio".localize(with: prefixHome)
         ratioLabel.textColor = edsDivideColor
-        contentView.addSubview(ratioLabel)
+        cardEffectView.addSubview(ratioLabel)
         ratioLabel.leading(to: ratioView)
         ratioLabel.centerY(to: currentView)
         

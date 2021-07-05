@@ -44,7 +44,7 @@ class ActionCell: UITableViewCell {
         typeImage.contentMode = .scaleAspectFit
         typeImage.tintColor = .white
         typeImage.backgroundColor = .systemGray
-        addSubview(typeImage)
+        contentView.addSubview(typeImage)
         typeImage.width(edsHeight)
         typeImage.height(edsHeight)
         typeImage.leadingToSuperview(offset: edsSpace)
@@ -55,7 +55,7 @@ class ActionCell: UITableViewCell {
         actionLabel.numberOfLines = 0
         actionLabel.font = UIFont.preferredFont(forTextStyle: .headline)
         actionLabel.textColor = .systemGray
-        addSubview(actionLabel)
+        contentView.addSubview(actionLabel)
 //        actionLabel.top(to: typeImage)
         actionLabel.centerY(to: typeImage)
         actionLabel.leadingToTrailing(of: typeImage, offset: edsSpace)
@@ -64,7 +64,7 @@ class ActionCell: UITableViewCell {
 //        timeLabel.text = "2020-01-01 00:00:00"
         timeLabel.textColor = .systemGray
         timeLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
-        addSubview(timeLabel)
+        contentView.addSubview(timeLabel)
         timeLabel.topToBottom(of: actionLabel, offset: edsMinSpace)
         timeLabel.trailingToSuperview(offset: edsSpace)
         timeLabel.bottomToSuperview(offset: -edsMinSpace, relation: .equalOrLess)

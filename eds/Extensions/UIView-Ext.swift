@@ -8,6 +8,8 @@
 
 import Foundation
 import UIKit
+import RxSwift
+import RxCocoa
 
 private var SwViewCaptureKey_IsCapturing: String = "SwViewCapture_AssoKey_isCapturing"
 

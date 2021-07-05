@@ -43,13 +43,13 @@ class WorkorderPhotoCollectionCell: UITableViewCell {
         collectionView.register(PhotoCell.self, forCellWithReuseIdentifier: String(describing: PhotoCell.self))
         collectionView.dataSource = self
         collectionView.delegate = self
-        addSubview(collectionView)
+        contentView.addSubview(collectionView)
         collectionView.edgesToSuperview()
         collectionView.height(photoHeight + edsMinSpace * 2)
 
         rightImage.image = UIImage(systemName: "chevron.compact.right")
         rightImage.tintColor = edsLightGrayColor
-        addSubview(rightImage)
+        contentView.addSubview(rightImage)
         rightImage.width(edsIconSize)
         rightImage.height(edsIconSize)
         rightImage.centerYToSuperview()

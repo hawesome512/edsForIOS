@@ -13,7 +13,7 @@ import TinyConstraints
 class DynamicDeviceController: UIViewController, DevicePageScrollDelegate {
     
     private let headerView = DeviceHeaderView()
-    private let pagingViewController = PagingViewController<IconItem>()
+    private let pagingViewController = PagingViewController() //PagingViewController<IconItem>()
     private var navigationBar: UINavigationBar?
     
     //头图↕️偏移当约束
@@ -86,7 +86,8 @@ class DynamicDeviceController: UIViewController, DevicePageScrollDelegate {
             pages = deviceType?.pages ?? []
             pagingViewController.dataSource = self
             pagingViewController.delegate = self
-            pagingViewController.menuItemSource = .class(type: IconPagingCell.self)
+//            pagingViewController.menuItemSource = .class(type: IconPagingCell.self)
+            pagingViewController.register(IconPagingCell.self, for: IconItem.self)
             //均分window.width
             pagingViewController.menuItemSize = .sizeToFit(minWidth: 100, height: 60)
             //活跃页颜色
@@ -119,10 +120,13 @@ class DynamicDeviceController: UIViewController, DevicePageScrollDelegate {
 
 // MARK: -Paging View Controller DataSource
 extension DynamicDeviceController: PagingViewControllerDataSource, PagingViewControllerDelegate {
+    func pagingViewController(_: PagingViewController, pagingItemAt index: Int) -> PagingItem {
+        let iconName = (index == pages.count) ? "info" : pages[index].title
+        let icon = "device_\(iconName)"
+        return IconItem(icon: icon, index: index)
+    }
     
-    //在最后面+1静态信息页
-    
-    func pagingViewController<T>(_ pagingViewController: PagingViewController<T>, viewControllerForIndex index: Int) -> UIViewController {
+    func pagingViewController(_: PagingViewController, viewControllerAt index: Int) -> UIViewController {
         if index == pages.count {
             let tableVC = FixedInfoChildController(style: .plain)
             tableVC.scrollDelegate = self
@@ -136,17 +140,40 @@ extension DynamicDeviceController: PagingViewControllerDataSource, PagingViewCon
             pageVC.parentVC = self
             return pageVC
         }
-        
     }
     
-    func pagingViewController<T>(_ pagingViewController: PagingViewController<T>, pagingItemForIndex index: Int) -> T {
-        let iconName = (index == pages.count) ? "info" : pages[index].title
-        let icon = "device_\(iconName)"
-        return IconItem(icon: icon, index: index) as! T
+    func numberOfViewControllers(in pagingViewController: PagingViewController) -> Int {
+        return pages.count+1
     }
     
-    func numberOfViewControllers<T>(in: PagingViewController<T>) -> Int {
-        return pages.count + 1
-    }
+    
+    //在最后面+1静态信息页
+    
+//    func pagingViewController<T>(_ pagingViewController: PagingViewController<T>, viewControllerForIndex index: Int) -> UIViewController {
+//        if index == pages.count {
+//            let tableVC = FixedInfoChildController(style: .plain)
+//            tableVC.scrollDelegate = self
+//            tableVC.device = device
+//            tableVC.parentVC = self
+//            return tableVC
+//        } else {
+//            let pageVC = PageItemController()
+//            pageVC.set(with: pages[index], in: device!.getShortID())
+//            pageVC.scrollDelegate = self
+//            pageVC.parentVC = self
+//            return pageVC
+//        }
+//
+//    }
+//
+//    func pagingViewController<T>(_ pagingViewController: PagingViewController<T>, pagingItemForIndex index: Int) -> T {
+//        let iconName = (index == pages.count) ? "info" : pages[index].title
+//        let icon = "device_\(iconName)"
+//        return IconItem(icon: icon, index: index) as! T
+//    }
+//
+//    func numberOfViewControllers<T>(in: PagingViewController<T>) -> Int {
+//        return pages.count + 1
+//    }
     
 }

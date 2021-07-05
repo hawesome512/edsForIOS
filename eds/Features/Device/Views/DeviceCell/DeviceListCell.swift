@@ -33,15 +33,15 @@ class DeviceListCell: UITableViewCell, PasswordVerifyDelegate {
 //        nameLabel.text = "短路短延时(s)"
         nameLabel.textColor = edsDefaultColor
         nameLabel.font = preferredFont
-        addSubview(nameLabel)
+        contentView.addSubview(nameLabel)
         nameLabel.centerYToSuperview()
         nameLabel.leadingToSuperview(offset: edsSpace)
         valueLabel.text = String(format: "%d", Tag.nilValue)
         valueLabel.font = preferredFont
-        addSubview(valueLabel)
+        contentView.addSubview(valueLabel)
         valueLabel.centerYToSuperview()
         //因cell右边存在accessoryType，space*2,避免其被覆盖
-        valueLabel.trailingToSuperview(offset: edsSpace * 2)
+        valueLabel.trailingToSuperview(offset: edsMinSpace)
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
